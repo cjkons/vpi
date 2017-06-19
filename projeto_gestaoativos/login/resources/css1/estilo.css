@@ -1,0 +1,123 @@
+html{
+    height: 100%
+}
+body {        
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;                    
+        height: 100%;
+}
+body,td,th {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 11px;
+	color: #515151;             
+}
+.formularios {
+	font-family: Tahoma, Arial; 
+        color:#838383; 
+        background:#FFFFFF; 
+        border: 1px solid #dadada; 
+        font-size: 8pt;
+}
+.centraliza {
+	text-align: center;
+}
+.select{
+    width: 250px !important;
+}
+.label {
+    text-align: right;
+    width: 100px;
+}
+.conteudo{
+    width: 100%;
+       
+}
+.rodape{
+    bottom: 0px;
+    width: 100%;     
+    position: relative;
+}
+.logoff{
+    float: right;
+    margin-right: 5px;
+    color: white;
+    cursor: pointer;
+}
+.botao {
+    cursor: pointer;
+    color:black !important;
+    height: 25px;
+}
+.botaoMenor {
+    cursor: pointer;
+    color:black !important;       
+}
+.centralizar{
+    margin: 0 auto;    
+}
+.moldura{
+    border: 1px solid lightgrey;
+}
+.foto{
+    padding: 2px;
+    width: 90px;
+    height: 100px;
+}
+.textoFoto{
+    width:450px;
+    overflow:hidden;
+}
+.fonteNome{ 
+    font-family: Tahoma,Geneva,sans-serif;
+    font-size: 28px;
+}
+.fonteEmail{    
+    font-family: Tahoma,Geneva,sans-serif;
+    font-size: 18px;
+}
+.radio{
+    width: 50px !important;
+}
+.divErros{
+    color: red;
+    font-weight: bold;
+    width: 600px;
+}
+.divMsg{
+    color: blue;
+    font-weight: bold;
+    width: 600px;
+}
+.linhaPar{
+    background-color: white;    
+}
+.linhaImpar{
+    background-color: lightblue;
+}
+.tabelaModal{
+    text-align: right;
+}
+.topo{    
+    width: 100%;
+    text-align: center;
+    height: 170px;    
+    padding-left: 20px; 
+}
+.containerTopo{
+    background-image: url('../img/fundo.jpg');
+}
+.menu{
+    height: 40px;
+    background-color: #00A1E5;
+}
+.botaoMenu{
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+.labelPrimeiraColunaModal{
+    width: 65px;
+    text-align: right;
+}
