@@ -12,7 +12,6 @@
 
         <!--MENU-->
         <link href="resources/geral/menu/simple-sidebar.css" rel="stylesheet">
-        <link href="resources/base/css/wrapper.css" rel="stylesheet">
         <!--MENU-->
 
         <!--NOTIFICAÇÕES-->
@@ -39,7 +38,6 @@
     </head>
 
     <body style="zoom: 85%;">
-        
         
         <nav id='barra_superior' style="border-color: #579ce9" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container-fluid">
@@ -72,123 +70,7 @@
                 </div>
             </div> 
         </nav>
-<!--FINAL BARRA SUPERIOR-->
 
-        <div id="wrapper">
-        <div class="overlay"></div>
-    
-        <!-- Sidebar -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-            <ul class="nav sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                       Brand
-                    </a>
-                </li>
-                <li style="border-bottom: solid #e8e8e8 1px;">
-                            <a onclick="" href="#" data-toggle="collapse" data-target="#menu_esquerdo_camarote" class="collapsed">
-                                <span class='icone-menu-esquerdo glyphicon glyphicon-globe' style=''></span>Adm Sistema
-                                <div class="collapse" id="menu_esquerdo_camarote" style="height: 0px;">
-                                    <ul>
-                                        <li style="border-bottom: solid #e8e8e8 1px;">
-                                             <a onclick="" href="#" data-toggle="collapse" data-target="#sub_menu_esquerdo_camarote" class="collapsed">
-                                                 <span class='icone-menu-esquerdo glyphicon glyphicon-import' style=''></span>Parâmetros Gerais
-                                                 <div class="collapse" id="sub_menu_esquerdo_camarote" style="height: 0px;">
-                                                    <ul>
-                                                         <li>
-                                                             <a onclick="adicionarAba('Cadastro de Empresa', 'CAMAROTE_01_01', 'camarote-01-01', 'index.php?m=cadastroempresa&c=cadastroempresacontroller', 'resources/geral/images/cadastroempresa.png')" href="#"><span class='icone-menu-esquerdo glyphicon glyphicon-file' style=''></span>Cadastro Empresa</a>
-                                                         </li>
-                                                         <li>
-                                                             <a onclick="adicionarAba('Cadastro Grupo Empresa', 'CAMAROTE_01_03', 'camarote-01-03', 'index.php?m=cadastrogrupoempresa&c=cadastrogrupoempresacontroller', 'resources/geral/images/grupo.png')" href="#"><span class='icone-menu-esquerdo glyphicon glyphicon-file' style=''></span>Cadastro Grupo Empresa</a>
-                                                         </li>
-                                                         <li>
-                                                             <a onclick="adicionarAba('Cadastro Filial', 'CAMAROTE_01_04', 'camarote-01-04', 'index.php?m=cadastrofilial&c=cadastrofilialcontroller', 'resources/geral/images/filial.jpg')" href="#"><span class='icone-menu-esquerdo glyphicon glyphicon-file' style=''></span>Cadastro Filial</a>
-                                                         </li>
-                                                         <li>
-                                                             <a onclick="adicionarAba('Cadastro Usuario', 'CAMAROTE_01_05', 'camarote-01-05', 'index.php?m=cadastrousuario&c=cadastrousuariocontroller', 'resources/geral/images/usuario.jpg')" href="#"><span class='icone-menu-esquerdo glyphicon glyphicon-file' style=''></span>Cadastro Usuário</a>
-                                                         </li>
-                                                         <li>
-                                                             <a onclick="adicionarAba('Cadastro Fornecedor Cliente', 'CAMAROTE_01_06', 'camarote-01-06', 'index.php?m=cadastrofornecedorcliente&c=cadastrofornecedorclientecontroller', 'resources/geral/images/fornecedor.jpg')" href="#"><span class='icone-menu-esquerdo glyphicon glyphicon-file' style=''></span>Cadastro Fornecedor Cliente</a>
-                                                         </li> 
-                                                    </ul>
-                                                 </div>
-                                             </a>
-                                         </li>
-                                        
-                                    </ul>
-                                </div>
-                            </a>
-                        </li>
-                <li>
-                    <a href="#">Home</a>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Events</a>
-                </li>
-                <li>
-                    <a href="#">Team</a>
-                </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Adm Sistema <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li class="dropdown-header">Dropdown heading</li>
-                    <li><a onclick="adicionarAba('Cadastro de Empresa', 'CAMAROTE_01_01', 'camarote-01-01', 'index.php?m=cadastroempresa&c=cadastroempresacontroller', 'resources/geral/images/cadastroempresa.png')" href="#"><span class='icone-menu-esquerdo glyphicon glyphicon-file' style=''></span>Cadastro Empresa</a></li>
-                    <li><a onclick="adicionarAba('Cadastro Grupo Empresa', 'CAMAROTE_01_03', 'camarote-01-03', 'index.php?m=cadastrogrupoempresa&c=cadastrogrupoempresacontroller', 'resources/geral/images/grupo.png')" href="#"><span class='icone-menu-esquerdo glyphicon glyphicon-file' style=''></span>Cadastro Grupo Empresa</a></li>
-                    <li><a onclick="adicionarAba('Cadastro Filial', 'CAMAROTE_01_04', 'camarote-01-04', 'index.php?m=cadastrofilial&c=cadastrofilialcontroller', 'resources/geral/images/filial.jpg')" href="#"><span class='icone-menu-esquerdo glyphicon glyphicon-file' style=''></span>Cadastro Filial</a></li>
-                    <li><a onclick="adicionarAba('Cadastro Usuario', 'CAMAROTE_01_05', 'camarote-01-05', 'index.php?m=cadastrousuario&c=cadastrousuariocontroller', 'resources/geral/images/usuario.jpg')" href="#"><span class='icone-menu-esquerdo glyphicon glyphicon-file' style=''></span>Cadastro Usuário</a></li>
-                    <li><a onclick="adicionarAba('Cadastro Fornecedor Cliente', 'CAMAROTE_01_06', 'camarote-01-06', 'index.php?m=cadastrofornecedorcliente&c=cadastrofornecedorclientecontroller', 'resources/geral/images/fornecedor.jpg')" href="#"><span class='icone-menu-esquerdo glyphicon glyphicon-file' style=''></span>Cadastro Fornecedor Cliente</a></li>
-                  </ul>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-                <li>
-                    <a href="https://twitter.com/maridlcrmn">Follow me</a>
-                </li>
-            </ul>
-        </nav>
-        <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
-                <span class="hamb-top"></span>
-    			<span class="hamb-middle"></span>
-				<span class="hamb-bottom"></span>
-            </button>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <h1>Fancy Toggle Sidebar Navigation</h1>
-                        <p>Bacon ipsum dolor sit amet tri-tip shoulder tenderloin shankle. Bresaola tail pancetta ball tip doner meatloaf corned beef. Kevin pastrami tri-tip prosciutto ham hock pork belly bacon pork loin salami pork chop shank corned beef tenderloin meatball cow. Pork bresaola meatloaf tongue, landjaeger tail andouille strip steak tenderloin sausage chicken tri-tip. Pastrami tri-tip kielbasa sausage porchetta pig sirloin boudin rump meatball andouille chuck tenderloin biltong shank </p>
-                        <p>Pig meatloaf bresaola, spare ribs venison short loin rump pork loin drumstick jowl meatball brisket. Landjaeger chicken fatback pork loin doner sirloin cow short ribs hamburger shoulder salami pastrami. Pork swine beef ribs t-bone flank filet mignon, ground round tongue. Tri-tip cow turducken shank beef shoulder bresaola tongue flank leberkas ball tip.</p>
-                        <p>Filet mignon brisket pancetta fatback short ribs short loin prosciutto jowl turducken biltong kevin pork chop pork beef ribs bresaola. Tongue beef ribs pastrami boudin. Chicken bresaola kielbasa strip steak biltong. Corned beef pork loin cow pig short ribs boudin bacon pork belly chicken andouille. Filet mignon flank turkey tongue. Turkey ball tip kielbasa pastrami flank tri-tip t-bone kevin landjaeger capicola tail fatback pork loin beef jerky.</p>
-                        <p>Chicken ham hock shankle, strip steak ground round meatball pork belly jowl pancetta sausage spare ribs. Pork loin cow salami pork belly. Tri-tip pork loin sausage jerky prosciutto t-bone bresaola frankfurter sirloin pork chop ribeye corned beef chuck. Short loin hamburger tenderloin, landjaeger venison porchetta strip steak turducken pancetta beef cow leberkas sausage beef ribs. Shoulder ham jerky kielbasa. Pig doner short loin pork chop. Short ribs frankfurter rump meatloaf.</p>
-                        <p>Filet mignon biltong chuck pork belly, corned beef ground round ribeye short loin rump swine. Hamburger drumstick turkey, shank rump biltong pork loin jowl sausage chicken. Rump pork belly fatback ball tip swine doner pig. Salami jerky cow, boudin pork chop sausage tongue andouille turkey.</p>                         
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /#page-content-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
-
-
-
-
-
-
-
-
-
-<!--WRAPPER ATUAL-->
         <div id="wrapper" style='padding-top: 20px;' >
 
             <!--LISTA DE PROGRAMAS-->
