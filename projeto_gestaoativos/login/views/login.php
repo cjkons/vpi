@@ -32,7 +32,7 @@ document.documentElement.className = document.documentElement.className.replace(
 if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required":["resources/login/scripts/museutils.js", "resources/login/scripts/museconfig.js", "resources/login/scripts/jquery.musepolyfill.bgsize.js", "resources/login/scripts/jquery.watch.js", "resources/login/scripts/jquery.museresponsive.js", "resources/login/scripts/require.js", "resources/login/scripts/index.css"], "outOfDate":[]};
 </script>
    
-  <title>Home</title>
+  <title>VPI Tecnologia - Clarify GA</title>
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="resources/login/css/site_global.css?crc=3936898828"/>
   <link rel="stylesheet" type="text/css" href="resources/login/css/index.css?crc=4153243950" id="pagesheet"/>
@@ -47,7 +47,7 @@ if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required
    try {Typekit.load();} catch(e) {}
 </script>
    </head>
- <body class="museBGSize">
+   <body style="zoom: 85%;" class="museBGSize">
      
      <input type="hidden" id="url" value="<?= isset($url) ? $url : "index.php?m=login" ?>" />
 
@@ -61,7 +61,7 @@ if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required
     </div>
     <div class="clearfix colelem" id="pu269"><!-- group -->
      <div class="clip_frame grpelem" id="u269"><!-- svg -->
-      <img class="svg svg_mar temp_no_img_src" id="u265" data-orig-src="resources/login/images/interface1asset-2login.svg?crc=459680531" onload="this.style.height=(this.offsetWidth*530.8072916666666/374)+'px'" alt="" data-mu-svgfallback="resources/login/images/interface1asset%202login_poster_.png?crc=325940621" data-image-width="374" data-image-height="531" src="resources/login/images/interface1asset%202login_poster_.png?crc=325940621"/>
+      <img class="svg svg_mar temp_no_img_src" id="u265" data-orig-src="resources/login/images/interface1asset-2login.svg?crc=459680531" onload="this.style.height=(this.offsetWidth*530.8072916666666/374)+'px'" alt="" data-mu-svgfallback="resources/login/images/interface1asset%202login_poster_.png?crc=325940621" data-image-width="374" data-image-height="531" src="resources/login/images/interface1asset-2login.svg?crc=459680531"/>
      </div>
      <div class="clearfix grpelem shared_content" id="u276-4" data-content-guid="u276-4_content"><!-- content -->
       <p id="u276-2">Copyright 2017. All Rights Reserved.</p>

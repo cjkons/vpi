@@ -1,13 +1,13 @@
 /////////////////////////////////////////////
-//VPI GESTAO                           //
-//Login - Versão 1.01                    ///  
-//Desenvolvido por Matheus Jaschke       //  
-//Janeiro de 2016                        //   
-//////////////////////////////////////////
+//CLARIFY - Gestão de Ativos               //
+//Login - Versão 1.00                      //  
+//Desenvolvido por Heitor Siqueira         //  
+//Junho de 2017                            //   
+/////////////////////////////////////////////
 var global_url;
 
 function logar() {
-    
+     
     
 
     var username = document.getElementById('u251-2').value;
@@ -17,7 +17,7 @@ function logar() {
     if (username.trim() == "") {
         mensagem('Atenção', 'Insira seu usuário', 'alert')
         return false
-    }
+    } 
 
     if (password.trim() == "") {
         mensagem('Atenção', 'Insira seu senha', 'alert')
@@ -42,21 +42,21 @@ function logar() {
             
          
             if (data == 1) {
-                $("#btnEntrar").html("<span class='fa fa-thumbs-up'></span> Credenciais Aprovadas");
-                $("#btnEntrar").attr('disabled', 'disabled');
+                $("#u259-4").html("<span class='fa fa-thumbs-up'></span> Credenciais Aprovadas");
+                $("#u259-4").attr('disabled', 'disabled');
                 var url = $('#url').val() == "" ? "http://localhost/index.php?m=base" : $('#url').val();
                 global_url = url;
                 window.location = global_url;
             } else {
                 mensagem('Atenção', 'A senha está incorreta', 'error');
-                $("#btnEntrar").html("<i class='fa fa-location-arrow'></i> Entrar");
-                $("#btnEntrar").removeAttr('disabled');
+                $("#u259-4").html("<i class='fa fa-location-arrow'></i> Entrar");
+                $("#u259-4").removeAttr('disabled');
             }
         },
         error: function (data) {
             alertify.error("Houve um problema ao verificar as suas credenciais");
-            $("#btnEntrar").html("<i class='fa fa-location-arrow'></i> Entrar");
-            $("#btnEntrar").removeAttr('disabled');
+            $("#u259-4").html("<i class='fa fa-location-arrow'></i> Entrar");
+            $("#u259-4").removeAttr('disabled');
         }
     });
 }

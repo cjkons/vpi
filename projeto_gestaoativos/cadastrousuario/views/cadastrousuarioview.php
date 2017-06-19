@@ -8,7 +8,7 @@
         <script src="resources/geral/progress-bar/pace.min.js"></script>
         <link href="resources/geral/progress-bar/dataurl.css" rel="stylesheet">
         <!--PROGRESS BAR-->
- 
+
         <!--JQUERY 1.11-->
         <link href="resources/geral/jquery/jquery-ui-1.11.2/jquery-ui.min.css" rel="stylesheet">
         <script src="resources/geral/jquery/jquery-1.11.1.min.js"></script>
@@ -49,11 +49,11 @@
         <!--GERAL-->
 
         <!-- CADASTRO EVENTO -->
-        <script src="resources/cadastrochecklist/js/cadastrochecklist.js"></script>
+        <script src="resources/cadastrousuario/js/cadastrousuario.js"></script>
         <!-- CADASTRO EVENTO -->
     </head>
 
-    <body style="zoom: 85%;">
+    <body>
            <nav class="navbart">
             <div class="container-fluid" align="center">
 
@@ -84,95 +84,132 @@
                 <a onclick="buscaUltimoRegistro()" class="btn btn-info">
                     <span class="glyphicon glyphicon-fast-forward"></span> 
                 </a>
+                <a href="#" class="btn btn-info">
+                    <span class="glyphicon glyphicon-print"></span> Imprimir
+                </a>
+                <a href="#" class="btn btn-info">
+                    <span class="glyphicon glyphicon-share"></span> Exportar
+                </a>
                  <a onclick="atualizar()" class="btn btn-info">
                     <span class="glyphicon glyphicon glyphicon-refresh"></span> Atualizar
                 </a>        
-                
+                <a href="#" class="btn btn-info">
+                    <span class="glyphicon glyphicon-question-sign"></span> Ajuda
+                </a>
               
              
 
             </div>
         </nav>
-         <br>       
-        <table style="width: 50%;" cellpadding="0" cellspacing="5px" align="center" >
-            <tr>
-                <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
-                    <div class="form">
-                        ID
-                        <input type="text" class="form-control" id="idCheckList"   placeholder="ID" readonly>
+        <table style="width: 80%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
+             <tr>
+                <td  style="padding-right: 5px;font-size: 14px;">
+                    <div class="form-group">
+                        <font size="2">Identificação</font>
+                        <input type="number" class="form-control" id="idUsuario"   placeholder="Identificação usuario" readonly>
                     </div>
                 </td>
-                <td  style="width: 40%; padding-right: 5px;font-size: 14px;">
-                    <div class="form">
-                        Checklist
-                        <input type="text" class="form-control" id="checkList"   placeholder="Checklist" maxlength="70" readonly>
+                <td  style="padding-right: 5px;font-size: 14px;">
+                    <div class="form-group">
+                        <font size="2">Nome</font>
+                        <input type="text" class="form-control" id="nomeUsuario"   placeholder="Nome" readonly>
                     </div>
                 </td>
-                
+                <td  style="padding-right: 5px;font-size: 14px;">
+                    <div class="form-group">
+                        <font size="2">Sobrenome</font>
+                        <input type="text" class="form-control" id="sobrenomeUsuario"   placeholder="Identificação usuario" readonly>
+                    </div>
+                </td>
+
             </tr>
-        </table>
-        <br><br><br>
-        <table id="tabelaPreco" style="width: 80%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
-                <tr>
-                    <td  style ="padding-right: 3px; text-align: center;  font-size: 14px;">
-                        <div class="form">           
-                            <br>
-                         <button  type="button" class="btn btn-info  glyphicon glyphicon-plus" onclick="plusTabelaPrecos()" ></button>
-                        </div>
-                    </td>
-                    
-                    <td  style="padding-right: 5px;font-size: 14px;">
-                    <div class="form">
-                        <input type="hidden" class="form-control" id="idCheckListDesc"   placeholder="ID" readonly>
+            <tr>
+                <td  style="padding-right: 5px;font-size: 14px;">
+                    <div class="form-group">
+                        <font size="2">Email</font>
+                        <input type="email" class="form-control" id="emailUsuario" placeholder="nome.sobrenome@empresa.com.br" readonly>
                     </div>
                 </td>
-                    
-                    
-                    <td  style="padding-right: 5px;font-size: 14px;">
-                          
-                        <div class="form">
-                             Descrição
-                             <input type="text" class="form-control" id="descricao"   placeholder="Descrição" maxlength="180" readonly>
-                    </td>
-                    <td  style="padding-right: 5px;font-size: 14px;">
-                        <div class="form">
-                            Níveis Grupo
-                            <input type="number" class="form-control" id="grupo"   placeholder="Níveis Grupo" readonly>
-                        </div>
-                    </td>
-                    <td  style="padding-right: 5px;font-size: 14px;">
-                        <div class="form">
-                            Subgrupo
-                            <input type="number" class="form-control" id="subGrupo"    placeholder="Subgrupo" onchange='salvar()' readonly>
-                        </div>
-                    </td>
-                    
-                    <td  style='padding-right: 5px; text-align: center; font-size: 14px;'>
-                        <div class='form' >
-                            <br>
-                            <button type='button' style='background-color: red;' class='btn btn-info  glyphicon glyphicon-remove' onclick='#' ></button>
-                        </div>
-                    </td>
-                    <td  style='padding-right: 5px; text-align: center; font-size: 14px;'>
-                        <div class='form' >
-                            <br>
-                            <button type='button' style='background-color: red;' class='btn btn-info  glyphicon glyphicon-floppy-disk' onclick='salvarDescricao(1)' ></button>
-                        </div>
-                    </td>
-                    <td>
-                        
-                    </td>
-                    
-                </tr>
+                <td  style="padding-right: 5px;font-size: 14px;">
+                    <div class="form-group">
+                        <font size="2">Empresa</font>
+                        <select  id="empresaUsuario" class="form-control"  readonly></select>
+                     </div>
+                </td>
+                <td  style="padding-right: 10px;font-size: 14px;">
+                    <div class="form-group">
+                        <input type="checkbox" id="ativoUsuario" name="ativoUsuario" disabled="true"/>
+                        <font size="2">Ativo</font>
+                    </div>
+                </td>
+
+            </tr>
+             <tr>
+                <td  style="padding-right: 5px;font-size: 14px;">
+                    <div class="form-group">
+                        <font size="2">Data de Nascimento</font>
+                        <input type="text" class="calendario form-control" id="dataNascimento" maxlength="10" readonly>
+                    </div>
+                </td>
+                <td  style="padding-right: 5px;font-size: 14px;">
+                    <div class="form-group">
+                        <font size="2">Matrícula</font>
+                        <input type="" class="form-control" id="matricula"  placeholder="Matricula" readonly>
+                    </div>
+                </td>
+                <td  style="padding-right: 5px;font-size: 14px;">
+                    <div class="form-group">
+                        <font size="2">Cargo</font>
+                        <input type="" class="form-control" id="cargo"  placeholder="Cargo" readonly>
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td  style="padding-right: 10px;font-size: 14px;">
+                    <div class="form-group">
+                        <font size="2">Login</font>  
+                        <input type="text" class="form-control" id="loginUsuario"   placeholder="Login" readonly>
+
+                    </div>
+                </td>
+                <td  style="padding-right: 10px;font-size: 14px;">
+                    <div class="form-group">
+                        <font size="2">Senha</font>
+                        <input type="password" class="form-control" id="senhaUsuario"   placeholder="Senha" readonly>
+                    </div>
+                </td>
+                <td style="padding-right: 10px;font-size: 14px;">
+                    <div class="form-group">
+                        <font size="2">Confirmação de Senha</font>
+                          <input type="password" class="form-control" id="confirmacaoUsuarioSenha"   placeholder="Senha" readonly>
+                    </div>
+                </td>
+
+            </tr>  
+             
+           
         </table>
-        <table id="tabelaPreco2" style="width: 80%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" ></table>
-
-
-
-        
        
            <br><br>
-           
+           <div style='width: 100%; overflow-x: hidden'>
+                <table id="grid" class="display" cellspacing="0" width="100%">
+                      <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Sobrenome</th>
+                            <th>E-Mail</th>
+                            <th>Empresa</th>
+                            <th>Ativo</th>
+                            <th>Login</th>
+                            <th>Data Nascimento</th>
+                            <th>Cargo</th>
+                            <th>Selecionar</th>
+                          </tr>
+                      </thead>
+                  </table>
+            </div>       
              
            
        
