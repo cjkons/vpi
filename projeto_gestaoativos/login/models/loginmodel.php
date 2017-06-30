@@ -21,7 +21,7 @@ class LoginModel extends CI_Model {
 
         $this->initConBanco();
 
-        $query = "SELECT ID, NOME, SOBRENOME, LOGIN, SENHA, EMAIL FROM CADASTRO_USUARIO WHERE LOGIN = '$login' AND IES_ATIVO = 'S'  ";
+        $query = "SELECT ID, NOME, SOBRENOME, LOGIN, SENHA, EMAIL FROM GA_CADASTRO_USUARIO WHERE LOGIN = '$login' AND IES_ATIVO = 'S'  ";
 
         $cs = $this->conBanco->query($query);
 		
@@ -62,7 +62,7 @@ class LoginModel extends CI_Model {
 
 		
         $idUsuario = $rs[0]->ID;
-        $query = "SELECT * FROM USUARIO_PROGRAMA WHERE ID_USUARIO = $idUsuario AND IES_ULTIMA_VERSAO = 'S' AND IS_PERMITIDO = 'S'";
+        $query = "SELECT * FROM GA_USUARIO_PROGRAMA WHERE ID_USUARIO = $idUsuario AND IES_ULTIMA_VERSAO = 'S' AND IS_PERMITIDO = 'S'";
 		
 		
         $cs = $this->conBanco->query($query);

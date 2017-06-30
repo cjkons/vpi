@@ -53,47 +53,47 @@
         <!-- CADASTRO EVENTO -->
     </head>
 
-    <body>
+    <body style="zoom: 85%;">
            <nav class="navbart">
             <div class="container-fluid" align="center">
 
-                <a onclick="novo()" class="btn btn-info">
+                <a onclick="novo()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-file"></span>  Novo 
                 </a>
-                <a onclick="salvar()" class="btn btn-info">
+                <a onclick="salvar()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
                 </a>
-                <a onclick="editar()" class="btn btn-info">
+                <a onclick="editar()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-pencil"></span> Editar
                 </a>
-                <a onclick="pesquisar()"class="btn btn-info" ata-toggle="modal" data-target="#myModal">
+                <a onclick="pesquisar()"class="btn btn-primary" ata-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-search"></span> Pesquisar
                 </a>
-                <a onclick="excluir()" class="btn btn-info">
+                <a onclick="excluir()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-trash"></span> Excluir
                 </a>
-                <a onclick="buscaPrimeiroRegistro()"  class="btn btn-info">
+                <a onclick="buscaPrimeiroRegistro()"  class="btn btn-primary">
                     <span class="glyphicon glyphicon-fast-backward"></span> 
                 </a>
-                <a onclick="buscaRegistroAnterior()" class="btn btn-info">
+                <a onclick="buscaRegistroAnterior()" class="btn btn-primary">
                     <span class="glyphicon glyphicon glyphicon-backward"></span> 
                 </a>
-                <a onclick="buscaRegistroProximo()"class="btn btn-info">
+                <a onclick="buscaRegistroProximo()"class="btn btn-primary">
                     <span class="glyphicon glyphicon-forward"></span> 
                 </a>
-                <a onclick="buscaUltimoRegistro()" class="btn btn-info">
+                <a onclick="buscaUltimoRegistro()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-fast-forward"></span> 
                 </a>
-                <a href="#" class="btn btn-info">
+                <a href="#" class="btn btn-primary">
                     <span class="glyphicon glyphicon-print"></span> Imprimir
                 </a>
-                <a href="#" class="btn btn-info">
+                <a href="#" class="btn btn-primary">
                     <span class="glyphicon glyphicon-share"></span> Exportar
                 </a>
-                 <a onclick="atualizar()" class="btn btn-info">
+                 <a onclick="atualizar()" class="btn btn-primary">
                     <span class="glyphicon glyphicon glyphicon-refresh"></span> Atualizar
                 </a>        
-                <a href="#" class="btn btn-info">
+                <a href="#" class="btn btn-primary">
                     <span class="glyphicon glyphicon-question-sign"></span> Ajuda
                 </a>
               
@@ -103,19 +103,19 @@
         </nav>
         <table style="width: 80%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
              <tr>
-                <td  style="padding-right: 5px;font-size: 14px;">
+                <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
                         <font size="2">Identificação</font>
                         <input type="number" class="form-control" id="idUsuario"   placeholder="Identificação usuario" readonly>
                     </div>
                 </td>
-                <td  style="padding-right: 5px;font-size: 14px;">
+                <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
                         <font size="2">Nome</font>
                         <input type="text" class="form-control" id="nomeUsuario"   placeholder="Nome" readonly>
                     </div>
                 </td>
-                <td  style="padding-right: 5px;font-size: 14px;">
+                <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
                         <font size="2">Sobrenome</font>
                         <input type="text" class="form-control" id="sobrenomeUsuario"   placeholder="Identificação usuario" readonly>
@@ -124,13 +124,13 @@
 
             </tr>
             <tr>
-                <td  style="padding-right: 5px;font-size: 14px;">
+                <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
                         <font size="2">Email</font>
                         <input type="email" class="form-control" id="emailUsuario" placeholder="nome.sobrenome@empresa.com.br" readonly>
                     </div>
                 </td>
-                <td  style="padding-right: 5px;font-size: 14px;">
+                <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
                         <font size="2">Empresa</font>
                         <select  id="empresaUsuario" class="form-control"  readonly></select>
@@ -145,19 +145,19 @@
 
             </tr>
              <tr>
-                <td  style="padding-right: 5px;font-size: 14px;">
+                <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
                         <font size="2">Data de Nascimento</font>
                         <input type="text" class="calendario form-control" id="dataNascimento" maxlength="10" readonly>
                     </div>
                 </td>
-                <td  style="padding-right: 5px;font-size: 14px;">
+                <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
                         <font size="2">Matrícula</font>
                         <input type="" class="form-control" id="matricula"  placeholder="Matricula" readonly>
                     </div>
                 </td>
-                <td  style="padding-right: 5px;font-size: 14px;">
+                <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
                         <font size="2">Cargo</font>
                         <input type="" class="form-control" id="cargo"  placeholder="Cargo" readonly>
@@ -192,7 +192,7 @@
         </table>
        
            <br><br>
-           <div style='width: 100%; overflow-x: hidden'>
+           <div style='width: 99%; margin-left: 7px; margin-right: 4px; overflow-x: hidden'>
                 <table id="grid" class="display" cellspacing="0" width="100%">
                       <thead>
                           <tr>

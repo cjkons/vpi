@@ -580,13 +580,13 @@ class cadastrochecklistmodel extends CI_Model {
            //print_r($valorSequencia); exit();
             
             $html .="<tr style='width: 80%; border-collapse: collapse' cellpadding='0' cellspacing='5px' align='center'>
-                    <td  style='padding-right: 3px;font-size: 14px;'><div class='form'><button type='button' class='btn btn-info  glyphicon glyphicon-plus' onclick='plusTabelaPrecos()'  onchange='carregarCodItemId($i) onblur='desabilitarBox('comboDispositivo')'</button></div></td>
+                    <td  style='padding-right: 3px;font-size: 14px;'><div class='form'><button type='button' class='btn btn-primary  glyphicon glyphicon-plus' onclick='plusTabelaPrecos()'  onchange='carregarCodItemId($i) onblur='desabilitarBox('comboDispositivo')'</button></div></td>
                     <td  style='padding-right: 5px;font-size: 14px;'><div class='form'><input size='8px' type='hidden' class='form-control' id='$idCheckListDesc' value='$valorIdCheckListDesc'  placeholder='ID' readonly></div></td>   
-                    <td  style='padding-right: 5px;font-size: 14px;'><div class='form'><input type='text' class='form-control' id='$descricao'  value='$valorDescricao'   placeholder='Descrição' readonly></div></td>
-                    <td  style='padding-right: 5px;font-size: 14px;'><div class='form'><input type='number' class='form-control' id='$grupo' value='$valorGrupo'  placeholder='Grupo' readonly></div></td>
-                    <td  style='padding-right: 5px;font-size: 14px;'><div class='form'><input type='number' class='form-control' id='$subGrupo'  value='$valorSubgrupo'   onchange = 'salvarDescricao($i)' placeholder='Subgrupo' readonly></div></td>
-                    <td  style='padding-right: 5px;font-size: 14px;'><div class='form'><button type='button' style='background-color: red;' class='btn btn-info  glyphicon glyphicon-remove' onclick='removerTr(this, $valorIdCheckListDesc)'></button></div></td>
-                    <td  style='padding-right: 5px;font-size: 14px;'><div class='form'><button type='button'  class='btn btn-info  glyphicon glyphicon-floppy-disk' onclick='salvarDescricao($i)'></button></div></td>
+                    <td  style='padding-right: 10px;font-size: 14px;'><div class='form'><input type='text' class='form-control' id='$descricao'  value='$valorDescricao'   placeholder='Descrição' readonly></div></td>
+                    <td  style='padding-right: 10px;font-size: 14px;'><div class='form'><input type='number' class='form-control' id='$grupo' value='$valorGrupo'  placeholder='Grupo' readonly></div></td>
+                    <td  style='padding-right: 10px;font-size: 14px;'><div class='form'><input type='number' class='form-control' id='$subGrupo'  value='$valorSubgrupo'   onchange = 'salvarDescricao($i)' placeholder='Subgrupo' readonly></div></td>
+                    <td  style='padding-right: 5px;font-size: 14px;'><div class='form'><button type='button' style='background-color: red;' class='btn btn-primary  glyphicon glyphicon-remove' onclick='removerTr(this, $valorIdCheckListDesc)'></button></div></td>
+                    <td  style='padding-right: 5px;font-size: 14px;'><div class='form'><button type='button'  class='btn btn-primary  glyphicon glyphicon-floppy-disk' onclick='salvarDescricao($i)'></button></div></td>
                </tr>";
         
         }    

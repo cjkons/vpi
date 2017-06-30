@@ -33,7 +33,7 @@ class basemodel extends CI_Model {
         $usuario = $this->getUsuarioLogado();
         $idUsuarioLogado = $usuario->ID;
 
-        $query = "SELECT COUNT(*) AS TOTAL FROM DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' AND ID_CONTEUDO = '$idConteudo'";
+        $query = "SELECT COUNT(*) AS TOTAL FROM GA_DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' AND ID_CONTEUDO = '$idConteudo'";
         $consulta = $this->conBanco->query($query);
 
         $rs = $consulta->result();
@@ -52,7 +52,7 @@ class basemodel extends CI_Model {
 
         $this->initConBanco();
 
-        $query = "SELECT COUNT(*) AS TOTAL FROM DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' AND NOME_ABA = '$nomeAba' AND NOME_PROGRAMA = '$nomePrograma' AND ID_CONTEUDO = '$idConteudo' AND CONTROLLER_CHAMADO = '$controllerChamado'";
+        $query = "SELECT COUNT(*) AS TOTAL FROM GA_DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' AND NOME_ABA = '$nomeAba' AND NOME_PROGRAMA = '$nomePrograma' AND ID_CONTEUDO = '$idConteudo' AND CONTROLLER_CHAMADO = '$controllerChamado'";
         $consulta = $this->conBanco->query($query);
 
         $rs = $consulta->result();
@@ -60,19 +60,19 @@ class basemodel extends CI_Model {
         if ($rs[0]->TOTAL == 0) {
             // insere
             //pega o ultimo ID inserido
-            $query = "SELECT MAX(ID) AS MAXIMO FROM DESKTOP";
+            $query = "SELECT MAX(ID) AS MAXIMO FROM GA_DESKTOP";
             $consulta = $this->conBanco->query($query);
             $rs = $consulta->result();
 
             $novoId = $rs[0]->MAXIMO + 1;
 
-            $query = "INSERT INTO DESKTOP (ID, ID_USUARIO, NOME_ABA, NOME_PROGRAMA, ID_CONTEUDO, CONTROLLER_CHAMADO, ENDERECO_ICONE) VALUES('$novoId','$idUsuarioLogado','$nomeAba','$nomePrograma','$idConteudo','$controllerChamado','$enderecoIcone')";
+            $query = "INSERT INTO GA_DESKTOP (ID, ID_USUARIO, NOME_ABA, NOME_PROGRAMA, ID_CONTEUDO, CONTROLLER_CHAMADO, ENDERECO_ICONE) VALUES('$novoId','$idUsuarioLogado','$nomeAba','$nomePrograma','$idConteudo','$controllerChamado','$enderecoIcone')";
             $this->conBanco->query($query);
             // retorna que inseriu
             return true;
         } else {
             // deleta
-            $query = "DELETE FROM DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' AND NOME_ABA = '$nomeAba' AND NOME_PROGRAMA = '$nomePrograma' AND ID_CONTEUDO = '$idConteudo' AND CONTROLLER_CHAMADO = '$controllerChamado'";
+            $query = "DELETE FROM GA_DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' AND NOME_ABA = '$nomeAba' AND NOME_PROGRAMA = '$nomePrograma' AND ID_CONTEUDO = '$idConteudo' AND CONTROLLER_CHAMADO = '$controllerChamado'";
             $this->conBanco->query($query);
             //retorna que apagou
             return false;
@@ -106,7 +106,7 @@ class basemodel extends CI_Model {
 
         $this->initConBanco();
 
-        $query = "SELECT COUNT(*) AS TOTAL FROM DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' AND NOME_ABA = '$nomeAba' AND NOME_PROGRAMA = '$nomePrograma' AND ID_CONTEUDO = '$idConteudo' AND CONTROLLER_CHAMADO = '$controllerChamado'";
+        $query = "SELECT COUNT(*) AS TOTAL FROM GA_DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' AND NOME_ABA = '$nomeAba' AND NOME_PROGRAMA = '$nomePrograma' AND ID_CONTEUDO = '$idConteudo' AND CONTROLLER_CHAMADO = '$controllerChamado'";
         $consulta = $this->conBanco->query($query);
 
         $rs = $consulta->result();
@@ -114,19 +114,19 @@ class basemodel extends CI_Model {
         if ($rs[0]->TOTAL == 0) {
             // insere
             //pega o ultimo ID inserido
-            $query = "SELECT MAX(ID) AS MAXIMO FROM DESKTOP";
+            $query = "SELECT MAX(ID) AS MAXIMO FROM GA_DESKTOP";
             $consulta = $this->conBanco->query($query);
             $rs = $consulta->result();
 
             $novoId = $rs[0]->MAXIMO + 1;
 
-            $query = "INSERT INTO DESKTOP (ID, ID_USUARIO, NOME_ABA, NOME_PROGRAMA, ID_CONTEUDO, CONTROLLER_CHAMADO, ENDERECO_ICONE) VALUES('$novoId','$idUsuarioLogado','$nomeAba','$nomePrograma','$idConteudo','$controllerChamado','$enderecoIcone')";
+            $query = "INSERT INTO GA_DESKTOP (ID, ID_USUARIO, NOME_ABA, NOME_PROGRAMA, ID_CONTEUDO, CONTROLLER_CHAMADO, ENDERECO_ICONE) VALUES('$novoId','$idUsuarioLogado','$nomeAba','$nomePrograma','$idConteudo','$controllerChamado','$enderecoIcone')";
             $this->conBanco->query($query);
             // retorna que inseriu
             return 'adicionou';
         } else {
             // deleta
-            $query = "DELETE FROM DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' AND NOME_ABA = '$nomeAba' AND NOME_PROGRAMA = '$nomePrograma' AND ID_CONTEUDO = '$idConteudo' AND CONTROLLER_CHAMADO = '$controllerChamado'";
+            $query = "DELETE FROM GA_DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' AND NOME_ABA = '$nomeAba' AND NOME_PROGRAMA = '$nomePrograma' AND ID_CONTEUDO = '$idConteudo' AND CONTROLLER_CHAMADO = '$controllerChamado'";
             $this->conBanco->query($query);
             //retorna que apagou
             return 'retirou';
@@ -140,7 +140,7 @@ class basemodel extends CI_Model {
         $usuario = $this->getUsuarioLogado();
         $idUsuarioLogado = $usuario->ID;
 
-        $query = "SELECT COUNT(*) AS TOTAL FROM DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' AND NOME_ABA = '$nomeAba' AND NOME_PROGRAMA = '$nomePrograma' AND ID_CONTEUDO = '$idConteudo' AND CONTROLLER_CHAMADO = '$controllerChamado'";
+        $query = "SELECT COUNT(*) AS TOTAL FROM GA_DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' AND NOME_ABA = '$nomeAba' AND NOME_PROGRAMA = '$nomePrograma' AND ID_CONTEUDO = '$idConteudo' AND CONTROLLER_CHAMADO = '$controllerChamado'";
         $consulta = $this->conBanco->query($query);
 
         $rs = $consulta->result();
@@ -159,7 +159,7 @@ class basemodel extends CI_Model {
         $usuario = $this->getUsuarioLogado();
         $idUsuarioLogado = $usuario->ID;
 
-        $query = "SELECT * FROM DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' ORDER BY ID";
+        $query = "SELECT * FROM GA_DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' ORDER BY ID";
         
         //print_r($query);exit();
         
@@ -177,7 +177,8 @@ class basemodel extends CI_Model {
         $usuario = $this->getUsuarioLogado();
         $idUsuarioLogado = $usuario->ID;
 
-        $query = "DELETE FROM DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' AND NOME_ABA = '$nomeAba'";
+        $query = "DELETE FROM GA_DESKTOP WHERE ID_USUARIO = '$idUsuarioLogado' AND NOME_ABA = '$nomeAba'";
+        //print_r($query); exit();
         return $this->conBanco->query($query);
     }
 
@@ -192,7 +193,7 @@ class basemodel extends CI_Model {
         
         
 
-        $query = "UPDATE DESKTOP SET X = '$x', Y = '$y' WHERE NOME_ABA = '$nomeAba' AND ID_USUARIO = '$idUsuarioLogado'";
+        $query = "UPDATE GA_DESKTOP SET X = '$x', Y = '$y' WHERE NOME_ABA = '$nomeAba' AND ID_USUARIO = '$idUsuarioLogado'";
         //print_r($query);
         return $this->conBanco->query($query);
     }
@@ -277,7 +278,7 @@ class basemodel extends CI_Model {
 
         $idUsuarioLogado = $this->getUsuarioLogado()->ID;
 
-        $query = "SELECT ID_EMPRESA FROM CADASTRO_USUARIO WHERE ID = $idUsuarioLogado";
+        $query = "SELECT ID_EMPRESA FROM GA_CADASTRO_USUARIO WHERE ID = $idUsuarioLogado";
 
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
@@ -286,7 +287,7 @@ class basemodel extends CI_Model {
 
 //**********************************************************************
 
-        $query = "SELECT * FROM CADASTRO_USUARIO T1
+        $query = "SELECT * FROM GA_CADASTRO_USUARIO T1
                 LEFT JOIN USUARIO_CHAT_STATUS T2 ON (T2.ID_USUARIO = T1.ID)
                 WHERE 
                 T1.IES_ATIVO = 'S'

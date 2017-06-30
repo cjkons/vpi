@@ -168,5 +168,14 @@ class basecontroller extends CI_Controller {
 
         echo json_encode($retorno);
     }
+    
+    public function removerFavorito() {
+
+        $nomeAba = $this->input->POST('nomeAba');
+
+        $this->load->model('basemodel');
+        
+        echo json_encode($this->basemodel->removerFavorito($nomeAba));
+    }
 
 }

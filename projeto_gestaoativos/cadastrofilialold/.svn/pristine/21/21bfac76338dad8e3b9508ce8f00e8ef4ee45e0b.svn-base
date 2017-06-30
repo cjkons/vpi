@@ -1,0 +1,38 @@
+<?php
+class LoginHook extends CI_Controller{
+    function index(){
+        $this->isLogado();
+    }
+    function isLogado(){
+        
+        $modulo = $this->input->get('m');
+        
+        $controller = $this->input->get('c');
+        
+        $function  = $this->input->get('f');
+        
+        $this->load->library('session');
+        
+        $usuario = $this->session->userdata('usuario');
+        
+        if(!empty($usuario)){
+            
+            return true;
+            
+        }else{
+
+            $this->load->helper('url');
+
+            $link = "";
+            $link .= !empty($modulo) ? "m=$modulo" : "";
+            $link .= !empty($controller) ? "c=$controller" : "";
+            $link .= !empty($function) ? "f=$function" : "";
+            
+            $url = base64_encode($link);
+            
+            redirect("m=login&u=$url");  
+            
+        }
+    }
+}
+?>

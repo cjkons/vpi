@@ -620,7 +620,7 @@ function carregaIcones() {
                             <div>\n\
                                 <img src='" + enderecoIcone.trim() + "' style='width:64px; height: 64px;' title='" + nomeAba.trim() + "'/>\n\
                             </div>\n\
-                            <div class='arredondaDiv'  id='nomeAba" + nomeIcone.trim() + "'  style='text-align : center ; background-color: #FFFFFF'>" + nomeAba.trim() + "</div>\n\
+                            <div class='arredondaDiv'  id='nomeAba" + nomeIcone.trim() + "'  style='margin-left: -20px;margin-top: 5px; text-align : center ; background-color: transparent;'>" + nomeAba.trim() + "</div>\n\
                             </div>\n\
                         </td>\n\
                         <td style='vertical-align: top;'>\n\
@@ -718,6 +718,8 @@ function removerIcone(idIcone, nomeAba) {
         success: function (retorno) {
             if (retorno == false) {
                 alert('Problema ao remover ícone :(');
+            }else{
+                alert('Icone removido :)');
             }
         },
         error: function () {

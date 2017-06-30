@@ -1,0 +1,17 @@
+<?php
+class LoginHook extends CI_Controller{
+    function index(){
+        $this->isLogado();
+    }
+    function isLogado(){
+        
+       /*$this->load->model('LoginModel');
+       
+       if(!$this->LoginModel->isLogado()){
+          // $this->load->helper('url');
+           //redirect('login');
+           return false;
+       }*/
+    }
+}
+?>
