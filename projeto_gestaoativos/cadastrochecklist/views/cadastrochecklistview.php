@@ -47,6 +47,9 @@
         <link href="resources/geral/resetarScrollBar.css" rel="stylesheet">
         <script src="resources/geral/geral.js"></script>
         <!--GERAL-->
+        
+       
+        <link href="resources/cadastrochecklist/responsive/campos.css" rel="stylesheet">
 
         <!-- CADASTRO EVENTO -->
         <script src="resources/cadastrochecklist/js/cadastrochecklist.js"></script>
@@ -57,34 +60,34 @@
            <nav class="navbart">
             <div class="container-fluid" align="center">
 
-                <a onclick="novo()" class="btn btn-info">
+                <a onclick="novo()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-file"></span>  Novo 
                 </a>
-                <a onclick="salvar()" class="btn btn-info">
+                <a onclick="salvar()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
                 </a>
-                <a onclick="editar()" class="btn btn-info">
+                <a onclick="editar()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-pencil"></span> Editar
                 </a>
-                <a onclick="pesquisar()"class="btn btn-info" ata-toggle="modal" data-target="#myModal">
+                <a onclick="pesquisar()"class="btn btn-primary" ata-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-search"></span> Pesquisar
                 </a>
-                <a onclick="excluir()" class="btn btn-info">
+                <a onclick="excluir()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-trash"></span> Excluir
                 </a>
-                <a onclick="buscaPrimeiroRegistro()"  class="btn btn-info">
+                <a onclick="buscaPrimeiroRegistro()"  class="btn btn-primary">
                     <span class="glyphicon glyphicon-fast-backward"></span> 
                 </a>
-                <a onclick="buscaRegistroAnterior()" class="btn btn-info">
+                <a onclick="buscaRegistroAnterior()" class="btn btn-primary">
                     <span class="glyphicon glyphicon glyphicon-backward"></span> 
                 </a>
-                <a onclick="buscaRegistroProximo()"class="btn btn-info">
+                <a onclick="buscaRegistroProximo()"class="btn btn-primary">
                     <span class="glyphicon glyphicon-forward"></span> 
                 </a>
-                <a onclick="buscaUltimoRegistro()" class="btn btn-info">
+                <a onclick="buscaUltimoRegistro()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-fast-forward"></span> 
                 </a>
-                 <a onclick="atualizar()" class="btn btn-info">
+                 <a onclick="atualizar()" class="btn btn-primary">
                     <span class="glyphicon glyphicon glyphicon-refresh"></span> Atualizar
                 </a>        
                 
@@ -96,13 +99,13 @@
          <br>       
         <table style="width: 50%;" cellpadding="0" cellspacing="5px" align="center" >
             <tr>
-                <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
+                <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                     <div class="form">
                         ID
                         <input type="text" class="form-control" id="idCheckList"   placeholder="ID" readonly>
                     </div>
                 </td>
-                <td  style="width: 40%; padding-right: 5px;font-size: 14px;">
+                <td  style="width: 40%; padding-right: 10px;font-size: 14px;">
                     <div class="form">
                         Checklist
                         <input type="text" class="form-control" id="checkList"   placeholder="Checklist" maxlength="70" readonly>
@@ -117,7 +120,7 @@
                     <td  style ="padding-right: 3px; text-align: center;  font-size: 14px;">
                         <div class="form">           
                             <br>
-                         <button  type="button" class="btn btn-info  glyphicon glyphicon-plus" onclick="plusTabelaPrecos()" ></button>
+                         <button  type="button" class="btn btn-primary  glyphicon glyphicon-plus" onclick="plusTabelaPrecos()" ></button>
                         </div>
                     </td>
                     
@@ -128,19 +131,19 @@
                 </td>
                     
                     
-                    <td  style="padding-right: 5px;font-size: 14px;">
+                    <td  style="padding-right: 10px;font-size: 14px;">
                           
                         <div class="form">
                              Descrição
                              <input type="text" class="form-control" id="descricao"   placeholder="Descrição" maxlength="180" readonly>
                     </td>
-                    <td  style="padding-right: 5px;font-size: 14px;">
+                    <td  style="padding-right: 10px;font-size: 14px;">
                         <div class="form">
                             Níveis Grupo
                             <input type="number" class="form-control" id="grupo"   placeholder="Níveis Grupo" readonly>
                         </div>
                     </td>
-                    <td  style="padding-right: 5px;font-size: 14px;">
+                    <td  style="padding-right: 10px;font-size: 14px;">
                         <div class="form">
                             Subgrupo
                             <input type="number" class="form-control" id="subGrupo"    placeholder="Subgrupo" onchange='salvar()' readonly>
@@ -150,13 +153,13 @@
                     <td  style='padding-right: 5px; text-align: center; font-size: 14px;'>
                         <div class='form' >
                             <br>
-                            <button type='button' style='background-color: red;' class='btn btn-info  glyphicon glyphicon-remove' onclick='#' ></button>
+                            <button type='button' style='background-color: red;' class='btn btn-primary  glyphicon glyphicon-remove' onclick='#' ></button>
                         </div>
                     </td>
                     <td  style='padding-right: 5px; text-align: center; font-size: 14px;'>
                         <div class='form' >
                             <br>
-                            <button type='button' style='background-color: red;' class='btn btn-info  glyphicon glyphicon-floppy-disk' onclick='salvarDescricao(1)' ></button>
+                            <button type='button' style='background-color: red;' class='btn btn-primary  glyphicon glyphicon-floppy-disk' onclick='salvarDescricao(1)' ></button>
                         </div>
                     </td>
                     <td>

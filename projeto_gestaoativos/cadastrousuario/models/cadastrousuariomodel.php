@@ -49,7 +49,7 @@ class cadastrousuariomodel extends CI_Model {
         
         $usuarioLogado = "teste";
         
-        $query = "SELECT * FROM CADASTRO_USUARIO  WHERE ID = $idUsuario";
+        $query = "SELECT * FROM GA_CADASTRO_USUARIO  WHERE ID = $idUsuario";
         
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
@@ -60,7 +60,7 @@ class cadastrousuariomodel extends CI_Model {
                 
         if (is_array($rs) && count($rs) > 0){
             
-            $query = "UPDATE CADASTRO_USUARIO SET ID_EMPRESA = '$empresaUsuario',  NOME  = '$nomeUsuario' , SOBRENOME = '$sobrenomeUsuario', EMAIL = '$emailUsuario', DATA_NASCIMENTO = '$dataNascimento', LOGIN = '$loginUsuario', SENHA = '$senha', IES_ATIVO = '$ativoUsuario', DATA_ALTERACAO = SYSDATE, USUARIO_ALTERADOR = '$usuarioLogado' WHERE ID = $idUsuario";
+            $query = "UPDATE GA_CADASTRO_USUARIO SET ID_EMPRESA = '$empresaUsuario',  NOME  = '$nomeUsuario' , SOBRENOME = '$sobrenomeUsuario', EMAIL = '$emailUsuario', DATA_NASCIMENTO = '$dataNascimento', LOGIN = '$loginUsuario', SENHA = '$senha', IES_ATIVO = '$ativoUsuario', DATA_ALTERACAO = SYSDATE, USUARIO_ALTERADOR = '$usuarioLogado' WHERE ID = $idUsuario";
             
             $resultado = $this->conBanco->query($query);
                
@@ -73,7 +73,7 @@ class cadastrousuariomodel extends CI_Model {
         }
         else{
             
-            $query = "SELECT MAX(ID) AS ID FROM  CADASTRO_USUARIO";
+            $query = "SELECT MAX(ID) AS ID FROM GA_CADASTRO_USUARIO";
 
             $cs = $this->conBanco->query($query);
             $rs = $cs->result();
@@ -85,7 +85,7 @@ class cadastrousuariomodel extends CI_Model {
                 $novoId = $rs[0]->ID + 1;
             }                       
 
-            $query = "INSERT INTO CADASTRO_USUARIO (ID, ID_EMPRESA, NOME, SOBRENOME, LOGIN, EMAIL, SENHA, IES_ATIVO, DATA_CADASTRO, USUARIO_CADASTRO, MATRICULA, CARGO, DATA_NASCIMENTO)
+            $query = "INSERT INTO GA_CADASTRO_USUARIO (ID, ID_EMPRESA, NOME, SOBRENOME, LOGIN, EMAIL, SENHA, IES_ATIVO, DATA_CADASTRO, USUARIO_CADASTRO, MATRICULA, CARGO, DATA_NASCIMENTO)
                             VALUES ($idUsuario,'$empresaUsuario', '$nomeUsuario', '$sobrenomeUsuario', '$loginUsuario', '$emailUsuario', '$senha', '$ativoUsuario', SYSDATE, '$usuarioLogado', '$matricula', '$cargo', '$dataNascimento')";     
 
              
@@ -104,7 +104,7 @@ class cadastrousuariomodel extends CI_Model {
         
         $this->initConBanco();
         
-        $query = "DELETE FROM CADASTRO_USUARIO WHERE ID = $idUsuario";
+        $query = "DELETE FROM GA_CADASTRO_USUARIO WHERE ID = $idUsuario";
         
         //print_r($query);exit();
         $resultado = $this->conBanco->query($query);
@@ -122,7 +122,7 @@ class cadastrousuariomodel extends CI_Model {
         
         $this->initConBanco();
         
-        $query = "SELECT * FROM CADASTRO_USUARIO ORDER BY ID";
+        $query = "SELECT * FROM GA_CADASTRO_USUARIO ORDER BY ID";
         
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
@@ -159,7 +159,7 @@ class cadastrousuariomodel extends CI_Model {
         
         $this->initConBanco();
         
-        $query = "SELECT * FROM CADASTRO_USUARIO ORDER BY ID";
+        $query = "SELECT * FROM GA_CADASTRO_USUARIO ORDER BY ID";
         
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
@@ -202,7 +202,7 @@ class cadastrousuariomodel extends CI_Model {
         
             $idProcura = $idUsuario - $cont;  
 
-            $query = "SELECT * FROM CADASTRO_USUARIO WHERE ID =  $idProcura";
+            $query = "SELECT * FROM GA_CADASTRO_USUARIO WHERE ID =  $idProcura";
 
             $cs = $this->conBanco->query($query);
             $rs = $cs->result();
@@ -242,7 +242,7 @@ class cadastrousuariomodel extends CI_Model {
         
             $idProcura = $idUsuario + $cont;  
 
-            $query = "SELECT * FROM CADASTRO_USUARIO WHERE ID =  $idProcura";
+            $query = "SELECT * FROM GA_CADASTRO_USUARIO WHERE ID =  $idProcura";
 
             $cs = $this->conBanco->query($query);
             $rs = $cs->result();
@@ -278,7 +278,7 @@ class cadastrousuariomodel extends CI_Model {
          
         if($idInicial == "" || $idInicial == null ){
             
-            $query = "SELECT * FROM CADASTRO_USUARIO WHERE NOME LIKE '%$nomeInicial%'";
+            $query = "SELECT * FROM GA_CADASTRO_USUARIO WHERE NOME LIKE '%$nomeInicial%'";
              
             //print_r($query);exit();
             $cs = $this->conBanco->query($query);
@@ -309,7 +309,7 @@ class cadastrousuariomodel extends CI_Model {
             }
         }
         else{
-            $query = "SELECT * FROM CADASTRO_USUARIO WHERE ID LIKE  '%$idInicial%'";
+            $query = "SELECT * FROM GA_CADASTRO_USUARIO WHERE ID LIKE  '%$idInicial%'";
             
             //print_r($query);exit();
             $cs = $this->conBanco->query($query);
@@ -363,7 +363,7 @@ class cadastrousuariomodel extends CI_Model {
         $data = array(); // linhas
         //$itens = $this->getDataGrid($indice, $ordem, $inicio, $tamanho, $parametro1, $parametro2);
         
-        $query = "SELECT * FROM CADASTRO_USUARIO ORDER BY ID";
+        $query = "SELECT * FROM GA_CADASTRO_USUARIO ORDER BY ID";
         
         
                
@@ -407,7 +407,7 @@ class cadastrousuariomodel extends CI_Model {
         $this->initConBanco();
         
                                
-        $query = "SELECT COUNT(ID) AS TOTAL FROM CADASTRO_USUARIO";
+        $query = "SELECT COUNT(ID) AS TOTAL FROM GA_CADASTRO_USUARIO";
         
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
@@ -426,7 +426,7 @@ class cadastrousuariomodel extends CI_Model {
        
         $this->initConBanco();
        
-        $query = "SELECT * FROM CADASTRO_USUARIO WHERE ID = $idUsuario";
+        $query = "SELECT * FROM GA_CADASTRO_USUARIO WHERE ID = $idUsuario";
             
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
@@ -462,7 +462,7 @@ class cadastrousuariomodel extends CI_Model {
         
         $this->initConBanco();
 
-        $query = "SELECT ID_EMPRESA, NOME_FANTASIA FROM SYS_EMPRESA ORDER BY NOME_FANTASIA ";
+        $query = "SELECT ID_EMPRESA, NOME_FANTASIA FROM GA_SYS_EMPRESA ORDER BY NOME_FANTASIA ";
                   
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();

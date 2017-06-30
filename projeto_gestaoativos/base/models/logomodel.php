@@ -30,7 +30,7 @@ class logomodel extends CI_Model {
 
         $this->initConBanco();
 
-        $query = "SELECT * FROM DESKTOP WHERE ID_USUARIO = " . $this->getUsuarioLogado()->ID;
+        $query = "SELECT * FROM GA_DESKTOP WHERE ID_USUARIO = " . $this->getUsuarioLogado()->ID;
         $cs = $this->conBanco->query($query);
         return $cs->result();
     }
@@ -39,7 +39,7 @@ class logomodel extends CI_Model {
 
         $this->initConBanco();
 
-        $query = "UPDATE DESKTOP SET X = $x, Y = $y WHERE NOME_ABA = '$nomeAba' AND ID_USUARIO = " . $this->getUsuarioLogado()->ID;
+        $query = "UPDATE GA_DESKTOP SET X = $x, Y = $y WHERE NOME_ABA = '$nomeAba' AND ID_USUARIO = " . $this->getUsuarioLogado()->ID;
         return $this->conBanco->query($query);
     }
 
@@ -47,7 +47,7 @@ class logomodel extends CI_Model {
 
         $this->initConBanco();
 
-        $query = "DELETE FROM DESKTOP WHERE NOME_ABA = '$nomeAba' AND ID_USUARIO = " . $this->getUsuarioLogado()->ID;
+        $query = "DELETE FROM GA_DESKTOP WHERE NOME_ABA = '$nomeAba' AND ID_USUARIO = " . $this->getUsuarioLogado()->ID;
         return $this->conBanco->query($query);
     }
 
