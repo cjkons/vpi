@@ -273,6 +273,7 @@ class cadastroplanopreventivocontroller extends CI_Controller {
     
     public function validarSalvarItem() {
         
+        $id              = $this->input->POST('id');
         $idAtividade     = $this->input->POST('idAtividade');
         $idItemModal     = $this->input->POST('idItemModal');
         $item            = $this->input->POST('item');
@@ -280,7 +281,7 @@ class cadastroplanopreventivocontroller extends CI_Controller {
         
         $this->load->model('cadastroplanopreventivomodel');
 
-        $retorno = $this->cadastroplanopreventivomodel->validarSalvarItem($idAtividade, $idItemModal, $item);
+        $retorno = $this->cadastroplanopreventivomodel->validarSalvarItem($id, $idAtividade, $idItemModal, $item);
 
         echo json_encode($retorno);
         //echo ($retorno);
@@ -360,5 +361,105 @@ class cadastroplanopreventivocontroller extends CI_Controller {
         echo json_encode($retorno);
     }
     
+    
+    ///////////// Adicionar atividades
+    
+    public function adicionarListaAtividades() {
+        
+        $id                = $this->input->POST('id');
+        $idAtividade       = $this->input->POST('idAtividade');
+        
+        
+        $this->load->model('cadastroplanopreventivomodel');
+
+        $retorno = $this->cadastroplanopreventivomodel->adicionarListaAtividades($id, $idAtividade);
+
+        echo json_encode($retorno);
+        //echo ($retorno);
+    }
+    
+    public function getAdicionarAtividadesDescricao() {
+        
+        $id                 = $this->input->POST('id');
+        $idAtividade        = $this->input->POST('idAtividade');
+        $idDescricaoModal        = $this->input->POST('idDescricaoModal');
+        
+        $this->load->model('cadastroplanopreventivomodel');
+
+
+
+        $retorno = $this->cadastroplanopreventivomodel->getAdicionarAtividadesDescricao($id, $idAtividade, $idDescricaoModal);
+
+        echo json_encode($retorno);
+    }
+    
+    public function novoAtividadesDescricao() {
+        
+        $id                 = $this->input->POST('id');
+        $idAtividade        = $this->input->POST('idAtividade');
+        
+        $this->load->model('cadastroplanopreventivomodel');
+
+        $retorno = $this->cadastroplanopreventivomodel->novoAtividadesDescricao($id, $idAtividade);
+
+        echo json_encode($retorno);
+    }
+    
+    public function salvarAtividadesDescricao() {
+        
+        $id                     = $this->input->POST('id');
+        $idAtividade            = $this->input->POST('idAtividade');
+        $idDescricaoModal       = $this->input->POST('idDescricaoModal');
+        $descricaoAtividades    = $this->input->POST('descricaoAtividades');
+        
+        
+                                        
+        $this->load->model('cadastroplanopreventivomodel');
+
+        $retorno = $this->cadastroplanopreventivomodel->salvarAtividadesDescricao($id, $idAtividade, $idDescricaoModal , $descricaoAtividades);
+
+        echo json_encode($retorno);
+    }
+    
+    public function getAdicionarAtividadeDescricao() {
+        
+        $id                 = $this->input->POST('id');
+        $idAtividade        = $this->input->POST('idAtividade');
+        $idDescricaoModal        = $this->input->POST('idDescricaoModal');
+        
+        $this->load->model('cadastroplanopreventivomodel');
+
+
+
+        $retorno = $this->cadastroplanopreventivomodel->getAdicionarAtividadeDescricao($id, $idAtividade, $idDescricaoModal);
+
+        echo json_encode($retorno);
+    }
+    
+     public function editarAtividadeDescricao() {
+        
+        $id                = $this->input->POST('id');
+        $idAtividade       = $this->input->POST('idAtividade');
+        $idItemModalValor       = $this->input->POST('idItemModalValor');
+        
+        $this->load->model('cadastroplanopreventivomodel');
+
+        $retorno = $this->cadastroplanopreventivomodel->editarAtividadeDescricao($id, $idAtividade,  $idItemModalValor);
+
+        echo ($retorno);
+    }
+    
+    public function excluirAtividadesDescricao() {
+        
+        $id                 = $this->input->POST('id');
+        $idAtividade        = $this->input->POST('idAtividade');
+        $idDescricaoModal       = $this->input->POST('idDescricaoModal');
+        
+        $this->load->model('cadastroplanopreventivomodel');
+
+        $retorno = $this->cadastroplanopreventivomodel->excluirAtividadesDescricao($id, $idAtividade, $idDescricaoModal);
+
+        echo json_encode($retorno);
+    }
     
 }

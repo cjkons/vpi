@@ -24,7 +24,7 @@ class cadastrousuariomodel extends CI_Model {
         
         $this->initConBanco();
         
-        $query = "SELECT max(ID) AS ID FROM  CADASTRO_USUARIO";
+        $query = "SELECT max(ID) AS ID FROM  GA_CADASTRO_USUARIO";
                         
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();

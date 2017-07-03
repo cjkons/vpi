@@ -35,33 +35,33 @@ if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required
   <title>VPI Tecnologia - Clarify GA</title>
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="resources/login/css/site_global.css?crc=3936898828"/>
-  <link rel="stylesheet" type="text/css" href="resources/login/css/index.css?crc=4153243950" id="pagesheet"/>
+  <link rel="stylesheet" type="text/css" href="resources/login/css/index.css?crc=4153243950" id="pagesheet"/> 
   <!-- IE-only CSS -->
   <!--[if lt IE 9]>
-  <link rel="stylesheet" type="text/css" href="css/nomq_index.css?crc=362491751" id="nomq_pagesheet"/>
+  <link rel="stylesheet" type="text/css" href="css/nomq_index.css?crc=362491751" id="nomq_pagesheet"/> 
   <![endif]-->
   <!-- JS includes -->
   <script src="https://use.typekit.net/ik/9MQIdA5nyMBM_bVuXHOcShXcRCuWt1d4ukp0CeoTmi9feT3gf5erbyJGwQMt5QwaFuvawh9hwQ6kFR9hFhJk5AJa52wawhjaw2IUFeIoZc9XZgGkHKoRdeBk-AZoOcFzdPoKSKURdeBk-AZoOcFzdPoKSKUaiaS0jhUySc8cpPoRdhX0j1JKfcuuShmzOWFyd1w7fbRm2UMMeMw6MKG4fFwVIMMjMPMfH6qJu3vbMg6BJM4HgIuuShAbMdOAECjB.js" type="text/javascript"></script>
-  <!-- Other scripts -->
+  <!-- Other scripts --> 
   <script type="text/javascript">
    try {Typekit.load();} catch(e) {}
 </script>
    </head>
    <body style="zoom: 85%;" class="museBGSize">
      
-     <input type="hidden" id="url" value="<?= isset($url) ? $url : "index.php?m=login" ?>" />
+     <input type="hidden" id="url" value="<?= isset($url) ? $url : "index.php?m=login" ?>" /> 
 
   <div class="breakpoint active" id="bp_infinity" data-min-width="961"><!-- responsive breakpoint node -->
    <div class="clearfix borderbox" id="page"><!-- column -->
     <div class="clearfix colelem shared_content" id="u104-4" data-content-guid="u104-4_content"><!-- content -->
-     <p id="u104-2">Bem vindo!</p>
+     <p id="u104-2" style="color: #FFFFFF;">Bem vindo!</p>
     </div>
     <div class="clip_frame colelem" id="u112"><!-- svg -->
-     <img class="svg svg_mar temp_no_img_src" id="u108" data-orig-src="resources/login/images/iconasset-1logoclarify.svg?crc=4008999996" onload="this.style.height=(this.offsetWidth*107.03478260869565/373)+'px'" alt="" data-mu-svgfallback="resources/login/images/iconasset%201logoclarify_poster_.png?crc=434667730" data-image-width="373" data-image-height="107" src="resources/login/images/iconasset-1logoclarify.svg?crc=4008999996"/>
+     <img class="svg svg_mar temp_no_img_src" id="u108" data-orig-src="resources/login/images/iconasset-1logoclarify_blue.svg?crc=4008999996" onload="this.style.height=(this.offsetWidth*107.03478260869565/373)+'px'" alt="" data-mu-svgfallback="resources/login/images/iconasset%201logoclarify_poster_.png?crc=434667730" data-image-width="373" data-image-height="107" src="resources/login/images/iconasset-1logoclarify.svg?crc=4008999996"/>
     </div>
     <div class="clearfix colelem" id="pu269"><!-- group -->
      <div class="clip_frame grpelem" id="u269"><!-- svg -->
-      <img class="svg svg_mar temp_no_img_src" id="u265" data-orig-src="resources/login/images/interface1asset-2login.svg?crc=459680531" onload="this.style.height=(this.offsetWidth*530.8072916666666/374)+'px'" alt="" data-mu-svgfallback="resources/login/images/interface1asset%202login_poster_.png?crc=325940621" data-image-width="374" data-image-height="531" src="resources/login/images/interface1asset-2login.svg?crc=459680531"/>
+      <img class="svg svg_mar temp_no_img_src" id="u265" data-orig-src="resources/login/images/interface1asset-2login_blue.svg?crc=459680531" onload="this.style.height=(this.offsetWidth*530.8072916666666/374)+'px'" alt="" data-mu-svgfallback="resources/login/images/interface1asset%202login_poster_.png?crc=325940621" data-image-width="374" data-image-height="531" src="resources/login/images/interface1asset-2login_blue.svg?crc=459680531"/>
      </div>
      <div class="clearfix grpelem shared_content" id="u276-4" data-content-guid="u276-4_content"><!-- content -->
       <p id="u276-2">Copyright 2017. All Rights Reserved.</p>
@@ -71,7 +71,7 @@ if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required
          
          <input style="background-color:transparent; color: #FFFFFF;" onkeypress="enter(event)" type="text"  id="u251-2" placeholder="Digite seu usuário" color=#ffffff required="" autofocus=""/>
       
-     </div>
+     </div> 
      <div class="clearfix grpelem shared_content" id="u254-4" data-content-guid="u254-4_content"><!-- content -->
          <input style="background-color:transparent; color: #FFFFFF;" onkeypress="enter(event)" type="password" class="form-control" id="u254-2" placeholder="Senha" required=""/>
       
@@ -80,7 +80,7 @@ if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required
     <a class="nonblock nontext clip_frame colelem" id="u321" href="http://facebook.com/vpitec"><!-- svg --><img class="svg svg_mar temp_no_img_src" id="u317" data-orig-src="resources/login/images/midiaasset-1social.svg?crc=4209081158" onload="this.style.height=(this.offsetWidth*33.57512953367876/120)+'px'" alt="" data-mu-svgfallback="resources/login/images/midiaasset%201social_poster_.png?crc=16240262" data-image-width="120" data-image-height="34" src="resources/login/images/midiaasset-1social.svg?crc=4209081158"/></a>
     <a class="nonblock nontext clearfix colelem shared_content" id="u328-4" href="http://www.vpitecnologia.com.br" data-content-guid="u328-4_content"><!-- content --><p id="u328-2">vpitecnologia.com.br</p></a>
     <div class="verticalspacer" data-offset-top="902" data-content-above-spacer="902" data-content-below-spacer="58"></div>
-   </div>
+   </div> 
   </div>
   <div class="breakpoint" id="bp_960" data-min-width="749" data-max-width="960"><!-- responsive breakpoint node -->
    <div class="clearfix borderbox temp_no_id" data-orig-id="page"><!-- column -->
@@ -96,7 +96,7 @@ if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required
      <span class="nonblock nontext clearfix grpelem placeholder" data-placeholder-for="u259-4_content"><!-- placeholder node --></span>
      <span class="clearfix grpelem placeholder" data-placeholder-for="u251-4_content"><!-- placeholder node --></span>
      <span class="clearfix grpelem placeholder" data-placeholder-for="u254-4_content"><!-- placeholder node --></span>
-    </div>
+    </div> 
     <a class="nonblock nontext clip_frame colelem temp_no_id" href="http://facebook.com/vpitec" data-orig-id="u321"><!-- svg --><img class="svg svg_mar temp_no_id temp_no_img_src" data-orig-src="resources/login/images/midiaasset-1social.svg?crc=4209081158" onload="this.style.height=(this.offsetWidth*26.86010362694294/96)+'px'" alt="" data-mu-svgfallback="resources/login/images/midiaasset%201social_poster_.png?crc=16240262" data-image-width="96" data-image-height="27" data-orig-id="u317" src="resources/login/images/blank.gif?crc=4208392903"/></a>
     <span class="nonblock nontext clearfix colelem placeholder" data-placeholder-for="u328-4_content"><!-- placeholder node --></span>
     <div class="verticalspacer" data-offset-top="764" data-content-above-spacer="763" data-content-below-spacer="72"></div>

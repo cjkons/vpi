@@ -1029,8 +1029,8 @@ function ampliarImagem() {
         var anexoMedicaoView = anexoMedicaoView.substr(61);
 
 
-        var enderecoMedicao = "http://localhost/gestaoativos/fwk/uploadsEquipamentos/imagens"; // localhost
-        //var enderecoMedicao = "http://sig.sulcatarinense.com.br/uploadsPermuta/Medicoes/"; // servidor
+        //var enderecoMedicao = "http://localhost/gestaoativos/fwk/uploadsEquipamentos/imagens"; // localhost
+        var enderecoMedicao = "http://192.168.100.15/gestaoativos/fwk/uploadsEquipamentos/imagens"; // servidor
 
         window.open(enderecoMedicao + anexoMedicaoView, '_blank');
     }

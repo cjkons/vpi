@@ -204,8 +204,8 @@ function salvar(){
             success: function(r) {
 
                 if (r == true) {
-                    salvarAtividades();
-                   // mensagem('Sucesso', 'Salvo com sucesso', 'success');
+                    //salvarAtividades();
+                    mensagem('Sucesso', 'Salvo com sucesso', 'success');
                     
                     //document.getElementById('tabelaPreco2').innerHTML = "";
                 }
@@ -1094,9 +1094,9 @@ function carregarItem(){
  
  function validarSalvarItem(){
      
-     
-    var idItemModal  =   $('#idItemModal').val();
-    var item         =   $('#item').val(); 
+    var id              =   $('#id').val();  
+    var idItemModal     =   $('#idItemModal').val();
+    var item            =   $('#item').val(); 
     var idAtividade     = document.getElementById('idAtividade').value;
     
     
@@ -1106,6 +1106,7 @@ function carregarItem(){
             url: 'index.php?m=cadastroplanopreventivo&c=cadastroplanopreventivocontroller&f=validarSalvarItem',
             data: {
                 
+                id: id,
                 idAtividade: idAtividade,
                 idItemModal: idItemModal,
                 item: item
@@ -1457,6 +1458,403 @@ function excluirItem(){
                 document.getElementById("observacao").value = "";
                 
                 getAdicionarItem(id, idAtividade, idItemModal);
+            }
+
+        },
+        error: function() {
+           
+        }
+    });
+}
+
+
+
+//////////////////// LISTA ATIVIDADES
+
+
+function adicionarListaAtividades(id, idAtividade) {
+
+
+    
+    
+              
+    var controleDePreenchimento = 'S';
+ 
+    if(id == ""){
+        controleDePreenchimento = 'N';
+    }
+    if(idAtividade == ""){
+        controleDePreenchimento = 'N';
+    }
+   
+     
+    if (controleDePreenchimento == 'S') {
+
+
+
+    $.ajax({
+            url: 'index.php?m=cadastroplanopreventivo&c=cadastroplanopreventivocontroller&f=adicionarListaAtividades',
+            data: {
+                
+               
+                id: id,
+                idAtividade: idAtividade
+                
+                
+               
+                 
+                 },
+            type: 'POST',
+            dataType: 'json',
+            async: true,
+            success: function(r) {
+                
+                    
+                    
+
+                   
+                   
+                    document.getElementById("descricaoAtividades").disabled          = false;
+                    
+                 //  alert();
+                    document.getElementById("id").value                         = id;
+                    document.getElementById("idAtividade").value                = idAtividade;
+                    document.getElementById("descricaoAtividades").value        = "";
+                    
+                    
+                    var idDescricaoModal = document.getElementById("idDescricaoModal").value         =  r;      
+
+
+                    getAdicionarAtividadesDescricao(id, idAtividade, idDescricaoModal);
+
+                    $('#adicionarListaAtividadesModal').modal('show');
+                    //$('#adicionarAtividadeModalEditar').modal('show');
+
+            },
+            error: function(e) {
+                    mensagem('Atenção', 'Prencha todos os campos', 'r', 'i', 2000, 1);
+            }
+            
+            
+        });   
+            
+    }else{
+         mensagem('Atenção', 'Prencha todos os campos', 'r', 'i', 2000, 1);
+    }        
+
+    
+}
+
+function  getAdicionarAtividadesDescricao(id, idAtividade, idDescricaoModal) {
+
+    document.getElementById("descricaoAtividades").readOnly = true;
+    
+
+    $.ajax({
+        url: 'index.php?m=cadastroplanopreventivo&c=cadastroplanopreventivocontroller&f=getAdicionarAtividadesDescricao',
+        data: {
+            id: id,
+            idAtividade: idAtividade,
+            idDescricaoModal: idDescricaoModal
+        },
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        success: function (r) {
+
+
+            document.getElementById('tabelaItem5').innerHTML = r;
+            
+
+
+
+
+        },
+        error: function (e) {
+            
+        }
+    });
+
+
+}
+
+function botaoAtividadesDescricaoSair() {
+
+
+    $('#adicionarListaAtividadesModal').modal('hide');
+
+
+}
+
+function novoAtividadesDescricao() {
+    
+    var id              =   $('#id').val(); 
+    var idAtividade     =   $('#idAtividade').val();   
+    
+
+    document.getElementById("descricaoAtividades").readOnly = false;
+    
+
+    //  alert();
+    
+    document.getElementById("idDescricaoModal").value = "";
+    document.getElementById("descricaoAtividades").value = "";
+    
+
+    
+
+
+    $.ajax({
+        url: 'index.php?m=cadastroplanopreventivo&c=cadastroplanopreventivocontroller&f=novoAtividadesDescricao',
+        data: {
+            
+            id: id,
+            idAtividade: idAtividade
+            
+        },
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        success: function (r) {
+
+            document.getElementById("idDescricaoModal").value = r;
+            
+
+
+        },
+        error: function (e) {
+
+        }
+    });
+
+
+
+}
+
+function salvarAtividadesDescricao(){
+     
+     
+     
+    var id              = document.getElementById('id').value;
+    var idAtividade     = document.getElementById('idAtividade').value;
+    
+     
+    var idDescricaoModal     = document.getElementById('idDescricaoModal').value;
+    var descricaoAtividades  = document.getElementById('descricaoAtividades').value;
+    
+        
+    
+   
+    var controleDePreenchimento = 'S';
+
+       
+    if (descricaoAtividades == "") {
+        controleDePreenchimento = 'N';
+    }
+    
+   
+    
+    
+    
+    if(controleDePreenchimento ==  'S'){
+    
+
+            $.ajax({
+            url: 'index.php?m=cadastroplanopreventivo&c=cadastroplanopreventivocontroller&f=salvarAtividadesDescricao',
+            data: {
+                
+                id: id,
+                idAtividade: idAtividade,
+                idDescricaoModal: idDescricaoModal,
+                descricaoAtividades: descricaoAtividades
+                
+
+
+            },
+            type: 'POST',
+            dataType: 'json',
+            async: true,
+            success: function(data) {
+
+                if (data == true) {
+                    mensagem('', 'Item Incluido com Sucesso', 'success');
+                    
+
+                    
+                    getAdicionarAtividadeDescricao(id, idAtividade, idDescricaoModal);
+                    
+                    document.getElementById("idDescricaoModal").value = "";
+                    document.getElementById("descricaoAtividades").value = "";
+                   
+                    
+                    document.getElementById("idDescricaoModal").readOnly         = true;
+                    document.getElementById("descricaoAtividades").readOnly      = true;
+                   
+                   
+
+                }
+                else {
+                    mensagem('Atenção', 'Erro ao salvar Descrição', 'error');
+                    $('#basicModal').modal('hide');
+                    getAdicionarAtividadeDescricao(id, idAtividade, idDescricaoModal);
+                    
+                    document.getElementById("idDescricaoModal").value = "";
+                    document.getElementById("descricaoAtividades").value = "";
+                    
+                    document.getElementById("idDescricaoModal").readOnly         = true;
+                    document.getElementById("descricaoAtividades").readOnly      = true;
+
+                }
+            },
+            error: function(e) {
+                mensagem('Atenção', 'Erro ao salvar Descrição', 'error');
+                $('#basicModal').modal('hide');
+                getAdicionarAtividadeDescricao(id, idAtividade, idDescricaoModal);
+                
+                    document.getElementById("idDescricaoModal").value = "";
+                    document.getElementById("descricaoAtividades").value = "";
+                    
+                    document.getElementById("idDescricaoModal").readOnly         = true;
+                    document.getElementById("descricaoAtividades").readOnly      = true;
+
+
+
+            }
+        }); 
+    }
+    else{
+        mensagem('Atenção', 'Prencha todos os campos', 'alert');
+        
+    }
+    
+    
+    
+}
+
+function  getAdicionarAtividadeDescricao(id, idAtividade, idDescricaoModal) {
+
+    document.getElementById("descricaoAtividades").readOnly      = true;
+
+    $.ajax({
+        url: 'index.php?m=cadastroplanopreventivo&c=cadastroplanopreventivocontroller&f=getAdicionarAtividadeDescricao',
+        data: {
+            id: id,
+            idAtividade: idAtividade,
+            idDescricaoModal: idDescricaoModal
+            
+        },
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        success: function (r) {
+
+
+            document.getElementById('tabelaItem5').innerHTML = r;
+            
+
+
+
+
+        },
+        error: function (e) {
+            
+        }
+    });
+
+
+}
+
+function editarAtividadeDescricao(id, idAtividade, idItemModalValor) {
+    
+    var id              =   $('#id').val(); 
+    var idAtividade     =   $('#idAtividade').val();
+   
+    document.getElementById("descricaoAtividades").readOnly = true;
+    
+    
+    $.ajax({
+            url: 'index.php?m=cadastroplanopreventivo&c=cadastroplanopreventivocontroller&f=editarAtividadeDescricao',
+            data: {
+                
+                id: id,
+                idAtividade: idAtividade,
+                idItemModalValor:idItemModalValor
+               
+                 
+                 },
+            type: 'POST',
+            dataType: 'json',
+            async: true,
+            success: function(r) {
+                
+                  // document.getElementById("idItemModal").value         =  r;
+                  
+                    document.getElementById("idDescricaoModal").readOnly         = true;
+                    document.getElementById("descricaoAtividades").readOnly      = false;
+                  
+                    document.getElementById('idDescricaoModal').value     = r[0];
+                    document.getElementById('descricaoAtividades').value  = r[1];
+                    
+                    
+                                       
+                   //$('#itemModalEditar').modal('show');
+
+            },
+            error: function(e) {
+                    mensagem('Atenção', 'Prencha todos os campos', 'r', 'i', 2000, 1);
+            }
+            
+            
+        });   
+            
+           
+
+    
+}
+
+function excluirAtividadesDescricao(){
+   
+    var  id                 =  document.getElementById('id').value;
+    var  idDescricaoModal   =  document.getElementById('idDescricaoModal').value;
+    var  idAtividade        =  document.getElementById('idAtividade').value;
+    
+    document.getElementById("descricaoAtividades").readOnly = true;
+    
+
+   
+              
+    $.ajax({
+        url: 'index.php?m=cadastroplanopreventivo&c=cadastroplanopreventivocontroller&f=excluirAtividadesDescricao',
+        data: {
+           
+           id: id,
+           idDescricaoModal: idDescricaoModal,
+           idAtividade: idAtividade
+            
+        },
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        
+        
+        success: function(data) {
+                
+            if (data != false) {
+                mensagem('', 'Descrição Excluido com Sucesso', 'r', 's', 2000, 1); 
+                
+                document.getElementById("idDescricaoModal").value = "";
+                document.getElementById("descricaoAtividades").value = "";
+                
+                
+                getAdicionarAtividadeDescricao(id, idAtividade, idDescricaoModal);
+            
+            } else {
+                mensagem('', 'Erro ao excluir Item', 'r', 'e', 2000, 1); 
+                
+                document.getElementById("idDescricaoModal").value = "";
+                document.getElementById("descricaoAtividades").value = "";
+                
+                getAdicionarAtividadeDescricao(id, idAtividade, idDescricaoModal);
             }
 
         },
