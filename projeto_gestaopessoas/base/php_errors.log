@@ -1,0 +1,80 @@
+[18-Dec-2012 17:34:57 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[19-Dec-2012 16:44:14 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[19-Dec-2012 17:00:48 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[19-Dec-2012 17:02:25 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[19-Dec-2012 17:03:14 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[19-Dec-2012 17:03:34 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[19-Dec-2012 17:17:29 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[19-Dec-2012 17:19:05 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[19-Dec-2012 17:19:48 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[02-Jan-2013 14:04:42 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[07-Jan-2013 19:11:25 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[07-Jan-2013 19:11:30 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[07-Jan-2013 19:11:30 UTC] PHP Warning:  copy(C:\server\www\fwk\resources\sig/img/projetos-documentos.png): failed to open stream: No such file or directory in C:\server\projetos\sig\build.php on line 246
+[07-Jan-2013 19:11:31 UTC] PHP Warning:  mkdir(): File exists in C:\server\projetos\sig\build.php on line 233
+[08-Jan-2013 10:22:28 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[08-Jan-2013 10:23:43 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[08-Jan-2013 10:38:57 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[08-Jan-2013 11:17:51 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[08-Jan-2013 11:22:43 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[08-Jan-2013 11:27:04 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[08-Jan-2013 11:27:50 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[08-Jan-2013 11:28:46 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[08-Jan-2013 11:55:32 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[08-Jan-2013 11:56:12 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[08-Jan-2013 12:46:31 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[08-Jan-2013 12:46:44 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[17-Jan-2013 13:41:17 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[22-Jan-2013 17:24:38 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[22-Jan-2013 17:24:53 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[22-Jan-2013 17:26:39 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[22-Jan-2013 17:29:20 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[22-Jan-2013 17:30:48 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[22-Jan-2013 17:34:49 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[22-Jan-2013 17:36:12 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[22-Jan-2013 17:36:32 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[22-Jan-2013 17:37:31 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[22-Jan-2013 17:38:16 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[22-Jan-2013 17:39:05 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[22-Jan-2013 17:42:04 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[22-Jan-2013 17:45:12 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0
+[22-Jan-2013 17:47:59 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib64/php/modules/ldap.so' - Não foi possível encontrar o módulo especificado.
+ in Unknown on line 0

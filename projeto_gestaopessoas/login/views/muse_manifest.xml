@@ -1,0 +1,55 @@
+<manifest alg="2" build="2017.0.2.363" opt="true" iceEnabled="true" iceMarkupVersion="2" iceEnabledOptions="link,responsive,cachebuster,textStyling" exportTarget="other" domain="clarify.com.br" resolutions="1x,2x" timestamp="1490725683135">
+  <folder name="css">
+    <file name="site_global.css" crc="3936898828"/>
+    <file name="index.css" crc="4153243950" ref="index"/>
+    <file name="nomq_index.css" crc="362491751" ref="index"/>
+  </folder>
+  <folder name="scripts">
+    <file name="jquery-1.8.3.min.js" crc="209076791" ref="index"/>
+    <file name="museutils.js" crc="4232573551" ref="index"/>
+    <file name="whatinput.js" crc="86476730" ref="index"/>
+    <file name="museconfig.js" crc="4152223963" ref="index"/>
+    <file name="jquery.musepolyfill.bgsize.js" crc="3880853905" ref="index"/>
+    <file name="jquery.watch.js" crc="3844535323" ref="index"/>
+    <file name="jquery.museresponsive.js" crc="433634197" ref="index"/>
+    <file name="require.js" crc="4234670167" ref="index"/>
+  </folder>
+  <folder name="images">
+    <file name="iconasset-1logoclarify.svg" crc="4008999996" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="iconasset 1logoclarify_poster_.png" crc="434667730" ref="index"/>
+    <file name="interface1asset-2login.svg" crc="459680531" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="interface1asset 2login_poster_.png" crc="325940621" ref="index"/>
+    <file name="midiaasset-1social.svg" crc="4209081158" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="midiaasset 1social_poster_.png" crc="16240262" ref="index"/>
+    <file name="bgloginclarigy.jpg" crc="241792458" ref="index">
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="bgloginclarigy2.jpg" crc="57777604" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="bgloginclarigy_2x.jpg" crc="241792458" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="blank.gif" crc="4208392903" ref="index"/>
+  </folder>
+  <file name="index.html" crc="464361660" seo="true" mt="1490725421483" redirect="true"/>
+</manifest>
