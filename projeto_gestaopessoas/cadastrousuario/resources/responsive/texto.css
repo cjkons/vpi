@@ -1,0 +1,174 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18/03/2016, 13:59:13
+    Author     : heitor.siqueira
+*/
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 1617px) {
+    html {
+ font-size: 90%;
+ }
+ table {
+font-size: 90%;
+
+}
+body {
+font-size: 90%;
+
+}
+div {
+font-size: 90%;
+
+}
+nav {
+font-size: 90%;
+
+}
+a {
+font-size: 90%;
+
+}
+}
+@media only screen and (min-width: 1375px) and (max-width: 1616px) {
+    html {
+ font-size: 80%;
+ }
+ table {
+font-size: 80%;
+
+}
+body {
+font-size: 80%;
+
+}
+div {
+font-size: 80%;
+
+}
+nav {
+font-size: 80%;
+
+}
+a {
+font-size: 80%;
+
+}
+}
+@media only screen and (min-width: 1189px) and (max-width: 1374px) {
+    html {
+ font-size: 70%;
+ }
+ table {
+font-size: 70%;
+
+}
+body {
+font-size: 70%;
+
+}
+div {
+font-size: 70%;
+
+}
+nav {
+font-size: 70%;
+
+}
+a {
+font-size: 70%;
+
+}
+}
+/* Tablet Portrait size to standard  (devices and browsers) */
+@media only screen and (min-width: 1000px) and (max-width: 1188px) {
+    html {
+ font-size: 60%;
+ }
+ table {
+font-size: 60%;
+
+}
+body {
+font-size: 60%;
+
+}
+div {
+font-size: 60%;
+
+}
+nav {
+font-size: 60%;
+
+}
+a {
+font-size: 60%;
+
+}
+}
+
+/* Tablet Portrait size to standard (devices and browsers) */
+@media only screen and (min-width: 880px) and (max-width: 999px) {
+    html {
+ font-size: 50%;
+ }
+ table {
+font-size: 50%;
+
+}
+body {
+font-size: 50%;
+
+}
+div {
+font-size: 50%;
+
+}
+nav {
+font-size: 50%;
+
+}
+}
+/* Tablet Portrait size to standard  (devices and browsers) */
+@media only screen and (min-width: 598px) and (max-width: 879px) {
+    html {
+ font-size: 40%;
+ }
+ table {
+font-size: 40%;
+
+}
+}
+
+
+/* Tablet Portrait size to standard  (devices and browsers) */
+@media only screen and (min-width: 497px) and (max-width: 597px) {
+    html {
+ font-size: 30%;
+ }
+ table {
+font-size: 30%;
+
+}
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 496px) {
+    html {
+ font-size: 50%;
+ }
+ table {
+font-size: 50%;
+
+}
+}
+
+h1 {
+font-size: 15px;
+
+}
+

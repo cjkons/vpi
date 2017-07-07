@@ -61,6 +61,9 @@
                 <a onclick="novo()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-file"></span>  Novo 
                 </a>
+                <a onclick="consultar()"  class="btn btn-primary" >
+                    <span class="fa fa-search"></span> Consultar Equipamento
+                </a>
                 <a onclick="salvar()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
                 </a>
@@ -115,11 +118,7 @@
                         <font size="3">Atividade</font>
                     </div>
                 </td>
-                <td  style="width: 10%; padding-right: 10px; padding-top: 10px; font-size: 14px;">
-                    <a onclick="consultar()"  class="btn btn-primary" >
-                    <span class="fa fa-search"></span> Consultar Equipamento
-                </a>
-                </td>
+                
                 
 
 
@@ -158,7 +157,7 @@
                        ---------------------------------------------------------------------------------------------------------------------------------------------->
 
                         <!-- Modal item -->
-                        <div style="position: absolute; width: 95%;" class="modal fade" data-backdrop="static" id="adicionarItensModal" tabindex="50" align="center" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div style="position: absolute; width: 100%;" class="modal fade" data-backdrop="static" id="adicionarItensModal" tabindex="50" align="center" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div  style="width: 60%;"  class="modal-dialog-esp" align="center">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -256,6 +255,89 @@
                             </div>
                         </div>
 
+                        
+                        <!-- ------------------------------------------------------------------------------------------------------------------------------------------
+                        ********************************************************Modal LISTA ATIVIDADES *********************************************************************
+                        ***********************************************************************************************************************************************
+                       ---------------------------------------------------------------------------------------------------------------------------------------------->
+
+                        <!-- Modal item -->
+                        <div style="position: absolute; width: 100%;" class="modal fade" data-backdrop="static" id="adicionarListaAtividadesModal" tabindex="50" align="center" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div  style="width: 60%;"  class="modal-dialog-esp" align="center">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title" id="myModalLabel2">Adicionar Lista Atividades</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <nav class="navbart">
+                                            <div class="container-fluid" align="center">
+                                                
+                                                <a onclick="novoAtividadesDescricao()" class="btn btn-primary">
+                                                    <span class="glyphicon glyphicon-file"></span>  Novo 
+                                                </a>
+                                                <a onclick="salvarAtividadesDescricao()" class="btn btn-primary">
+                                                    <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+                                                </a>
+                                                <a onclick="botaoAtividadesDescricaoSair()" class="btn btn-primary">
+                                                    <span class="glyphicon glyphicon-refresh"></span> Sair
+                                                </a>
+                                                </a>
+                                                <a onclick="#" class="btn btn-primary">
+                                                    <span class="glyphicon"></span>- - - 
+
+                                                </a>
+
+                                                <a onclick="excluirAtividadesDescricao()" class="btn btn-primary">
+                                                    <span class="glyphicon glyphicon-trash"></span> Excluir
+                                                </a>
+
+                                            </div>
+                                        </nav>
+
+                                        </table>
+                                        <table style="width: 100%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
+                                            <tr>
+                                                <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
+                                                    <div class="form">
+                                                        Seq.
+                                                        <input type="text" class="form-control" id="idDescricaoModal"  placeholder="Seq." disabled >
+                                                    </div>
+                                                </td>
+
+                                            
+                                                <td  style="width: 30%; padding-right: 5px;font-size: 14px;">
+                                                    <div class="form">
+                                                        Descrição Atividades   
+                                                        <input type="text" class="form-control" id="descricaoAtividades"   placeholder="Descrição Atividades" disabled>
+                                                        
+                                                    </div>
+                                                </td>
+                                            </tr>    
+                                            
+                                        </table> 
+        
+        
+                            <br>
+                            <HR WIDTH=100%>
+                            <br>                    
+
+        
+                                        
+                                <br><br><br>
+                                <table id="tabelaItem5" style="width: 100%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center"></table>
+
+
+                                    </div>
+                                    
+                                    
+
+            
+                               
+                                </div>
+                            </div>
+                        </div>
+
 
 
 
@@ -265,7 +347,7 @@
            ---------------------------------------------------------------------------------------------------------------------------------------------->
 
             <!-- Modal item -->
-            <div style="width: 90%;" class="modal fade" data-backdrop="static" id="adicionarAtividadeModal" tabindex="50" align="center" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div style="width: 100%;" class="modal fade" data-backdrop="static" id="adicionarAtividadeModal" tabindex="50" align="center" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div  style="width: 40%;"  class="modal-dialog-esp" align="center">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -330,7 +412,7 @@
                                     <td  style="width: 28%; padding-right: 5px;font-size: 14px;">
                                         <div class="form">
                                             Freq.
-                                            <input type="text" class="form-control" id="frequencia"   placeholder="Freq." >
+                                            <input type="number" class="form-control" id="frequencia"   placeholder="Freq." >
                                         </div>
                                     </td>
                                 </tr>
@@ -361,7 +443,7 @@
            ---------------------------------------------------------------------------------------------------------------------------------------------->
 
             <!-- Modal item -->
-            <div style="width: 90%; "class="modal fade" data-backdrop="static" id="adicionarAtividadeModalEditar" tabindex="50" align="center" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div style="width: 100%; "class="modal fade" data-backdrop="static" id="adicionarAtividadeModalEditar" tabindex="50" align="center" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div style="width: 40%;" class="modal-dialog-esp">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -434,7 +516,7 @@
                                 <td  style="width: 28%; padding-right: 5px;font-size: 14px;">
                                     <div class="form">
                                         Frequência
-                                        <input type="text" class="form-control" id="frequenciaEditar"   placeholder="Frequência" >
+                                        <input type="number" class="form-control" id="frequenciaEditar"   placeholder="Frequência" >
                                     </div>
                                 </td>
                                 </tr>

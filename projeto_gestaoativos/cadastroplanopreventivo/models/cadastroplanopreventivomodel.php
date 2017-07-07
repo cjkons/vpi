@@ -48,7 +48,7 @@ class cadastroplanopreventivomodel extends CI_Model {
         
         //$quantidade = str_replace(',', '.', $quantidade);
         
-        $query = "SELECT * FROM GA_PL_PREVENT WHERE COD_EQUIPAMENTO = $equipamento" ;
+        $query = "SELECT * FROM GA_PL_PREVENT WHERE COD_EQUIPAMENTO = '$equipamento'" ;
         //print_r($query);exit();
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
@@ -159,7 +159,16 @@ class cadastroplanopreventivomodel extends CI_Model {
                 $resultado = $this->conBanco->query($query);
 
                 if ($resultado == true || $resultado == 1) {
-                    return true;
+                    
+                    $query = "DELETE GA_PL_PREVENT_ATV_DESC WHERE ID_PL_PREVENT = $id";
+                    $resultado = $this->conBanco->query($query);
+
+                    if ($resultado == true || $resultado == 1) {
+                        return true;
+
+                    } else {
+                        return false;
+                    }
                     
                 } else {
                     return false;
@@ -516,14 +525,14 @@ class cadastroplanopreventivomodel extends CI_Model {
 
 
                 $html .="<tr  style='width: 100%; padding-right: 5px; padding-top: 2px; padding-botton: 2px; font-size: 14px;' align='center' >
-                        <td  style='width: 4%;  padding-right: 2px;'><a onclick='editarAtividade($idAdicionarModal, $idAtividadeValor)' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span>  Editar Atividade </a></td>
-                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$idAtividade'   value='$idAtividadeValor' readonly></div></td>
-                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$intervencao'   value='$intervencaoValor' readonly></div></td>
-                        <td  style='width: 6%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$descAtividade'   value='$descAtividadeValor' readonly></div></td>
-                        <td  style='width: 10%; padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$frequencia'   value='$frequenciaValor' readonly></div></td>
+                        <td  style='width: 5%;  padding-right: 2px;'><a onclick='editarAtividade($idAdicionarModal, $idAtividadeValor)' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span>  Editar Atividade </a></td>
+                        <td  style='width: 5%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$idAtividade'   value='$idAtividadeValor' readonly></div></td>
+                        <td  style='width: 15%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$intervencao'   value='$intervencaoValor' readonly></div></td>
+                        <td  style='width: 15%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$descAtividade'   value='$descAtividadeValor' readonly></div></td>
+                        <td  style='width: 10%; padding-right: 2px;'><div class='form'><input  type='number' class='form-control' style='font-size: 14px;' id='$frequencia'   value='$frequenciaValor' readonly></div></td>
                         <td  style='width: 10%; padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$executor'   value='$executorValor' readonly></div></td>
-                        <td  style='width: 4%;  padding-right: 2px;'><a onclick='addItem($idAdicionarModal, $idAtividadeValor)' class='btn btn-primary'><span class='fa fa-plus-square'></span>  Adicionar Item </a></td>
-                        <td  style='width: 4%;  padding-right: 2px;'><a onclick='#' class='btn btn-primary'><span class='glyphicon glyphicon-file'></span>  Atividades </a></td>
+                        <td  style='width: 5%;  padding-right: 2px;'><a onclick='addItem($idAdicionarModal, $idAtividadeValor)' class='btn btn-primary'><span class='fa fa-plus-square'></span>  Adicionar Item </a></td>
+                        <td  style='width: 5%;  padding-right: 2px;'><a onclick='adicionarListaAtividades ($idAdicionarModal, $idAtividadeValor)' class='btn btn-primary'><span class='glyphicon glyphicon-file'></span>  Atividades </a></td>
 
 
 
@@ -608,15 +617,16 @@ class cadastroplanopreventivomodel extends CI_Model {
                 $executorValor = $item->EXECUTOR;
                 
 
-                $html .="<tr  style='width: 95%; padding-right: 5px; padding-top: 2px; ' align='center' >
-                        <td  style='width: 4%;  padding-right: 2px;'><a onclick='editarAtividade($idAdicionarModal, $idAtividadeValor)' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span>  Editar Atividade </a></td>
-                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$idAtividade'   value='$idAtividadeValor' readonly></div></td>
-                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$intervencao'   value='$intervencaoValor' readonly></div></td>
-                        <td  style='width: 6%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$descAtividade'   value='$descAtividadeValor' readonly></div></td>
-                        <td  style='width: 10%; padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$frequencia'   value='$frequenciaValor' readonly></div></td>
+                $html .="<tr  style='width: 100%; padding-right: 5px; padding-top: 2px; padding-botton: 2px; font-size: 14px;' align='center' >
+                        <td  style='width: 5%;  padding-right: 2px;'><a onclick='editarAtividade($idAdicionarModal, $idAtividadeValor)' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span>  Editar Atividade </a></td>
+                        <td  style='width: 5%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$idAtividade'   value='$idAtividadeValor' readonly></div></td>
+                        <td  style='width: 15%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$intervencao'   value='$intervencaoValor' readonly></div></td>
+                        <td  style='width: 15%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$descAtividade'   value='$descAtividadeValor' readonly></div></td>
+                        <td  style='width: 10%; padding-right: 2px;'><div class='form'><input  type='number' class='form-control' style='font-size: 14px;' id='$frequencia'   value='$frequenciaValor' readonly></div></td>
                         <td  style='width: 10%; padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 14px;' id='$executor'   value='$executorValor' readonly></div></td>
-                        <td  style='width: 4%;  padding-right: 2px;'><a onclick='addItem($idAdicionarModal, $idAtividadeValor)' class='btn btn-primary'><span class='fa fa-plus-square'></span>  Adicionar Item </a></td>
-                        <td  style='width: 4%;  padding-right: 2px;'><a onclick='#' class='btn btn-primary'><span class='glyphicon glyphicon-file'></span>  Atividades </a></td>
+                        <td  style='width: 5%;  padding-right: 2px;'><a onclick='addItem($idAdicionarModal, $idAtividadeValor)' class='btn btn-primary'><span class='fa fa-plus-square'></span>  Adicionar Item </a></td>
+                        <td  style='width: 5%;  padding-right: 2px;'><a onclick='adicionarListaAtividades($idAdicionarModal, $idAtividadeValor)' class='btn btn-primary'><span class='glyphicon glyphicon-file'></span>  Atividades </a></td>
+
 
 
 
@@ -776,7 +786,18 @@ class cadastroplanopreventivomodel extends CI_Model {
 
                 if($resultado == true || $resultado == 1){
 
-                       return true;
+                       $query = "DELETE GA_PL_PREVENT_ATV_DESC WHERE ID_PL_PREVENT = '$id' AND ID_ATIVIDADE = '$idAtividade' ";
+                        // print_r($query);exit();
+                         $resultado = $this->conBanco->query($query);
+
+                        if($resultado == true || $resultado == 1){
+
+                               return true;
+
+
+                        } else {
+                            return false;
+                        }
                        
                    
                 } else {
@@ -803,7 +824,18 @@ class cadastroplanopreventivomodel extends CI_Model {
 
                 if($resultado == true || $resultado == 1){
 
-                       return true;
+                       $query = "DELETE GA_PL_PREVENT_ATV_DESC_TMP WHERE ID_PL_PREVENT = '$id' AND ID_ATIVIDADE = '$idAtividade' ";
+                        // print_r($query);exit();
+                         $resultado = $this->conBanco->query($query);
+
+                        if($resultado == true || $resultado == 1){
+
+                               return true;
+
+
+                        } else {
+                            return false;
+                        }
                        
                    
                 } else {
@@ -837,7 +869,17 @@ class cadastroplanopreventivomodel extends CI_Model {
 
             if($resultado == true || $resultado == 1){
                 
-                return true;
+                $query = "DELETE GA_PL_PREVENT_ATV_DESC_TMP";
+                // print_r($query);exit();
+                $resultado = $this->conBanco->query($query);
+
+                if($resultado == true || $resultado == 1){
+
+                    return true;
+
+                } else {
+                        return false;
+                }
                    
             } else {
                     return false;
@@ -1051,7 +1093,7 @@ class cadastroplanopreventivomodel extends CI_Model {
         
     }
     
-    public function validarSalvarItem($idAtividade, $idItemModal, $item) {
+    public function validarSalvarItem($id, $idAtividade, $idItemModal, $item) {
 
         $this->initConBanco();
 
@@ -1067,7 +1109,7 @@ class cadastroplanopreventivomodel extends CI_Model {
         // SE O FOR NOVO,
         if (is_array($rs) && count($rs) != "") {
             
-            $query = "SELECT * FROM GA_PL_PREVENT_ITEM WHERE COD_ITEM = '$item' AND ID_ATIVIDADE = $idAtividade ";
+            $query = "SELECT * FROM GA_PL_PREVENT_ITEM WHERE COD_ITEM = '$item' AND ID_ATIVIDADE = $idAtividade AND ID_PL_PREVENT = '$id' ";
 
             //print_r($query);exit();
             $cs = $this->conBanco->query($query);
@@ -1606,6 +1648,580 @@ class cadastroplanopreventivomodel extends CI_Model {
       
     
     }
+    
+    //// adicionar atividades
+    
+    public function adicionarListaAtividades($id, $idAtividade){
+        
+        $this->initConBanco();
+        
+        $query = "SELECT * FROM GA_PL_PREVENT_ATV WHERE ID_PL_PREVENT = '$id' AND ID_ATIVIDADE = '$idAtividade'";
+        //print_r($query);exit();     
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+        
+        if (is_array($rs) && count($rs) == ""){
+        
+        $query = "SELECT MAX(ID_ATIVIDADE_DESC) AS ID_ATIVIDADE_DESC FROM GA_PL_PREVENT_ATV_DESC_TMP WHERE ID_PL_PREVENT = '$id' AND ID_ATIVIDADE = '$idAtividade'";
+                   //print_r($query);exit();     
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+        
+        
+           
+            if(count($rs) > 0){
+                $novoId = $rs[0]->ID_ATIVIDADE_DESC + 1;
+            }
+            else{
+                $novoId = 1;
+
+            }
+
+            
+        }else{
+           $query = "SELECT MAX(ID_ATIVIDADE_DESC) AS ID_ATIVIDADE_DESC FROM GA_PL_PREVENT_ATV_DESC WHERE ID_PL_PREVENT = '$id' AND ID_ATIVIDADE = '$idAtividade'";
+                 //  print_r($query);exit();     
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+
+            if(count($rs) > 0){
+                $novoId = $rs[0]->ID_ATIVIDADE_DESC + 1;
+            }
+            else{
+                $novoId = 1;
+
+            }
+
+
+            
+        
+        }   
+    //return $novoId; 
+    return json_encode($novoId);
+    }
+    
+    
+    
+    
+    public function getAdicionarAtividadesDescricao($id, $idAtividade, $idDescricaoModal) {
+
+        $this->initConBanco();
+        
+        $query = "SELECT * FROM GA_PL_PREVENT_ATV WHERE ID_PL_PREVENT =  '$id' AND ID_ATIVIDADE = $idAtividade";
+
+        //print_r($query);exit();
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+        
+        
+        
+        if (is_array($rs) && count($rs) > 0){
+            
+
+
+            $query = "SELECT * FROM GA_PL_PREVENT_ATV_DESC WHERE ID_PL_PREVENT = $id AND ID_ATIVIDADE = $idAtividade ORDER BY ID_ATIVIDADE_DESC";
+
+            //print_r($query);exit();
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+
+
+            $html = "";
+
+            $html .="<tr  style='width: 10%; padding-right: 5px; ' align='center' >
+                        <td  style='width: 4%; padding-right: 5px;font-size: 14px;'>Editar</td>
+                        <td  style='width: 4%; padding-right: 5px;font-size: 14px;'>Seq.</td>
+                        <td  style='width: 4%; padding-right: 5px;font-size: 14px;'>Atividade Descrição</td>
+                        
+                        
+                    </tr>";
+
+
+            $j = 0;
+
+            foreach ($rs as $item) {
+
+                //print_r($i);exit();
+
+                $id = $j;
+                $j = $j + 1;
+
+                $idDescricaoModalModal = $j;
+
+                $atividadeDescricao  = $j;
+                $atividadeDescricao .= "_";
+                $atividadeDescricao .= $j;
+
+                
+                
+                $idDescricaoModalValor = $item->ID_ATIVIDADE_DESC;
+                $atividadeDescricaoValor = $item->DESC_ATIVIDADE;
+                
+                
+                
+
+
+
+                $html .="<tr  style='width: 100%; padding-right: 5px; padding-top: 2px; font-size: 14px;' align='center' >
+                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarAtividadeDescricao($id, $idAtividade, $idDescricaoModalValor)' readonly ></button></div></td>
+                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 12px;' id='$idDescricaoModalModal'   value='$idDescricaoModalValor' readonly></div></td>
+                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 12px;' id='$atividadeDescricao'   value='$atividadeDescricaoValor' readonly></div></td>
+                        
+
+
+
+                  </tr>";
+            }
+
+
+            return $html;
+
+
+            /// CARREGA TABELA TEMPORARIA DE ITENS INSERIDOS NOVO 
+        }else{
+        
+            $query = "SELECT * FROM GA_PL_PREVENT_ATV_DESC_TMP WHERE ID_PL_PREVENT = $id AND ID_ATIVIDADE = $idAtividade ORDER BY ID_ATIVIDADE_DESC";
+
+            //print_r($query);exit();
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+
+
+            $html = "";
+
+            $html .="<tr  style='width: 10%; padding-right: 5px; ' align='center' >
+                        <td  style='width: 4%; padding-right: 5px;font-size: 14px;'>Editar</td>
+                        <td  style='width: 4%; padding-right: 5px;font-size: 14px;'>Seq.</td>
+                        <td  style='width: 4%; padding-right: 5px;font-size: 14px;'>Atividade Descrição</td>
+                        
+                        
+                    </tr>";
+
+
+            $j = 0;
+
+            foreach ($rs as $item) {
+
+                //print_r($i);exit();
+
+                $id = $j;
+                $j = $j + 1;
+
+                $idDescricaoModalModal = $j;
+
+                $atividadeDescricao  = $j;
+                $atividadeDescricao .= "_";
+                $atividadeDescricao .= $j;
+
+                
+                
+                $idDescricaoModalValor = $item->ID_ATIVIDADE_DESC;
+                $atividadeDescricaoValor = $item->DESC_ATIVIDADE;
+                
+                
+                
+
+
+
+                $html .="<tr  style='width: 100%; padding-right: 5px; padding-top: 2px; font-size: 14px;' align='center' >
+                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarAtividadeDescricao($id, $idAtividade, $idDescricaoModalValor)' readonly ></button></div></td>
+                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 12px;' id='$idDescricaoModalModal'   value='$idDescricaoModalValor' readonly></div></td>
+                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 12px;' id='$atividadeDescricao'   value='$atividadeDescricaoValor' readonly></div></td>
+                        
+
+
+
+                  </tr>";
+            }
+
+
+            return $html;
+
+        }
+
+            
+    }
+    
+    public function novoAtividadesDescricao($id, $idAtividade){
+        
+        $this->initConBanco();
+        
+        $query = "SELECT * FROM GA_PL_PREVENT_ATV WHERE ID_PL_PREVENT = '$id' AND ID_ATIVIDADE = '$idAtividade'";
+        //print_r($query);exit();     
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+        
+        if (is_array($rs) && count($rs) == ""){
+        
+        $query = "SELECT MAX(ID_ATIVIDADE_DESC) AS ID_ATIVIDADE_DESC FROM GA_PL_PREVENT_ATV_DESC_TMP WHERE ID_PL_PREVENT = '$id' AND ID_ATIVIDADE = '$idAtividade'";
+                   //print_r($query);exit();     
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+        
+        
+           
+            if(count($rs) > 0){
+                $novoId = $rs[0]->ID_ATIVIDADE_DESC + 1;
+            }
+            else{
+                $novoId = 1;
+
+            }
+
+            
+        }else{
+           $query = "SELECT MAX(ID_ATIVIDADE_DESC) AS ID_ATIVIDADE_DESC FROM GA_PL_PREVENT_ATV_DESC WHERE ID_PL_PREVENT = '$id' AND ID_ATIVIDADE = '$idAtividade'";
+                 //  print_r($query);exit();     
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+
+            if(count($rs) > 0){
+                $novoId = $rs[0]->ID_ATIVIDADE_DESC + 1;
+            }
+            else{
+                $novoId = 1;
+
+            }
+
+
+            
+        
+        }   
+    
+    return json_encode($novoId);
+    }
+    
+    
+    public function salvarAtividadesDescricao($id, $idAtividade, $idDescricaoModal , $descricaoAtividades) {
+
+        $this->initConBanco();
+        
+        
+
+// VERIFICA SE A ATIVIDADE EM QUESTAO, ESTA SALVA NA TABELA TEMPORARIA OU NAO.
+        $query = "SELECT * FROM  GA_PL_PREVENT_ATV  WHERE ID_PL_PREVENT = $id AND ID_ATIVIDADE = $idAtividade";
+
+       // print_r($query); exit();
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+
+        $usuarioLogado = "TESTE SISTEMA"; // IMPLEMENTAR A FUNÇÃO PRA PEGAR O USUÁRIO LOGADO
+
+
+// SE A ATIVIDADE ESTIVER SALVA NA TABELA FINAL (NAO TEMPORARIO)
+        if (is_array($rs) && count($rs) != "") {
+
+
+            $query = "SELECT * FROM  GA_PL_PREVENT_ATV_DESC WHERE ID_PL_PREVENT = $id AND ID_ATIVIDADE = $idAtividade AND ID_ATIVIDADE_DESC = '$idDescricaoModal'";
+
+            //print_r($query); exit();
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+
+
+
+            if (is_array($rs) && count($rs) > 0) {
+
+
+
+                $query = "UPDATE GA_PL_PREVENT_ATV_DESC SET DESC_ATIVIDADE = '$descricaoAtividades', DATA_ALTERACAO = SYSDATE, USUARIO_ALTERACAO = '$usuarioLogado' WHERE ID_PL_PREVENT = $id AND ID_ATIVIDADE = $idAtividade AND ID_ATIVIDADE_DESC = $idDescricaoModal";
+                //print_r($query);exit();
+                $resultado = $this->conBanco->query($query);
+
+                if ($resultado == true || $resultado == 1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+
+
+                $query = "INSERT INTO GA_PL_PREVENT_ATV_DESC (ID_PL_PREVENT, ID_ATIVIDADE, ID_ATIVIDADE_DESC, DESC_ATIVIDADE, DATA_CADASTRO, USUARIO_CADASTRO)
+                                 VALUES ($id, $idAtividade, $idDescricaoModal, '$descricaoAtividades', SYSDATE, '$usuarioLogado')";
+
+                //print_r($query);exit();
+                $resultado = $this->conBanco->query($query);
+
+                if ($resultado == true || $resultado == 1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            
+// SE A ATIVIDADE ESTIVER SALVA NA TABELA TEMPORARIO. (TEMPORARIO)            
+        } else {
+
+            $query = "SELECT * FROM  GA_PL_PREVENT_ATV_DESC_TMP WHERE ID_PL_PREVENT = $id AND ID_ATIVIDADE = $idAtividade AND ID_ATIVIDADE_DESC = '$idDescricaoModal'";
+
+            //print_r($query); exit();
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+
+
+
+            if (is_array($rs) && count($rs) > 0) {
+
+
+
+                $query = "UPDATE GA_PL_PREVENT_ATV_DESC_TMP SET DESC_ATIVIDADE = '$descricaoAtividades', DATA_ALTERACAO = SYSDATE, USUARIO_ALTERACAO = '$usuarioLogado' WHERE ID_PL_PREVENT = $id AND ID_ATIVIDADE = $idAtividade AND ID_ATIVIDADE_DESC = $idDescricaoModal";
+                //print_r($query);exit();
+                $resultado = $this->conBanco->query($query);
+
+                if ($resultado == true || $resultado == 1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+
+
+                $query = "INSERT INTO GA_PL_PREVENT_ATV_DESC_TMP (ID_PL_PREVENT, ID_ATIVIDADE, ID_ATIVIDADE_DESC, DESC_ATIVIDADE, DATA_CADASTRO, USUARIO_CADASTRO)
+                                 VALUES ($id, $idAtividade, $idDescricaoModal, '$descricaoAtividades', SYSDATE, '$usuarioLogado')";
+
+                //print_r($query);exit();
+                $resultado = $this->conBanco->query($query);
+
+                if ($resultado == true || $resultado == 1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
+    
+    
+     public function getAdicionarAtividadeDescricao($id, $idAtividade, $idDescricaoModal) {
+
+        $this->initConBanco();
+        
+        $query = "SELECT * FROM GA_PL_PREVENT_ATV WHERE ID_PL_PREVENT =  '$id' AND ID_ATIVIDADE = $idAtividade";
+
+       // print_r($query);exit();
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+        
+        
+        
+        if (is_array($rs) && count($rs) > 0){
+            
+
+
+            $query = "SELECT * FROM GA_PL_PREVENT_ATV_DESC WHERE ID_PL_PREVENT = $id AND ID_ATIVIDADE = $idAtividade ORDER BY ID_ATIVIDADE_DESC";
+
+            //print_r($query);exit();
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+
+
+            $html = "";
+
+            $html .="<tr  style='width: 10%; padding-right: 5px; ' align='center' >
+                        <td  style='width: 4%; padding-right: 5px;font-size: 14px;'>Editar</td>
+                        <td  style='width: 4%; padding-right: 5px;font-size: 14px;'>Seq.</td>
+                        <td  style='width: 4%; padding-right: 5px;font-size: 14px;'>Atividade Descrição</td>
+                        
+                        
+                    </tr>";
+
+
+            $j = 0;
+
+            foreach ($rs as $item) {
+
+                //print_r($i);exit();
+
+                $id = $j;
+                $j = $j + 1;
+
+                $idDescricaoModalModal = $j;
+
+                $descricaoAtividades = $j;
+                $descricaoAtividades .= "_";
+                $descricaoAtividades .= $j;
+
+                
+                
+                
+                $idItemModalValor = $item->ID_ATIVIDADE_DESC;
+                $descricaoAtividadesValor = $item->DESC_ATIVIDADE;
+                
+                
+
+                $html .="<tr  style='width: 100%; padding-right: 5px; padding-top: 2px; font-size: 14px;' align='center' >
+                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarAtividadeDescricao($id, $idAtividade, $idItemModalValor)' readonly ></button></div></td>
+                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 12px;' id='$idDescricaoModalModal'   value='$idItemModalValor' readonly></div></td>
+                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 12px;' id='$descricaoAtividades'   value='$descricaoAtividadesValor' readonly></div></td>
+                        
+
+
+
+                  </tr>";
+            }
+
+
+            return $html;
+
+
+            /// CARREGA TABELA TEMPORARIA DE ITENS INSERIDOS NOVO 
+        }else{
+        
+            $query = "SELECT * FROM GA_PL_PREVENT_ATV_DESC_TMP WHERE ID_PL_PREVENT = $id AND ID_ATIVIDADE = $idAtividade ORDER BY ID_ATIVIDADE_DESC";
+
+            //print_r($query);exit();
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+
+
+            $html = "";
+
+            $html .="<tr  style='width: 10%; padding-right: 5px; ' align='center' >
+                        <td  style='width: 4%; padding-right: 5px;font-size: 14px;'>Editar</td>
+                        <td  style='width: 4%; padding-right: 5px;font-size: 14px;'>Seq.</td>
+                        <td  style='width: 4%; padding-right: 5px;font-size: 14px;'>Atividade Descrição</td>
+                        
+                        
+                    </tr>";
+
+
+            $j = 0;
+
+            foreach ($rs as $item) {
+
+                //print_r($i);exit();
+
+                $id = $j;
+                $j = $j + 1;
+
+                $idDescricaoModalModal = $j;
+
+                $descricaoAtividades = $j;
+                $descricaoAtividades .= "_";
+                $descricaoAtividades .= $j;
+
+                
+                
+                
+                $idItemModalValor = $item->ID_ATIVIDADE_DESC;
+                $descricaoAtividadesValor = $item->DESC_ATIVIDADE;
+                
+                
+
+                $html .="<tr  style='width: 100%; padding-right: 5px; padding-top: 2px; font-size: 14px;' align='center' >
+                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarAtividadeDescricao($id, $idAtividade, $idItemModalValor)' readonly ></button></div></td>
+                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 12px;' id='$idDescricaoModalModal'   value='$idItemModalValor' readonly></div></td>
+                        <td  style='width: 4%;  padding-right: 2px;'><div class='form'><input  type='text' class='form-control' style='font-size: 12px;' id='$descricaoAtividades'   value='$descricaoAtividadesValor' readonly></div></td>
+                        
+ 
+
+
+                  </tr>";
+            }
+
+
+            return $html;
+        }
+
+            
+    }
+    
+    
+    public function editarAtividadeDescricao($id, $idAtividade,  $idItemModalValor){
+        
+        $this->initConBanco();
+        
+        $query = "SELECT * FROM GA_PL_PREVENT_ATV_DESC WHERE ID_PL_PREVENT =  '$id' AND ID_ATIVIDADE = '$idAtividade' AND ID_ATIVIDADE_DESC = '$idItemModalValor'";
+        //print_r($query);exit();     
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+                    
+        $obj = array();
+
+        if (is_array($rs) && count($rs) > 0){
+            
+            
+            $obj[] = $rs[0]->ID_ATIVIDADE_DESC;
+            $obj[] = $rs[0]->DESC_ATIVIDADE;
+            
+            
+            
+            return json_encode($obj);
+        
+            
+        }else{
+            
+            $query = "SELECT * FROM GA_PL_PREVENT_ATV_DESC_TMP WHERE ID_PL_PREVENT =  '$id' AND ID_ATIVIDADE = '$idAtividade' AND ID_ATIVIDADE_DESC = '$idItemModalValor'";
+            // print_r($query);exit();     
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+
+            $obj = array();
+
+            if (is_array($rs) && count($rs) > 0){
+
+
+                $obj[] = $rs[0]->ID_ATIVIDADE_DESC;
+                $obj[] = $rs[0]->DESC_ATIVIDADE;
+                
+//             
+
+            }else{
+                return false;
+            } 
+        }  
+    }
+    
+    
+    public function excluirAtividadesDescricao($id, $idAtividade, $idDescricaoModal){
+        
+        $this->initConBanco();        
+        
+         $query = "SELECT * FROM GA_PL_PREVENT_ATV_DESC WHERE ID_PL_PREVENT = '$id' AND ID_ATIVIDADE = '$idAtividade' AND ID_ATIVIDADE_DESC = '$idDescricaoModal'";
+        
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+         
+        if (is_array($rs) && count($rs) > 0) {
+            
+            
+            $query = "DELETE GA_PL_PREVENT_ATV_DESC WHERE ID_PL_PREVENT = '$id' AND ID_ATIVIDADE = '$idAtividade' AND ID_ATIVIDADE_DESC = '$idDescricaoModal' ";
+             //print_r($query);exit();
+             $resultado = $this->conBanco->query($query);
+
+            if($resultado == true || $resultado == 1){
+            
+                   return true;
+                   
+            } else {
+                    return false;
+            }
+            
+            
+            
+        }else{
+            
+            $query = "DELETE GA_PL_PREVENT_ATV_DESC_TMP WHERE ID_PL_PREVENT = '$id' AND ID_ATIVIDADE = '$idAtividade' AND ID_ATIVIDADE_DESC = '$idDescricaoModal' ";
+            // print_r($query);exit();
+             $resultado = $this->conBanco->query($query);
+
+            if($resultado == true || $resultado == 1){
+            
+                   return true;
+                   
+            } else {
+                    return false;
+            }
+            
+                
+           
+        }
+        
+      
+    
+    }
+    
+    
     
     
     
