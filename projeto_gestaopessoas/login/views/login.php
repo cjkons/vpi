@@ -57,7 +57,7 @@ if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required
      <p id="u104-2" style="color: #FFFFFF;">Bem vindo!</p>
     </div>
     <div class="clip_frame colelem" id="u112"><!-- svg -->
-     <img class="svg svg_mar temp_no_img_src" id="u108" data-orig-src="resources/login/images/iconasset-1logoclarify_blue.svg?crc=4008999996" onload="this.style.height=(this.offsetWidth*107.03478260869565/373)+'px'" alt="" data-mu-svgfallback="resources/login/images/iconasset%201logoclarify_poster_.png?crc=434667730" data-image-width="373" data-image-height="107" src="resources/login/images/iconasset-1logoclarify.svg?crc=4008999996"/>
+     <img class="svg svg_mar temp_no_img_src" id="u108" data-orig-src="resources/login/images/peopleAsset 2.svg" onload="this.style.height=(this.offsetWidth*107.03478260869565/373)+'px'" alt="" data-mu-svgfallback="resources/login/images/iconasset%201logoclarify_poster_.png?crc=434667730" data-image-width="373" data-image-height="107" src="resources/login/images/peopleAsset 2.svg"/>
     </div>
     <div class="clearfix colelem" id="pu269"><!-- group -->
      <div class="clip_frame grpelem" id="u269"><!-- svg -->

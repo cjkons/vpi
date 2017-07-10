@@ -6,30 +6,28 @@
 /// VPI TECNOLOGIA                          ///
 ///////////////////////////////////////////////
 
-var tipoFilial;
+
 
 $(document).ready(function() {
   
   carregarEmpresa();    
   carregarFilial();
   carregarFuncionario();
+  carregarListaExames();
   getGrid();
   
-$('#dataExameComplementar').datepicker({
-    format: "dd/mm/yyyy",
-    language: "pt-BR"
-  });     
+ 
 
-$('#dataRealizacao').datepicker({
+    $('#dataRealizacao').datepicker({
     format: "dd/mm/yyyy",
     language: "pt-BR"
   });
 
-$('#dataComplementar1').datepicker({
+    $('#dataComplementar1').datepicker({
     format: "dd/mm/yyyy",
     language: "pt-BR"
   });     
-$('#dataComplementar2').datepicker({
+    $('#dataComplementar2').datepicker({
     format: "dd/mm/yyyy",
     language: "pt-BR"
   });
@@ -81,44 +79,12 @@ $('#dataComplementar2').datepicker({
    // adiciona a classe selected na selecionada atualmente
    $(this).addClass("selected");
    // mostra a aba clicada
-   $($(this).attr("href")).show();
+   $($(this).attr("href")).show(); 
    // pra nao ir para o link
    return false;
    });
    });
 
-
-
-$(document).ready( function() {
-   /* Executa a requisição quando o campo CEP perder o foco */
-   $('#cep').blur(function(){
-       
-             
-             
-           /* Configura a requisição AJAX */
-           $.ajax({
-                url : 'index.php?m=cadastroaso&c=cadastroasocontroller&f=consultarCep', /* URL que será chamada */ 
-                type : 'POST', /* Tipo da requisição */ 
-                data: 'cep=' + $('#cep').val(), /* dado que será enviado via POST */
-                dataType: 'json', /* Tipo de transmissão */
-                success: function(data){
-                    
-                    if(data.sucesso == 1){
-                        $('#endereco').val(data.endereco);
-                        $('#bairro').val(data.bairro);
-                        $('#cidade').val(data.cidade);
-                        $('#estado').val(data.estado);
- 
-                        $('#numero').focus();
-                    }
-                    else {
-                        mensagem('Atenção', 'CEP Não encontrado', 'error');
-                    }
-                }
-           });   
-   return false;    
-   })
-});
 
 function ocultarGrid(){
     
@@ -165,6 +131,7 @@ function novo(){
     
     document.getElementById("resultadoExame").readOnly             = true;
     document.getElementById("observacaoExame").readOnly             = false;
+    document.getElementById("localRealizacao").readOnly             = false;
     document.getElementById("dataRealizacao").readOnly             = false;
     
     
@@ -188,6 +155,8 @@ function novo(){
     document.getElementById("pagamentoExame").readOnly             = false;
     document.getElementById("valorExame").readOnly             = false; 
     
+    document.getElementById("anexoExame").readOnly             = false; 
+    document.getElementById("anexoView").hidden             = true; 
     
     document.getElementById("idAso").value            = "";
     document.getElementById("empresa").value            = 0;
@@ -216,28 +185,31 @@ function novo(){
     
     document.getElementById("resultadoExame").value            = 0;
     document.getElementById("observacaoExame").value            = "";
+    document.getElementById("localRealizacao").value            = "";
     document.getElementById("dataRealizacao").value            = "";
     
     
-    document.getElementById("exameComplementar1").value            = "";
+    document.getElementById("exameComplementar1").value            = 0;
     document.getElementById("dataComplementar1").value            = "";
-    document.getElementById("exameComplementar2").value            = "";
+    document.getElementById("exameComplementar2").value            = 0;
     document.getElementById("dataComplementar2").value            = "";
-    document.getElementById("exameComplementar3").value            = "";
+    document.getElementById("exameComplementar3").value            = 0;
     document.getElementById("dataComplementar3").value            = "";
-    document.getElementById("exameComplementar4").value            = "";
+    document.getElementById("exameComplementar4").value            = 0;
     document.getElementById("dataComplementar4").value            = "";
-    document.getElementById("exameComplementar5").value            = "";
+    document.getElementById("exameComplementar5").value            = 0;
     document.getElementById("dataComplementar5").value            = "";
-    document.getElementById("exameComplementar6").value            = "";
+    document.getElementById("exameComplementar6").value            = 0;
     document.getElementById("dataComplementar6").value            = "";
-    document.getElementById("exameComplementar7").value            = "";
+    document.getElementById("exameComplementar7").value            = 0;
     document.getElementById("dataComplementar7").value            = "";
-    document.getElementById("exameComplementar8").value            = "";
+    document.getElementById("exameComplementar8").value            = 0;
     document.getElementById("dataComplementar8").value            = "";
     
     document.getElementById("pagamentoExame").value            = 0;
     document.getElementById("valorExame").value            = "";
+    document.getElementById("anexoExame").value            = "";
+    document.getElementById("anexoView").value            = "";
     
          
     $.ajax({
@@ -285,6 +257,7 @@ function salvar(){
     
     var resultadoExame           =   $('#resultadoExame').val();
     var observacaoExame           =   $('#observacaoExame').val();
+    var localRealizacao           =   $('#localRealizacao').val();
     var dataRealizacao           =   $('#dataRealizacao').val();
     
     var exameComplementar1           =   $('#exameComplementar1').val();
@@ -306,6 +279,9 @@ function salvar(){
     
     var pagamentoExame           =   $('#pagamentoExame').val();
     var valorExame           =   $('#valorExame').val();
+    
+    var anexoExame           =   $('#anexoExame').val();
+    var anexoView           =   $('#anexoView').val();
     
     if ($('#agBiologico').is(':checked') == true) {
     
@@ -404,11 +380,20 @@ function salvar(){
     if(resultadoExame == 0){
         controleDePreenchimento = 'N';
     }
+    if(localRealizacao == ""){
+        controleDePreenchimento = 'N';
+    }
     if(dataRealizacao == ""){
         controleDePreenchimento = 'N';
     }
     if(pagamentoExame == 0){
         controleDePreenchimento = 'N';
+    }
+    
+    if(anexoExame == ""){
+        if(anexoView == ""){
+            controleDePreenchimento = 'N';
+        }
     }
     
     
@@ -444,6 +429,7 @@ function salvar(){
 
                 document.getElementById("resultadoExame").readOnly             = true;
                 document.getElementById("observacaoExame").readOnly             = true;
+                document.getElementById("localRealizacao").readOnly             = true;
                 document.getElementById("dataRealizacao").readOnly             = true;
 
 
@@ -466,13 +452,33 @@ function salvar(){
 
                 document.getElementById("pagamentoExame").readOnly             = true;
                 document.getElementById("valorExame").readOnly             = true; 
+                
+                document.getElementById("anexoExame").readOnly             = true;
+                document.getElementById("anexoView").readOnly             = true;
     
         
+        if (anexoExame != "") {
+
+
+            var fd1 = new FormData();
+
+            fd1.append('anexo', document.getElementById('anexoExame').files[0]);
+
+
+            $.ajax({
+                url: 'index.php?m=cadastroaso&c=cadastroasocontroller&f=salvarAnexo',
+                type: 'POST',
+                cache: false,
+                data: fd1,
+                processData: false,
+                contentType: false,
+                async: false,
+                success: function (enderecoAnexo, pasta) {
         
         
         
             $.ajax({
-                        url: 'index.php?m=cadastrofuncionarios&c=cadastrofuncionarioscontroller&f=salvar',
+                        url: 'index.php?m=cadastroaso&c=cadastroasocontroller&f=salvar',
                         data: {
                             
                                     idAso: idAso,
@@ -498,7 +504,97 @@ function salvar(){
                                     riscoAcidente: riscoAcidente,
                                     riscoErgonomico: riscoErgonomico,
                                     ausenciaRisco: ausenciaRisco,
+                                    resultadoExame: resultadoExame,
                                     observacaoExame: observacaoExame,
+                                    localRealizacao: localRealizacao,
+                                    dataRealizacao: dataRealizacao,
+                                    
+                                    
+                                    exameComplementar1: exameComplementar1,
+                                    dataComplementar1: dataComplementar1,
+                                    exameComplementar2: exameComplementar2,
+                                    dataComplementar2: dataComplementar2,
+                                    exameComplementar3: exameComplementar3,
+                                    dataComplementar3: dataComplementar3,
+                                    exameComplementar4: exameComplementar4,
+                                    dataComplementar4: dataComplementar4,
+                                    exameComplementar5: exameComplementar5,
+                                    dataComplementar5: dataComplementar5,
+                                    exameComplementar6: exameComplementar6,
+                                    dataComplementar6: dataComplementar6,
+                                    exameComplementar7: exameComplementar7,
+                                    dataComplementar7: dataComplementar7,
+                                    exameComplementar8: exameComplementar8,
+                                    dataComplementar8: dataComplementar8,
+                                    
+                                    pagamentoExame: pagamentoExame,
+                                    valorExame: valorExame,
+                                    
+                                    
+                                    anexoExame: enderecoAnexo // PASSANDO VALOR DA ARQUIVO VINDO DO ANEXO
+                                    
+                                    
+                                    
+                                    
+                            
+
+
+                        },
+                        type: 'POST',
+                        dataType: 'json',
+                        async: true,
+                        success: function(r) {
+
+                            if (r == true) {
+                                mensagem('Sucesso', 'Salvo com sucesso', 'success');
+                                
+                                atualizar();
+                                
+                            }
+                            else {
+                                mensagem('Atenção', 'Erro ao salvar', 'error'); 
+                            }
+                        },
+                        error: function(e) {
+                             mensagem('Atenção', 'Erro ao salvar', 'error'); 
+                        }
+                    });
+                    
+                }
+            });   
+    
+    // SEM NOVO ANEXO, BUSCA VALOR NO ANEXO VIEW        
+        }else{
+            $.ajax({
+                        url: 'index.php?m=cadastroaso&c=cadastroasocontroller&f=salvar',
+                        data: {
+                            
+                                    idAso: idAso,
+                                    empresa: empresa,
+                                    filial: filial,
+                                    funcionario: funcionario,
+                                    matricula: matricula,
+                                    setor: setor,
+                                    funcao: funcao,
+                                    dataNasc: dataNasc,
+                                    cpf: cpf,
+                                    ctps: ctps,
+                                    pisPasep: pisPasep,
+                                    
+                                    
+                                    tipoExames: tipoExames,
+                                    outrosExames: outrosExames,
+                                    medico: medico,
+                                    crm: crm,
+                                    agBiologico: agBiologico,
+                                    agFisico: agFisico,
+                                    agQuimico: agQuimico,
+                                    riscoAcidente: riscoAcidente,
+                                    riscoErgonomico: riscoErgonomico,
+                                    ausenciaRisco: ausenciaRisco,
+                                    resultadoExame: resultadoExame,
+                                    observacaoExame: observacaoExame,
+                                    localRealizacao: localRealizacao,
                                     dataRealizacao: dataRealizacao,
                                     
                                     
@@ -522,6 +618,12 @@ function salvar(){
                                     pagamentoExame: pagamentoExame,
                                     valorExame: valorExame
                                     
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
                             
 
 
@@ -533,9 +635,9 @@ function salvar(){
 
                             if (r == true) {
                                 mensagem('Sucesso', 'Salvo com sucesso', 'success');
-                                $('#basicModal').modal('hide');
-                                document.getElementById("imagemView").innerHTML = "";
+                                
                                 atualizar();
+                                
                             }
                             else {
                                 mensagem('Atenção', 'Erro ao salvar', 'error'); 
@@ -547,10 +649,11 @@ function salvar(){
                     });
         }
             
-    
+    }
             
     else{
-        mensagem('Atenção', 'Prencha todos os campos', 'alert');
+        
+        mensagem('Atenção', 'Prencha todos os campos', 'r', 'e', 2000, 1);
         
       
             
@@ -560,12 +663,12 @@ function salvar(){
 
 function excluir(){
     
-    var idFuncionario  =   $('#idFuncionario').val();
+    var idAso  =   $('#idAso').val();
      
     $.ajax({
-        url: 'index.php?m=cadastrofuncionarios&c=cadastrofuncionarioscontroller&f=excluir',
+        url: 'index.php?m=cadastroaso&c=cadastroasocontroller&f=excluir',
         data: {
-            idFuncionario: idFuncionario
+            idAso: idAso
         },
         type: 'POST',
         dataType: 'json',
@@ -574,21 +677,19 @@ function excluir(){
 
             if (r == true) {
                 mensagem('Sucesso', 'Excluído  com Sucesso', 'success');
-                $('#basicModal').modal('hide');
-                document.getElementById("imagemView").innerHTML = "";
-                atualizar();
+               
+               atualizar();
             }
             else {
                mensagem('Sucesso', 'Excluído  com Sucesso', 'success');
-                $('#basicModal').modal('hide');
-                document.getElementById("imagemView").innerHTML = "";
-                atualizar();
+              
+               atualizar();
             }
         },
         error: function(e) {
             mensagem('Sucesso', 'Excluído  com Sucesso', 'success');
             $('#basicModal').modal('hide');
-            document.getElementById("imagemView").innerHTML = "";
+            
 
         }
     }); 
@@ -609,75 +710,62 @@ function pesquisar() {
 
 function editar(){
     
-    document.getElementById("idFuncionario").readOnly = true;
-    document.getElementById("empresa").readOnly = false;
-    document.getElementById("filial").readOnly = false;
-    document.getElementById("livro").readOnly = false;
-    document.getElementById("pagina").readOnly = false;
-    document.getElementById("matricula").readOnly = false;
-    document.getElementById("funcao").readOnly = false;
-    document.getElementById("salarioValor").readOnly = false;
-    document.getElementById("salarioPagamento").readOnly = false;
-    document.getElementById("dataAdmissao").readOnly = false;
-    document.getElementById("experiencia").readOnly = false;
-    document.getElementById("horarioInicial1").readOnly = false;
-    document.getElementById("horarioFinal1").readOnly = false;
-    document.getElementById("horarioInicial2").readOnly = false;
-    document.getElementById("horarioFinal2").readOnly = false;
-    document.getElementById("dataCadastro").readOnly = true;
-    document.getElementById("nomeFuncionario").readOnly = false;
-    document.getElementById("dataNasc").readOnly = false;
-    document.getElementById("cidadeNasc").readOnly = false;
-    document.getElementById("estadoNasc").readOnly = false;
-    document.getElementById("nomeMae").readOnly = false;
-    document.getElementById("nomePai").readOnly = false;
-    document.getElementById("imagem").readOnly = false;
-    document.getElementById("cep").readOnly = false;
-    document.getElementById("endereco").readOnly = false;
-    document.getElementById("numero").readOnly = false;
-    document.getElementById("bairro").readOnly = false;
-    document.getElementById("cidade").readOnly = false;
-    document.getElementById("estado").readOnly = false;
-    document.getElementById("telefone1").readOnly = false;
-    document.getElementById("telefone2").readOnly = false;
-    document.getElementById("telefone3").readOnly = false;
-    document.getElementById("email").readOnly = false;
-    document.getElementById("cpf").readOnly = false;
-    document.getElementById("identidade").readOnly = false;
-    document.getElementById("expedidorIdentidade").readOnly = false;
-    document.getElementById("estadoIdentidade").readOnly = false;
-    document.getElementById("dataIdentidade").readOnly = false;
-    document.getElementById("ctps").readOnly = false;
-    document.getElementById("serieCtps").readOnly = false;
-    document.getElementById("pisPasep").readOnly = false;
-    document.getElementById("estadoCtps").readOnly = false;
-    document.getElementById("dataCtps").readOnly = false;
-    document.getElementById("tituloEleitor").readOnly = false;
-    document.getElementById("zonaEleitor").readOnly = false;
-    document.getElementById("secaoEleitor").readOnly = false;
-    document.getElementById("sexo").readOnly = false;
-    document.getElementById("estadoCivil").readOnly = false;
-    document.getElementById("deficienteFisico").readOnly = false;
-    document.getElementById("grauInstrucao").readOnly = false;
-    document.getElementById("etnia").readOnly = false;
-    document.getElementById("corOlhos").readOnly = false;
-    document.getElementById("corCabelos").readOnly = false;
-    document.getElementById("altura").readOnly = false;
-    document.getElementById("peso").readOnly = false;
-    document.getElementById("nomeFilho1").readOnly = false;
-    document.getElementById("dataNasc1").readOnly = false;
-    document.getElementById("nomeFilho2").readOnly = false;
-    document.getElementById("dataNasc2").readOnly = false;
-    document.getElementById("nomeFilho3").readOnly = false;
-    document.getElementById("dataNasc3").readOnly = false;
-    document.getElementById("nomeFilho4").readOnly = false;
-    document.getElementById("dataNasc4").readOnly = false;
-    document.getElementById("nomeFilho5").readOnly = false;
-    document.getElementById("dataNasc5").readOnly = false;
-    document.getElementById("nomeFilho6").readOnly = false;
-    document.getElementById("dataNasc6").readOnly = false;
-    document.getElementById("setor").readOnly = false;
-    document.getElementById("desativado").disabled = false;
+    document.getElementById("idAso").readOnly             = true;
+    document.getElementById("empresa").readOnly             = false;
+    document.getElementById("filial").readOnly             = false;
+    document.getElementById("funcionario").readOnly             = false;
+    document.getElementById("matricula").readOnly             = true;
+    document.getElementById("setor").readOnly             = true;
+    document.getElementById("funcao").readOnly             = true;
+    document.getElementById("dataNasc").readOnly             = true;
+    document.getElementById("cpf").readOnly             = true;
+    document.getElementById("ctps").readOnly             = true;
+    document.getElementById("pisPasep").readOnly             = true;
+    
+    
+    document.getElementById("tipoExames").readOnly             = false;
+    document.getElementById("outrosExames").readOnly             = false;
+    document.getElementById("medico").readOnly             = false;
+    document.getElementById("crm").readOnly             = false;
+    
+    document.getElementById("agBiologico").disabled = false;
+    document.getElementById("agFisico").disabled = false;
+    document.getElementById("agQuimico").disabled = false;
+    document.getElementById("riscoAcidente").disabled = false;
+    document.getElementById("riscoErgonomico").disabled = false;
+    document.getElementById("ausenciaRisco").disabled = false;
+    
+    document.getElementById("resultadoExame").readOnly             = true;
+    document.getElementById("observacaoExame").readOnly             = false;
+    document.getElementById("localRealizacao").readOnly             = false;
+    document.getElementById("dataRealizacao").readOnly             = false;
+    
+    
+    document.getElementById("exameComplementar1").readOnly             = false;
+    document.getElementById("dataComplementar1").readOnly             = false;
+    document.getElementById("exameComplementar2").readOnly             = false;
+    document.getElementById("dataComplementar2").readOnly             = false;
+    document.getElementById("exameComplementar3").readOnly             = false;
+    document.getElementById("dataComplementar3").readOnly             = false;
+    document.getElementById("exameComplementar4").readOnly             = false;
+    document.getElementById("dataComplementar4").readOnly             = false;
+    document.getElementById("exameComplementar5").readOnly             = false;
+    document.getElementById("dataComplementar5").readOnly             = false;
+    document.getElementById("exameComplementar6").readOnly             = false;
+    document.getElementById("dataComplementar6").readOnly             = false;
+    document.getElementById("exameComplementar7").readOnly             = false;
+    document.getElementById("dataComplementar7").readOnly             = false;
+    document.getElementById("exameComplementar8").readOnly             = false;
+    document.getElementById("dataComplementar8").readOnly             = false;
+    
+    document.getElementById("pagamentoExame").readOnly             = false;
+    document.getElementById("valorExame").readOnly             = false; 
+    
+    document.getElementById("anexoExame").readOnly             = false; 
+    document.getElementById("anexoView").readOnly             = true; 
+    
+    
+    
     
          
        
@@ -686,80 +774,65 @@ function editar(){
 
 function buscaPrimeiroRegistro(){
     
-    document.getElementById("idFuncionario").readOnly = true;
-    document.getElementById("empresa").readOnly = true;
-    document.getElementById("filial").readOnly = true;
-    document.getElementById("livro").readOnly = true;
-    document.getElementById("pagina").readOnly = true;
-    document.getElementById("matricula").readOnly = true;
-    document.getElementById("funcao").readOnly = true;
-    document.getElementById("salarioValor").readOnly = true;
-    document.getElementById("salarioPagamento").readOnly = true;
-    document.getElementById("dataAdmissao").readOnly = true;
-    document.getElementById("experiencia").readOnly = true;
-    document.getElementById("horarioInicial1").readOnly = true;
-    document.getElementById("horarioFinal1").readOnly = true;
-    document.getElementById("horarioInicial2").readOnly = true;
-    document.getElementById("horarioFinal2").readOnly = true;
-    document.getElementById("dataCadastro").readOnly = true;
-    document.getElementById("nomeFuncionario").readOnly = true;
-    document.getElementById("dataNasc").readOnly = true;
-    document.getElementById("cidadeNasc").readOnly = true;
-    document.getElementById("estadoNasc").readOnly = true;
-    document.getElementById("nomeMae").readOnly = true;
-    document.getElementById("nomePai").readOnly = true;
-    document.getElementById("imagem").readOnly = true;
-    document.getElementById("cep").readOnly = true;
-    document.getElementById("endereco").readOnly = true;
-    document.getElementById("numero").readOnly = true;
-    document.getElementById("bairro").readOnly = true;
-    document.getElementById("cidade").readOnly = true;
-    document.getElementById("estado").readOnly = true;
-    document.getElementById("telefone1").readOnly = true;
-    document.getElementById("telefone2").readOnly = true;
-    document.getElementById("telefone3").readOnly = true;
-    document.getElementById("email").readOnly = true;
-    document.getElementById("cpf").readOnly = true;
-    document.getElementById("identidade").readOnly = true;
-    document.getElementById("expedidorIdentidade").readOnly = true;
-    document.getElementById("estadoIdentidade").readOnly = true;
-    document.getElementById("dataIdentidade").readOnly = true;
-    document.getElementById("ctps").readOnly = true;
-    document.getElementById("serieCtps").readOnly = true;
-    document.getElementById("pisPasep").readOnly = true;
-    document.getElementById("estadoCtps").readOnly = true;
-    document.getElementById("dataCtps").readOnly = true;
-    document.getElementById("tituloEleitor").readOnly = true;
-    document.getElementById("zonaEleitor").readOnly = true;
-    document.getElementById("secaoEleitor").readOnly = true;
-    document.getElementById("sexo").readOnly = true;
-    document.getElementById("estadoCivil").readOnly = true;
-    document.getElementById("deficienteFisico").readOnly = true;
-    document.getElementById("grauInstrucao").readOnly = true;
-    document.getElementById("etnia").readOnly = true;
-    document.getElementById("corOlhos").readOnly = true;
-    document.getElementById("corCabelos").readOnly = true;
-    document.getElementById("altura").readOnly = true;
-    document.getElementById("peso").readOnly = true;
-    document.getElementById("nomeFilho1").readOnly = true;
-    document.getElementById("dataNasc1").readOnly = true;
-    document.getElementById("nomeFilho2").readOnly = true;
-    document.getElementById("dataNasc2").readOnly = true;
-    document.getElementById("nomeFilho3").readOnly = true;
-    document.getElementById("dataNasc3").readOnly = true;
-    document.getElementById("nomeFilho4").readOnly = true;
-    document.getElementById("dataNasc4").readOnly = true;
-    document.getElementById("nomeFilho5").readOnly = true;
-    document.getElementById("dataNasc5").readOnly = true;
-    document.getElementById("nomeFilho6").readOnly = true;
-    document.getElementById("dataNasc6").readOnly = true;
-    document.getElementById("setor").readOnly = true;
-    document.getElementById("desativado").disabled = true;
-
+    document.getElementById("idAso").readOnly             = true;
+    document.getElementById("empresa").readOnly             = true;
+    document.getElementById("filial").readOnly             = true;
+    document.getElementById("funcionario").readOnly             = true;
+    document.getElementById("matricula").readOnly             = true;
+    document.getElementById("setor").readOnly             = true;
+    document.getElementById("funcao").readOnly             = true;
+    document.getElementById("dataNasc").readOnly             = true;
+    document.getElementById("cpf").readOnly             = true;
+    document.getElementById("ctps").readOnly             = true;
+    document.getElementById("pisPasep").readOnly             = true;
+    
+    
+    document.getElementById("tipoExames").readOnly             = true;
+    document.getElementById("outrosExames").readOnly             = true;
+    document.getElementById("medico").readOnly             = true;
+    document.getElementById("crm").readOnly             = true;
+    
+    document.getElementById("agBiologico").disabled = true;
+    document.getElementById("agFisico").disabled = true;
+    document.getElementById("agQuimico").disabled = true;
+    document.getElementById("riscoAcidente").disabled = true;
+    document.getElementById("riscoErgonomico").disabled = true;
+    document.getElementById("ausenciaRisco").disabled = true;
+    
+    document.getElementById("resultadoExame").readOnly             = true;
+    document.getElementById("observacaoExame").readOnly             = true;
+    document.getElementById("localRealizacao").readOnly             = true;
+    document.getElementById("dataRealizacao").readOnly             = true;
+    
+    
+    document.getElementById("exameComplementar1").readOnly             = true;
+    document.getElementById("dataComplementar1").readOnly             = true;
+    document.getElementById("exameComplementar2").readOnly             = true;
+    document.getElementById("dataComplementar2").readOnly             = true;
+    document.getElementById("exameComplementar3").readOnly             = true;
+    document.getElementById("dataComplementar3").readOnly             = true;
+    document.getElementById("exameComplementar4").readOnly             = true;
+    document.getElementById("dataComplementar4").readOnly             = true;
+    document.getElementById("exameComplementar5").readOnly             = true;
+    document.getElementById("dataComplementar5").readOnly             = true;
+    document.getElementById("exameComplementar6").readOnly             = true;
+    document.getElementById("dataComplementar6").readOnly             = true;
+    document.getElementById("exameComplementar7").readOnly             = true;
+    document.getElementById("dataComplementar7").readOnly             = true;
+    document.getElementById("exameComplementar8").readOnly             = true;
+    document.getElementById("dataComplementar8").readOnly             = true;
+    
+    document.getElementById("pagamentoExame").readOnly             = true;
+    document.getElementById("valorExame").readOnly             = true; 
+    
+    document.getElementById("anexoExame").readOnly             = true; 
+    document.getElementById("anexoView").readOnly             = true; 
+    
+    document.getElementById("anexoView").value = "";
    
     
     $.ajax({
-        url: 'index.php?m=cadastrofuncionarios&c=cadastrofuncionarioscontroller&f=buscaPrimeiroRegistro',
+        url: 'index.php?m=cadastroaso&c=cadastroasocontroller&f=buscaPrimeiroRegistro',
         data: {
        
         },
@@ -768,98 +841,109 @@ function buscaPrimeiroRegistro(){
         async: true,
         success: function(r) {
                    
-            document.getElementById("idFuncionario").value = r[0];
+            document.getElementById("idAso").value = r[0];
             document.getElementById("empresa").value = r[1];
             document.getElementById("filial").value = r[2];
-            document.getElementById("livro").value = r[3];
-            document.getElementById("pagina").value = r[4];
-            document.getElementById("nomeFuncionario").value = r[5];
-            document.getElementById("dataNasc").value = r[6];
-            document.getElementById("cidadeNasc").value = r[7];
-            document.getElementById("estadoNasc").value = r[8];
-            document.getElementById("dataCadastro").value = r[9];
+            document.getElementById("funcionario").value = r[3];
+            document.getElementById("matricula").value = r[4];
+            document.getElementById("setor").value = r[5];
+            document.getElementById("funcao").value = r[6];
+            document.getElementById("dataNasc").value = r[7];
+            document.getElementById("cpf").value = r[8];
+            document.getElementById("ctps").value = r[9];
+            document.getElementById("pisPasep").value = r[10];
+            document.getElementById("tipoExames").value = r[11];
+            document.getElementById("outrosExames").value = r[12];
+            document.getElementById("medico").value = r[13];
+            document.getElementById("crm").value = r[14];
             
-            document.getElementById("matricula").value = r[10];
-            document.getElementById("funcao").value = r[11];
-            document.getElementById("salarioValor").value = r[12];
-            document.getElementById("salarioPagamento").value = r[13];
-            document.getElementById("dataAdmissao").value = r[14];
-            document.getElementById("experiencia").value = r[15];
-            document.getElementById("horarioInicial1").value = r[16];
-            document.getElementById("horarioFinal1").value = r[17];
-            document.getElementById("horarioInicial2").value = r[18];
-            document.getElementById("horarioFinal2").value = r[19];
-            document.getElementById("imagemView").value = r[20];
-            
-            document.getElementById("cep").value = r[21];
-            document.getElementById("endereco").value = r[22];
-            document.getElementById("numero").value = r[23];
-            document.getElementById("bairro").value = r[24];
-            document.getElementById("cidade").value = r[25];
-            document.getElementById("estado").value = r[26];
-            document.getElementById("email").value = r[27];
-            document.getElementById("telefone1").value = r[28];
-            document.getElementById("telefone2").value = r[29];
-            document.getElementById("telefone3").value = r[30];
-            
-            document.getElementById("cpf").value = r[31];
-            document.getElementById("identidade").value = r[32];
-            document.getElementById("expedidorIdentidade").value = r[33];
-            document.getElementById("estadoIdentidade").value = r[34];
-            document.getElementById("dataIdentidade").value = r[35];
-            document.getElementById("ctps").value = r[36];
-            document.getElementById("serieCtps").value = r[37];
-            document.getElementById("pisPasep").value = r[38];
-            document.getElementById("estadoCtps").value = r[39];
-            document.getElementById("dataCtps").value = r[40];
-            document.getElementById("tituloEleitor").value = r[41];
-            document.getElementById("zonaEleitor").value = r[42];
-            document.getElementById("secaoEleitor").value = r[43];
-            
-            
-            document.getElementById("nomeMae").value = r[44];
-            document.getElementById("nomePai").value = r[45];
-            document.getElementById("sexo").value = r[46];
-            document.getElementById("estadoCivil").value = r[47];
-            document.getElementById("deficienteFisico").value = r[48];
-            document.getElementById("grauInstrucao").value = r[49];
-            document.getElementById("etnia").value = r[50];
-            document.getElementById("corOlhos").value = r[51];
-            document.getElementById("corCabelos").value = r[52];
-            document.getElementById("altura").value = r[53];
-            document.getElementById("peso").value = r[54];
-            
-            document.getElementById("nomeFilho1").value = r[55];
-            document.getElementById("dataNasc1").value = r[56];
-            document.getElementById("nomeFilho2").value = r[57];
-            document.getElementById("dataNasc2").value = r[58];
-            document.getElementById("nomeFilho3").value = r[59];
-            document.getElementById("dataNasc3").value = r[60];
-            document.getElementById("nomeFilho4").value = r[61];
-            document.getElementById("dataNasc4").value = r[62];
-            document.getElementById("nomeFilho5").value = r[63];
-            document.getElementById("dataNasc5").value = r[64];
-            document.getElementById("nomeFilho6").value = r[65];
-            document.getElementById("dataNasc6").value = r[66];
-            
-             document.getElementById("setor").value = r[67];
-            document.getElementById("desativado").value = r[68];
-             
-            if (r[68] == 'S' ) {
+            if (r[15] == 'S' ) {
                 
-                $('#desativado').prop('checked', true);
+                $('#agBiologico').prop('checked', true);
                 
             }else{
                 
-                $('#desativado').prop('checked', false);
+                $('#agBiologico').prop('checked', false);
             }
             
-            document.getElementById("imagem").value = "";
+            if (r[16] == 'S' ) {
+                
+                $('#agFisico').prop('checked', true);
+                
+            }else{
+                
+                $('#agFisico').prop('checked', false);
+            }
             
-            var imagemView = r[20];
-             
-            carregarImagem(imagemView);  
+            if (r[17] == 'S' ) {
+                
+                $('#agQuimico').prop('checked', true);
+                
+            }else{
+                
+                $('#agQuimico').prop('checked', false);
+            }
+            
+            if (r[18] == 'S' ) {
+                
+                $('#riscoAcidente').prop('checked', true);
+                
+            }else{
+                
+                $('#riscoAcidente').prop('checked', false);
+            }
+            
+            if (r[19] == 'S' ) {
+                
+                $('#riscoErgonomico').prop('checked', true);
+                
+            }else{
+                
+                $('#riscoErgonomico').prop('checked', false);
+            }
+            
+            if (r[20] == 'S' ) {
+                
+                $('#ausenciaRisco').prop('checked', true);
+                
+            }else{
+                
+                $('#ausenciaRisco').prop('checked', false);
+            }
+
+            document.getElementById("resultadoExame").value = r[21];
+            document.getElementById("observacaoExame").value = r[22];
+            document.getElementById("dataRealizacao").value = r[23];
+            document.getElementById("exameComplementar1").value = r[24];
+            document.getElementById("dataComplementar1").value = r[25];
+            document.getElementById("exameComplementar2").value = r[26];
+            document.getElementById("dataComplementar2").value = r[27];
+            document.getElementById("exameComplementar3").value = r[28];
+            document.getElementById("dataComplementar3").value = r[29];
+            document.getElementById("exameComplementar4").value = r[30];
+            document.getElementById("dataComplementar4").value = r[31];
+            document.getElementById("exameComplementar5").value = r[32];
+            document.getElementById("dataComplementar5").value = r[33];
+            document.getElementById("exameComplementar6").value = r[34];
+            document.getElementById("dataComplementar6").value = r[35];
+            document.getElementById("exameComplementar7").value = r[36];
+            document.getElementById("dataComplementar7").value = r[37];
+            document.getElementById("exameComplementar8").value = r[38];
+            document.getElementById("dataComplementar8").value = r[39];
+            document.getElementById("pagamentoExame").value = r[40];
+            document.getElementById("valorExame").value = r[41];
+            
+            document.getElementById("localRealizacao").value = r[42];
+            
+            document.getElementById("anexoExame").value = "";
+            
+            var anexoView = r[43];
+            var anexoView = anexoView.substr(57);
+            document.getElementById("anexoView").value = anexoView;
            
+            
+            
+            
             
         },
         error: function(e) {
@@ -872,84 +956,68 @@ function buscaPrimeiroRegistro(){
 function buscaRegistroAnterior(){
     
     
-    document.getElementById("idFuncionario").readOnly = true;
-    document.getElementById("empresa").readOnly = true;
-    document.getElementById("filial").readOnly = true;
-    document.getElementById("livro").readOnly = true;
-    document.getElementById("pagina").readOnly = true;
-    document.getElementById("matricula").readOnly = true;
-    document.getElementById("funcao").readOnly = true;
-    document.getElementById("salarioValor").readOnly = true;
-    document.getElementById("salarioPagamento").readOnly = true;
-    document.getElementById("dataAdmissao").readOnly = true;
-    document.getElementById("experiencia").readOnly = true;
-    document.getElementById("horarioInicial1").readOnly = true;
-    document.getElementById("horarioFinal1").readOnly = true;
-    document.getElementById("horarioInicial2").readOnly = true;
-    document.getElementById("horarioFinal2").readOnly = true;
-    document.getElementById("dataCadastro").readOnly = true;
-    document.getElementById("nomeFuncionario").readOnly = true;
-    document.getElementById("dataNasc").readOnly = true;
-    document.getElementById("cidadeNasc").readOnly = true;
-    document.getElementById("estadoNasc").readOnly = true;
-    document.getElementById("nomeMae").readOnly = true;
-    document.getElementById("nomePai").readOnly = true;
-    document.getElementById("imagem").readOnly = true;
-    document.getElementById("cep").readOnly = true;
-    document.getElementById("endereco").readOnly = true;
-    document.getElementById("numero").readOnly = true;
-    document.getElementById("bairro").readOnly = true;
-    document.getElementById("cidade").readOnly = true;
-    document.getElementById("estado").readOnly = true;
-    document.getElementById("telefone1").readOnly = true;
-    document.getElementById("telefone2").readOnly = true;
-    document.getElementById("telefone3").readOnly = true;
-    document.getElementById("email").readOnly = true;
-    document.getElementById("cpf").readOnly = true;
-    document.getElementById("identidade").readOnly = true;
-    document.getElementById("expedidorIdentidade").readOnly = true;
-    document.getElementById("estadoIdentidade").readOnly = true;
-    document.getElementById("dataIdentidade").readOnly = true;
-    document.getElementById("ctps").readOnly = true;
-    document.getElementById("serieCtps").readOnly = true;
-    document.getElementById("pisPasep").readOnly = true;
-    document.getElementById("estadoCtps").readOnly = true;
-    document.getElementById("dataCtps").readOnly = true;
-    document.getElementById("tituloEleitor").readOnly = true;
-    document.getElementById("zonaEleitor").readOnly = true;
-    document.getElementById("secaoEleitor").readOnly = true;
-    document.getElementById("sexo").readOnly = true;
-    document.getElementById("estadoCivil").readOnly = true;
-    document.getElementById("deficienteFisico").readOnly = true;
-    document.getElementById("grauInstrucao").readOnly = true;
-    document.getElementById("etnia").readOnly = true;
-    document.getElementById("corOlhos").readOnly = true;
-    document.getElementById("corCabelos").readOnly = true;
-    document.getElementById("altura").readOnly = true;
-    document.getElementById("peso").readOnly = true;
-    document.getElementById("nomeFilho1").readOnly = true;
-    document.getElementById("dataNasc1").readOnly = true;
-    document.getElementById("nomeFilho2").readOnly = true;
-    document.getElementById("dataNasc2").readOnly = true;
-    document.getElementById("nomeFilho3").readOnly = true;
-    document.getElementById("dataNasc3").readOnly = true;
-    document.getElementById("nomeFilho4").readOnly = true;
-    document.getElementById("dataNasc4").readOnly = true;
-    document.getElementById("nomeFilho5").readOnly = true;
-    document.getElementById("dataNasc5").readOnly = true;
-    document.getElementById("nomeFilho6").readOnly = true;
-    document.getElementById("dataNasc6").readOnly = true;
-    document.getElementById("setor").readOnly = true;
-    document.getElementById("desativado").disabled = true;
+    document.getElementById("idAso").readOnly             = true;
+    document.getElementById("empresa").readOnly             = true;
+    document.getElementById("filial").readOnly             = true;
+    document.getElementById("funcionario").readOnly             = true;
+    document.getElementById("matricula").readOnly             = true;
+    document.getElementById("setor").readOnly             = true;
+    document.getElementById("funcao").readOnly             = true;
+    document.getElementById("dataNasc").readOnly             = true;
+    document.getElementById("cpf").readOnly             = true;
+    document.getElementById("ctps").readOnly             = true;
+    document.getElementById("pisPasep").readOnly             = true;
+    
+    
+    document.getElementById("tipoExames").readOnly             = true;
+    document.getElementById("outrosExames").readOnly             = true;
+    document.getElementById("medico").readOnly             = true;
+    document.getElementById("crm").readOnly             = true;
+    
+    document.getElementById("agBiologico").disabled = true;
+    document.getElementById("agFisico").disabled = true;
+    document.getElementById("agQuimico").disabled = true;
+    document.getElementById("riscoAcidente").disabled = true;
+    document.getElementById("riscoErgonomico").disabled = true;
+    document.getElementById("ausenciaRisco").disabled = true;
+    
+    document.getElementById("resultadoExame").readOnly             = true;
+    document.getElementById("observacaoExame").readOnly             = true;
+    document.getElementById("localRealizacao").readOnly             = true;
+    document.getElementById("dataRealizacao").readOnly             = true;
+    
+    
+    document.getElementById("exameComplementar1").readOnly             = true;
+    document.getElementById("dataComplementar1").readOnly             = true;
+    document.getElementById("exameComplementar2").readOnly             = true;
+    document.getElementById("dataComplementar2").readOnly             = true;
+    document.getElementById("exameComplementar3").readOnly             = true;
+    document.getElementById("dataComplementar3").readOnly             = true;
+    document.getElementById("exameComplementar4").readOnly             = true;
+    document.getElementById("dataComplementar4").readOnly             = true;
+    document.getElementById("exameComplementar5").readOnly             = true;
+    document.getElementById("dataComplementar5").readOnly             = true;
+    document.getElementById("exameComplementar6").readOnly             = true;
+    document.getElementById("dataComplementar6").readOnly             = true;
+    document.getElementById("exameComplementar7").readOnly             = true;
+    document.getElementById("dataComplementar7").readOnly             = true;
+    document.getElementById("exameComplementar8").readOnly             = true;
+    document.getElementById("dataComplementar8").readOnly             = true;
+    
+    document.getElementById("pagamentoExame").readOnly             = true;
+    document.getElementById("valorExame").readOnly             = true; 
 
+    document.getElementById("anexoExame").readOnly             = true; 
+    document.getElementById("anexoView").readOnly             = true;
     
-    var idFuncionario  =  $('#idFuncionario').val();  
-  
+    document.getElementById("anexoView").value = "";
     
+    var idAso  =  $('#idAso').val();  
+        
     $.ajax({
-        url: 'index.php?m=cadastrofuncionarios&c=cadastrofuncionarioscontroller&f=buscaRegistroAnterior',
+        url: 'index.php?m=cadastroaso&c=cadastroasocontroller&f=buscaRegistroAnterior',
         data: {
-            idFuncionario: idFuncionario
+            idAso: idAso
        
         },
         type: 'POST',
@@ -958,98 +1026,110 @@ function buscaRegistroAnterior(){
         success: function(r) {
             
             if(r != false){
-
-                document.getElementById("idFuncionario").value = r[0];
+                
+                document.getElementById("idAso").value = r[0];
                 document.getElementById("empresa").value = r[1];
                 document.getElementById("filial").value = r[2];
-                document.getElementById("livro").value = r[3];
-                document.getElementById("pagina").value = r[4];
-                document.getElementById("nomeFuncionario").value = r[5];
-                document.getElementById("dataNasc").value = r[6];
-                document.getElementById("cidadeNasc").value = r[7];
-                document.getElementById("estadoNasc").value = r[8];
-                document.getElementById("dataCadastro").value = r[9];
+                document.getElementById("funcionario").value = r[3];
+                document.getElementById("matricula").value = r[4];
+                document.getElementById("setor").value = r[5];
+                document.getElementById("funcao").value = r[6];
+                document.getElementById("dataNasc").value = r[7];
+                document.getElementById("cpf").value = r[8];
+                document.getElementById("ctps").value = r[9];
+                document.getElementById("pisPasep").value = r[10];
+                document.getElementById("tipoExames").value = r[11];
+                document.getElementById("outrosExames").value = r[12];
+                document.getElementById("medico").value = r[13];
+                document.getElementById("crm").value = r[14];
 
-                document.getElementById("matricula").value = r[10];
-                document.getElementById("funcao").value = r[11];
-                document.getElementById("salarioValor").value = r[12];
-                document.getElementById("salarioPagamento").value = r[13];
-                document.getElementById("dataAdmissao").value = r[14];
-                document.getElementById("experiencia").value = r[15];
-                document.getElementById("horarioInicial1").value = r[16];
-                document.getElementById("horarioFinal1").value = r[17];
-                document.getElementById("horarioInicial2").value = r[18];
-                document.getElementById("horarioFinal2").value = r[19];
-                document.getElementById("imagemView").value = r[20];
+                if (r[15] == 'S' ) {
 
-                document.getElementById("cep").value = r[21];
-                document.getElementById("endereco").value = r[22];
-                document.getElementById("numero").value = r[23];
-                document.getElementById("bairro").value = r[24];
-                document.getElementById("cidade").value = r[25];
-                document.getElementById("estado").value = r[26];
-                document.getElementById("email").value = r[27];
-                document.getElementById("telefone1").value = r[28];
-                document.getElementById("telefone2").value = r[29];
-                document.getElementById("telefone3").value = r[30];
-
-                document.getElementById("cpf").value = r[31];
-                document.getElementById("identidade").value = r[32];
-                document.getElementById("expedidorIdentidade").value = r[33];
-                document.getElementById("estadoIdentidade").value = r[34];
-                document.getElementById("dataIdentidade").value = r[35];
-                document.getElementById("ctps").value = r[36];
-                document.getElementById("serieCtps").value = r[37];
-                document.getElementById("pisPasep").value = r[38];
-                document.getElementById("estadoCtps").value = r[39];
-                document.getElementById("dataCtps").value = r[40];
-                document.getElementById("tituloEleitor").value = r[41];
-                document.getElementById("zonaEleitor").value = r[42];
-                document.getElementById("secaoEleitor").value = r[43];
-
-
-                document.getElementById("nomeMae").value = r[44];
-                document.getElementById("nomePai").value = r[45];
-                document.getElementById("sexo").value = r[46];
-                document.getElementById("estadoCivil").value = r[47];
-                document.getElementById("deficienteFisico").value = r[48];
-                document.getElementById("grauInstrucao").value = r[49];
-                document.getElementById("etnia").value = r[50];
-                document.getElementById("corOlhos").value = r[51];
-                document.getElementById("corCabelos").value = r[52];
-                document.getElementById("altura").value = r[53];
-                document.getElementById("peso").value = r[54];
-
-                document.getElementById("nomeFilho1").value = r[55];
-                document.getElementById("dataNasc1").value = r[56];
-                document.getElementById("nomeFilho2").value = r[57];
-                document.getElementById("dataNasc2").value = r[58];
-                document.getElementById("nomeFilho3").value = r[59];
-                document.getElementById("dataNasc3").value = r[60];
-                document.getElementById("nomeFilho4").value = r[61];
-                document.getElementById("dataNasc4").value = r[62];
-                document.getElementById("nomeFilho5").value = r[63];
-                document.getElementById("dataNasc5").value = r[64];
-                document.getElementById("nomeFilho6").value = r[65];
-                document.getElementById("dataNasc6").value = r[66];
-                
-                document.getElementById("setor").value = r[67];
-                document.getElementById("desativado").value = r[68];
-             
-                if (r[68] == 'S' ) {
-
-                    $('#desativado').prop('checked', true);
+                    $('#agBiologico').prop('checked', true);
 
                 }else{
 
-                    $('#desativado').prop('checked', false);
+                    $('#agBiologico').prop('checked', false);
                 }
 
+                if (r[16] == 'S' ) {
 
-                document.getElementById("imagem").value = "";
-                var imagemView = r[20];
-                   
-                carregarImagem(imagemView); 
+                    $('#agFisico').prop('checked', true);
+
+                }else{
+
+                    $('#agFisico').prop('checked', false);
+                }
+
+                if (r[17] == 'S' ) {
+
+                    $('#agQuimico').prop('checked', true);
+
+                }else{
+
+                    $('#agQuimico').prop('checked', false);
+                }
+
+                if (r[18] == 'S' ) {
+
+                    $('#riscoAcidente').prop('checked', true);
+
+                }else{
+
+                    $('#riscoAcidente').prop('checked', false);
+                }
+
+                if (r[19] == 'S' ) {
+
+                    $('#riscoErgonomico').prop('checked', true);
+
+                }else{
+
+                    $('#riscoErgonomico').prop('checked', false);
+                }
+
+                if (r[20] == 'S' ) {
+
+                    $('#ausenciaRisco').prop('checked', true);
+
+                }else{
+
+                    $('#ausenciaRisco').prop('checked', false);
+                }
+
+                document.getElementById("resultadoExame").value = r[21];
+                document.getElementById("observacaoExame").value = r[22];
+                document.getElementById("dataRealizacao").value = r[23];
+                document.getElementById("exameComplementar1").value = r[24];
+                document.getElementById("dataComplementar1").value = r[25];
+                document.getElementById("exameComplementar2").value = r[26];
+                document.getElementById("dataComplementar2").value = r[27];
+                document.getElementById("exameComplementar3").value = r[28];
+                document.getElementById("dataComplementar3").value = r[29];
+                document.getElementById("exameComplementar4").value = r[30];
+                document.getElementById("dataComplementar4").value = r[31];
+                document.getElementById("exameComplementar5").value = r[32];
+                document.getElementById("dataComplementar5").value = r[33];
+                document.getElementById("exameComplementar6").value = r[34];
+                document.getElementById("dataComplementar6").value = r[35];
+                document.getElementById("exameComplementar7").value = r[36];
+                document.getElementById("dataComplementar7").value = r[37];
+                document.getElementById("exameComplementar8").value = r[38];
+                document.getElementById("dataComplementar8").value = r[39];
+                document.getElementById("pagamentoExame").value = r[40];
+                document.getElementById("valorExame").value = r[41];
+                
+                document.getElementById("localRealizacao").value = r[42];
+                
+                document.getElementById("anexoExame").value = "";
+                
+                
+                var anexoView = r[43];
+                var anexoView = anexoView.substr(57);
+                document.getElementById("anexoView").value = anexoView;
+                
+
+
 
             }
           
@@ -1069,84 +1149,69 @@ function buscaRegistroAnterior(){
 function buscaRegistroProximo(){
     
     
-    document.getElementById("idFuncionario").readOnly = true;
-    document.getElementById("empresa").readOnly = true;
-    document.getElementById("filial").readOnly = true;
-    document.getElementById("livro").readOnly = true;
-    document.getElementById("pagina").readOnly = true;
-    document.getElementById("matricula").readOnly = true;
-    document.getElementById("funcao").readOnly = true;
-    document.getElementById("salarioValor").readOnly = true;
-    document.getElementById("salarioPagamento").readOnly = true;
-    document.getElementById("dataAdmissao").readOnly = true;
-    document.getElementById("experiencia").readOnly = true;
-    document.getElementById("horarioInicial1").readOnly = true;
-    document.getElementById("horarioFinal1").readOnly = true;
-    document.getElementById("horarioInicial2").readOnly = true;
-    document.getElementById("horarioFinal2").readOnly = true;
-    document.getElementById("dataCadastro").readOnly = true;
-    document.getElementById("nomeFuncionario").readOnly = true;
-    document.getElementById("dataNasc").readOnly = true;
-    document.getElementById("cidadeNasc").readOnly = true;
-    document.getElementById("estadoNasc").readOnly = true;
-    document.getElementById("nomeMae").readOnly = true;
-    document.getElementById("nomePai").readOnly = true;
-    document.getElementById("imagem").readOnly = true;
-    document.getElementById("cep").readOnly = true;
-    document.getElementById("endereco").readOnly = true;
-    document.getElementById("numero").readOnly = true;
-    document.getElementById("bairro").readOnly = true;
-    document.getElementById("cidade").readOnly = true;
-    document.getElementById("estado").readOnly = true;
-    document.getElementById("telefone1").readOnly = true;
-    document.getElementById("telefone2").readOnly = true;
-    document.getElementById("telefone3").readOnly = true;
-    document.getElementById("email").readOnly = true;
-    document.getElementById("cpf").readOnly = true;
-    document.getElementById("identidade").readOnly = true;
-    document.getElementById("expedidorIdentidade").readOnly = true;
-    document.getElementById("estadoIdentidade").readOnly = true;
-    document.getElementById("dataIdentidade").readOnly = true;
-    document.getElementById("ctps").readOnly = true;
-    document.getElementById("serieCtps").readOnly = true;
-    document.getElementById("pisPasep").readOnly = true;
-    document.getElementById("estadoCtps").readOnly = true;
-    document.getElementById("dataCtps").readOnly = true;
-    document.getElementById("tituloEleitor").readOnly = true;
-    document.getElementById("zonaEleitor").readOnly = true;
-    document.getElementById("secaoEleitor").readOnly = true;
-    document.getElementById("sexo").readOnly = true;
-    document.getElementById("estadoCivil").readOnly = true;
-    document.getElementById("deficienteFisico").readOnly = true;
-    document.getElementById("grauInstrucao").readOnly = true;
-    document.getElementById("etnia").readOnly = true;
-    document.getElementById("corOlhos").readOnly = true;
-    document.getElementById("corCabelos").readOnly = true;
-    document.getElementById("altura").readOnly = true;
-    document.getElementById("peso").readOnly = true;
-    document.getElementById("nomeFilho1").readOnly = true;
-    document.getElementById("dataNasc1").readOnly = true;
-    document.getElementById("nomeFilho2").readOnly = true;
-    document.getElementById("dataNasc2").readOnly = true;
-    document.getElementById("nomeFilho3").readOnly = true;
-    document.getElementById("dataNasc3").readOnly = true;
-    document.getElementById("nomeFilho4").readOnly = true;
-    document.getElementById("dataNasc4").readOnly = true;
-    document.getElementById("nomeFilho5").readOnly = true;
-    document.getElementById("dataNasc5").readOnly = true;
-    document.getElementById("nomeFilho6").readOnly = true;
-    document.getElementById("dataNasc6").readOnly = true;
-    document.getElementById("setor").readOnly = true;
-    document.getElementById("desativado").disabled = true;
-
+    document.getElementById("idAso").readOnly             = true;
+    document.getElementById("empresa").readOnly             = true;
+    document.getElementById("filial").readOnly             = true;
+    document.getElementById("funcionario").readOnly             = true;
+    document.getElementById("matricula").readOnly             = true;
+    document.getElementById("setor").readOnly             = true;
+    document.getElementById("funcao").readOnly             = true;
+    document.getElementById("dataNasc").readOnly             = true;
+    document.getElementById("cpf").readOnly             = true;
+    document.getElementById("ctps").readOnly             = true;
+    document.getElementById("pisPasep").readOnly             = true;
     
-    var idFuncionario  =  $('#idFuncionario').val();             
+    
+    document.getElementById("tipoExames").readOnly             = true;
+    document.getElementById("outrosExames").readOnly             = true;
+    document.getElementById("medico").readOnly             = true;
+    document.getElementById("crm").readOnly             = true;
+    
+    document.getElementById("agBiologico").disabled = true;
+    document.getElementById("agFisico").disabled = true;
+    document.getElementById("agQuimico").disabled = true;
+    document.getElementById("riscoAcidente").disabled = true;
+    document.getElementById("riscoErgonomico").disabled = true;
+    document.getElementById("ausenciaRisco").disabled = true;
+    
+    document.getElementById("resultadoExame").readOnly             = true;
+    document.getElementById("observacaoExame").readOnly             = true;
+    document.getElementById("localRealizacao").readOnly             = true;
+    document.getElementById("dataRealizacao").readOnly             = true;
+    
+    
+    document.getElementById("exameComplementar1").readOnly             = true;
+    document.getElementById("dataComplementar1").readOnly             = true;
+    document.getElementById("exameComplementar2").readOnly             = true;
+    document.getElementById("dataComplementar2").readOnly             = true;
+    document.getElementById("exameComplementar3").readOnly             = true;
+    document.getElementById("dataComplementar3").readOnly             = true;
+    document.getElementById("exameComplementar4").readOnly             = true;
+    document.getElementById("dataComplementar4").readOnly             = true;
+    document.getElementById("exameComplementar5").readOnly             = true;
+    document.getElementById("dataComplementar5").readOnly             = true;
+    document.getElementById("exameComplementar6").readOnly             = true;
+    document.getElementById("dataComplementar6").readOnly             = true;
+    document.getElementById("exameComplementar7").readOnly             = true;
+    document.getElementById("dataComplementar7").readOnly             = true;
+    document.getElementById("exameComplementar8").readOnly             = true;
+    document.getElementById("dataComplementar8").readOnly             = true;
+    
+    document.getElementById("pagamentoExame").readOnly             = true;
+    document.getElementById("valorExame").readOnly             = true;
+    
+    document.getElementById("anexoExame").readOnly             = true; 
+    document.getElementById("anexoView").readOnly             = true;
+
+    document.getElementById("anexoView").value = "";
+    
+    var idAso  =  $('#idAso').val();             
    
     
     $.ajax({
-        url: 'index.php?m=cadastrofuncionarios&c=cadastrofuncionarioscontroller&f=buscaRegistroProximo',
+        url: 'index.php?m=cadastroaso&c=cadastroasocontroller&f=buscaRegistroProximo',
         data: {
-            idFuncionario: idFuncionario
+            idAso: idAso
        
         },
         type: 'POST',
@@ -1156,97 +1221,105 @@ function buscaRegistroProximo(){
             
             if(r != false){
                     
-                    document.getElementById("idFuncionario").value = r[0];
+                    document.getElementById("idAso").value = r[0];
                     document.getElementById("empresa").value = r[1];
                     document.getElementById("filial").value = r[2];
-                    document.getElementById("livro").value = r[3];
-                    document.getElementById("pagina").value = r[4];
-                    document.getElementById("nomeFuncionario").value = r[5];
-                    document.getElementById("dataNasc").value = r[6];
-                    document.getElementById("cidadeNasc").value = r[7];
-                    document.getElementById("estadoNasc").value = r[8];
-                    document.getElementById("dataCadastro").value = r[9];
+                    document.getElementById("funcionario").value = r[3];
+                    document.getElementById("matricula").value = r[4];
+                    document.getElementById("setor").value = r[5];
+                    document.getElementById("funcao").value = r[6];
+                    document.getElementById("dataNasc").value = r[7];
+                    document.getElementById("cpf").value = r[8];
+                    document.getElementById("ctps").value = r[9];
+                    document.getElementById("pisPasep").value = r[10];
+                    document.getElementById("tipoExames").value = r[11];
+                    document.getElementById("outrosExames").value = r[12];
+                    document.getElementById("medico").value = r[13];
+                    document.getElementById("crm").value = r[14];
 
-                    document.getElementById("matricula").value = r[10];
-                    document.getElementById("funcao").value = r[11];
-                    document.getElementById("salarioValor").value = r[12];
-                    document.getElementById("salarioPagamento").value = r[13];
-                    document.getElementById("dataAdmissao").value = r[14];
-                    document.getElementById("experiencia").value = r[15];
-                    document.getElementById("horarioInicial1").value = r[16];
-                    document.getElementById("horarioFinal1").value = r[17];
-                    document.getElementById("horarioInicial2").value = r[18];
-                    document.getElementById("horarioFinal2").value = r[19];
-                    document.getElementById("imagemView").value = r[20];
+                    if (r[15] == 'S' ) {
 
-                    document.getElementById("cep").value = r[21];
-                    document.getElementById("endereco").value = r[22];
-                    document.getElementById("numero").value = r[23];
-                    document.getElementById("bairro").value = r[24];
-                    document.getElementById("cidade").value = r[25];
-                    document.getElementById("estado").value = r[26];
-                    document.getElementById("email").value = r[27];
-                    document.getElementById("telefone1").value = r[28];
-                    document.getElementById("telefone2").value = r[29];
-                    document.getElementById("telefone3").value = r[30];
-
-                    document.getElementById("cpf").value = r[31];
-                    document.getElementById("identidade").value = r[32];
-                    document.getElementById("expedidorIdentidade").value = r[33];
-                    document.getElementById("estadoIdentidade").value = r[34];
-                    document.getElementById("dataIdentidade").value = r[35];
-                    document.getElementById("ctps").value = r[36];
-                    document.getElementById("serieCtps").value = r[37];
-                    document.getElementById("pisPasep").value = r[38];
-                    document.getElementById("estadoCtps").value = r[39];
-                    document.getElementById("dataCtps").value = r[40];
-                    document.getElementById("tituloEleitor").value = r[41];
-                    document.getElementById("zonaEleitor").value = r[42];
-                    document.getElementById("secaoEleitor").value = r[43];
-
-
-                    document.getElementById("nomeMae").value = r[44];
-                    document.getElementById("nomePai").value = r[45];
-                    document.getElementById("sexo").value = r[46];
-                    document.getElementById("estadoCivil").value = r[47];
-                    document.getElementById("deficienteFisico").value = r[48];
-                    document.getElementById("grauInstrucao").value = r[49];
-                    document.getElementById("etnia").value = r[50];
-                    document.getElementById("corOlhos").value = r[51];
-                    document.getElementById("corCabelos").value = r[52];
-                    document.getElementById("altura").value = r[53];
-                    document.getElementById("peso").value = r[54];
-
-                    document.getElementById("nomeFilho1").value = r[55];
-                    document.getElementById("dataNasc1").value = r[56];
-                    document.getElementById("nomeFilho2").value = r[57];
-                    document.getElementById("dataNasc2").value = r[58];
-                    document.getElementById("nomeFilho3").value = r[59];
-                    document.getElementById("dataNasc3").value = r[60];
-                    document.getElementById("nomeFilho4").value = r[61];
-                    document.getElementById("dataNasc4").value = r[62];
-                    document.getElementById("nomeFilho5").value = r[63];
-                    document.getElementById("dataNasc5").value = r[64];
-                    document.getElementById("nomeFilho6").value = r[65];
-                    document.getElementById("dataNasc6").value = r[66];
-                    
-                    document.getElementById("setor").value = r[67];
-                    document.getElementById("desativado").value = r[68];
-             
-                    if (r[68] == 'S' ) {
-
-                        $('#desativado').prop('checked', true);
+                        $('#agBiologico').prop('checked', true);
 
                     }else{
 
-                        $('#desativado').prop('checked', false);
+                        $('#agBiologico').prop('checked', false);
                     }
 
-                    document.getElementById("imagem").value = "";
-                    var imagemView = r[20];
+                    if (r[16] == 'S' ) {
+
+                        $('#agFisico').prop('checked', true);
+
+                    }else{
+
+                        $('#agFisico').prop('checked', false);
+                    }
+
+                    if (r[17] == 'S' ) {
+
+                        $('#agQuimico').prop('checked', true);
+
+                    }else{
+
+                        $('#agQuimico').prop('checked', false);
+                    }
+
+                    if (r[18] == 'S' ) {
+
+                        $('#riscoAcidente').prop('checked', true);
+
+                    }else{
+
+                        $('#riscoAcidente').prop('checked', false);
+                    }
+
+                    if (r[19] == 'S' ) {
+
+                        $('#riscoErgonomico').prop('checked', true);
+
+                    }else{
+
+                        $('#riscoErgonomico').prop('checked', false);
+                    }
+
+                    if (r[20] == 'S' ) {
+
+                        $('#ausenciaRisco').prop('checked', true);
+
+                    }else{
+
+                        $('#ausenciaRisco').prop('checked', false);
+                    }
+
+                    document.getElementById("resultadoExame").value = r[21];
+                    document.getElementById("observacaoExame").value = r[22];
+                    document.getElementById("dataRealizacao").value = r[23];
+                    document.getElementById("exameComplementar1").value = r[24];
+                    document.getElementById("dataComplementar1").value = r[25];
+                    document.getElementById("exameComplementar2").value = r[26];
+                    document.getElementById("dataComplementar2").value = r[27];
+                    document.getElementById("exameComplementar3").value = r[28];
+                    document.getElementById("dataComplementar3").value = r[29];
+                    document.getElementById("exameComplementar4").value = r[30];
+                    document.getElementById("dataComplementar4").value = r[31];
+                    document.getElementById("exameComplementar5").value = r[32];
+                    document.getElementById("dataComplementar5").value = r[33];
+                    document.getElementById("exameComplementar6").value = r[34];
+                    document.getElementById("dataComplementar6").value = r[35];
+                    document.getElementById("exameComplementar7").value = r[36];
+                    document.getElementById("dataComplementar7").value = r[37];
+                    document.getElementById("exameComplementar8").value = r[38];
+                    document.getElementById("dataComplementar8").value = r[39];
+                    document.getElementById("pagamentoExame").value = r[40];
+                    document.getElementById("valorExame").value = r[41];
                 
-                    carregarImagem(imagemView);     
-            
+                    document.getElementById("localRealizacao").value = r[42];
+                    
+                    document.getElementById("anexoExame").value = "";
+                    
+                    var anexoView = r[43];
+                    var anexoView = anexoView.substr(57);
+                    document.getElementById("anexoView").value = anexoView;
             }
            
         },
@@ -1261,79 +1334,65 @@ function buscaRegistroProximo(){
 
 function buscaUltimoRegistro(){
     
-    document.getElementById("idFuncionario").readOnly = true;
-    document.getElementById("empresa").readOnly = true;
-    document.getElementById("filial").readOnly = true;
-    document.getElementById("livro").readOnly = true;
-    document.getElementById("pagina").readOnly = true;
-    document.getElementById("matricula").readOnly = true;
-    document.getElementById("funcao").readOnly = true;
-    document.getElementById("salarioValor").readOnly = true;
-    document.getElementById("salarioPagamento").readOnly = true;
-    document.getElementById("dataAdmissao").readOnly = true;
-    document.getElementById("experiencia").readOnly = true;
-    document.getElementById("horarioInicial1").readOnly = true;
-    document.getElementById("horarioFinal1").readOnly = true;
-    document.getElementById("horarioInicial2").readOnly = true;
-    document.getElementById("horarioFinal2").readOnly = true;
-    document.getElementById("dataCadastro").readOnly = true;
-    document.getElementById("nomeFuncionario").readOnly = true;
-    document.getElementById("dataNasc").readOnly = true;
-    document.getElementById("cidadeNasc").readOnly = true;
-    document.getElementById("estadoNasc").readOnly = true;
-    document.getElementById("nomeMae").readOnly = true;
-    document.getElementById("nomePai").readOnly = true;
-    document.getElementById("imagem").readOnly = true;
-    document.getElementById("cep").readOnly = true;
-    document.getElementById("endereco").readOnly = true;
-    document.getElementById("numero").readOnly = true;
-    document.getElementById("bairro").readOnly = true;
-    document.getElementById("cidade").readOnly = true;
-    document.getElementById("estado").readOnly = true;
-    document.getElementById("telefone1").readOnly = true;
-    document.getElementById("telefone2").readOnly = true;
-    document.getElementById("telefone3").readOnly = true;
-    document.getElementById("email").readOnly = true;
-    document.getElementById("cpf").readOnly = true;
-    document.getElementById("identidade").readOnly = true;
-    document.getElementById("expedidorIdentidade").readOnly = true;
-    document.getElementById("estadoIdentidade").readOnly = true;
-    document.getElementById("dataIdentidade").readOnly = true;
-    document.getElementById("ctps").readOnly = true;
-    document.getElementById("serieCtps").readOnly = true;
-    document.getElementById("pisPasep").readOnly = true;
-    document.getElementById("estadoCtps").readOnly = true;
-    document.getElementById("dataCtps").readOnly = true;
-    document.getElementById("tituloEleitor").readOnly = true;
-    document.getElementById("zonaEleitor").readOnly = true;
-    document.getElementById("secaoEleitor").readOnly = true;
-    document.getElementById("sexo").readOnly = true;
-    document.getElementById("estadoCivil").readOnly = true;
-    document.getElementById("deficienteFisico").readOnly = true;
-    document.getElementById("grauInstrucao").readOnly = true;
-    document.getElementById("etnia").readOnly = true;
-    document.getElementById("corOlhos").readOnly = true;
-    document.getElementById("corCabelos").readOnly = true;
-    document.getElementById("altura").readOnly = true;
-    document.getElementById("peso").readOnly = true;
-    document.getElementById("nomeFilho1").readOnly = true;
-    document.getElementById("dataNasc1").readOnly = true;
-    document.getElementById("nomeFilho2").readOnly = true;
-    document.getElementById("dataNasc2").readOnly = true;
-    document.getElementById("nomeFilho3").readOnly = true;
-    document.getElementById("dataNasc3").readOnly = true;
-    document.getElementById("nomeFilho4").readOnly = true;
-    document.getElementById("dataNasc4").readOnly = true;
-    document.getElementById("nomeFilho5").readOnly = true;
-    document.getElementById("dataNasc5").readOnly = true;
-    document.getElementById("nomeFilho6").readOnly = true;
-    document.getElementById("dataNasc6").readOnly = true;
-    document.getElementById("setor").readOnly = true;
-    document.getElementById("desativado").disabled = true;
+    document.getElementById("idAso").readOnly             = true;
+    document.getElementById("empresa").readOnly             = true;
+    document.getElementById("filial").readOnly             = true;
+    document.getElementById("funcionario").readOnly             = true;
+    document.getElementById("matricula").readOnly             = true;
+    document.getElementById("setor").readOnly             = true;
+    document.getElementById("funcao").readOnly             = true;
+    document.getElementById("dataNasc").readOnly             = true;
+    document.getElementById("cpf").readOnly             = true;
+    document.getElementById("ctps").readOnly             = true;
+    document.getElementById("pisPasep").readOnly             = true;
+    
+    
+    document.getElementById("tipoExames").readOnly             = true;
+    document.getElementById("outrosExames").readOnly             = true;
+    document.getElementById("medico").readOnly             = true;
+    document.getElementById("crm").readOnly             = true;
+    
+    document.getElementById("agBiologico").disabled = true;
+    document.getElementById("agFisico").disabled = true;
+    document.getElementById("agQuimico").disabled = true;
+    document.getElementById("riscoAcidente").disabled = true;
+    document.getElementById("riscoErgonomico").disabled = true;
+    document.getElementById("ausenciaRisco").disabled = true;
+    
+    document.getElementById("resultadoExame").readOnly             = true;
+    document.getElementById("observacaoExame").readOnly             = true;
+    document.getElementById("localRealizacao").readOnly             = true;
+    document.getElementById("dataRealizacao").readOnly             = true;
+    
+    
+    document.getElementById("exameComplementar1").readOnly             = true;
+    document.getElementById("dataComplementar1").readOnly             = true;
+    document.getElementById("exameComplementar2").readOnly             = true;
+    document.getElementById("dataComplementar2").readOnly             = true;
+    document.getElementById("exameComplementar3").readOnly             = true;
+    document.getElementById("dataComplementar3").readOnly             = true;
+    document.getElementById("exameComplementar4").readOnly             = true;
+    document.getElementById("dataComplementar4").readOnly             = true;
+    document.getElementById("exameComplementar5").readOnly             = true;
+    document.getElementById("dataComplementar5").readOnly             = true;
+    document.getElementById("exameComplementar6").readOnly             = true;
+    document.getElementById("dataComplementar6").readOnly             = true;
+    document.getElementById("exameComplementar7").readOnly             = true;
+    document.getElementById("dataComplementar7").readOnly             = true;
+    document.getElementById("exameComplementar8").readOnly             = true;
+    document.getElementById("dataComplementar8").readOnly             = true;
+    
+    document.getElementById("pagamentoExame").readOnly             = true;
+    document.getElementById("valorExame").readOnly             = true; 
+    
+    document.getElementById("anexoExame").readOnly             = true; 
+    document.getElementById("anexoView").readOnly             = true;
 
+    document.getElementById("anexoView").value = "";
+    
     
     $.ajax({
-        url: 'index.php?m=cadastrofuncionarios&c=cadastrofuncionarioscontroller&f=buscaUltimoRegistro',
+        url: 'index.php?m=cadastroaso&c=cadastroasocontroller&f=buscaUltimoRegistro',
         data: {
        
         },
@@ -1342,97 +1401,106 @@ function buscaUltimoRegistro(){
         async: true,
         success: function(r) {
             
-                document.getElementById("idFuncionario").value = r[0];
+                document.getElementById("idAso").value = r[0];
                 document.getElementById("empresa").value = r[1];
                 document.getElementById("filial").value = r[2];
-                document.getElementById("livro").value = r[3];
-                document.getElementById("pagina").value = r[4];
-                document.getElementById("nomeFuncionario").value = r[5];
-                document.getElementById("dataNasc").value = r[6];
-                document.getElementById("cidadeNasc").value = r[7];
-                document.getElementById("estadoNasc").value = r[8];
-                document.getElementById("dataCadastro").value = r[9];
+                document.getElementById("funcionario").value = r[3];
+                document.getElementById("matricula").value = r[4];
+                document.getElementById("setor").value = r[5];
+                document.getElementById("funcao").value = r[6];
+                document.getElementById("dataNasc").value = r[7];
+                document.getElementById("cpf").value = r[8];
+                document.getElementById("ctps").value = r[9];
+                document.getElementById("pisPasep").value = r[10];
+                document.getElementById("tipoExames").value = r[11];
+                document.getElementById("outrosExames").value = r[12];
+                document.getElementById("medico").value = r[13];
+                document.getElementById("crm").value = r[14];
 
-                document.getElementById("matricula").value = r[10];
-                document.getElementById("funcao").value = r[11];
-                document.getElementById("salarioValor").value = r[12];
-                document.getElementById("salarioPagamento").value = r[13];
-                document.getElementById("dataAdmissao").value = r[14];
-                document.getElementById("experiencia").value = r[15];
-                document.getElementById("horarioInicial1").value = r[16];
-                document.getElementById("horarioFinal1").value = r[17];
-                document.getElementById("horarioInicial2").value = r[18];
-                document.getElementById("horarioFinal2").value = r[19];
-                document.getElementById("imagemView").value = r[20];
+                if (r[15] == 'S' ) {
 
-                document.getElementById("cep").value = r[21];
-                document.getElementById("endereco").value = r[22];
-                document.getElementById("numero").value = r[23];
-                document.getElementById("bairro").value = r[24];
-                document.getElementById("cidade").value = r[25];
-                document.getElementById("estado").value = r[26];
-                document.getElementById("email").value = r[27];
-                document.getElementById("telefone1").value = r[28];
-                document.getElementById("telefone2").value = r[29];
-                document.getElementById("telefone3").value = r[30];
+                    $('#agBiologico').prop('checked', true);
 
-                document.getElementById("cpf").value = r[31];
-                document.getElementById("identidade").value = r[32];
-                document.getElementById("expedidorIdentidade").value = r[33];
-                document.getElementById("estadoIdentidade").value = r[34];
-                document.getElementById("dataIdentidade").value = r[35];
-                document.getElementById("ctps").value = r[36];
-                document.getElementById("serieCtps").value = r[37];
-                document.getElementById("pisPasep").value = r[38];
-                document.getElementById("estadoCtps").value = r[39];
-                document.getElementById("dataCtps").value = r[40];
-                document.getElementById("tituloEleitor").value = r[41];
-                document.getElementById("zonaEleitor").value = r[42];
-                document.getElementById("secaoEleitor").value = r[43];
+                }else{
 
+                    $('#agBiologico').prop('checked', false);
+                }
 
-                document.getElementById("nomeMae").value = r[44];
-                document.getElementById("nomePai").value = r[45];
-                document.getElementById("sexo").value = r[46];
-                document.getElementById("estadoCivil").value = r[47];
-                document.getElementById("deficienteFisico").value = r[48];
-                document.getElementById("grauInstrucao").value = r[49];
-                document.getElementById("etnia").value = r[50];
-                document.getElementById("corOlhos").value = r[51];
-                document.getElementById("corCabelos").value = r[52];
-                document.getElementById("altura").value = r[53];
-                document.getElementById("peso").value = r[54];
+                if (r[16] == 'S' ) {
 
-                document.getElementById("nomeFilho1").value = r[55];
-                document.getElementById("dataNasc1").value = r[56];
-                document.getElementById("nomeFilho2").value = r[57];
-                document.getElementById("dataNasc2").value = r[58];
-                document.getElementById("nomeFilho3").value = r[59];
-                document.getElementById("dataNasc3").value = r[60];
-                document.getElementById("nomeFilho4").value = r[61];
-                document.getElementById("dataNasc4").value = r[62];
-                document.getElementById("nomeFilho5").value = r[63];
-                document.getElementById("dataNasc5").value = r[64];
-                document.getElementById("nomeFilho6").value = r[65];
-                document.getElementById("dataNasc6").value = r[66];
+                    $('#agFisico').prop('checked', true);
+
+                }else{
+
+                    $('#agFisico').prop('checked', false);
+                }
+
+                if (r[17] == 'S' ) {
+
+                    $('#agQuimico').prop('checked', true);
+
+                }else{
+
+                    $('#agQuimico').prop('checked', false);
+                }
+
+                if (r[18] == 'S' ) {
+
+                    $('#riscoAcidente').prop('checked', true);
+
+                }else{
+
+                    $('#riscoAcidente').prop('checked', false);
+                }
+
+                if (r[19] == 'S' ) {
+
+                    $('#riscoErgonomico').prop('checked', true);
+
+                }else{
+
+                    $('#riscoErgonomico').prop('checked', false);
+                }
+
+                if (r[20] == 'S' ) {
+
+                    $('#ausenciaRisco').prop('checked', true);
+
+                }else{
+
+                    $('#ausenciaRisco').prop('checked', false);
+                }
+
+                document.getElementById("resultadoExame").value = r[21];
+                document.getElementById("observacaoExame").value = r[22];
+                document.getElementById("dataRealizacao").value = r[23];
+                document.getElementById("exameComplementar1").value = r[24];
+                document.getElementById("dataComplementar1").value = r[25];
+                document.getElementById("exameComplementar2").value = r[26];
+                document.getElementById("dataComplementar2").value = r[27];
+                document.getElementById("exameComplementar3").value = r[28];
+                document.getElementById("dataComplementar3").value = r[29];
+                document.getElementById("exameComplementar4").value = r[30];
+                document.getElementById("dataComplementar4").value = r[31];
+                document.getElementById("exameComplementar5").value = r[32];
+                document.getElementById("dataComplementar5").value = r[33];
+                document.getElementById("exameComplementar6").value = r[34];
+                document.getElementById("dataComplementar6").value = r[35];
+                document.getElementById("exameComplementar7").value = r[36];
+                document.getElementById("dataComplementar7").value = r[37];
+                document.getElementById("exameComplementar8").value = r[38];
+                document.getElementById("dataComplementar8").value = r[39];
+                document.getElementById("pagamentoExame").value = r[40];
+                document.getElementById("valorExame").value = r[41];
                 
-                document.getElementById("setor").value = r[67];
-                document.getElementById("desativado").value = r[68];
-             
-                    if (r[68] == 'S' ) {
-
-                        $('#desativado').prop('checked', true);
-
-                    }else{
-
-                        $('#desativado').prop('checked', false);
-                    }
-            
-                document.getElementById("imagem").value = "";
-                var imagemView = r[20];
+                document.getElementById("localRealizacao").value = r[42];
                 
-                carregarImagem(imagemView); 
-           
+                document.getElementById("anexoExame").value = "";
+                
+                
+                    var anexoView = r[43];
+                    var anexoView = anexoView.substr(57);
+                    document.getElementById("anexoView").value = anexoView;
         },
         error: function(e) {
 
@@ -1452,7 +1520,7 @@ function pesquisaFiltro(){
     // Pesquisa Para alimentar campos
     
     $.ajax({
-        url: 'index.php?m=cadastrofuncionarios&c=cadastrofuncionarioscontroller&f=pesquisaSimples',
+        url: 'index.php?m=cadastroaso&c=cadastroasocontroller&f=pesquisaSimples',
         data: {
             idInicial: idInicial,
             nomeInicial: nomeInicial
@@ -1464,97 +1532,106 @@ function pesquisaFiltro(){
         success: function(r) {
             
              
-                document.getElementById("idFuncionario").value = r[0];
+                document.getElementById("idAso").value = r[0];
                 document.getElementById("empresa").value = r[1];
                 document.getElementById("filial").value = r[2];
-                document.getElementById("livro").value = r[3];
-                document.getElementById("pagina").value = r[4];
-                document.getElementById("nomeFuncionario").value = r[5];
-                document.getElementById("dataNasc").value = r[6];
-                document.getElementById("cidadeNasc").value = r[7];
-                document.getElementById("estadoNasc").value = r[8];
-                document.getElementById("dataCadastro").value = r[9];
+                document.getElementById("funcionario").value = r[3];
+                document.getElementById("matricula").value = r[4];
+                document.getElementById("setor").value = r[5];
+                document.getElementById("funcao").value = r[6];
+                document.getElementById("dataNasc").value = r[7];
+                document.getElementById("cpf").value = r[8];
+                document.getElementById("ctps").value = r[9];
+                document.getElementById("pisPasep").value = r[10];
+                document.getElementById("tipoExames").value = r[11];
+                document.getElementById("outrosExames").value = r[12];
+                document.getElementById("medico").value = r[13];
+                document.getElementById("crm").value = r[14];
 
-                document.getElementById("matricula").value = r[10];
-                document.getElementById("funcao").value = r[11];
-                document.getElementById("salarioValor").value = r[12];
-                document.getElementById("salarioPagamento").value = r[13];
-                document.getElementById("dataAdmissao").value = r[14];
-                document.getElementById("experiencia").value = r[15];
-                document.getElementById("horarioInicial1").value = r[16];
-                document.getElementById("horarioFinal1").value = r[17];
-                document.getElementById("horarioInicial2").value = r[18];
-                document.getElementById("horarioFinal2").value = r[19];
-                document.getElementById("imagemView").value = r[20];
+                if (r[15] == 'S' ) {
 
-                document.getElementById("cep").value = r[21];
-                document.getElementById("endereco").value = r[22];
-                document.getElementById("numero").value = r[23];
-                document.getElementById("bairro").value = r[24];
-                document.getElementById("cidade").value = r[25];
-                document.getElementById("estado").value = r[26];
-                document.getElementById("email").value = r[27];
-                document.getElementById("telefone1").value = r[28];
-                document.getElementById("telefone2").value = r[29];
-                document.getElementById("telefone3").value = r[30];
+                    $('#agBiologico').prop('checked', true);
 
-                document.getElementById("cpf").value = r[31];
-                document.getElementById("identidade").value = r[32];
-                document.getElementById("expedidorIdentidade").value = r[33];
-                document.getElementById("estadoIdentidade").value = r[34];
-                document.getElementById("dataIdentidade").value = r[35];
-                document.getElementById("ctps").value = r[36];
-                document.getElementById("serieCtps").value = r[37];
-                document.getElementById("pisPasep").value = r[38];
-                document.getElementById("estadoCtps").value = r[39];
-                document.getElementById("dataCtps").value = r[40];
-                document.getElementById("tituloEleitor").value = r[41];
-                document.getElementById("zonaEleitor").value = r[42];
-                document.getElementById("secaoEleitor").value = r[43];
+                }else{
 
+                    $('#agBiologico').prop('checked', false);
+                }
 
-                document.getElementById("nomeMae").value = r[44];
-                document.getElementById("nomePai").value = r[45];
-                document.getElementById("sexo").value = r[46];
-                document.getElementById("estadoCivil").value = r[47];
-                document.getElementById("deficienteFisico").value = r[48];
-                document.getElementById("grauInstrucao").value = r[49];
-                document.getElementById("etnia").value = r[50];
-                document.getElementById("corOlhos").value = r[51];
-                document.getElementById("corCabelos").value = r[52];
-                document.getElementById("altura").value = r[53];
-                document.getElementById("peso").value = r[54];
+                if (r[16] == 'S' ) {
 
-                document.getElementById("nomeFilho1").value = r[55];
-                document.getElementById("dataNasc1").value = r[56];
-                document.getElementById("nomeFilho2").value = r[57];
-                document.getElementById("dataNasc2").value = r[58];
-                document.getElementById("nomeFilho3").value = r[59];
-                document.getElementById("dataNasc3").value = r[60];
-                document.getElementById("nomeFilho4").value = r[61];
-                document.getElementById("dataNasc4").value = r[62];
-                document.getElementById("nomeFilho5").value = r[63];
-                document.getElementById("dataNasc5").value = r[64];
-                document.getElementById("nomeFilho6").value = r[65];
-                document.getElementById("dataNasc6").value = r[66];
+                    $('#agFisico').prop('checked', true);
+
+                }else{
+
+                    $('#agFisico').prop('checked', false);
+                }
+
+                if (r[17] == 'S' ) {
+
+                    $('#agQuimico').prop('checked', true);
+
+                }else{
+
+                    $('#agQuimico').prop('checked', false);
+                }
+
+                if (r[18] == 'S' ) {
+
+                    $('#riscoAcidente').prop('checked', true);
+
+                }else{
+
+                    $('#riscoAcidente').prop('checked', false);
+                }
+
+                if (r[19] == 'S' ) {
+
+                    $('#riscoErgonomico').prop('checked', true);
+
+                }else{
+
+                    $('#riscoErgonomico').prop('checked', false);
+                }
+
+                if (r[20] == 'S' ) {
+
+                    $('#ausenciaRisco').prop('checked', true);
+
+                }else{
+
+                    $('#ausenciaRisco').prop('checked', false);
+                }
+
+                document.getElementById("resultadoExame").value = r[21];
+                document.getElementById("observacaoExame").value = r[22];
+                document.getElementById("dataRealizacao").value = r[23];
+                document.getElementById("exameComplementar1").value = r[24];
+                document.getElementById("dataComplementar1").value = r[25];
+                document.getElementById("exameComplementar2").value = r[26];
+                document.getElementById("dataComplementar2").value = r[27];
+                document.getElementById("exameComplementar3").value = r[28];
+                document.getElementById("dataComplementar3").value = r[29];
+                document.getElementById("exameComplementar4").value = r[30];
+                document.getElementById("dataComplementar4").value = r[31];
+                document.getElementById("exameComplementar5").value = r[32];
+                document.getElementById("dataComplementar5").value = r[33];
+                document.getElementById("exameComplementar6").value = r[34];
+                document.getElementById("dataComplementar6").value = r[35];
+                document.getElementById("exameComplementar7").value = r[36];
+                document.getElementById("dataComplementar7").value = r[37];
+                document.getElementById("exameComplementar8").value = r[38];
+                document.getElementById("dataComplementar8").value = r[39];
+                document.getElementById("pagamentoExame").value = r[40];
+                document.getElementById("valorExame").value = r[41];
                 
-                document.getElementById("setor").value = r[67];
-                document.getElementById("desativado").value = r[68];
-             
-                    if (r[68] == 'S' ) {
-
-                        $('#desativado').prop('checked', true);
-
-                    }else{
-
-                        $('#desativado').prop('checked', false);
-                    }
-            
-            
-                document.getElementById("imagem").value = "";
-                var imagemView = r[20];
+                document.getElementById("localRealizacao").value = r[42];
                 
-                carregarImagem(imagemView); 
+                document.getElementById("anexoExame").value = "";
+                
+                
+                    var anexoView = r[43];
+                    var anexoView = anexoView.substr(57);
+                    document.getElementById("anexoView").value = anexoView;
                 
             $('#pesquisarModal').modal('hide');          
             
@@ -1576,7 +1653,7 @@ function getGrid() {
         "processing": true,
         "serverSide": true,
         ajax: {
-            "url": "index.php?m=cadastrofuncionarios&c=cadastrofuncionarioscontroller&f=getGrid",
+            "url": "index.php?m=cadastroaso&c=cadastroasocontroller&f=getGrid",
               
             "type": "POST",
         },
@@ -1584,14 +1661,14 @@ function getGrid() {
             "url": '//cdn.datatables.net/plug-ins/1.10.7/i18n/Portuguese-Brasil.json'
         },
         "columns": [
-            {"data": "ID_FUNCIONARIO"},
+            {"data": "ID_ASO"},
             {"data": "EMPRESA"},
             {"data": "FILIAL"},
-            {"data": "NOME_FUNCIONARIO"},
+            {"data": "FUNCIONARIO"},
             {"data": "MATRICULA"},
             {"data": "SETOR"},
             {"data": "FUNCAO"},
-            {"data": "SELECIONAR"},       
+            {"data": "SELECIONAR"}       
             
             
             
@@ -1611,81 +1688,65 @@ function getGrid() {
   
  }
  
- function selecionaGrid(idFuncionario){
+ function selecionaGrid(idAso){
     
    
     // Pesquisa Para alimentar campos
     //alert(idFuncionario);
     
-    document.getElementById("idFuncionario").readOnly = true;
-    document.getElementById("empresa").readOnly = true;
-    document.getElementById("filial").readOnly = true;
-    document.getElementById("livro").readOnly = true;
-    document.getElementById("pagina").readOnly = true;
-    document.getElementById("matricula").readOnly = true;
-    document.getElementById("funcao").readOnly = true;
-    document.getElementById("salarioValor").readOnly = true;
-    document.getElementById("salarioPagamento").readOnly = true;
-    document.getElementById("dataAdmissao").readOnly = true;
-    document.getElementById("experiencia").readOnly = true;
-    document.getElementById("horarioInicial1").readOnly = true;
-    document.getElementById("horarioFinal1").readOnly = true;
-    document.getElementById("horarioInicial2").readOnly = true;
-    document.getElementById("horarioFinal2").readOnly = true;
-    document.getElementById("dataCadastro").readOnly = true;
-    document.getElementById("nomeFuncionario").readOnly = true;
-    document.getElementById("dataNasc").readOnly = true;
-    document.getElementById("cidadeNasc").readOnly = true;
-    document.getElementById("estadoNasc").readOnly = true;
-    document.getElementById("nomeMae").readOnly = true;
-    document.getElementById("nomePai").readOnly = true;
-    document.getElementById("imagem").readOnly = true;
-    document.getElementById("cep").readOnly = true;
-    document.getElementById("endereco").readOnly = true;
-    document.getElementById("numero").readOnly = true;
-    document.getElementById("bairro").readOnly = true;
-    document.getElementById("cidade").readOnly = true;
-    document.getElementById("estado").readOnly = true;
-    document.getElementById("telefone1").readOnly = true;
-    document.getElementById("telefone2").readOnly = true;
-    document.getElementById("telefone3").readOnly = true;
-    document.getElementById("email").readOnly = true;
-    document.getElementById("cpf").readOnly = true;
-    document.getElementById("identidade").readOnly = true;
-    document.getElementById("expedidorIdentidade").readOnly = true;
-    document.getElementById("estadoIdentidade").readOnly = true;
-    document.getElementById("dataIdentidade").readOnly = true;
-    document.getElementById("ctps").readOnly = true;
-    document.getElementById("serieCtps").readOnly = true;
-    document.getElementById("pisPasep").readOnly = true;
-    document.getElementById("estadoCtps").readOnly = true;
-    document.getElementById("dataCtps").readOnly = true;
-    document.getElementById("tituloEleitor").readOnly = true;
-    document.getElementById("zonaEleitor").readOnly = true;
-    document.getElementById("secaoEleitor").readOnly = true;
-    document.getElementById("sexo").readOnly = true;
-    document.getElementById("estadoCivil").readOnly = true;
-    document.getElementById("deficienteFisico").readOnly = true;
-    document.getElementById("grauInstrucao").readOnly = true;
-    document.getElementById("etnia").readOnly = true;
-    document.getElementById("corOlhos").readOnly = true;
-    document.getElementById("corCabelos").readOnly = true;
-    document.getElementById("altura").readOnly = true;
-    document.getElementById("peso").readOnly = true;
-    document.getElementById("nomeFilho1").readOnly = true;
-    document.getElementById("dataNasc1").readOnly = true;
-    document.getElementById("nomeFilho2").readOnly = true;
-    document.getElementById("dataNasc2").readOnly = true;
-    document.getElementById("nomeFilho3").readOnly = true;
-    document.getElementById("dataNasc3").readOnly = true;
-    document.getElementById("nomeFilho4").readOnly = true;
-    document.getElementById("dataNasc4").readOnly = true;
-    document.getElementById("nomeFilho5").readOnly = true;
-    document.getElementById("dataNasc5").readOnly = true;
-    document.getElementById("nomeFilho6").readOnly = true;
-    document.getElementById("dataNasc6").readOnly = true;
-    document.getElementById("setor").readOnly = true;
-    document.getElementById("desativado").disabled = true;
+    document.getElementById("idAso").readOnly             = true;
+    document.getElementById("empresa").readOnly             = true;
+    document.getElementById("filial").readOnly             = true;
+    document.getElementById("funcionario").readOnly             = true;
+    document.getElementById("matricula").readOnly             = true;
+    document.getElementById("setor").readOnly             = true;
+    document.getElementById("funcao").readOnly             = true;
+    document.getElementById("dataNasc").readOnly             = true;
+    document.getElementById("cpf").readOnly             = true;
+    document.getElementById("ctps").readOnly             = true;
+    document.getElementById("pisPasep").readOnly             = true;
+    
+    
+    document.getElementById("tipoExames").readOnly             = true;
+    document.getElementById("outrosExames").readOnly             = true;
+    document.getElementById("medico").readOnly             = true;
+    document.getElementById("crm").readOnly             = true;
+    
+    document.getElementById("agBiologico").disabled = true;
+    document.getElementById("agFisico").disabled = true;
+    document.getElementById("agQuimico").disabled = true;
+    document.getElementById("riscoAcidente").disabled = true;
+    document.getElementById("riscoErgonomico").disabled = true;
+    document.getElementById("ausenciaRisco").disabled = true;
+    
+    document.getElementById("resultadoExame").readOnly             = true;
+    document.getElementById("observacaoExame").readOnly             = true;
+    document.getElementById("localRealizacao").readOnly             = true;
+    document.getElementById("dataRealizacao").readOnly             = true;
+    
+    
+    document.getElementById("exameComplementar1").readOnly             = true;
+    document.getElementById("dataComplementar1").readOnly             = true;
+    document.getElementById("exameComplementar2").readOnly             = true;
+    document.getElementById("dataComplementar2").readOnly             = true;
+    document.getElementById("exameComplementar3").readOnly             = true;
+    document.getElementById("dataComplementar3").readOnly             = true;
+    document.getElementById("exameComplementar4").readOnly             = true;
+    document.getElementById("dataComplementar4").readOnly             = true;
+    document.getElementById("exameComplementar5").readOnly             = true;
+    document.getElementById("dataComplementar5").readOnly             = true;
+    document.getElementById("exameComplementar6").readOnly             = true;
+    document.getElementById("dataComplementar6").readOnly             = true;
+    document.getElementById("exameComplementar7").readOnly             = true;
+    document.getElementById("dataComplementar7").readOnly             = true;
+    document.getElementById("exameComplementar8").readOnly             = true;
+    document.getElementById("dataComplementar8").readOnly             = true;
+    
+    document.getElementById("pagamentoExame").readOnly             = true;
+    document.getElementById("valorExame").readOnly             = true; 
+    
+    document.getElementById("anexoExame").readOnly             = true; 
+    document.getElementById("anexoView").readOnly             = true;
     
 
     
@@ -1693,9 +1754,9 @@ function getGrid() {
     
     
     $.ajax({
-        url: 'index.php?m=cadastrofuncionarios&c=cadastrofuncionarioscontroller&f=selecionaGrid',
+        url: 'index.php?m=cadastroaso&c=cadastroasocontroller&f=selecionaGrid',
         data: {
-            idFuncionario: idFuncionario
+            idAso: idAso
             
             
         },
@@ -1705,98 +1766,106 @@ function getGrid() {
         success: function(r) {
             
              
-                document.getElementById("idFuncionario").value = r[0];
+                document.getElementById("idAso").value = r[0];
                 document.getElementById("empresa").value = r[1];
                 document.getElementById("filial").value = r[2];
-                document.getElementById("livro").value = r[3];
-                document.getElementById("pagina").value = r[4];
-                document.getElementById("nomeFuncionario").value = r[5];
-                document.getElementById("dataNasc").value = r[6];
-                document.getElementById("cidadeNasc").value = r[7];
-                document.getElementById("estadoNasc").value = r[8];
-                document.getElementById("dataCadastro").value = r[9];
+                document.getElementById("funcionario").value = r[3];
+                document.getElementById("matricula").value = r[4];
+                document.getElementById("setor").value = r[5];
+                document.getElementById("funcao").value = r[6];
+                document.getElementById("dataNasc").value = r[7];
+                document.getElementById("cpf").value = r[8];
+                document.getElementById("ctps").value = r[9];
+                document.getElementById("pisPasep").value = r[10];
+                document.getElementById("tipoExames").value = r[11];
+                document.getElementById("outrosExames").value = r[12];
+                document.getElementById("medico").value = r[13];
+                document.getElementById("crm").value = r[14];
 
-                document.getElementById("matricula").value = r[10];
-                document.getElementById("funcao").value = r[11];
-                document.getElementById("salarioValor").value = r[12];
-                document.getElementById("salarioPagamento").value = r[13];
-                document.getElementById("dataAdmissao").value = r[14];
-                document.getElementById("experiencia").value = r[15];
-                document.getElementById("horarioInicial1").value = r[16];
-                document.getElementById("horarioFinal1").value = r[17];
-                document.getElementById("horarioInicial2").value = r[18];
-                document.getElementById("horarioFinal2").value = r[19];
-                document.getElementById("imagemView").value = r[20];
+                if (r[15] == 'S' ) {
 
-                document.getElementById("cep").value = r[21];
-                document.getElementById("endereco").value = r[22];
-                document.getElementById("numero").value = r[23];
-                document.getElementById("bairro").value = r[24];
-                document.getElementById("cidade").value = r[25];
-                document.getElementById("estado").value = r[26];
-                document.getElementById("email").value = r[27];
-                document.getElementById("telefone1").value = r[28];
-                document.getElementById("telefone2").value = r[29];
-                document.getElementById("telefone3").value = r[30];
+                    $('#agBiologico').prop('checked', true);
 
-                document.getElementById("cpf").value = r[31];
-                document.getElementById("identidade").value = r[32];
-                document.getElementById("expedidorIdentidade").value = r[33];
-                document.getElementById("estadoIdentidade").value = r[34];
-                document.getElementById("dataIdentidade").value = r[35];
-                document.getElementById("ctps").value = r[36];
-                document.getElementById("serieCtps").value = r[37];
-                document.getElementById("pisPasep").value = r[38];
-                document.getElementById("estadoCtps").value = r[39];
-                document.getElementById("dataCtps").value = r[40];
-                document.getElementById("tituloEleitor").value = r[41];
-                document.getElementById("zonaEleitor").value = r[42];
-                document.getElementById("secaoEleitor").value = r[43];
+                }else{
 
+                    $('#agBiologico').prop('checked', false);
+                }
 
-                document.getElementById("nomeMae").value = r[44];
-                document.getElementById("nomePai").value = r[45];
-                document.getElementById("sexo").value = r[46];
-                document.getElementById("estadoCivil").value = r[47];
-                document.getElementById("deficienteFisico").value = r[48];
-                document.getElementById("grauInstrucao").value = r[49];
-                document.getElementById("etnia").value = r[50];
-                document.getElementById("corOlhos").value = r[51];
-                document.getElementById("corCabelos").value = r[52];
-                document.getElementById("altura").value = r[53];
-                document.getElementById("peso").value = r[54];
+                if (r[16] == 'S' ) {
 
-                document.getElementById("nomeFilho1").value = r[55];
-                document.getElementById("dataNasc1").value = r[56];
-                document.getElementById("nomeFilho2").value = r[57];
-                document.getElementById("dataNasc2").value = r[58];
-                document.getElementById("nomeFilho3").value = r[59];
-                document.getElementById("dataNasc3").value = r[60];
-                document.getElementById("nomeFilho4").value = r[61];
-                document.getElementById("dataNasc4").value = r[62];
-                document.getElementById("nomeFilho5").value = r[63];
-                document.getElementById("dataNasc5").value = r[64];
-                document.getElementById("nomeFilho6").value = r[65];
-                document.getElementById("dataNasc6").value = r[66];
+                    $('#agFisico').prop('checked', true);
+
+                }else{
+
+                    $('#agFisico').prop('checked', false);
+                }
+
+                if (r[17] == 'S' ) {
+
+                    $('#agQuimico').prop('checked', true);
+
+                }else{
+
+                    $('#agQuimico').prop('checked', false);
+                }
+
+                if (r[18] == 'S' ) {
+
+                    $('#riscoAcidente').prop('checked', true);
+
+                }else{
+
+                    $('#riscoAcidente').prop('checked', false);
+                }
+
+                if (r[19] == 'S' ) {
+
+                    $('#riscoErgonomico').prop('checked', true);
+
+                }else{
+
+                    $('#riscoErgonomico').prop('checked', false);
+                }
+
+                if (r[20] == 'S' ) {
+
+                    $('#ausenciaRisco').prop('checked', true);
+
+                }else{
+
+                    $('#ausenciaRisco').prop('checked', false);
+                }
+
+                document.getElementById("resultadoExame").value = r[21];
+                document.getElementById("observacaoExame").value = r[22];
+                document.getElementById("dataRealizacao").value = r[23];
+                document.getElementById("exameComplementar1").value = r[24];
+                document.getElementById("dataComplementar1").value = r[25];
+                document.getElementById("exameComplementar2").value = r[26];
+                document.getElementById("dataComplementar2").value = r[27];
+                document.getElementById("exameComplementar3").value = r[28];
+                document.getElementById("dataComplementar3").value = r[29];
+                document.getElementById("exameComplementar4").value = r[30];
+                document.getElementById("dataComplementar4").value = r[31];
+                document.getElementById("exameComplementar5").value = r[32];
+                document.getElementById("dataComplementar5").value = r[33];
+                document.getElementById("exameComplementar6").value = r[34];
+                document.getElementById("dataComplementar6").value = r[35];
+                document.getElementById("exameComplementar7").value = r[36];
+                document.getElementById("dataComplementar7").value = r[37];
+                document.getElementById("exameComplementar8").value = r[38];
+                document.getElementById("dataComplementar8").value = r[39];
+                document.getElementById("pagamentoExame").value = r[40];
+                document.getElementById("valorExame").value = r[41];
                 
-                document.getElementById("setor").value = r[67];
-                document.getElementById("desativado").value = r[68];
-             
-                    if (r[68] == 'S' ) {
-
-                        $('#desativado').prop('checked', true);
-
-                    }else{
-
-                        $('#desativado').prop('checked', false);
-                    }
-            
-             
-                document.getElementById("imagem").value = "";
-                var imagemView = r[20];
+                document.getElementById("localExame").value = r[42];
                 
-                carregarImagem(imagemView); 
-            
+                document.getElementById("anexoExame").value = "";               
+                
+                
+                    var anexoView = r[43];
+                    var anexoView = anexoView.substr(57);
+                    document.getElementById("anexoView").value = anexoView;
                      
         },
         error: function(e) {
@@ -1809,153 +1878,109 @@ function getGrid() {
 function atualizar() {
 
 
-    document.getElementById("idFuncionario").readOnly = true;
-    document.getElementById("empresa").readOnly = true;
-    document.getElementById("filial").readOnly = true;
-    document.getElementById("livro").readOnly = true;
-    document.getElementById("pagina").readOnly = true;
-    document.getElementById("matricula").readOnly = true;
-    document.getElementById("funcao").readOnly = true;
-    document.getElementById("salarioValor").readOnly = true;
-    document.getElementById("salarioPagamento").readOnly = true;
-    document.getElementById("dataAdmissao").readOnly = true;
-    document.getElementById("experiencia").readOnly = true;
-    document.getElementById("horarioInicial1").readOnly = true;
-    document.getElementById("horarioFinal1").readOnly = true;
-    document.getElementById("horarioInicial2").readOnly = true;
-    document.getElementById("horarioFinal2").readOnly = true;
-    document.getElementById("dataCadastro").readOnly = true;
-    document.getElementById("nomeFuncionario").readOnly = true;
-    document.getElementById("dataNasc").readOnly = true;
-    document.getElementById("cidadeNasc").readOnly = true;
-    document.getElementById("estadoNasc").readOnly = true;
-    document.getElementById("nomeMae").readOnly = true;
-    document.getElementById("nomePai").readOnly = true;
-    document.getElementById("imagem").readOnly = true;
-    document.getElementById("cep").readOnly = true;
-    document.getElementById("endereco").readOnly = true;
-    document.getElementById("numero").readOnly = true;
-    document.getElementById("bairro").readOnly = true;
-    document.getElementById("cidade").readOnly = true;
-    document.getElementById("estado").readOnly = true;
-    document.getElementById("telefone1").readOnly = true;
-    document.getElementById("telefone2").readOnly = true;
-    document.getElementById("telefone3").readOnly = true;
-    document.getElementById("email").readOnly = true;
-    document.getElementById("cpf").readOnly = true;
-    document.getElementById("identidade").readOnly = true;
-    document.getElementById("expedidorIdentidade").readOnly = true;
-    document.getElementById("estadoIdentidade").readOnly = true;
-    document.getElementById("dataIdentidade").readOnly = true;
-    document.getElementById("ctps").readOnly = true;
-    document.getElementById("serieCtps").readOnly = true;
-    document.getElementById("pisPasep").readOnly = true;
-    document.getElementById("estadoCtps").readOnly = true;
-    document.getElementById("dataCtps").readOnly = true;
-    document.getElementById("tituloEleitor").readOnly = true;
-    document.getElementById("zonaEleitor").readOnly = true;
-    document.getElementById("secaoEleitor").readOnly = true;
-    document.getElementById("sexo").readOnly = true;
-    document.getElementById("estadoCivil").readOnly = true;
-    document.getElementById("deficienteFisico").readOnly = true;
-    document.getElementById("grauInstrucao").readOnly = true;
-    document.getElementById("etnia").readOnly = true;
-    document.getElementById("corOlhos").readOnly = true;
-    document.getElementById("corCabelos").readOnly = true;
-    document.getElementById("altura").readOnly = true;
-    document.getElementById("peso").readOnly = true;
-    document.getElementById("nomeFilho1").readOnly = true;
-    document.getElementById("dataNasc1").readOnly = true;
-    document.getElementById("nomeFilho2").readOnly = true;
-    document.getElementById("dataNasc2").readOnly = true;
-    document.getElementById("nomeFilho3").readOnly = true;
-    document.getElementById("dataNasc3").readOnly = true;
-    document.getElementById("nomeFilho4").readOnly = true;
-    document.getElementById("dataNasc4").readOnly = true;
-    document.getElementById("nomeFilho5").readOnly = true;
-    document.getElementById("dataNasc5").readOnly = true;
-    document.getElementById("nomeFilho6").readOnly = true;
-    document.getElementById("dataNasc6").readOnly = true;
-    document.getElementById("setor").readOnly = true;
-    document.getElementById("desativado").disabled = true;
-
-
-
-    document.getElementById("idFuncionario").value = "";
+    document.getElementById("idAso").readOnly             = true;
+    document.getElementById("empresa").readOnly             = true;
+    document.getElementById("filial").readOnly             = true;
+    document.getElementById("funcionario").readOnly             = true;
+    document.getElementById("matricula").readOnly             = true;
+    document.getElementById("setor").readOnly             = true;
+    document.getElementById("funcao").readOnly             = true;
+    document.getElementById("dataNasc").readOnly             = true;
+    document.getElementById("cpf").readOnly             = true;
+    document.getElementById("ctps").readOnly             = true;
+    document.getElementById("pisPasep").readOnly             = true;
+    document.getElementById("tipoExames").readOnly             = true;
+    document.getElementById("outrosExames").readOnly             = true;
+    document.getElementById("medico").readOnly             = true;
+    document.getElementById("crm").readOnly             = true;
+    
+    document.getElementById("agBiologico").disabled = true;
+    document.getElementById("agFisico").disabled = true;
+    document.getElementById("agQuimico").disabled = true;
+    document.getElementById("riscoAcidente").disabled = true;
+    document.getElementById("riscoErgonomico").disabled = true;
+    document.getElementById("ausenciaRisco").disabled = true;
+    
+    document.getElementById("resultadoExame").readOnly             = true;
+    document.getElementById("observacaoExame").readOnly             = true;
+    document.getElementById("localRealizacao").readOnly             = true;
+    document.getElementById("dataRealizacao").readOnly             = true;
+    
+    
+    document.getElementById("exameComplementar1").readOnly             = true;
+    document.getElementById("dataComplementar1").readOnly             = true;
+    document.getElementById("exameComplementar2").readOnly             = true;
+    document.getElementById("dataComplementar2").readOnly             = true;
+    document.getElementById("exameComplementar3").readOnly             = true;
+    document.getElementById("dataComplementar3").readOnly             = true;
+    document.getElementById("exameComplementar4").readOnly             = true;
+    document.getElementById("dataComplementar4").readOnly             = true;
+    document.getElementById("exameComplementar5").readOnly             = true;
+    document.getElementById("dataComplementar5").readOnly             = true;
+    document.getElementById("exameComplementar6").readOnly             = true;
+    document.getElementById("dataComplementar6").readOnly             = true;
+    document.getElementById("exameComplementar7").readOnly             = true;
+    document.getElementById("dataComplementar7").readOnly             = true;
+    document.getElementById("exameComplementar8").readOnly             = true;
+    document.getElementById("dataComplementar8").readOnly             = true;
+    document.getElementById("pagamentoExame").readOnly             = true;
+    document.getElementById("valorExame").readOnly             = true; 
+    
+    document.getElementById("anexoExame").readOnly             = true; 
+    document.getElementById("anexoView").hidden             = true;
+    
+    
+    
+    document.getElementById("idAso").value = "";
     document.getElementById("empresa").value = 0;
     document.getElementById("filial").value = 0;
-    document.getElementById("livro").value = "";
-    document.getElementById("pagina").value = "";
+    document.getElementById("funcionario").value = 0;
     document.getElementById("matricula").value = "";
-    document.getElementById("funcao").value = 0;
-    document.getElementById("salarioValor").value = "";
-    document.getElementById("salarioPagamento").value = 0;
-    document.getElementById("dataAdmissao").value = "";
-    document.getElementById("experiencia").value = 0;
-    document.getElementById("horarioInicial1").value = "";
-    document.getElementById("horarioFinal1").value = "";
-    document.getElementById("horarioInicial2").value = "";
-    document.getElementById("horarioFinal2").value = "";
-    document.getElementById("dataCadastro").value = "";
-    document.getElementById("nomeFuncionario").value = "";
+    document.getElementById("setor").value = "";
+    document.getElementById("funcao").value = "";
     document.getElementById("dataNasc").value = "";
-    document.getElementById("cidadeNasc").value = "";
-    document.getElementById("estadoNasc").value = 0;
-    document.getElementById("nomeMae").value = "";
-    document.getElementById("nomePai").value = "";
-    document.getElementById("imagem").value = "";
-    document.getElementById("cep").value = "";
-    document.getElementById("endereco").value = "";
-    document.getElementById("numero").value = "";
-    document.getElementById("bairro").value = "";
-    document.getElementById("cidade").value = "";
-    document.getElementById("estado").value = 0;
-    document.getElementById("telefone1").value = "";
-    document.getElementById("telefone2").value = "";
-    document.getElementById("telefone3").value = "";
-    document.getElementById("email").value = "";
     document.getElementById("cpf").value = "";
-    document.getElementById("identidade").value = "";
-    document.getElementById("expedidorIdentidade").value = "";
-    document.getElementById("estadoIdentidade").value = 0;
-    document.getElementById("dataIdentidade").value = "";
     document.getElementById("ctps").value = "";
-    document.getElementById("serieCtps").value = "";
     document.getElementById("pisPasep").value = "";
-    document.getElementById("estadoCtps").value = 0;
-    document.getElementById("dataCtps").value = "";
-    document.getElementById("tituloEleitor").value = "";
-    document.getElementById("zonaEleitor").value = "";
-    document.getElementById("secaoEleitor").value = "";
-    document.getElementById("sexo").value = 0;
-    document.getElementById("estadoCivil").value = 0;
-    document.getElementById("deficienteFisico").value = 0;
-    document.getElementById("grauInstrucao").value = 0;
-    document.getElementById("etnia").value = 0;
-    document.getElementById("corOlhos").value = "";
-    document.getElementById("corCabelos").value = "";
-    document.getElementById("altura").value = "";
-    document.getElementById("peso").value = "";
-    document.getElementById("nomeFilho1").value = "";
-    document.getElementById("dataNasc1").value = "";
-    document.getElementById("nomeFilho2").value = "";
-    document.getElementById("dataNasc2").value = "";
-    document.getElementById("nomeFilho3").value = "";
-    document.getElementById("dataNasc3").value = "";
-    document.getElementById("nomeFilho4").value = "";
-    document.getElementById("dataNasc4").value = "";
-    document.getElementById("nomeFilho5").value = "";
-    document.getElementById("dataNasc5").value = "";
-    document.getElementById("nomeFilho6").value = "";
-    document.getElementById("dataNasc6").value = "";
+    document.getElementById("tipoExames").value = 0;
+    document.getElementById("outrosExames").value = "";
+    document.getElementById("medico").value = "";
+    document.getElementById("crm").value = "";
     
-    document.getElementById("setor").value = 0;
+    $('#agBiologico').prop('checked', false);
+    $('#agFisico').prop('checked', false);
+    $('#agQuimico').prop('checked', false);
+    $('#riscoAcidente').prop('checked', false);
+    $('#riscoErgonomico').prop('checked', false);
+    $('#ausenciaRisco').prop('checked', false);
     
-    $('#desativado').prop('checked', false);
-                   
+    document.getElementById("resultadoExame").value = 0;
+    document.getElementById("observacaoExame").value = "";
+    document.getElementById("localRealizacao").value = "";
+    document.getElementById("dataRealizacao").value = "";
+    document.getElementById("exameComplementar1").value = 0;
+    document.getElementById("dataComplementar1").value = "";
+    document.getElementById("exameComplementar2").value = 0;
+    document.getElementById("dataComplementar2").value = "";
+    document.getElementById("exameComplementar3").value = 0;
+    document.getElementById("dataComplementar3").value = "";
+    document.getElementById("exameComplementar4").value = 0;
+    document.getElementById("dataComplementar4").value = "";
+    document.getElementById("exameComplementar5").value = 0;
+    document.getElementById("dataComplementar5").value = "";
+    document.getElementById("exameComplementar6").value = 0; 
+    document.getElementById("dataComplementar6").value = "";
+    document.getElementById("exameComplementar7").value = 0;
+    document.getElementById("dataComplementar7").value = "";
+    document.getElementById("exameComplementar8").value = 0;
+    document.getElementById("dataComplementar8").value = "";
+    document.getElementById("pagamentoExame").value = 0;
+    document.getElementById("valorExame").value = "";
     
-    document.getElementById("imagemView").value = " ";
-
+    document.getElementById("anexoExame").value = "";
+    document.getElementById("anexoView").value = "";
+    
+    
 }
 
 
@@ -2136,6 +2161,43 @@ function carregarDataAtual() {
 
 }
 
+function carregarListaExames(){
+    
+           
+    $.ajax({
+        url: 'index.php?m=cadastroaso&c=cadastroasocontroller&f=carregarListaExames',
+        data: {
+            
+        },
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        
+        
+        success: function(data) {
+                
+            if (data != false) {
+                document.getElementById('exameComplementar1').innerHTML = data;
+                document.getElementById('exameComplementar2').innerHTML = data;
+                document.getElementById('exameComplementar3').innerHTML = data;
+                document.getElementById('exameComplementar4').innerHTML = data;
+                document.getElementById('exameComplementar5').innerHTML = data;
+                document.getElementById('exameComplementar6').innerHTML = data;
+                document.getElementById('exameComplementar7').innerHTML = data;
+                document.getElementById('exameComplementar8').innerHTML = data;
+               
+            } else {
+                mensagem('Atenção', 'Erro ao carregar a lista de EXAMES', 'error'); 
+               
+            }
+
+        },
+        error: function() {
+            desbloqueiaTela();
+        }
+    });
+}
+
 function carregarOutrosExames(){
     
     var tipoExames                 =   $('#tipoExames').val(); 
@@ -2165,6 +2227,115 @@ function carregarValorExame(){
         document.getElementById("valorExame").disabled = false;
     }
     
+    
+}
+
+function carregaExame2(){
+    
+    var dataComplementar1                 =   $('#dataComplementar1').val(); 
+ 
+    if (dataComplementar1 != ""){
+         
+         document.getElementById("exameComplementar2").disabled = false;
+         document.getElementById("dataComplementar2").disabled = false; 
+        
+    }else{
+        document.getElementById("exameComplementar2").disabled = true;
+        document.getElementById("dataComplementar2").disabled = true;
+    }
+    
+}
+function carregaExame3(){
+    
+    var dataComplementar2                 =   $('#dataComplementar2').val(); 
+   
+    if (dataComplementar2 != ""){
+         
+         document.getElementById("exameComplementar3").disabled = false;
+         document.getElementById("dataComplementar3").disabled = false; 
+        
+    }else{
+        document.getElementById("exameComplementar3").disabled = true;
+        document.getElementById("dataComplementar3").disabled = true;
+    }
+    
+}
+function carregaExame4(){
+    
+    var dataComplementar3                 =   $('#dataComplementar3').val(); 
+   
+    if (dataComplementar3 != ""){
+         
+         document.getElementById("exameComplementar4").disabled = false;
+         document.getElementById("dataComplementar4").disabled = false; 
+        
+    }else{
+        document.getElementById("exameComplementar4").disabled = true;
+        document.getElementById("dataComplementar4").disabled = true;
+    }
+    
+}
+function carregaExame5(){
+    
+    var dataComplementar4                 =   $('#dataComplementar4').val(); 
+   
+    if (dataComplementar4 != ""){
+         
+         document.getElementById("exameComplementar5").disabled = false;
+         document.getElementById("dataComplementar5").disabled = false; 
+        
+    }else{
+        document.getElementById("exameComplementar5").disabled = true;
+        document.getElementById("dataComplementar5").disabled = true;
+    }
+    
+}
+
+function carregaExame6(){
+    
+    var dataComplementar5                 =   $('#dataComplementar5').val(); 
+   
+    if (dataComplementar5 != ""){
+         
+         document.getElementById("exameComplementar6").disabled = false;
+         document.getElementById("dataComplementar6").disabled = false; 
+        
+    }else{
+        document.getElementById("exameComplementar6").disabled = true;
+        document.getElementById("dataComplementar6").disabled = true;
+    }
+    
+}
+
+function carregaExame7(){
+    
+    var dataComplementar6                 =   $('#dataComplementar6').val(); 
+   
+    if (dataComplementar6 != ""){
+         
+         document.getElementById("exameComplementar7").disabled = false;
+         document.getElementById("dataComplementar7").disabled = false; 
+        
+    }else{
+        document.getElementById("exameComplementar7").disabled = true;
+        document.getElementById("dataComplementar7").disabled = true;
+    }
+    
+}
+
+function carregaExame8(){
+    
+    var dataComplementar7                 =   $('#dataComplementar7').val(); 
+   
+    if (dataComplementar7 != ""){
+         
+         document.getElementById("exameComplementar8").disabled = false;
+         document.getElementById("dataComplementar8").disabled = false; 
+        
+    }else{
+        document.getElementById("exameComplementar8").disabled = true;
+        document.getElementById("dataComplementar8").disabled = true;
+    }
     
 }
 
@@ -2326,6 +2497,11 @@ function mvalorValor(valor) {
     return valor;
 }
 
+// Mensagens de Alerta
+ 
+
+
+
 
 
 /// CARREGAMENTO DE IMAGEM EM TELA, APOS SALVA
@@ -2357,4 +2533,68 @@ function verificaCarregamento(){
     {
         setTimeout( "verificaCarregamento()", 1 );
     }
+}
+
+
+/////////// ABRIR ARQUIVO PDF
+
+function getPdf(){
+    
+    var idAso  =  $('#idAso').val();       
+
+    $.ajax({
+        url: 'index.php?m=cadastroaso&c=cadastroasocontroller&f=getPdf',
+        data: {
+            idAso: idAso
+            
+
+
+        },
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        success: function(data) {
+                   
+                    abrirArquivoPdf();
+                    
+          
+        },
+        error: function() {
+                 
+                 abrirArquivoPdf();
+                 
+        }
+    });
+      
+    
+}
+
+function abrirArquivoPdf() {
+
+    //window.open('C:/teste/pdf/.teste1.pdf'); - local
+    //window.open('http://www.vpitecnologia.com.br/gcconcreto/relatoriostemp/relatorio/.cadastro_orcamento.pdf'); //gcconcreto
+   // window.open('http://localhost/gestaopessoas/fwk/uploads/pdf/.atestado_aso.pdf'); // localhost
+    window.open('http://192.168.8.70/gestaopessoas/fwk/uploads/pdf/.atestado_aso.pdf'); // pc local
+  
+}
+
+function vizualizarAnexo() {
+    
+    var anexoView = $('#anexoView').val();
+    
+    
+    
+    if (anexoView != ""){
+        
+        //var enderecoContrato = "http://localhost/gestaopessoas/fwk/uploads/pdf/examesAso/"; // localhost
+        var enderecoContrato = "http://192.168.8.70/gestaopessoas/fwk/uploads/pdf/examesAso/"; // pc local
+        //var enderecoContrato = "http://sig.sulcatarinense.com.br/uploadsPermuta/Contratos/"; // servidor
+
+        window.open(enderecoContrato + anexoView, '_blank');
+    }else{
+         mensagem('Atenção', 'Nenhum Arquivo em Anexo', 'error'); 
+    }
+     
+   
+     
 }

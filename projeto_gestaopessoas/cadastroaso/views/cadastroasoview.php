@@ -33,6 +33,7 @@
 
         <!--BLOCKUI-->
         <script src="resources/geral/blockUI/jquery.blockUI.js" type="text/javascript"></script>
+        
         <!--BLOCKUI-->
 
         <!--GRID-->
@@ -52,6 +53,7 @@
 
         <!-- CADASTRO FILIAL -->
         <script src="resources/cadastroaso/js/cadastroaso.js"></script>
+        
         <!-- CADASTRO FILIAL -->
     </head>
 
@@ -87,6 +89,9 @@
                 <a onclick="buscaUltimoRegistro()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-fast-forward"></span> 
                 </a>
+                <a onclick="getPdf()" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-print"></span> Imprimir
+                </a>
                 
                  <a onclick="atualizar()" class="btn btn-primary">
                     <span class="glyphicon glyphicon glyphicon-refresh"></span> Atualizar
@@ -101,6 +106,7 @@
                <li><a href="#tab1" onclick="mostrarGrid()">DADOS FUNCIONÁRIO</a></li>
                <li><a href="#tab2" onclick="ocultarGrid()">EXAMES ASO  </a></li>
                <li><a href="#tab3" onclick="ocultarGrid()">EXAMES COMPLEMENTARES</a></li>
+               <li><a href="#tab4" onclick="ocultarGrid()">ANEXO FOLHA EXAME</a></li>
                
    </ul>
 
@@ -217,7 +223,7 @@
                 <tr>
                     <td  style="width: 20%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Exame
+                            Motivo do Exame
                             <select style="text-transform: uppercase;" id="tipoExames" class="form-control" onchange="carregarOutrosExames()"readonly>
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="ADMISSIONAL">Admissional</option>
@@ -324,11 +330,17 @@
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="observacaoExame"   placeholder="Observação Resultado" readonly>
                         </div>
                     </td>
-                    <td  style="width: 28%; padding-right: 10px;font-size: 14px;">                  
+                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">                  
+                    </td>
+                    <td  style="width: 18%; padding-right: 10px;font-size: 14px;">
+                          <div class="form-group">
+                            Local da Realizaçao do Exame
+                            <input style="text-transform: uppercase;" type="text" class="form-control" id="localRealizacao"   placeholder="Local Realização" readonly>
+                        </div>
                     </td>
                     <td  style="width: 12%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            Data Realização
+                            Data Realização do Exame
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="dataRealizacao"  placeholder="Data Realização" readonly>
                         </div>
                     </td>
@@ -347,15 +359,16 @@
                 <tr>            
                     
                     <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
+                        <div class="form-group">
                             Exame
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="exameComplementar1"   placeholder="Exame" readonly>
+                            <select  id="exameComplementar1" class="form-control"  readonly  ></select>
                         </div>
+                         
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Data Realização
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataComplementar1"   placeholder="Data Realização" readonly>
+                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataComplementar1" onchange="carregaExame2()"  placeholder="Data Realização" readonly>
                         </div>
                     </td>
                     
@@ -365,52 +378,13 @@
                     <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Exame
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="exameComplementar2"   placeholder="Exame" readonly>
+                            <select  id="exameComplementar2" class="form-control"  readonly  ></select>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Data Realização
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataComplementar2"   placeholder="Data Realização" readonly>
-                        </div>
-                    </td>
-                    
-                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
-                         
-                    </td>
-                 
-                    
-                </tr>
-        </table>
-     <table style="width: 90%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
-                <tr>            
-                    
-                    <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
-                            Exame
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="exameComplementar3"   placeholder="Exame" readonly>
-                        </div>
-                    </td>
-                    <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
-                            Data Realização
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataComplementar3"   placeholder="Data Realização" readonly>
-                        </div>
-                    </td>
-                    
-                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
-                         
-                    </td>
-                    <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
-                            Exame
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="exameComplementar4"   placeholder="Exame" readonly>
-                        </div>
-                    </td>
-                    <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
-                            Data Realização
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataComplementar4"   placeholder="Data Realização" readonly>
+                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataComplementar2" onchange="carregaExame3()"  placeholder="Data Realização" readonly>
                         </div>
                     </td>
                     
@@ -425,15 +399,15 @@
                 <tr>            
                     
                     <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
+                        <div class="form-group">
                             Exame
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="exameComplementar5"   placeholder="Exame" readonly>
+                            <select  id="exameComplementar3" class="form-control"  readonly  ></select>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Data Realização
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataComplementar5"   placeholder="Data Realização" readonly>
+                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataComplementar3" onchange="carregaExame4()"   placeholder="Data Realização" readonly>
                         </div>
                     </td>
                     
@@ -441,15 +415,15 @@
                          
                     </td>
                     <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
+                        <div class="form-group">
                             Exame
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="exameComplementar6"   placeholder="Exame" readonly>
+                            <select  id="exameComplementar4" class="form-control"  readonly  ></select>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Data Realização
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataComplementar6"   placeholder="Data Realização" readonly>
+                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataComplementar4" onchange="carregaExame5()"  placeholder="Data Realização" readonly>
                         </div>
                     </td>
                     
@@ -464,15 +438,15 @@
                 <tr>            
                     
                     <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
+                    <div class="form-group">
                             Exame
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="exameComplementar7"   placeholder="Exame" readonly>
+                            <select  id="exameComplementar5" class="form-control"  readonly  ></select>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Data Realização
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataComplementar7"   placeholder="Data Realização" readonly>
+                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataComplementar5" onchange="carregaExame6()"  placeholder="Data Realização" readonly>
                         </div>
                     </td>
                     
@@ -480,9 +454,48 @@
                          
                     </td>
                     <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
+                        <div class="form-group">
                             Exame
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="exameComplementar8"   placeholder="Exame" readonly>
+                            <select  id="exameComplementar6" class="form-control"  readonly  ></select>
+                        </div>
+                    </td>
+                    <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
+                          <div class="form-group">
+                            Data Realização
+                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataComplementar6" onchange="carregaExame7()"  placeholder="Data Realização" readonly>
+                        </div>
+                    </td>
+                    
+                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
+                         
+                    </td>
+                 
+                    
+                </tr>
+        </table>
+     <table style="width: 90%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
+                <tr>            
+                    
+                    <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
+                        <div class="form-group">
+                            Exame
+                            <select  id="exameComplementar7" class="form-control"  readonly  ></select>
+                        </div>
+                    </td>
+                    <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
+                          <div class="form-group">
+                            Data Realização
+                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataComplementar7" onchange="carregaExame8()"  placeholder="Data Realização" readonly>
+                        </div>
+                    </td>
+                    
+                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
+                         
+                    </td>
+                    <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
+                        <div class="form-group">
+                            Exame
+                            <select  id="exameComplementar8" class="form-control"  readonly  ></select>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
@@ -536,6 +549,44 @@
                 </tr>
         </table>
     </fieldset> 
+    
+    
+   </div>
+    
+    
+    <div id="tab4" class="contaba">
+
+    <fieldset class="fieldset-border">
+     <legend class="legend-border">Anexo do Exame Realizado</legend>
+        
+     <table style="width: 90%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
+                <tr>            
+                    <td  style="width: 30%;padding-right: 10px;font-size: 14px;">
+                            <div class="form-group">
+                               Anexo Exame
+                               <input type="file" class="form-control" id="anexoExame" enctype="multipart/form-data"  readonly>
+                        </div>
+                    </td>
+                    
+                     <td  style="width: 30%; padding-right: 10px;font-size: 14px;">
+                       <div class="form-group">
+                            Exibir Anexo
+                            <input style="text-transform: uppercase;" type="text" class="form-control" id="anexoView" placeholder="Exibir Anexo" onclick="vizualizarAnexo()" readonly>
+                        </div>
+                   </td>
+                    <td  style="width: 30%; padding-right: 10px;font-size: 14px;">
+                          
+                    </td>
+                    
+                 
+                    
+                </tr>
+        </table>
+    
+    </fieldset>
+    
+    
+     
     
     
    </div>
@@ -622,5 +673,6 @@
         </div>
       </div>
     </div>
+    
     
 </html>

@@ -166,7 +166,7 @@
                         
                     </td>
                     
-                </tr>
+                </tr> 
         </table>
         <table id="tabelaPreco2" style="width: 80%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" ></table>
 

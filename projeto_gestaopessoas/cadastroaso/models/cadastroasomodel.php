@@ -1,4 +1,6 @@
 <?php
+require_once("resources/cadastroaso/dompdf/dompdf_config.inc.php");
+
 
 class cadastroasomodel extends CI_Model {
 
@@ -42,25 +44,20 @@ class cadastroasomodel extends CI_Model {
     }   
     
 
-    public function salvar($idFuncionario, $empresa, $filial, $livro, $pagina, $nomeFuncionario, $dataNasc, $cidadeNasc, $estadoNasc, $dataCadastro,
-                            $matricula, $funcao, $salarioValor, $salarioPagamento, $dataAdmissao, $experiencia, $horarioInicial1, $horarioFinal1, $horarioInicial2,
-                            $horarioFinal2, $imagem, $cep, $endereco, $numero, $bairro, $cidade, $estado, $email, $telefone1, $telefone2, $telefone3, $cpf, $identidade,
-                            $expedidorIdentidade, $estadoIdentidade, $dataIdentidade, $ctps, $serieCtps, $pisPasep, $estadoCtps, $dataCtps, $tituloEleitor, $zonaEleitor,
-                            $secaoEleitor, $nomeMae, $nomePai, $sexo, $estadoCivil, $deficienteFisico, $grauInstrucao, $etnia, $corOlhos, $corCabelos, $altura, $peso, $nomeFilho1,
-                            $dataNasc1, $nomeFilho2, $dataNasc2, $nomeFilho3, $dataNasc3, $nomeFilho4, $dataNasc4, $nomeFilho5, $dataNasc5, $nomeFilho6, $dataNasc6, $setor, $desativado){
+    public function salvar($idAso, $empresa, $filial, $funcionario, $matricula, $setor, $funcao, $dataNasc, $cpf, $ctps, $pisPasep, $tipoExames, $outrosExames,
+                                $medico, $crm, $agBiologico, $agFisico, $agQuimico, $riscoAcidente, $riscoErgonomico, $ausenciaRisco, $resultadoExame, $observacaoExame,
+                                $localRealizacao, $dataRealizacao, $exameComplementar1, $dataComplementar1, $exameComplementar2, $dataComplementar2, $exameComplementar3, $dataComplementar3,
+                                $exameComplementar4, $dataComplementar4, $exameComplementar5, $dataComplementar5, $exameComplementar6, $dataComplementar6, $exameComplementar7,
+                                $dataComplementar7, $exameComplementar8, $dataComplementar8, $pagamentoExame, $valorExame, $anexoExame){
 
         $this->initConBanco();
         
-        $salarioValor = str_replace('.', '', $salarioValor);
-        $salarioValor = str_replace(',', '.', $salarioValor);
-        
-        $altura = str_replace(',', '.', $altura);
-        
-        $peso = str_replace(',', '.', $peso);
+        $valorExame = str_replace('.', '', $valorExame);
+        $valorExame = str_replace(',', '.', $valorExame);
         
         
         
-        $query = "SELECT * FROM GP_CAD_FUNCIONARIO  WHERE ID_FUNCIONARIO = $idFuncionario";
+        $query = "SELECT * FROM GP_CAD_EXAME_ASO  WHERE ID_ASO = $idAso";
         
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
@@ -69,16 +66,21 @@ class cadastroasomodel extends CI_Model {
         
         if (is_array($rs) && count($rs) > 0){
             
-            $query = "UPDATE GP_CAD_FUNCIONARIO SET EMPRESA  = '$empresa' , FILIAL = '$filial', LIVRO = '$livro', PAGINA = '$pagina',"
-                    . " NOME_FUNCIONARIO = '$nomeFuncionario', DATA_NASC = '$dataNasc', CIDADE_NASC = '$cidadeNasc', ESTADO_NASC = '$estadoNasc', MATRICULA = '$matricula',"
-                    . " FUNCAO = '$funcao', SALARIO_VALOR = $salarioValor, SALARIO_PAGAMENTO = '$salarioPagamento', DATA_ADMISSAO = '$dataAdmissao', EXPERIENCIA = '$experiencia',"
-                    . " HORARIO_INICIAL_1 = '$horarioInicial1', HORARIO_FINAL_1 = '$horarioFinal1', HORARIO_INICIAL_2 = '$horarioInicial2', HORARIO_FINAL_2 = '$horarioFinal2', IMAGEM = '$imagem',"
-                    . " CEP = '$cep', ENDERECO = '$endereco', NUMERO = '$numero', BAIRRO = '$bairro', CIDADE = '$cidade', ESTADO = '$estado', EMAIL = '$email', TELEFONE_1 = '$telefone1', TELEFONE_2 = '$telefone2',"
-                    . " TELEFONE_3 = '$telefone3', CPF = '$cpf', IDENTIDADE = '$identidade', EXPEDIDOR_IDENTIDADE = '$expedidorIdentidade', ESTADO_IDENTIDADE = '$estadoIdentidade', DATA_IDENTIDADE = '$dataIdentidade', CTPS = '$ctps',"
-                    . " SERIE_CTPS = '$serieCtps', PIS_PASEP = '$pisPasep', ESTADO_CTPS = '$estadoCtps', DATA_CTPS = '$dataCtps', TITULO_ELEITOR = '$tituloEleitor', ZONA_ELEITOR = '$zonaEleitor', SECAO_ELEITOR = '$secaoEleitor',"
-                    . " NOME_MAE = '$nomeMae', NOME_PAI = '$nomePai', SEXO = '$sexo', ESTADO_CIVIL = '$estadoCivil', DEFICIENTE_FISICO = '$deficienteFisico', GRAU_INSTRUCAO = '$grauInstrucao', ETNIA = '$etnia', COR_OLHOS = '$corOlhos',"
-                    . " COR_CABELOS = '$corCabelos', ALTURA = '$altura', PESO = '$peso', NOME_FILHO_1 = '$nomeFilho1', DATA_NASC_1 = '$dataNasc1', NOME_FILHO_2 = '$nomeFilho2', DATA_NASC_2 = '$dataNasc2', NOME_FILHO_3 = '$nomeFilho3',"
-                    . " DATA_NASC_3 = '$dataNasc3', NOME_FILHO_4 = '$nomeFilho4', DATA_NASC_4 = '$dataNasc4', NOME_FILHO_5 = '$nomeFilho5', DATA_NASC_5 = '$dataNasc5', NOME_FILHO_6 = '$nomeFilho6', DATA_NASC_6 = '$dataNasc6', SETOR = '$setor', DESATIVADO = '$desativado', USUARIO_ALTERACAO = '$usuarioLogado', DATA_ALTERACAO = SYSDATE WHERE ID_FUNCIONARIO = $idFuncionario";
+            if($anexoExame != ""){
+                
+                $anexo = " ANEXO_EXAME = '$anexoExame',";
+            }else{
+                $anexo = "";
+            }
+            
+            $query = "UPDATE GP_CAD_EXAME_ASO SET EMPRESA  = '$empresa' , FILIAL = '$filial', FUNCIONARIO = '$funcionario', MATRICULA = '$matricula', SETOR = '$setor', FUNCAO = '$funcao',"
+                    . " DATA_NASC = '$dataNasc', CPF = '$cpf', CTPS = '$ctps', PIS_PASEP = '$pisPasep', TIPO_EXAMES = '$tipoExames', OUTROS_EXAMES = '$outrosExames', MEDICO = '$medico', "
+                    . " CRM = '$crm', AG_BIOLOGICO = '$agBiologico', AG_FISICO = '$agFisico', AG_QUIMICO = '$agQuimico', RISCO_ACIDENTE = '$riscoAcidente', RISCO_ERGONOMICO = '$riscoErgonomico',"
+                    . " AUSENCIA_RISCO = '$ausenciaRisco', RESULTADO_EXAME = '$resultadoExame', OBSERVACAO_EXAME = '$observacaoExame', LOCAL_REALIZACAO = '$localRealizacao', DATA_REALIZACAO = '$dataRealizacao', EXAME_COMPLEMENTAR_1 = '$exameComplementar1',"
+                    . " DATA_COMPLEMENTAR_1 = '$dataComplementar1', EXAME_COMPLEMENTAR_2 = '$exameComplementar2', DATA_COMPLEMENTAR_2 = '$dataComplementar2', EXAME_COMPLEMENTAR_3 = '$exameComplementar3', DATA_COMPLEMENTAR_3 = '$dataComplementar3',"
+                    . " EXAME_COMPLEMENTAR_4 = '$exameComplementar4', DATA_COMPLEMENTAR_4 = '$dataComplementar4', EXAME_COMPLEMENTAR_5 = '$exameComplementar5', DATA_COMPLEMENTAR_5 = '$dataComplementar5', EXAME_COMPLEMENTAR_6 = '$exameComplementar6',"
+                    . " DATA_COMPLEMENTAR_6 = '$dataComplementar6', EXAME_COMPLEMENTAR_7 = '$exameComplementar7', DATA_COMPLEMENTAR_7 = '$dataComplementar7', EXAME_COMPLEMENTAR_8 = '$exameComplementar8', DATA_COMPLEMENTAR_8 = '$dataComplementar8',"
+                    . " PAGAMENTO_EXAME = '$pagamentoExame', VALOR_EXAME = '$valorExame', $anexo  USUARIO_ALTERACAO = '$usuarioLogado', DATA_ALTERACAO = SYSDATE WHERE ID_ASO = $idAso";
 
             //print_r($query);exit();
             $resultado = $this->conBanco->query($query);
@@ -92,7 +94,7 @@ class cadastroasomodel extends CI_Model {
         }
         else{
             
-            $query = "SELECT MAX(ID_FUNCIONARIO)  AS ID_FUNCIONARIO FROM  GP_CAD_FUNCIONARIO";
+            $query = "SELECT MAX(ID_ASO)  AS ID_ASO FROM  GP_CAD_EXAME_ASO";
 
             $cs = $this->conBanco->query($query);
             $rs = $cs->result();
@@ -102,20 +104,20 @@ class cadastroasomodel extends CI_Model {
                 $novoId = 1;            
             }
             else{
-                $novoId = $rs[0]->ID_FUNCIONARIO + 1;
+                $novoId = $rs[0]->ID_ASO + 1;
             }                       
 
-            $query = "INSERT INTO GP_CAD_FUNCIONARIO (ID_FUNCIONARIO, EMPRESA, FILIAL, LIVRO, PAGINA, NOME_FUNCIONARIO, DATA_NASC, CIDADE_NASC, ESTADO_NASC, MATRICULA, FUNCAO, SALARIO_VALOR,"
-                    . " SALARIO_PAGAMENTO, DATA_ADMISSAO, EXPERIENCIA, HORARIO_INICIAL_1, HORARIO_FINAL_1, HORARIO_INICIAL_2, HORARIO_FINAL_2, IMAGEM, CEP, ENDERECO, NUMERO, BAIRRO, CIDADE,"
-                    . " ESTADO, EMAIL, TELEFONE_1, TELEFONE_2, TELEFONE_3, CPF, IDENTIDADE, EXPEDIDOR_IDENTIDADE, ESTADO_IDENTIDADE, DATA_IDENTIDADE, CTPS, SERIE_CTPS, PIS_PASEP, ESTADO_CTPS,"
-                    . " DATA_CTPS, TITULO_ELEITOR, ZONA_ELEITOR, SECAO_ELEITOR, NOME_MAE, NOME_PAI, SEXO, ESTADO_CIVIL, DEFICIENTE_FISICO, GRAU_INSTRUCAO, ETNIA, COR_OLHOS, COR_CABELOS, ALTURA,"
-                    . " PESO, NOME_FILHO_1, DATA_NASC_1, NOME_FILHO_2, DATA_NASC_2, NOME_FILHO_3, DATA_NASC_3, NOME_FILHO_4, DATA_NASC_4, NOME_FILHO_5, DATA_NASC_5, NOME_FILHO_6, SETOR, DESTIVADO, USUARIO_CADASTRO, DATA_CADASTRO)
+            $query = "INSERT INTO GP_CAD_EXAME_ASO (ID_ASO, EMPRESA, FILIAL, FUNCIONARIO, MATRICULA, SETOR, FUNCAO, DATA_NASC, CPF, CTPS, PIS_PASEP, TIPO_EXAMES, OUTROS_EXAMES,"
+                    . " MEDICO, CRM, AG_BIOLOGICO, AG_FISICO, AG_QUIMICO, RISCO_ACIDENTE, RISCO_ERGONOMICO, AUSENCIA_RISCO, RESULTADO_EXAME, OBSERVACAO_EXAME, LOCAL_REALIZACAO, DATA_REALIZACAO, "
+                    . " EXAME_COMPLEMENTAR_1, DATA_COMPLEMENTAR_1, EXAME_COMPLEMENTAR_2, DATA_COMPLEMENTAR_2, EXAME_COMPLEMENTAR_3, DATA_COMPLEMENTAR_3, EXAME_COMPLEMENTAR_4,"
+                    . " DATA_COMPLEMENTAR_4, EXAME_COMPLEMENTAR_5, DATA_COMPLEMENTAR_5, EXAME_COMPLEMENTAR_6, DATA_COMPLEMENTAR_6, EXAME_COMPLEMENTAR_7, DATA_COMPLEMENTAR_7,"
+                    . " EXAME_COMPLEMENTAR_8, DATA_COMPLEMENTAR_8, PAGAMENTO_EXAME, VALOR_EXAME, ANEXO_EXAME, DATA_CADASTRO, USUARIO_CADASTRO)
                              
-                        VALUES ($novoId, '$empresa', '$filial', '$livro', '$pagina', '$nomeFuncionario', '$dataNasc', '$cidadeNasc', '$estadoNasc', '$matricula', '$funcao', $salarioValor, '$salarioPagamento',"
-                    . " '$dataAdmissao', '$experiencia', '$horarioInicial1', '$horarioFinal1', '$horarioInicial2', '$horarioFinal2', '$imagem', '$cep', '$endereco', $numero, '$bairro', '$cidade', '$estado', '$email',"
-                    . " '$telefone1', '$telefone2', '$telefone3', '$cpf', '$identidade', '$expedidorIdentidade', '$estadoIdentidade', '$dataIdentidade', '$ctps', '$serieCtps', '$pisPasep', '$estadoCtps', '$dataCtps', '$tituloEleitor',"
-                    . " '$zonaEleitor', '$secaoEleitor', '$nomeMae', '$nomePai', '$sexo', '$estadoCivil', '$deficienteFisico', '$grauInstrucao', '$etnia', '$corOlhos', '$corCabelos', '$altura', '$peso', '$nomeFilho1', '$dataNasc1', '$nomeFilho2',"
-                    . " '$dataNasc2', '$nomeFilho3', '$dataNasc3', '$nomeFilho4', '$dataNasc4', '$nomeFilho5', '$dataNasc5', '$nomeFilho6', '$setor', '$desativado' '$usuarioLogado', SYSDATE)";     
+                        VALUES ($novoId, '$empresa', '$filial', '$funcionario', '$matricula', '$setor', '$funcao', '$dataNasc', '$cpf', '$ctps', '$pisPasep', '$tipoExames', '$outrosExames',"
+                    . " '$medico', '$crm', '$agBiologico', '$agFisico', '$agQuimico', '$riscoAcidente', '$riscoErgonomico', '$ausenciaRisco', '$resultadoExame', '$observacaoExame', '$localRealizacao', '$dataRealizacao',"
+                    . " '$exameComplementar1', '$dataComplementar1', '$exameComplementar2', '$dataComplementar2', '$exameComplementar3', '$dataComplementar3', '$exameComplementar4', '$dataComplementar4',"
+                    . " '$exameComplementar5', '$dataComplementar5', '$exameComplementar6', '$dataComplementar6', '$exameComplementar7', '$dataComplementar7', '$exameComplementar8', '$dataComplementar8',"
+                    . " '$pagamentoExame', '$valorExame', '$anexoExame', SYSDATE, '$usuarioLogado')";     
 
             //print_r($query);exit();
             $resultado = $this->conBanco->query($query);
@@ -129,11 +131,11 @@ class cadastroasomodel extends CI_Model {
         }
     }
     
-    public function excluir($idFuncionario){
+    public function excluir($idAso){
         
         $this->initConBanco();
         
-        $query = "DELETE FROM GP_CAD_FUNCIONARIO WHERE ID_FUNCIONARIO = $idFuncionario";
+        $query = "DELETE FROM GP_CAD_EXAME_ASO WHERE ID_ASO = $idAso";
                         
         $resultado = $this->conBanco->query($query);
                         
@@ -150,7 +152,7 @@ class cadastroasomodel extends CI_Model {
         
         $this->initConBanco();
         
-        $query = "SELECT * FROM GP_CAD_FUNCIONARIO ORDER BY ID_FUNCIONARIO";
+        $query = "SELECT * FROM GP_CAD_EXAME_ASO ORDER BY ID_ASO";
         
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
@@ -159,81 +161,53 @@ class cadastroasomodel extends CI_Model {
         
         if (is_array($rs) && count($rs) > 0){
             
-            $obj[] = $rs[0]->ID_FUNCIONARIO;
+            $obj[] = $rs[0]->ID_ASO;
             $obj[] = $rs[0]->EMPRESA;
             $obj[] = $rs[0]->FILIAL;
-            $obj[] = $rs[0]->LIVRO;
-            $obj[] = $rs[0]->PAGINA;
-            $obj[] = $rs[0]->NOME_FUNCIONARIO;
-            $obj[] = $rs[0]->DATA_NASC;
-            $obj[] = $rs[0]->CIDADE_NASC;
-            $obj[] = $rs[0]->ESTADO_NASC;
-            $obj[] = $rs[0]->DATA_CADASTRO;
-            
+            $obj[] = $rs[0]->FUNCIONARIO;
             $obj[] = $rs[0]->MATRICULA;
-            $obj[] = $rs[0]->FUNCAO;
-            $obj[] = $rs[0]->SALARIO_VALOR;
-            $obj[] = $rs[0]->SALARIO_PAGAMENTO;
-            $obj[] = $rs[0]->DATA_ADMISSAO;
-            $obj[] = $rs[0]->EXPERIENCIA;
-            $obj[] = $rs[0]->HORARIO_INICIAL_1;
-            $obj[] = $rs[0]->HORARIO_FINAL_1;
-            $obj[] = $rs[0]->HORARIO_INICIAL_2;
-            $obj[] = $rs[0]->HORARIO_FINAL_2;
-            $obj[] = $rs[0]->IMAGEM;
-            
-            $obj[] = $rs[0]->CEP;
-            $obj[] = $rs[0]->ENDERECO;
-            $obj[] = $rs[0]->NUMERO;
-            $obj[] = $rs[0]->BAIRRO;
-            $obj[] = $rs[0]->CIDADE;
-            $obj[] = $rs[0]->ESTADO;
-            $obj[] = $rs[0]->EMAIL;
-            $obj[] = $rs[0]->TELEFONE_1;
-            $obj[] = $rs[0]->TELEFONE_2;
-            $obj[] = $rs[0]->TELEFONE_3;
-            
-            $obj[] = $rs[0]->CPF;
-            $obj[] = $rs[0]->IDENTIDADE;
-            $obj[] = $rs[0]->EXPEDIDOR_IDENTIDADE;
-            $obj[] = $rs[0]->ESTADO_IDENTIDADE;
-            $obj[] = $rs[0]->DATA_IDENTIDADE;
-            $obj[] = $rs[0]->CTPS;
-            $obj[] = $rs[0]->SERIE_CTPS;
-            $obj[] = $rs[0]->PIS_PASEP;
-            $obj[] = $rs[0]->ESTADO_CTPS;
-            $obj[] = $rs[0]->DATA_CTPS;
-            $obj[] = $rs[0]->TITULO_ELEITOR;
-            $obj[] = $rs[0]->ZONA_ELEITOR;
-            $obj[] = $rs[0]->SECAO_ELEITOR;
-            
-            $obj[] = $rs[0]->NOME_MAE;
-            $obj[] = $rs[0]->NOME_PAI;
-            $obj[] = $rs[0]->SEXO;
-            $obj[] = $rs[0]->ESTADO_CIVIL;
-            $obj[] = $rs[0]->DEFICIENTE_FISICO;
-            $obj[] = $rs[0]->GRAU_INSTRUCAO;
-            $obj[] = $rs[0]->ETNIA;
-            $obj[] = $rs[0]->COR_OLHOS;
-            $obj[] = $rs[0]->COR_CABELOS;
-            $obj[] = $rs[0]->ALTURA;
-            $obj[] = $rs[0]->PESO;
-            
-            $obj[] = $rs[0]->NOME_FILHO_1;
-            $obj[] = $rs[0]->DATA_NASC_1;
-            $obj[] = $rs[0]->NOME_FILHO_2;
-            $obj[] = $rs[0]->DATA_NASC_2;
-            $obj[] = $rs[0]->NOME_FILHO_3;
-            $obj[] = $rs[0]->DATA_NASC_3;
-            $obj[] = $rs[0]->NOME_FILHO_4;
-            $obj[] = $rs[0]->DATA_NASC_4;
-            $obj[] = $rs[0]->NOME_FILHO_5;
-            $obj[] = $rs[0]->DATA_NASC_5;
-            $obj[] = $rs[0]->NOME_FILHO_6;
-            $obj[] = $rs[0]->DATA_NASC_6;
-            
             $obj[] = $rs[0]->SETOR;
-            $obj[] = $rs[0]->DESATIVADO;
+            $obj[] = $rs[0]->FUNCAO;
+            $obj[] = $rs[0]->DATA_NASC;
+            $obj[] = $rs[0]->CPF;
+            $obj[] = $rs[0]->CTPS;
+            $obj[] = $rs[0]->PIS_PASEP;
+            
+            $obj[] = $rs[0]->TIPO_EXAMES;
+            $obj[] = $rs[0]->OUTROS_EXAMES;
+            $obj[] = $rs[0]->MEDICO;
+            $obj[] = $rs[0]->CRM;
+            $obj[] = $rs[0]->AG_BIOLOGICO;
+            $obj[] = $rs[0]->AG_FISICO;
+            $obj[] = $rs[0]->AG_QUIMICO;
+            $obj[] = $rs[0]->RISCO_ACIDENTE;
+            $obj[] = $rs[0]->RISCO_ERGONOMICO;
+            $obj[] = $rs[0]->AUSENCIA_RISCO;
+            $obj[] = $rs[0]->RESULTADO_EXAME;
+            $obj[] = $rs[0]->OBSERVACAO_EXAME;
+            $obj[] = $rs[0]->DATA_REALIZACAO;
+            
+            $obj[] = $rs[0]->EXAME_COMPLEMENTAR_1;
+            $obj[] = $rs[0]->DATA_COMPLEMENTAR_1;
+            $obj[] = $rs[0]->EXAME_COMPLEMENTAR_2;
+            $obj[] = $rs[0]->DATA_COMPLEMENTAR_2;
+            $obj[] = $rs[0]->EXAME_COMPLEMENTAR_3;
+            $obj[] = $rs[0]->DATA_COMPLEMENTAR_3;
+            $obj[] = $rs[0]->EXAME_COMPLEMENTAR_4;
+            $obj[] = $rs[0]->DATA_COMPLEMENTAR_4;
+            $obj[] = $rs[0]->EXAME_COMPLEMENTAR_5;
+            $obj[] = $rs[0]->DATA_COMPLEMENTAR_5;
+            $obj[] = $rs[0]->EXAME_COMPLEMENTAR_6;
+            $obj[] = $rs[0]->DATA_COMPLEMENTAR_6;
+            $obj[] = $rs[0]->EXAME_COMPLEMENTAR_7;
+            $obj[] = $rs[0]->DATA_COMPLEMENTAR_7;
+            $obj[] = $rs[0]->EXAME_COMPLEMENTAR_8;
+            $obj[] = $rs[0]->DATA_COMPLEMENTAR_8;
+            $obj[] = $rs[0]->PAGAMENTO_EXAME;
+            $obj[] = $rs[0]->VALOR_EXAME;
+            
+            $obj[] = $rs[0]->LOCAL_REALIZACAO;
+            $obj[] = $rs[0]->ANEXO_EXAME;
             
             
                     
@@ -248,7 +222,7 @@ class cadastroasomodel extends CI_Model {
         
         $this->initConBanco();
         
-        $query = "SELECT * FROM GP_CAD_FUNCIONARIO ORDER BY ID_FUNCIONARIO";
+        $query = "SELECT * FROM GP_CAD_EXAME_ASO ORDER BY ID_ASO";
         
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
@@ -260,82 +234,53 @@ class cadastroasomodel extends CI_Model {
         if (is_array($rs) && count($rs) > 0){
             
             
-            
-            $obj[] = $rs[$cont]->ID_FUNCIONARIO;
+            $obj[] = $rs[$cont]->ID_ASO;
             $obj[] = $rs[$cont]->EMPRESA;
             $obj[] = $rs[$cont]->FILIAL;
-            $obj[] = $rs[$cont]->LIVRO;
-            $obj[] = $rs[$cont]->PAGINA;
-            $obj[] = $rs[$cont]->NOME_FUNCIONARIO;
-            $obj[] = $rs[$cont]->DATA_NASC;
-            $obj[] = $rs[$cont]->CIDADE_NASC;
-            $obj[] = $rs[$cont]->ESTADO_NASC;
-            $obj[] = $rs[$cont]->DATA_CADASTRO;
-            
+            $obj[] = $rs[$cont]->FUNCIONARIO;
             $obj[] = $rs[$cont]->MATRICULA;
-            $obj[] = $rs[$cont]->FUNCAO;
-            $obj[] = $rs[$cont]->SALARIO_VALOR;
-            $obj[] = $rs[$cont]->SALARIO_PAGAMENTO;
-            $obj[] = $rs[$cont]->DATA_ADMISSAO;
-            $obj[] = $rs[$cont]->EXPERIENCIA;
-            $obj[] = $rs[$cont]->HORARIO_INICIAL_1;
-            $obj[] = $rs[$cont]->HORARIO_FINAL_1;
-            $obj[] = $rs[$cont]->HORARIO_INICIAL_2;
-            $obj[] = $rs[$cont]->HORARIO_FINAL_2;
-            $obj[] = $rs[$cont]->IMAGEM;
-            
-            $obj[] = $rs[$cont]->CEP;
-            $obj[] = $rs[$cont]->ENDERECO;
-            $obj[] = $rs[$cont]->NUMERO;
-            $obj[] = $rs[$cont]->BAIRRO;
-            $obj[] = $rs[$cont]->CIDADE;
-            $obj[] = $rs[$cont]->ESTADO;
-            $obj[] = $rs[$cont]->EMAIL;
-            $obj[] = $rs[$cont]->TELEFONE_1;
-            $obj[] = $rs[$cont]->TELEFONE_2;
-            $obj[] = $rs[$cont]->TELEFONE_3;
-            
-            $obj[] = $rs[$cont]->CPF;
-            $obj[] = $rs[$cont]->IDENTIDADE;
-            $obj[] = $rs[$cont]->EXPEDIDOR_IDENTIDADE;
-            $obj[] = $rs[$cont]->ESTADO_IDENTIDADE;
-            $obj[] = $rs[$cont]->DATA_IDENTIDADE;
-            $obj[] = $rs[$cont]->CTPS;
-            $obj[] = $rs[$cont]->SERIE_CTPS;
-            $obj[] = $rs[$cont]->PIS_PASEP;
-            $obj[] = $rs[$cont]->ESTADO_CTPS;
-            $obj[] = $rs[$cont]->DATA_CTPS;
-            $obj[] = $rs[$cont]->TITULO_ELEITOR;
-            $obj[] = $rs[$cont]->ZONA_ELEITOR;
-            $obj[] = $rs[$cont]->SECAO_ELEITOR;
-            
-            $obj[] = $rs[$cont]->NOME_MAE;
-            $obj[] = $rs[$cont]->NOME_PAI;
-            $obj[] = $rs[$cont]->SEXO;
-            $obj[] = $rs[$cont]->ESTADO_CIVIL;
-            $obj[] = $rs[$cont]->DEFICIENTE_FISICO;
-            $obj[] = $rs[$cont]->GRAU_INSTRUCAO;
-            $obj[] = $rs[$cont]->ETNIA;
-            $obj[] = $rs[$cont]->COR_OLHOS;
-            $obj[] = $rs[$cont]->COR_CABELOS;
-            $obj[] = $rs[$cont]->ALTURA;
-            $obj[] = $rs[$cont]->PESO;
-            
-            $obj[] = $rs[$cont]->NOME_FILHO_1;
-            $obj[] = $rs[$cont]->DATA_NASC_1;
-            $obj[] = $rs[$cont]->NOME_FILHO_2;
-            $obj[] = $rs[$cont]->DATA_NASC_2;
-            $obj[] = $rs[$cont]->NOME_FILHO_3;
-            $obj[] = $rs[$cont]->DATA_NASC_3;
-            $obj[] = $rs[$cont]->NOME_FILHO_4;
-            $obj[] = $rs[$cont]->DATA_NASC_4;
-            $obj[] = $rs[$cont]->NOME_FILHO_5;
-            $obj[] = $rs[$cont]->DATA_NASC_5;
-            $obj[] = $rs[$cont]->NOME_FILHO_6;
-            $obj[] = $rs[$cont]->DATA_NASC_6;
-            
             $obj[] = $rs[$cont]->SETOR;
-            $obj[] = $rs[$cont]->DESATIVADO;
+            $obj[] = $rs[$cont]->FUNCAO;
+            $obj[] = $rs[$cont]->DATA_NASC;
+            $obj[] = $rs[$cont]->CPF;
+            $obj[] = $rs[$cont]->CTPS;
+            $obj[] = $rs[$cont]->PIS_PASEP;
+            
+            $obj[] = $rs[$cont]->TIPO_EXAMES;
+            $obj[] = $rs[$cont]->OUTROS_EXAMES;
+            $obj[] = $rs[$cont]->MEDICO;
+            $obj[] = $rs[$cont]->CRM;
+            $obj[] = $rs[$cont]->AG_BIOLOGICO;
+            $obj[] = $rs[$cont]->AG_FISICO;
+            $obj[] = $rs[$cont]->AG_QUIMICO;
+            $obj[] = $rs[$cont]->RISCO_ACIDENTE;
+            $obj[] = $rs[$cont]->RISCO_ERGONOMICO;
+            $obj[] = $rs[$cont]->AUSENCIA_RISCO;
+            $obj[] = $rs[$cont]->RESULTADO_EXAME;
+            $obj[] = $rs[$cont]->OBSERVACAO_EXAME;
+            $obj[] = $rs[$cont]->DATA_REALIZACAO;
+            
+            $obj[] = $rs[$cont]->EXAME_COMPLEMENTAR_1;
+            $obj[] = $rs[$cont]->DATA_COMPLEMENTAR_1;
+            $obj[] = $rs[$cont]->EXAME_COMPLEMENTAR_2;
+            $obj[] = $rs[$cont]->DATA_COMPLEMENTAR_2;
+            $obj[] = $rs[$cont]->EXAME_COMPLEMENTAR_3;
+            $obj[] = $rs[$cont]->DATA_COMPLEMENTAR_3;
+            $obj[] = $rs[$cont]->EXAME_COMPLEMENTAR_4;
+            $obj[] = $rs[$cont]->DATA_COMPLEMENTAR_4;
+            $obj[] = $rs[$cont]->EXAME_COMPLEMENTAR_5;
+            $obj[] = $rs[$cont]->DATA_COMPLEMENTAR_5;
+            $obj[] = $rs[$cont]->EXAME_COMPLEMENTAR_6;
+            $obj[] = $rs[$cont]->DATA_COMPLEMENTAR_6;
+            $obj[] = $rs[$cont]->EXAME_COMPLEMENTAR_7;
+            $obj[] = $rs[$cont]->DATA_COMPLEMENTAR_7;
+            $obj[] = $rs[$cont]->EXAME_COMPLEMENTAR_8;
+            $obj[] = $rs[$cont]->DATA_COMPLEMENTAR_8;
+            $obj[] = $rs[$cont]->PAGAMENTO_EXAME;
+            $obj[] = $rs[$cont]->VALOR_EXAME;
+            
+            $obj[] = $rs[$cont]->LOCAL_REALIZACAO;
+            $obj[] = $rs[$cont]->ANEXO_EXAME;
         
             return json_encode($obj);
         }
@@ -345,7 +290,7 @@ class cadastroasomodel extends CI_Model {
            
     }
     
-    public function buscaRegistroAnterior($idFuncionario){
+    public function buscaRegistroAnterior($idAso){
         
         $this->initConBanco();
         
@@ -354,9 +299,9 @@ class cadastroasomodel extends CI_Model {
         
         for($i =0; $i < 10; $i++){
             
-            $idProcura = $idFuncionario - $cont; 
+            $idProcura = $idAso - $cont; 
 
-            $query = "SELECT * FROM GP_CAD_FUNCIONARIO WHERE ID_FUNCIONARIO =  $idProcura" ;
+            $query = "SELECT * FROM GP_CAD_EXAME_ASO WHERE ID_ASO =  $idProcura" ;
 
             $cs = $this->conBanco->query($query);
             $rs = $cs->result();
@@ -365,81 +310,53 @@ class cadastroasomodel extends CI_Model {
 
             if (is_array($rs) && count($rs) > 0){
 
-                $obj[] = $rs[0]->ID_FUNCIONARIO;
+                $obj[] = $rs[0]->ID_ASO;
                 $obj[] = $rs[0]->EMPRESA;
                 $obj[] = $rs[0]->FILIAL;
-                $obj[] = $rs[0]->LIVRO;
-                $obj[] = $rs[0]->PAGINA;
-                $obj[] = $rs[0]->NOME_FUNCIONARIO;
-                $obj[] = $rs[0]->DATA_NASC;
-                $obj[] = $rs[0]->CIDADE_NASC;
-                $obj[] = $rs[0]->ESTADO_NASC;
-                $obj[] = $rs[0]->DATA_CADASTRO;
-
+                $obj[] = $rs[0]->FUNCIONARIO;
                 $obj[] = $rs[0]->MATRICULA;
-                $obj[] = $rs[0]->FUNCAO;
-                $obj[] = $rs[0]->SALARIO_VALOR;
-                $obj[] = $rs[0]->SALARIO_PAGAMENTO;
-                $obj[] = $rs[0]->DATA_ADMISSAO;
-                $obj[] = $rs[0]->EXPERIENCIA;
-                $obj[] = $rs[0]->HORARIO_INICIAL_1;
-                $obj[] = $rs[0]->HORARIO_FINAL_1;
-                $obj[] = $rs[0]->HORARIO_INICIAL_2;
-                $obj[] = $rs[0]->HORARIO_FINAL_2;
-                $obj[] = $rs[0]->IMAGEM;
-
-                $obj[] = $rs[0]->CEP;
-                $obj[] = $rs[0]->ENDERECO;
-                $obj[] = $rs[0]->NUMERO;
-                $obj[] = $rs[0]->BAIRRO;
-                $obj[] = $rs[0]->CIDADE;
-                $obj[] = $rs[0]->ESTADO;
-                $obj[] = $rs[0]->EMAIL;
-                $obj[] = $rs[0]->TELEFONE_1;
-                $obj[] = $rs[0]->TELEFONE_2;
-                $obj[] = $rs[0]->TELEFONE_3;
-
-                $obj[] = $rs[0]->CPF;
-                $obj[] = $rs[0]->IDENTIDADE;
-                $obj[] = $rs[0]->EXPEDIDOR_IDENTIDADE;
-                $obj[] = $rs[0]->ESTADO_IDENTIDADE;
-                $obj[] = $rs[0]->DATA_IDENTIDADE;
-                $obj[] = $rs[0]->CTPS;
-                $obj[] = $rs[0]->SERIE_CTPS;
-                $obj[] = $rs[0]->PIS_PASEP;
-                $obj[] = $rs[0]->ESTADO_CTPS;
-                $obj[] = $rs[0]->DATA_CTPS;
-                $obj[] = $rs[0]->TITULO_ELEITOR;
-                $obj[] = $rs[0]->ZONA_ELEITOR;
-                $obj[] = $rs[0]->SECAO_ELEITOR;
-
-                $obj[] = $rs[0]->NOME_MAE;
-                $obj[] = $rs[0]->NOME_PAI;
-                $obj[] = $rs[0]->SEXO;
-                $obj[] = $rs[0]->ESTADO_CIVIL;
-                $obj[] = $rs[0]->DEFICIENTE_FISICO;
-                $obj[] = $rs[0]->GRAU_INSTRUCAO;
-                $obj[] = $rs[0]->ETNIA;
-                $obj[] = $rs[0]->COR_OLHOS;
-                $obj[] = $rs[0]->COR_CABELOS;
-                $obj[] = $rs[0]->ALTURA;
-                $obj[] = $rs[0]->PESO;
-
-                $obj[] = $rs[0]->NOME_FILHO_1;
-                $obj[] = $rs[0]->DATA_NASC_1;
-                $obj[] = $rs[0]->NOME_FILHO_2;
-                $obj[] = $rs[0]->DATA_NASC_2;
-                $obj[] = $rs[0]->NOME_FILHO_3;
-                $obj[] = $rs[0]->DATA_NASC_3;
-                $obj[] = $rs[0]->NOME_FILHO_4;
-                $obj[] = $rs[0]->DATA_NASC_4;
-                $obj[] = $rs[0]->NOME_FILHO_5;
-                $obj[] = $rs[0]->DATA_NASC_5;
-                $obj[] = $rs[0]->NOME_FILHO_6;
-                $obj[] = $rs[0]->DATA_NASC_6;
-                
                 $obj[] = $rs[0]->SETOR;
-                $obj[] = $rs[0]->DESATIVADO;
+                $obj[] = $rs[0]->FUNCAO;
+                $obj[] = $rs[0]->DATA_NASC;
+                $obj[] = $rs[0]->CPF;
+                $obj[] = $rs[0]->CTPS;
+                $obj[] = $rs[0]->PIS_PASEP;
+
+                $obj[] = $rs[0]->TIPO_EXAMES;
+                $obj[] = $rs[0]->OUTROS_EXAMES;
+                $obj[] = $rs[0]->MEDICO;
+                $obj[] = $rs[0]->CRM;
+                $obj[] = $rs[0]->AG_BIOLOGICO;
+                $obj[] = $rs[0]->AG_FISICO;
+                $obj[] = $rs[0]->AG_QUIMICO;
+                $obj[] = $rs[0]->RISCO_ACIDENTE;
+                $obj[] = $rs[0]->RISCO_ERGONOMICO;
+                $obj[] = $rs[0]->AUSENCIA_RISCO;
+                $obj[] = $rs[0]->RESULTADO_EXAME;
+                $obj[] = $rs[0]->OBSERVACAO_EXAME;
+                $obj[] = $rs[0]->DATA_REALIZACAO;
+
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_1;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_1;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_2;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_2;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_3;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_3;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_4;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_4;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_5;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_5;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_6;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_6;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_7;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_7;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_8;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_8;
+                $obj[] = $rs[0]->PAGAMENTO_EXAME;
+                $obj[] = $rs[0]->VALOR_EXAME;
+                
+                $obj[] = $rs[0]->LOCAL_REALIZACAO;
+                $obj[] = $rs[0]->ANEXO_EXAME;
 
 
                 return json_encode($obj);
@@ -456,7 +373,7 @@ class cadastroasomodel extends CI_Model {
     }
     
     
-     public function buscaRegistroProximo($idFuncionario){
+     public function buscaRegistroProximo($idAso){
         
         $this->initConBanco();
                  
@@ -465,9 +382,9 @@ class cadastroasomodel extends CI_Model {
         for($i =0; $i < 10; $i++){
         
                 
-            $idProcura = $idFuncionario + $cont;  
+            $idProcura = $idAso + $cont;  
 
-            $query = "SELECT * FROM GP_CAD_FUNCIONARIO WHERE ID_FUNCIONARIO =  $idProcura";
+            $query = "SELECT * FROM GP_CAD_EXAME_ASO WHERE ID_ASO =  $idProcura";
 
             $cs = $this->conBanco->query($query);
             $rs = $cs->result();
@@ -476,81 +393,54 @@ class cadastroasomodel extends CI_Model {
 
             if (is_array($rs) && count($rs) > 0){
 
-                $obj[] = $rs[0]->ID_FUNCIONARIO;
+                $obj[] = $rs[0]->ID_ASO;
                 $obj[] = $rs[0]->EMPRESA;
                 $obj[] = $rs[0]->FILIAL;
-                $obj[] = $rs[0]->LIVRO;
-                $obj[] = $rs[0]->PAGINA;
-                $obj[] = $rs[0]->NOME_FUNCIONARIO;
-                $obj[] = $rs[0]->DATA_NASC;
-                $obj[] = $rs[0]->CIDADE_NASC;
-                $obj[] = $rs[0]->ESTADO_NASC;
-                $obj[] = $rs[0]->DATA_CADASTRO;
-
+                $obj[] = $rs[0]->FUNCIONARIO;
                 $obj[] = $rs[0]->MATRICULA;
-                $obj[] = $rs[0]->FUNCAO;
-                $obj[] = $rs[0]->SALARIO_VALOR;
-                $obj[] = $rs[0]->SALARIO_PAGAMENTO;
-                $obj[] = $rs[0]->DATA_ADMISSAO;
-                $obj[] = $rs[0]->EXPERIENCIA;
-                $obj[] = $rs[0]->HORARIO_INICIAL_1;
-                $obj[] = $rs[0]->HORARIO_FINAL_1;
-                $obj[] = $rs[0]->HORARIO_INICIAL_2;
-                $obj[] = $rs[0]->HORARIO_FINAL_2;
-                $obj[] = $rs[0]->IMAGEM;
-
-                $obj[] = $rs[0]->CEP;
-                $obj[] = $rs[0]->ENDERECO;
-                $obj[] = $rs[0]->NUMERO;
-                $obj[] = $rs[0]->BAIRRO;
-                $obj[] = $rs[0]->CIDADE;
-                $obj[] = $rs[0]->ESTADO;
-                $obj[] = $rs[0]->EMAIL;
-                $obj[] = $rs[0]->TELEFONE_1;
-                $obj[] = $rs[0]->TELEFONE_2;
-                $obj[] = $rs[0]->TELEFONE_3;
-
-                $obj[] = $rs[0]->CPF;
-                $obj[] = $rs[0]->IDENTIDADE;
-                $obj[] = $rs[0]->EXPEDIDOR_IDENTIDADE;
-                $obj[] = $rs[0]->ESTADO_IDENTIDADE;
-                $obj[] = $rs[0]->DATA_IDENTIDADE;
-                $obj[] = $rs[0]->CTPS;
-                $obj[] = $rs[0]->SERIE_CTPS;
-                $obj[] = $rs[0]->PIS_PASEP;
-                $obj[] = $rs[0]->ESTADO_CTPS;
-                $obj[] = $rs[0]->DATA_CTPS;
-                $obj[] = $rs[0]->TITULO_ELEITOR;
-                $obj[] = $rs[0]->ZONA_ELEITOR;
-                $obj[] = $rs[0]->SECAO_ELEITOR;
-
-                $obj[] = $rs[0]->NOME_MAE;
-                $obj[] = $rs[0]->NOME_PAI;
-                $obj[] = $rs[0]->SEXO;
-                $obj[] = $rs[0]->ESTADO_CIVIL;
-                $obj[] = $rs[0]->DEFICIENTE_FISICO;
-                $obj[] = $rs[0]->GRAU_INSTRUCAO;
-                $obj[] = $rs[0]->ETNIA;
-                $obj[] = $rs[0]->COR_OLHOS;
-                $obj[] = $rs[0]->COR_CABELOS;
-                $obj[] = $rs[0]->ALTURA;
-                $obj[] = $rs[0]->PESO;
-
-                $obj[] = $rs[0]->NOME_FILHO_1;
-                $obj[] = $rs[0]->DATA_NASC_1;
-                $obj[] = $rs[0]->NOME_FILHO_2;
-                $obj[] = $rs[0]->DATA_NASC_2;
-                $obj[] = $rs[0]->NOME_FILHO_3;
-                $obj[] = $rs[0]->DATA_NASC_3;
-                $obj[] = $rs[0]->NOME_FILHO_4;
-                $obj[] = $rs[0]->DATA_NASC_4;
-                $obj[] = $rs[0]->NOME_FILHO_5;
-                $obj[] = $rs[0]->DATA_NASC_5;
-                $obj[] = $rs[0]->NOME_FILHO_6;
-                $obj[] = $rs[0]->DATA_NASC_6;
-
                 $obj[] = $rs[0]->SETOR;
-                $obj[] = $rs[0]->DESATIVADO;
+                $obj[] = $rs[0]->FUNCAO;
+                $obj[] = $rs[0]->DATA_NASC;
+                $obj[] = $rs[0]->CPF;
+                $obj[] = $rs[0]->CTPS;
+                $obj[] = $rs[0]->PIS_PASEP;
+
+                $obj[] = $rs[0]->TIPO_EXAMES;
+                $obj[] = $rs[0]->OUTROS_EXAMES;
+                $obj[] = $rs[0]->MEDICO;
+                $obj[] = $rs[0]->CRM;
+                $obj[] = $rs[0]->AG_BIOLOGICO;
+                $obj[] = $rs[0]->AG_FISICO;
+                $obj[] = $rs[0]->AG_QUIMICO;
+                $obj[] = $rs[0]->RISCO_ACIDENTE;
+                $obj[] = $rs[0]->RISCO_ERGONOMICO;
+                $obj[] = $rs[0]->AUSENCIA_RISCO;
+                $obj[] = $rs[0]->RESULTADO_EXAME;
+                $obj[] = $rs[0]->OBSERVACAO_EXAME;
+                $obj[] = $rs[0]->DATA_REALIZACAO;
+
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_1;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_1;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_2;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_2;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_3;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_3;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_4;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_4;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_5;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_5;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_6;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_6;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_7;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_7;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_8;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_8;
+                $obj[] = $rs[0]->PAGAMENTO_EXAME;
+                $obj[] = $rs[0]->VALOR_EXAME;
+                
+                $obj[] = $rs[0]->LOCAL_REALIZACAO;
+                $obj[] = $rs[0]->ANEXO_EXAME;
+
 
                 return json_encode($obj);
             }
@@ -566,7 +456,7 @@ class cadastroasomodel extends CI_Model {
          
         if($idInicial == "" || $idInicial == null ){
             
-            $query = "SELECT * FROM GP_CAD_FUNCIONARIO WHERE NOME_FUNCIONARIO LIKE '%$nomeInicial%'";
+            $query = "SELECT * FROM GP_CAD_EXAME_ASO WHERE FUNCIONARIO LIKE '%$nomeInicial%'";
             
             //print_r($query);exit();
             $cs = $this->conBanco->query($query);
@@ -576,81 +466,54 @@ class cadastroasomodel extends CI_Model {
             
             if (is_array($rs) && count($rs) > 0){
             
-                $obj[] = $rs[0]->ID_FUNCIONARIO;
+                $obj[] = $rs[0]->ID_ASO;
                 $obj[] = $rs[0]->EMPRESA;
                 $obj[] = $rs[0]->FILIAL;
-                $obj[] = $rs[0]->LIVRO;
-                $obj[] = $rs[0]->PAGINA;
-                $obj[] = $rs[0]->NOME_FUNCIONARIO;
-                $obj[] = $rs[0]->DATA_NASC;
-                $obj[] = $rs[0]->CIDADE_NASC;
-                $obj[] = $rs[0]->ESTADO_NASC;
-                $obj[] = $rs[0]->DATA_CADASTRO;
-
+                $obj[] = $rs[0]->FUNCIONARIO;
                 $obj[] = $rs[0]->MATRICULA;
-                $obj[] = $rs[0]->FUNCAO;
-                $obj[] = $rs[0]->SALARIO_VALOR;
-                $obj[] = $rs[0]->SALARIO_PAGAMENTO;
-                $obj[] = $rs[0]->DATA_ADMISSAO;
-                $obj[] = $rs[0]->EXPERIENCIA;
-                $obj[] = $rs[0]->HORARIO_INICIAL_1;
-                $obj[] = $rs[0]->HORARIO_FINAL_1;
-                $obj[] = $rs[0]->HORARIO_INICIAL_2;
-                $obj[] = $rs[0]->HORARIO_FINAL_2;
-                $obj[] = $rs[0]->IMAGEM;
-
-                $obj[] = $rs[0]->CEP;
-                $obj[] = $rs[0]->ENDERECO;
-                $obj[] = $rs[0]->NUMERO;
-                $obj[] = $rs[0]->BAIRRO;
-                $obj[] = $rs[0]->CIDADE;
-                $obj[] = $rs[0]->ESTADO;
-                $obj[] = $rs[0]->EMAIL;
-                $obj[] = $rs[0]->TELEFONE_1;
-                $obj[] = $rs[0]->TELEFONE_2;
-                $obj[] = $rs[0]->TELEFONE_3;
-
-                $obj[] = $rs[0]->CPF;
-                $obj[] = $rs[0]->IDENTIDADE;
-                $obj[] = $rs[0]->EXPEDIDOR_IDENTIDADE;
-                $obj[] = $rs[0]->ESTADO_IDENTIDADE;
-                $obj[] = $rs[0]->DATA_IDENTIDADE;
-                $obj[] = $rs[0]->CTPS;
-                $obj[] = $rs[0]->SERIE_CTPS;
-                $obj[] = $rs[0]->PIS_PASEP;
-                $obj[] = $rs[0]->ESTADO_CTPS;
-                $obj[] = $rs[0]->DATA_CTPS;
-                $obj[] = $rs[0]->TITULO_ELEITOR;
-                $obj[] = $rs[0]->ZONA_ELEITOR;
-                $obj[] = $rs[0]->SECAO_ELEITOR;
-
-                $obj[] = $rs[0]->NOME_MAE;
-                $obj[] = $rs[0]->NOME_PAI;
-                $obj[] = $rs[0]->SEXO;
-                $obj[] = $rs[0]->ESTADO_CIVIL;
-                $obj[] = $rs[0]->DEFICIENTE_FISICO;
-                $obj[] = $rs[0]->GRAU_INSTRUCAO;
-                $obj[] = $rs[0]->ETNIA;
-                $obj[] = $rs[0]->COR_OLHOS;
-                $obj[] = $rs[0]->COR_CABELOS;
-                $obj[] = $rs[0]->ALTURA;
-                $obj[] = $rs[0]->PESO;
-
-                $obj[] = $rs[0]->NOME_FILHO_1;
-                $obj[] = $rs[0]->DATA_NASC_1;
-                $obj[] = $rs[0]->NOME_FILHO_2;
-                $obj[] = $rs[0]->DATA_NASC_2;
-                $obj[] = $rs[0]->NOME_FILHO_3;
-                $obj[] = $rs[0]->DATA_NASC_3;
-                $obj[] = $rs[0]->NOME_FILHO_4;
-                $obj[] = $rs[0]->DATA_NASC_4;
-                $obj[] = $rs[0]->NOME_FILHO_5;
-                $obj[] = $rs[0]->DATA_NASC_5;
-                $obj[] = $rs[0]->NOME_FILHO_6;
-                $obj[] = $rs[0]->DATA_NASC_6;
-
                 $obj[] = $rs[0]->SETOR;
-                $obj[] = $rs[0]->DESATIVADO;
+                $obj[] = $rs[0]->FUNCAO;
+                $obj[] = $rs[0]->DATA_NASC;
+                $obj[] = $rs[0]->CPF;
+                $obj[] = $rs[0]->CTPS;
+                $obj[] = $rs[0]->PIS_PASEP;
+
+                $obj[] = $rs[0]->TIPO_EXAMES;
+                $obj[] = $rs[0]->OUTROS_EXAMES;
+                $obj[] = $rs[0]->MEDICO;
+                $obj[] = $rs[0]->CRM;
+                $obj[] = $rs[0]->AG_BIOLOGICO;
+                $obj[] = $rs[0]->AG_FISICO;
+                $obj[] = $rs[0]->AG_QUIMICO;
+                $obj[] = $rs[0]->RISCO_ACIDENTE;
+                $obj[] = $rs[0]->RISCO_ERGONOMICO;
+                $obj[] = $rs[0]->AUSENCIA_RISCO;
+                $obj[] = $rs[0]->RESULTADO_EXAME;
+                $obj[] = $rs[0]->OBSERVACAO_EXAME;
+                $obj[] = $rs[0]->DATA_REALIZACAO;
+
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_1;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_1;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_2;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_2;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_3;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_3;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_4;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_4;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_5;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_5;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_6;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_6;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_7;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_7;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_8;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_8;
+                $obj[] = $rs[0]->PAGAMENTO_EXAME;
+                $obj[] = $rs[0]->VALOR_EXAME;
+                
+                $obj[] = $rs[0]->LOCAL_REALIZACAO;
+                $obj[] = $rs[0]->ANEXO_EXAME;
+
 
                 return json_encode($obj);
             }
@@ -659,7 +522,7 @@ class cadastroasomodel extends CI_Model {
             }
         }
         else{
-            $query = "SELECT * FROM GP_CAD_FUNCIONARIO WHERE ID_FUNCIONARIO = '$idInicial'";
+            $query = "SELECT * FROM GP_CAD_EXAME_ASO WHERE ID_ASO = '$idInicial'";
          
             //print_r($query);exit();
             $cs = $this->conBanco->query($query);
@@ -670,81 +533,54 @@ class cadastroasomodel extends CI_Model {
             
             if (is_array($rs) && count($rs) > 0){
             
-                $obj[] = $rs[0]->ID_FUNCIONARIO;
+                $obj[] = $rs[0]->ID_ASO;
                 $obj[] = $rs[0]->EMPRESA;
                 $obj[] = $rs[0]->FILIAL;
-                $obj[] = $rs[0]->LIVRO;
-                $obj[] = $rs[0]->PAGINA;
-                $obj[] = $rs[0]->NOME_FUNCIONARIO;
-                $obj[] = $rs[0]->DATA_NASC;
-                $obj[] = $rs[0]->CIDADE_NASC;
-                $obj[] = $rs[0]->ESTADO_NASC;
-                $obj[] = $rs[0]->DATA_CADASTRO;
-
+                $obj[] = $rs[0]->FUNCIONARIO;
                 $obj[] = $rs[0]->MATRICULA;
-                $obj[] = $rs[0]->FUNCAO;
-                $obj[] = $rs[0]->SALARIO_VALOR;
-                $obj[] = $rs[0]->SALARIO_PAGAMENTO;
-                $obj[] = $rs[0]->DATA_ADMISSAO;
-                $obj[] = $rs[0]->EXPERIENCIA;
-                $obj[] = $rs[0]->HORARIO_INICIAL_1;
-                $obj[] = $rs[0]->HORARIO_FINAL_1;
-                $obj[] = $rs[0]->HORARIO_INICIAL_2;
-                $obj[] = $rs[0]->HORARIO_FINAL_2;
-                $obj[] = $rs[0]->IMAGEM;
-
-                $obj[] = $rs[0]->CEP;
-                $obj[] = $rs[0]->ENDERECO;
-                $obj[] = $rs[0]->NUMERO;
-                $obj[] = $rs[0]->BAIRRO;
-                $obj[] = $rs[0]->CIDADE;
-                $obj[] = $rs[0]->ESTADO;
-                $obj[] = $rs[0]->EMAIL;
-                $obj[] = $rs[0]->TELEFONE_1;
-                $obj[] = $rs[0]->TELEFONE_2;
-                $obj[] = $rs[0]->TELEFONE_3;
-
-                $obj[] = $rs[0]->CPF;
-                $obj[] = $rs[0]->IDENTIDADE;
-                $obj[] = $rs[0]->EXPEDIDOR_IDENTIDADE;
-                $obj[] = $rs[0]->ESTADO_IDENTIDADE;
-                $obj[] = $rs[0]->DATA_IDENTIDADE;
-                $obj[] = $rs[0]->CTPS;
-                $obj[] = $rs[0]->SERIE_CTPS;
-                $obj[] = $rs[0]->PIS_PASEP;
-                $obj[] = $rs[0]->ESTADO_CTPS;
-                $obj[] = $rs[0]->DATA_CTPS;
-                $obj[] = $rs[0]->TITULO_ELEITOR;
-                $obj[] = $rs[0]->ZONA_ELEITOR;
-                $obj[] = $rs[0]->SECAO_ELEITOR;
-
-                $obj[] = $rs[0]->NOME_MAE;
-                $obj[] = $rs[0]->NOME_PAI;
-                $obj[] = $rs[0]->SEXO;
-                $obj[] = $rs[0]->ESTADO_CIVIL;
-                $obj[] = $rs[0]->DEFICIENTE_FISICO;
-                $obj[] = $rs[0]->GRAU_INSTRUCAO;
-                $obj[] = $rs[0]->ETNIA;
-                $obj[] = $rs[0]->COR_OLHOS;
-                $obj[] = $rs[0]->COR_CABELOS;
-                $obj[] = $rs[0]->ALTURA;
-                $obj[] = $rs[0]->PESO;
-
-                $obj[] = $rs[0]->NOME_FILHO_1;
-                $obj[] = $rs[0]->DATA_NASC_1;
-                $obj[] = $rs[0]->NOME_FILHO_2;
-                $obj[] = $rs[0]->DATA_NASC_2;
-                $obj[] = $rs[0]->NOME_FILHO_3;
-                $obj[] = $rs[0]->DATA_NASC_3;
-                $obj[] = $rs[0]->NOME_FILHO_4;
-                $obj[] = $rs[0]->DATA_NASC_4;
-                $obj[] = $rs[0]->NOME_FILHO_5;
-                $obj[] = $rs[0]->DATA_NASC_5;
-                $obj[] = $rs[0]->NOME_FILHO_6;
-                $obj[] = $rs[0]->DATA_NASC_6;
-
                 $obj[] = $rs[0]->SETOR;
-                $obj[] = $rs[0]->DESATIVADO;
+                $obj[] = $rs[0]->FUNCAO;
+                $obj[] = $rs[0]->DATA_NASC;
+                $obj[] = $rs[0]->CPF;
+                $obj[] = $rs[0]->CTPS;
+                $obj[] = $rs[0]->PIS_PASEP;
+
+                $obj[] = $rs[0]->TIPO_EXAMES;
+                $obj[] = $rs[0]->OUTROS_EXAMES;
+                $obj[] = $rs[0]->MEDICO;
+                $obj[] = $rs[0]->CRM;
+                $obj[] = $rs[0]->AG_BIOLOGICO;
+                $obj[] = $rs[0]->AG_FISICO;
+                $obj[] = $rs[0]->AG_QUIMICO;
+                $obj[] = $rs[0]->RISCO_ACIDENTE;
+                $obj[] = $rs[0]->RISCO_ERGONOMICO;
+                $obj[] = $rs[0]->AUSENCIA_RISCO;
+                $obj[] = $rs[0]->RESULTADO_EXAME;
+                $obj[] = $rs[0]->OBSERVACAO_EXAME;
+                $obj[] = $rs[0]->DATA_REALIZACAO;
+
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_1;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_1;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_2;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_2;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_3;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_3;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_4;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_4;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_5;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_5;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_6;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_6;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_7;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_7;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_8;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_8;
+                $obj[] = $rs[0]->PAGAMENTO_EXAME;
+                $obj[] = $rs[0]->VALOR_EXAME;
+                
+                $obj[] = $rs[0]->LOCAL_REALIZACAO;
+                $obj[] = $rs[0]->ANEXO_EXAME;
+
                 
                 return json_encode($obj);
             }
@@ -771,8 +607,8 @@ class cadastroasomodel extends CI_Model {
         $data = array(); // linhas
         //$itens = $this->getDataGrid($indice, $ordem, $inicio, $tamanho, $parametro1, $parametro2);
         
-        $query = "SELECT * FROM GP_CAD_FUNCIONARIO ORDER BY ID_FUNCIONARIO";
-        
+        $query = "SELECT * FROM GP_CAD_EXAME_ASO ORDER BY ID_ASO";
+        //print_r($query);exit();      
         
                
         $cs = $this->conBanco->query($query);
@@ -782,9 +618,10 @@ class cadastroasomodel extends CI_Model {
 
         foreach ($itens as $item) {
 
-            $aux = $item->ID_FUNCIONARIO;
+            $aux = $item->ID_ASO;
             $empresa = $item->EMPRESA;
             $filial = $item->FILIAL;
+            $funcionario = $item->FUNCIONARIO;
             $funcao = $item->FUNCAO;
             $setor = $item->SETOR;
             
@@ -802,27 +639,22 @@ class cadastroasomodel extends CI_Model {
         
             $nomeFilial  = $rs[0]->NOME_FANTASIA;
             
-            $query = "SELECT FUNCAO FROM GP_CAD_FUNCOES WHERE ID_FUNCAO = $funcao  ";
-             //print_r($query);exit();      
+            $query = "SELECT NOME_FUNCIONARIO FROM GP_CAD_FUNCIONARIO WHERE ID_FUNCIONARIO = $funcionario  ";
+            //print_r($query);exit();      
             $cs = $this->conBanco->query($query);
             $rs = $cs->result();
             
-            $nomeFuncao  = $rs[0]->FUNCAO;
+            $nomeFuncionario  = $rs[0]->NOME_FUNCIONARIO;
             
-            $query = "SELECT SETOR FROM GP_CAD_SETOR WHERE ID_SETOR = $setor  ";
-             //print_r($query);exit();      
-            $cs = $this->conBanco->query($query);
-            $rs = $cs->result();
             
-            $nomeSetor  = $rs[0]->SETOR;
             
-            $obj['ID_FUNCIONARIO'] = $item->ID_FUNCIONARIO;
+            $obj['ID_ASO'] = $item->ID_ASO;
             $obj['EMPRESA'] = $nomeEmpresa;
             $obj['FILIAL'] = $nomeFilial;
-            $obj['NOME_FUNCIONARIO'] = $item->NOME_FUNCIONARIO;
+            $obj['FUNCIONARIO'] = $nomeFuncionario;
             $obj['MATRICULA'] = $item->MATRICULA;
-            $obj['FUNCAO'] = $nomeFuncao;
-            $obj['SETOR'] = $nomeSetor;
+            $obj['FUNCAO'] = $item->FUNCAO;
+            $obj['SETOR'] = $item->SETOR;
             $obj['SELECIONAR'] = "<button type='submit' class='btn-primary' onclick='selecionaGrid($aux)'>SELECIONAR</button>";
           
             $data[] = $obj;
@@ -842,7 +674,7 @@ class cadastroasomodel extends CI_Model {
         $this->initConBanco();
         
                                
-        $query = "SELECT COUNT(ID_FUNCIONARIO) AS TOTAL FROM GP_CAD_FUNCIONARIO";
+        $query = "SELECT COUNT(ID_ASO) AS TOTAL FROM GP_CAD_EXAME_ASO";
         
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
@@ -856,12 +688,12 @@ class cadastroasomodel extends CI_Model {
           
     }
     
-    public function selecionaGrid($idFuncionario){
+    public function selecionaGrid($idAso){
         
        
         $this->initConBanco();
        
-        $query = "SELECT * FROM GP_CAD_FUNCIONARIO WHERE ID_FUNCIONARIO = $idFuncionario";
+        $query = "SELECT * FROM GP_CAD_EXAME_ASO WHERE ID_ASO = $idAso";
          
         //print_r($query);exit();
         $cs = $this->conBanco->query($query);
@@ -871,81 +703,54 @@ class cadastroasomodel extends CI_Model {
            
         if (is_array($rs) && count($rs) > 0){
             
-            $obj[] = $rs[0]->ID_FUNCIONARIO;
-            $obj[] = $rs[0]->EMPRESA;
-            $obj[] = $rs[0]->FILIAL;
-            $obj[] = $rs[0]->LIVRO;
-            $obj[] = $rs[0]->PAGINA;
-            $obj[] = $rs[0]->NOME_FUNCIONARIO;
-            $obj[] = $rs[0]->DATA_NASC;
-            $obj[] = $rs[0]->CIDADE_NASC;
-            $obj[] = $rs[0]->ESTADO_NASC;
-            $obj[] = $rs[0]->DATA_CADASTRO;
-            
-            $obj[] = $rs[0]->MATRICULA;
-            $obj[] = $rs[0]->FUNCAO;
-            $obj[] = $rs[0]->SALARIO_VALOR;
-            $obj[] = $rs[0]->SALARIO_PAGAMENTO;
-            $obj[] = $rs[0]->DATA_ADMISSAO;
-            $obj[] = $rs[0]->EXPERIENCIA;
-            $obj[] = $rs[0]->HORARIO_INICIAL_1;
-            $obj[] = $rs[0]->HORARIO_FINAL_1;
-            $obj[] = $rs[0]->HORARIO_INICIAL_2;
-            $obj[] = $rs[0]->HORARIO_FINAL_2;
-            $obj[] = $rs[0]->IMAGEM;
-            
-            $obj[] = $rs[0]->CEP;
-            $obj[] = $rs[0]->ENDERECO;
-            $obj[] = $rs[0]->NUMERO;
-            $obj[] = $rs[0]->BAIRRO;
-            $obj[] = $rs[0]->CIDADE;
-            $obj[] = $rs[0]->ESTADO;
-            $obj[] = $rs[0]->EMAIL;
-            $obj[] = $rs[0]->TELEFONE_1;
-            $obj[] = $rs[0]->TELEFONE_2;
-            $obj[] = $rs[0]->TELEFONE_3;
-            
-            $obj[] = $rs[0]->CPF;
-            $obj[] = $rs[0]->IDENTIDADE;
-            $obj[] = $rs[0]->EXPEDIDOR_IDENTIDADE;
-            $obj[] = $rs[0]->ESTADO_IDENTIDADE;
-            $obj[] = $rs[0]->DATA_IDENTIDADE;
-            $obj[] = $rs[0]->CTPS;
-            $obj[] = $rs[0]->SERIE_CTPS;
-            $obj[] = $rs[0]->PIS_PASEP;
-            $obj[] = $rs[0]->ESTADO_CTPS;
-            $obj[] = $rs[0]->DATA_CTPS;
-            $obj[] = $rs[0]->TITULO_ELEITOR;
-            $obj[] = $rs[0]->ZONA_ELEITOR;
-            $obj[] = $rs[0]->SECAO_ELEITOR;
-            
-            $obj[] = $rs[0]->NOME_MAE;
-            $obj[] = $rs[0]->NOME_PAI;
-            $obj[] = $rs[0]->SEXO;
-            $obj[] = $rs[0]->ESTADO_CIVIL;
-            $obj[] = $rs[0]->DEFICIENTE_FISICO;
-            $obj[] = $rs[0]->GRAU_INSTRUCAO;
-            $obj[] = $rs[0]->ETNIA;
-            $obj[] = $rs[0]->COR_OLHOS;
-            $obj[] = $rs[0]->COR_CABELOS;
-            $obj[] = $rs[0]->ALTURA;
-            $obj[] = $rs[0]->PESO;
-            
-            $obj[] = $rs[0]->NOME_FILHO_1;
-            $obj[] = $rs[0]->DATA_NASC_1;
-            $obj[] = $rs[0]->NOME_FILHO_2;
-            $obj[] = $rs[0]->DATA_NASC_2;
-            $obj[] = $rs[0]->NOME_FILHO_3;
-            $obj[] = $rs[0]->DATA_NASC_3;
-            $obj[] = $rs[0]->NOME_FILHO_4;
-            $obj[] = $rs[0]->DATA_NASC_4;
-            $obj[] = $rs[0]->NOME_FILHO_5;
-            $obj[] = $rs[0]->DATA_NASC_5;
-            $obj[] = $rs[0]->NOME_FILHO_6;
-            $obj[] = $rs[0]->DATA_NASC_6;
-            
-            $obj[] = $rs[0]->SETOR;
-            $obj[] = $rs[0]->DESATIVADO;
+                $obj[] = $rs[0]->ID_ASO;
+                $obj[] = $rs[0]->EMPRESA;
+                $obj[] = $rs[0]->FILIAL;
+                $obj[] = $rs[0]->FUNCIONARIO;
+                $obj[] = $rs[0]->MATRICULA;
+                $obj[] = $rs[0]->SETOR;
+                $obj[] = $rs[0]->FUNCAO;
+                $obj[] = $rs[0]->DATA_NASC;
+                $obj[] = $rs[0]->CPF;
+                $obj[] = $rs[0]->CTPS;
+                $obj[] = $rs[0]->PIS_PASEP;
+
+                $obj[] = $rs[0]->TIPO_EXAMES;
+                $obj[] = $rs[0]->OUTROS_EXAMES;
+                $obj[] = $rs[0]->MEDICO;
+                $obj[] = $rs[0]->CRM;
+                $obj[] = $rs[0]->AG_BIOLOGICO;
+                $obj[] = $rs[0]->AG_FISICO;
+                $obj[] = $rs[0]->AG_QUIMICO;
+                $obj[] = $rs[0]->RISCO_ACIDENTE;
+                $obj[] = $rs[0]->RISCO_ERGONOMICO;
+                $obj[] = $rs[0]->AUSENCIA_RISCO;
+                $obj[] = $rs[0]->RESULTADO_EXAME;
+                $obj[] = $rs[0]->OBSERVACAO_EXAME;
+                $obj[] = $rs[0]->DATA_REALIZACAO;
+
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_1;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_1;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_2;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_2;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_3;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_3;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_4;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_4;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_5;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_5;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_6;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_6;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_7;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_7;
+                $obj[] = $rs[0]->EXAME_COMPLEMENTAR_8;
+                $obj[] = $rs[0]->DATA_COMPLEMENTAR_8;
+                $obj[] = $rs[0]->PAGAMENTO_EXAME;
+                $obj[] = $rs[0]->VALOR_EXAME;
+                
+                $obj[] = $rs[0]->LOCAL_REALIZACAO;
+                $obj[] = $rs[0]->ANEXO_EXAME;
+
                 
             return json_encode($obj);
         }
@@ -1139,6 +944,325 @@ class cadastroasomodel extends CI_Model {
         $dataAtual = date('d/m/Y');
 
         return $dataAtual;
+    }
+    
+    
+    
+    public function carregarListaExames(){
+        
+        $this->initConBanco();
+
+        $query = "SELECT ID_EXAMES, EXAMES FROM GP_CAD_EXAMES ORDER BY EXAMES ";
+                  
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+        
+        $html = "<option value='0'>Selecione</option>";
+
+        if (is_array($rs) && count($rs) > 0) {
+
+            
+            foreach ($rs as $item) {
+
+                $idExames = $item->ID_EXAMES;
+                $nome      = $item->EXAMES;
+                $html .= "<option value='$idExames'>$nome</option>";
+            }
+
+            return $html; 
+        } else {
+            return "<option value='0'>Nenhum Exame Cadastrado</option>";
+        }
+           
+        
+    }
+    
+    
+    ////////// GERA ARQUIVO EM PDF
+    
+    
+    
+    public function getPdf ($idAso){
+         
+         
+        
+        $this->initConBanco();
+        
+        
+        $query = "SELECT * FROM GP_CAD_EXAME_ASO WHERE ID_ASO = '$idAso'";
+        
+        
+               
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+        
+        if (is_array($rs) && count($rs) > 0){
+            
+                $idAso = $rs[0]->ID_ASO;
+                $empresa = $rs[0]->EMPRESA;
+                $filial = $rs[0]->FILIAL;
+                $funcionario = $rs[0]->FUNCIONARIO;
+                $matricula = $rs[0]->MATRICULA;
+                $setor = $rs[0]->SETOR;
+                $funcao = $rs[0]->FUNCAO;
+                $dataNasc = $rs[0]->DATA_NASC;
+                $cpf = $rs[0]->CPF;
+                $ctps = $rs[0]->CTPS;
+                $pisPasep = $rs[0]->PIS_PASEP;
+
+                $tipoExames = $rs[0]->TIPO_EXAMES;
+                $outrosExames = $rs[0]->OUTROS_EXAMES;
+                $medico = $rs[0]->MEDICO;
+                $crm = $rs[0]->CRM;
+                $agBiologico = $rs[0]->AG_BIOLOGICO;
+                $agFisico = $rs[0]->AG_FISICO;
+                $agQuimico = $rs[0]->AG_QUIMICO;
+                $riscoAcidente = $rs[0]->RISCO_ACIDENTE;
+                $riscoErgonomico = $rs[0]->RISCO_ERGONOMICO;
+                $ausenciaRisco = $rs[0]->AUSENCIA_RISCO;
+                $resultadoExame = $rs[0]->RESULTADO_EXAME;
+                $observacaoExame = $rs[0]->OBSERVACAO_EXAME;
+                $dataRealizacao = $rs[0]->DATA_REALIZACAO;
+
+                $exameComplementar1 = $rs[0]->EXAME_COMPLEMENTAR_1;
+                $dataComplementar1 = $rs[0]->DATA_COMPLEMENTAR_1;
+                $exameComplementar2 = $rs[0]->EXAME_COMPLEMENTAR_2;
+                $dataComplementar2 = $rs[0]->DATA_COMPLEMENTAR_2;
+                $exameComplementar3 = $rs[0]->EXAME_COMPLEMENTAR_3;
+                $dataComplementar3 = $rs[0]->DATA_COMPLEMENTAR_3;
+                $exameComplementar4 = $rs[0]->EXAME_COMPLEMENTAR_4;
+                $dataComplementar4 = $rs[0]->DATA_COMPLEMENTAR_4;
+                $exameComplementar5 = $rs[0]->EXAME_COMPLEMENTAR_5;
+                $dataComplementar5 = $rs[0]->DATA_COMPLEMENTAR_5;
+                $exameComplementar6 = $rs[0]->EXAME_COMPLEMENTAR_6;
+                $dataComplementar6 = $rs[0]->DATA_COMPLEMENTAR_6;
+                $exameComplementar7 = $rs[0]->EXAME_COMPLEMENTAR_7;
+                $dataComplementar7 = $rs[0]->DATA_COMPLEMENTAR_7;
+                $exameComplementar8 = $rs[0]->EXAME_COMPLEMENTAR_8;
+                $dataComplementar8 = $rs[0]->DATA_COMPLEMENTAR_8;
+                $pagamentoExame = $rs[0]->PAGAMENTO_EXAME;
+                $valorExame = $rs[0]->VALOR_EXAME;
+                
+                $localRealizacao = $rs[0]->LOCAL_REALIZACAO;
+                $obj[] = $rs[0]->ANEXO_EXAME;
+                
+                if ($tipoExames == "ADMISSIONAL"){
+                    $adm = "X";
+                    $outrosExames = "";
+                }
+                if ($tipoExames == "DEMISSIONAL"){
+                    $dem = "X";
+                    $outrosExames = "";
+                }
+                if ($tipoExames == "PERIODICO"){
+                    $per = "X";
+                    $outrosExames = "";
+                }
+                if ($tipoExames == "MUDANCA_FUNCAO"){
+                    $mud = "X";
+                    $outrosExames = "";
+                }
+                if ($tipoExames == "RETORNO_TRABALHO"){
+                    $ret = "X";
+                    $outrosExames = "";
+                }
+                if ($tipoExames == "OUTROS"){
+                    $out = "X";
+                }
+                
+                
+                if ($agBiologico == "S"){
+                    $agBio = "X";
+                }
+                if ($agFisico == "S"){
+                    $agFis = "X";
+                }
+                if ($agQuimico == "S"){
+                    $agQui = "X";
+                }
+                if ($riscoAcidente == "S"){
+                    $risAc = "X";
+                }
+                if ($riscoErgonomico == "S"){
+                    $risEr = "X";
+                }
+                if ($ausenciaRisco == "S"){
+                    $semRis = "X";
+                }
+            
+            
+            
+            $query = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA  WHERE ID_EMPRESA = $empresa ";
+                  
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+        
+            $nomeEmpresa  = $rs[0]->NOME_FANTASIA;
+            
+            $query = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA_FILIAL  WHERE ID_EMPRESA_FILIAL = $filial ";
+                  
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+        
+            $nomeFilial  = $rs[0]->NOME_FANTASIA;
+            
+            $query = "SELECT NOME_FUNCIONARIO FROM GP_CAD_FUNCIONARIO WHERE ID_FUNCIONARIO = $funcionario  ";
+            //print_r($query);exit();      
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+            
+            $nomeFuncionario  = $rs[0]->NOME_FUNCIONARIO;
+            
+            
+            
+        
+        
+        $html = "";
+        $html .= "<table align='center'cellspacing='0'; cellpadding ='9'; style='width: 100%; border: 1 solid #000000;'>";
+        $html .="<tr>";
+        $html .="<td colspan = '2' style= 'border: 1 solid #000000; padding-top: 10px; padding-botton: 5px; width: 50%; font-size: 30px; color: #000000;' align='center'>ATESTADO DE SAÚDE OCUPACIONAL (ASO)</td>";
+        $html .=" </tr>";                               
+        $html .="<tr>";
+        $html .="<td align='center' style= 'width: 50%; font-size: 24px; color: #000000; border: 1 solid #000000;' ><b>Dados Empresa<b></td>";
+        $html .="<td align='center' style= 'width: 50%; height: 150px; font-size: 24px; color: #000000; border: 1 solid #000000;' ><b>Dados Empresa<b></td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td  colspan = '2' align='left' style= 'width: 100%; height: 150px; font-size: 24px; color: #000000; border: 1 solid #000000;' ><b>Empresa:</b> $nomeEmpresa &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<b>Filial:</b> $nomeFilial <br><br> "
+                . "<b>Funcionário:</b> $nomeFuncionario &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<b>Data Nascimento:</b> $dataNasc<br><br>"
+                . "<b>Setor:</b> $setor&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; <b>Função:</b> $funcao &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; <b>Matrícula:</b> $matricula<br><br>"
+                . "<b>CPF:</b> $cpf &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; <b>CTPS:</b> $ctps &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; <b>PIS/PASEP:</b> $pisPasep</td>";
+        
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '2' style= 'width: 100%; border: 1 solid #000000; padding-top: 10px; padding-botton: 5px; width: 50%; font-size: 30px; color: #000000;' align='center'><b>Programa de Controle Médico de Saúde Ocupacional (P.C.M.S.O)<b></td>";
+        $html .=" </tr>"; 
+        $html .="<tr>";
+        $html .="<td colspan = '2' style= 'width: 100%;font-size: 21px; color: #000000;'  align='left'><b>MOTIVO DO EXAME:</b><br><br></td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '2' style= 'width: 100%;font-size: 21px; color: #000000;'  align='left'>&nbsp;&nbsp;&nbsp;(&nbsp;$adm&nbsp;) Admissional &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;$dem&nbsp;) Demissional &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;$per&nbsp;) Periódico &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;$mud&nbsp;) Mudança de Função &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;$ret&nbsp;) Retorno do Trabalho &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;$out&nbsp;) Outros<br><br></td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '2' style= 'width: 100%;font-size: 21px; color: #000000;'  align='left'>&nbsp;&nbsp;&nbsp;<b>Outros:</b> $outrosExames</td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '2' style= 'width: 100%; border-top: 1 solid #000000;font-size: 21px; color: #000000;'  align='left'><b>RISCOS OCUPACIONAIS:</b><br><br></td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '2' style= 'width: 100%;font-size: 21px; color: #000000;'  align='left'>&nbsp;&nbsp;&nbsp;(&nbsp;$agBio&nbsp;) Agentes Biológicos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;$agFis&nbsp; ) Agentes Físicos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;$agQui&nbsp; ) Agentes Quimicos</td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '2' style= 'width: 100%;font-size: 21px; color: #000000;'  align='left'>&nbsp;&nbsp;&nbsp;(&nbsp;$risAc&nbsp; ) Riscos Acidentes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;$risEr&nbsp;) Riscos Ergonômicos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;$semRis&nbsp; ) Ausência de Riscos Ocupacionais Expecíficos</td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '2' style= 'width: 100%; border-top: 1 solid #000000;font-size: 21px; color: #000000;'  align='left'>Atesto para os devidos fins e de acordo com o artigo 168 da C.L.T.,"
+                . "                                                                                                                 e NR-7, da portaria nº 24 de 27/12/94 que o paciente/funcionário<br>"
+                . "                                                                                                                 cidato, foi examinado clinicamente, gozando no momento sanidade física e mental, não sendo de moléstias infectocontagiosas, <br> sendo considerado:<br><br></td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '2' style= 'width: 100%;font-size: 21px; color: #000000;'  align='center'><b><u>$resultadoExame(A) PARA A FUNÇÃO<br></u><b></td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '2' style= 'width: 100%; border-top: 1 solid #000000;font-size: 21px; color: #000000;'  align='left'><b>EXAMES COMPLEMENTARES:</b><br><br></td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '2' style= 'text-transform: uppercase; width: 100%; border-botom: 1 solid #000000;font-size: 21px; color: #000000;'  align='left'><b>&nbsp;$exameComplementar1, &nbsp;$exameComplementar2<br><br> &nbsp;$exameComplementar3, &nbsp;$exameComplementar4<br><br> &nbsp;$exameComplementar5,&nbsp;$exameComplementar6<br><br>&nbsp;$exameComplementar7,&nbsp;$exameComplementar8</b><br><br></td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '2' style= 'width: 100%; border-top: 1 solid #000000;font-size: 21px; color: #000000;'  align='left'><b><br><br><br></td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td  style= 'text-transform: uppercase; text-decoration: overline; font-size: 23px; color: #000000;'  align='center'></td>";
+        $html .="<td  style= 'text-transform: uppercase; font-size: 23px; color: #000000;'  align='center'>$localRealizacao, $dataRealizacao</td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td  style= 'text-transform: uppercase; text-decoration: overline; font-size: 23px; color: #000000;'  align='center'></td>";
+        $html .="<td  style= 'text-transform: uppercase; text-decoration: overline; font-size: 23px; color: #000000;'  align='center'>&nbsp;&nbsp;&nbsp;LOCAL e DATA &nbsp;&nbsp;<br><br><br><br><br><br><br></td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td  style= 'text-transform: uppercase; text-decoration: overline; font-size: 23px; color: #000000;'  align='center'>&nbsp;&nbsp;&nbsp;Assinatura: ($nomeFuncionario)&nbsp;&nbsp;&nbsp;</td>";
+        $html .="<td  style= 'text-transform: uppercase; text-decoration: overline; font-size: 23px; color: #000000;'  align='center'>&nbsp;&nbsp;&nbsp;($medico - CRM Nº. $crm)&nbsp;&nbsp;&nbsp;</td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '2' style= 'font-size: 21px; border-bottom: 1 solid #000000;'  align='left'></td>";
+        $html .="</tr>";
+        
+        
+        $html .="</table> ";
+         
+        }
+        
+        
+        //$pasta = "C:/server/htdocs/gcconcreto/relatoriostemp/relatorio/"; // gcconcreto
+        $pasta= 'C:/server/htdocs/gestaopessoas/fwk/uploads/pdf/'; // local
+
+        if (is_dir($pasta)) {
+            $diretorio = dir($pasta);
+
+            while ($arquivo = $diretorio->read()) {
+                if (($arquivo != '.') && ($arquivo != '..')) {
+                    unlink($pasta . $arquivo);
+                    echo 'Arquivo ' . $arquivo . ' foi apagado com sucesso. <br />';
+                }
+            }
+
+            $diretorio->close();
+        } else {
+            echo 'A pasta não existe.';
+        }
+
+
+        $nomeDoArquivo = "atestado_aso.pdf";
+        $tipoFolha = "P"; // P = Retrato | L = Paisagem
+
+
+
+        $retorno = $this->geraPDFAtestado($nomeDoArquivo, $html, $tipoFolha);
+
+        if ($retorno) {
+            $gerado = true;
+        } else {
+            $gerado = false;
+        }
+
+        if ($gerado == true) {
+            echo "Arquivo Gerado: " . $nomeDoArquivo . "\n";
+        } else {
+            echo "Erro ao gerar o arquivo.";
+            return;
+        }
+    }
+    
+    private function geraPDFAtestado($nomeDoArquivo, $html, $tipo) {
+        //print_r("gerapdf");exit();
+        $dompdf = new DOMPDF();
+        define("DOMPDF_ENABLE_REMOTE", true);
+//	if ($tipo == "L") {
+//		$dompdf->set_paper("legal", "landscape"); // Altera o papel para modo paisagem.
+//	}
+        $dompdf->load_html($html); // Carrega o HTML para a classe.
+        $dompdf->render();
+
+
+
+        $canvas = $dompdf->get_canvas();
+        $font = Font_Metrics::get_font("helvetica", "normal");
+        //$canvas->page_text(510, 18, "Pág. {PAGE_NUM}/{PAGE_COUNT}", $font, 8, array(0, 0, 0)); //header
+        //$canvas->page_text(270, 792, "Copyright © 2015 - Empresa XPTO", $font, 6, array(0,0,0)); //footer
+        header("Content-type: application/pdf");
+        $pdf = $dompdf->output(); // Cria o pdf
+       $nomeDoArquivo = "atestado_aso.pdf";
+
+        //$arquivo = 'C:\server\htdocs\gcconcreto\relatoriostemp\relatorio\.'; // gcconcreto
+        $arquivo = 'C:\server\htdocs\gestaopessoas\fwk\uploads\pdf\.'; //local
+        $arquivo .= $nomeDoArquivo; // Caminho onde será salvo o arquivo.
+
+
+        if (file_put_contents($arquivo, $pdf)) { //Tenta salvar o pdf gerado
+            return true; // Salvo com sucesso.
+        } else {
+            return false; // Erro ao salvar o arquivo
+        }
     }
     
     

@@ -20,35 +20,6 @@ class cadastrofuncoesmodel extends CI_Model {
         return $this->access->getUsuarioLogado();
     }
     
-    public function carregarExames(){
-        
-        $this->initConBanco();
-
-        $query = "SELECT ID_EXAMES, EXAMES FROM GP_CAD_EXAMES ORDER BY EXAMES ";
-                  
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-        
-        $html = "<option value='0'>Selecione</option>";
-
-        if (is_array($rs) && count($rs) > 0) {
-
-            
-            foreach ($rs as $item) {
-
-                $idExames = $item->ID_EXAMES;
-                $exames      = $item->EXAMES;
-                $html .= "<option value='$idExames'>$exames</option>";
-            }
-
-            return $html; 
-        } else {
-            return "<option value='0'>Nenhum Exame Cadastrado</option>";
-        }
-           
-        
-    }
-    
     
     public function novo(){
         
@@ -71,7 +42,7 @@ class cadastrofuncoesmodel extends CI_Model {
          
     }   
 
-   public function salvar($id, $funcao, $descricao, $cbo){
+   public function salvar($id, $funcao, $descricao, $cbo, $periodoExame){
         
         $this->initConBanco();
         
@@ -86,7 +57,7 @@ class cadastrofuncoesmodel extends CI_Model {
         
         if (is_array($rs) && count($rs) > 0){
             
-            $query = "UPDATE GP_CAD_FUNCOES SET FUNCAO = '$funcao', DESCRICAO = '$descricao', CBO = '$cbo', DATA_ALTERACAO = SYSDATE, USUARIO_ALTERACAO = '$usuarioLogado' WHERE CBO = '$cbo'";
+            $query = "UPDATE GP_CAD_FUNCOES SET FUNCAO = '$funcao', DESCRICAO = '$descricao', CBO = '$cbo', PERIODO_EXAME_ASO = '$periodoExame',  DATA_ALTERACAO = SYSDATE, USUARIO_ALTERACAO = '$usuarioLogado' WHERE CBO = '$cbo'";
 
             
             //print_r($query);exit();
@@ -102,8 +73,8 @@ class cadastrofuncoesmodel extends CI_Model {
         else{
                                    
 
-            $query = "INSERT INTO GP_CAD_FUNCOES (ID_FUNCAO, FUNCAO, DESCRICAO, CBO, DATA_CADASTRO, USUARIO_CADASTRO)
-                             VALUES ($id, '$funcao', '$descricao', '$cbo', SYSDATE, '$usuarioLogado')";     
+            $query = "INSERT INTO GP_CAD_FUNCOES (ID_FUNCAO, FUNCAO, DESCRICAO, CBO, PERIODO_EXAME_ASO, DATA_CADASTRO, USUARIO_CADASTRO)
+                             VALUES ($id, '$funcao', '$descricao', '$cbo', '$periodoExame', SYSDATE, '$usuarioLogado')";     
 
             //print_r($query);exit();
             $resultado = $this->conBanco->query($query);
@@ -141,6 +112,7 @@ class cadastrofuncoesmodel extends CI_Model {
                         <td  style='width: 4%; padding-right: 5px;font-size: 14px;'>Função</td>
                         <td  style='width: 6%; padding-right: 5px;font-size: 14px;'>Descrição</td>
                         <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>CBO</td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Período para Exame ASO</td>
                         
                     </tr>";
 
@@ -176,12 +148,23 @@ class cadastrofuncoesmodel extends CI_Model {
                 $cbo .= "_";
                 $cbo .= $j;
                 
+                $periodoExame  = $j;
+                $periodoExame .= "_";
+                $periodoExame .= $j;
+                $periodoExame .= "_";
+                $periodoExame .= $j;
+                $periodoExame .= "_";
+                $periodoExame .= $j;
+                $periodoExame .= "_";
+                $periodoExame .= $j;
+                
                 
                 
                 $idValor = $item->ID_FUNCAO;
                 $funcaoValor = $item->FUNCAO;
                 $descricaoValor = $item->DESCRICAO;
                 $cboValor = $item->CBO;
+                $periodoExameValor = $item->PERIODO_EXAME_ASO;
                 
                 
                
@@ -192,6 +175,7 @@ class cadastrofuncoesmodel extends CI_Model {
                         <td  style='width: 20%;  padding-right: 10px;'><div class='form'><input  type='text' class='form-control' style='font-size: 12px;' id='$funcao'   value='$funcaoValor' readonly></div></td>
                         <td  style='width: 20%; padding-right: 10px;'><div class='form'><input  type='text' class='form-control' style='font-size: 12px;' id='$descricao'   value='$descricaoValor' readonly></div></td>
                         <td  style='width: 9%; padding-right: 10px;'><div class='form'><input  type='text' class='form-control' style='font-size: 12px;' id='$cbo'   value='$cboValor' readonly></div></td>
+                        <td  style='width: 9%; padding-right: 10px;'><div class='form'><input  type='text' class='form-control' style='font-size: 12px;' id='$periodoExame'   value='$periodoExameValor' readonly></div></td>
                         
 
 
@@ -226,6 +210,7 @@ class cadastrofuncoesmodel extends CI_Model {
             $obj[] = $rs[0]->FUNCAO;
             $obj[] = $rs[0]->DESCRICAO;
             $obj[] = $rs[0]->CBO;
+            $obj[] = $rs[0]->PERIODO_EXAME_ASO;
 
 
             return json_encode($obj);
@@ -273,6 +258,7 @@ class cadastrofuncoesmodel extends CI_Model {
                 $obj[] = $rs[0]->FUNCAO;
                 $obj[] = $rs[0]->DESCRICAO;
                 $obj[] = $rs[0]->CBO;
+                $obj[] = $rs[0]->PERIODO_EXAME_ASO;
 
                 return json_encode($obj);
             }

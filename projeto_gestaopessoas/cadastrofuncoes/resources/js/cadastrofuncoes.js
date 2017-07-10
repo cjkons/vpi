@@ -11,66 +11,15 @@ $(document).ready(function() {
     
   
  getAdicionarFuncao();
- carregarExames();
+ 
  
     
 });
 
-$(function(){
-   // abas
-   // oculta todas as abas
-   $("div.contaba").hide();
-   // mostra somente  a primeira aba
-   $("div.contaba:first").show();
-   // seta a primeira aba como selecionada (na lista de abas)
-   $("#abas a:first").addClass("selected");
-
-   // quando clicar no link de uma aba
-   $("#abas a").click(function(){
-   // oculta todas as abas
-   $("div.contaba").hide();
-   // tira a seleção da aba atual
-   $("#abas a").removeClass("selected");
-
-   // adiciona a classe selected na selecionada atualmente
-   $(this).addClass("selected");
-   // mostra a aba clicada
-   $($(this).attr("href")).show();
-   // pra nao ir para o link
-   return false;
-   });
-   });
 
 
-function carregarExames(){
-    
-           
-    $.ajax({
-        url: 'index.php?m=cadastrofuncoes&c=cadastrofuncoescontroller&f=carregarExames',
-        data: {
-            
-        },
-        type: 'POST',
-        dataType: 'json',
-        async: true,
-        
-        
-        success: function(data) {
-                
-            if (data != false) {
-                document.getElementById('exames').innerHTML = data;
-               
-            } else {
-                mensagem('Atenção', 'Erro ao carregar a lista de Exames', 'error'); 
-               
-            }
 
-        },
-        error: function() {
-            desbloqueiaTela();
-        }
-    });
-}
+
 
 
 
@@ -80,12 +29,14 @@ function novo(){
     document.getElementById("funcao").readOnly          = false;
     document.getElementById("descricao").readOnly       = false;
     document.getElementById("cbo").readOnly             = false;
+    document.getElementById("periodoExame").readOnly    = false;
     
     
     document.getElementById("id").value             = "";
     document.getElementById("funcao").value         = "";
     document.getElementById("descricao").value      = "";
     document.getElementById("cbo").value            = "";
+    document.getElementById("periodoExame").value   = 0;
     
        
     
@@ -125,6 +76,7 @@ function salvar(){
     var funcao          =   $('#funcao').val();
     var descricao       =   $('#descricao').val();
     var cbo             =   $('#cbo').val();
+    var periodoExame    =   $('#periodoExame').val();
     
     
     var controleDePreenchimento = 'S';
@@ -139,6 +91,9 @@ function salvar(){
     if(cbo == ""){
         controleDePreenchimento = 'N';
     }
+    if(periodoExame == 0){
+        controleDePreenchimento = 'N';
+    }
     
    
     
@@ -149,6 +104,7 @@ function salvar(){
         document.getElementById("funcao").readOnly          = true;
         document.getElementById("descricao").readOnly       = true;
         document.getElementById("cbo").readOnly             = true;
+        document.getElementById("periodoExame").readOnly             = true;
         
         $.ajax({
             url: 'index.php?m=cadastrofuncoes&c=cadastrofuncoescontroller&f=salvar',
@@ -156,7 +112,8 @@ function salvar(){
                 id: id,
                 funcao: funcao,
                 descricao: descricao,
-                cbo: cbo
+                cbo: cbo,
+                periodoExame: periodoExame
                 
                 
                 
@@ -199,6 +156,7 @@ function  getAdicionarFuncao(id, cbo) {
         document.getElementById("funcao").readOnly          = true;
         document.getElementById("descricao").readOnly       = true;
         document.getElementById("cbo").readOnly             = true;
+        document.getElementById("periodoExame").readOnly    = true;
     
 
     $.ajax({
@@ -235,7 +193,8 @@ function editarFuncao(id, cbo) {
         document.getElementById("id").readOnly              = true;
         document.getElementById("funcao").readOnly          = true;
         document.getElementById("descricao").readOnly       = true;
-        document.getElementById("cbo").readOnly             = true;    
+        document.getElementById("cbo").readOnly             = true;
+        document.getElementById("periodoExame").readOnly    = true;
     
     $.ajax({
             url: 'index.php?m=cadastrofuncoes&c=cadastrofuncoescontroller&f=editarFuncao',
@@ -257,12 +216,14 @@ function editarFuncao(id, cbo) {
                     document.getElementById("funcao").readOnly          = false;
                     document.getElementById("descricao").readOnly       = false;
                     document.getElementById("cbo").readOnly             = false;
+                    document.getElementById("periodoExame").readOnly    = true;
                   
                     
-                    document.getElementById("id").value         = r[0];
-                    document.getElementById("funcao").value     = r[1];
-                    document.getElementById("descricao").value  = r[2];
-                    document.getElementById("cbo").value        = r[3];
+                    document.getElementById("id").value             = r[0];
+                    document.getElementById("funcao").value         = r[1];
+                    document.getElementById("descricao").value      = r[2];
+                    document.getElementById("cbo").value            = r[3];
+                    document.getElementById("periodoExame").value   = r[4];
                     
                                        
                    //$('#itemModalEditar').modal('show');
@@ -350,10 +311,12 @@ function pesquisaFiltro(){
         success: function(r) {
             
              
-                    document.getElementById("id").value         = r[0];
-                    document.getElementById("funcao").value     = r[1];
-                    document.getElementById("descricao").value  = r[2];
-                    document.getElementById("cbo").value        = r[3];
+                    document.getElementById("id").value             = r[0];
+                    document.getElementById("funcao").value         = r[1];
+                    document.getElementById("descricao").value      = r[2];
+                    document.getElementById("cbo").value            = r[3];
+                    document.getElementById("periodoExame").value   = r[4];
+                    
 
 
 
@@ -379,11 +342,14 @@ function atualizar() {
     document.getElementById("funcao").readOnly = true;
     document.getElementById("descricao").readOnly = true;
     document.getElementById("cbo").readOnly = true;
+    document.getElementById("periodoExame").readOnly = true;
 
     document.getElementById("id").value             = "";
     document.getElementById("funcao").value         = "";
     document.getElementById("descricao").value      = "";
     document.getElementById("cbo").value            = "";
+    document.getElementById("periodoExame").value   = 0;
+    
 
 
      getAdicionarFuncao();

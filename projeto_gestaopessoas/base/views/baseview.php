@@ -194,7 +194,7 @@
         <!-- Menu Suprimentos -->  
          <li class="active treeview">
           <a href="#">
-            <i class="fa fa-truck"></i>
+            <i class="fa fa-medkit"></i>
             <span>Gestão de Medicina e Segurança</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -202,7 +202,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a onclick="adicionarAba('Cadastro Exames ASO', 'MEDICINAESEGURANCA_01_01', 'medicinaeseguranca-01-01', 'index.php?m=cadastroexames&c=cadastroexamescontroller', 'resources/geral/images/cadastroexames.png')" href="#"><i class="fa fa-check-square"></i>Cadastro Exames ASO</a></li> 
-            <li><a onclick="adicionarAba('Cadastro ASO', 'MEDICINAESEGURANCA_01_02', 'medicinaeseguranca-01-02', 'index.php?m=cadastroaso&c=cadastroasocontroller', 'resources/geral/images/cadastroaso.png')" href="#"><i class="fa fa-check-square"></i>Cadastro ASO</a></li> 
+            <li><a onclick="adicionarAba('Cadastro ASO', 'MEDICINAESEGURANCA_01_02', 'medicinaeseguranca-01-02', 'index.php?m=cadastroaso&c=cadastroasocontroller', 'resources/geral/images/cadastroaso.png')" href="#"><i class="fa fa-heartbeat"></i>Cadastro ASO</a></li> 
           </ul>
         </li>
          

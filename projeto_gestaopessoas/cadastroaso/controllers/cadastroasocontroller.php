@@ -26,96 +26,66 @@ class cadastroasocontroller extends CI_Controller {
      
     public function salvar() {
                 
-        $idFuncionario           = $this->input->POST('idFuncionario');
+        $idAso         = $this->input->POST('idAso');
         $empresa            = $this->input->POST('empresa');
         $filial        = $this->input->POST('filial');
-        $livro       = $this->input->POST('livro');
-        $pagina         = $this->input->POST('pagina');
-        $nomeFuncionario         = $this->input->POST('nomeFuncionario');
-        $dataNasc        = $this->input->POST('dataNasc');
-        $cidadeNasc      = $this->input->POST('cidadeNasc');
-        $estadoNasc  = $this->input->POST('estadoNasc');
-        $dataCadastro = $this->input->POST('dataCadastro');
+        $funcionario       = $this->input->POST('funcionario');
+        $matricula         = $this->input->POST('matricula');
+        $setor         = $this->input->POST('setor');
+        $funcao        = $this->input->POST('funcao');
+        $dataNasc      = $this->input->POST('dataNasc');
+        $cpf  = $this->input->POST('cpf');
+        $ctps = $this->input->POST('ctps');
+        $pisPasep           = $this->input->POST('pisPasep');
         
+        $tipoExames             = $this->input->POST('tipoExames');
+        $outrosExames                = $this->input->POST('outrosExames');
+        $medico             = $this->input->POST('medico');
+        $crm             = $this->input->POST('crm');
+        $agBiologico             = $this->input->POST('agBiologico');
+        $agFisico               = $this->input->POST('agFisico');
+        $agQuimico          = $this->input->POST('agQuimico');
+        $riscoAcidente          = $this->input->POST('riscoAcidente');
+        $riscoErgonomico            = $this->input->POST('riscoErgonomico');
+        $ausenciaRisco              = $this->input->POST('ausenciaRisco');
+        $resultadoExame              = $this->input->POST('resultadoExame');
+        $observacaoExame              = $this->input->POST('observacaoExame');
+        $localRealizacao              = $this->input->POST('localRealizacao');
+        $dataRealizacao              = $this->input->POST('dataRealizacao');
         
-        $matricula           = $this->input->POST('matricula');
-        $funcao             = $this->input->POST('funcao');
-        $salarioValor                = $this->input->POST('salarioValor');
-        $salarioPagamento             = $this->input->POST('salarioPagamento');
-        $dataAdmissao             = $this->input->POST('dataAdmissao');
-        $experiencia             = $this->input->POST('experiencia');
-        $horarioInicial1               = $this->input->POST('horarioInicial1');
-        $horarioFinal1          = $this->input->POST('horarioFinal1');
-        $horarioInicial2          = $this->input->POST('horarioInicial2');
-        $horarioFinal2            = $this->input->POST('horarioFinal2');
-        $imagem              = $this->input->POST('imagem');
+        $exameComplementar1              = $this->input->POST('exameComplementar1');
+        $dataComplementar1              = $this->input->POST('dataComplementar1');
+        $exameComplementar2              = $this->input->POST('exameComplementar2');
+        $dataComplementar2              = $this->input->POST('dataComplementar2');
+        $exameComplementar3              = $this->input->POST('exameComplementar3');
+        $dataComplementar3              = $this->input->POST('dataComplementar3');
+        $exameComplementar4              = $this->input->POST('exameComplementar4');
+        $dataComplementar4              = $this->input->POST('dataComplementar4');
+        $exameComplementar5              = $this->input->POST('exameComplementar5');
+        $dataComplementar5              = $this->input->POST('dataComplementar5');
+        $exameComplementar6              = $this->input->POST('exameComplementar6');
+        $dataComplementar6              = $this->input->POST('dataComplementar6');
+        $exameComplementar7              = $this->input->POST('exameComplementar7');
+        $dataComplementar7              = $this->input->POST('dataComplementar7');
+        $exameComplementar8              = $this->input->POST('exameComplementar8');
+        $dataComplementar8              = $this->input->POST('dataComplementar8');
+        $pagamentoExame              = $this->input->POST('pagamentoExame');
+        $valorExame              = $this->input->POST('valorExame');
         
-        $cep              = $this->input->POST('cep');
-        $endereco              = $this->input->POST('endereco');
-        $numero              = $this->input->POST('numero');
-        $bairro              = $this->input->POST('bairro');
-        $cidade              = $this->input->POST('cidade');
-        $estado              = $this->input->POST('estado');
-        $email              = $this->input->POST('email');
-        $telefone1              = $this->input->POST('telefone1');
-        $telefone2              = $this->input->POST('telefone2');
-        $telefone3              = $this->input->POST('telefone3');
-        
-        $cpf              = $this->input->POST('cpf');
-        $identidade              = $this->input->POST('identidade');
-        $expedidorIdentidade              = $this->input->POST('expedidorIdentidade');
-        $estadoIdentidade              = $this->input->POST('estadoIdentidade');
-        $dataIdentidade             = $this->input->POST('dataIdentidade');
-        $ctps              = $this->input->POST('ctps');
-        $serieCtps              = $this->input->POST('serieCtps');
-        $pisPasep              = $this->input->POST('pisPasep');
-        $estadoCtps              = $this->input->POST('estadoCtps');
-        $dataCtps              = $this->input->POST('dataCtps');
-        $tituloEleitor              = $this->input->POST('tituloEleitor');
-        $zonaEleitor              = $this->input->POST('zonaEleitor');
-        $secaoEleitor              = $this->input->POST('secaoEleitor');
-        
-        $nomeMae              = $this->input->POST('nomeMae');
-        $nomePai              = $this->input->POST('nomePai');
-        $sexo              = $this->input->POST('sexo');
-        $estadoCivil              = $this->input->POST('estadoCivil');
-        $deficienteFisico              = $this->input->POST('deficienteFisico');
-        $grauInstrucao              = $this->input->POST('grauInstrucao');
-        $etnia              = $this->input->POST('etnia');
-        $corOlhos              = $this->input->POST('corOlhos');
-        $corCabelos              = $this->input->POST('corCabelos');
-        $altura              = $this->input->POST('altura');
-        $peso              = $this->input->POST('peso');
-        
-        $nomeFilho1              = $this->input->POST('nomeFilho1');
-        $dataNasc1              = $this->input->POST('dataNasc1');
-        $nomeFilho2              = $this->input->POST('nomeFilho2');
-        $dataNasc2              = $this->input->POST('dataNasc2');
-        $nomeFilho3              = $this->input->POST('nomeFilho3');
-        $dataNasc3              = $this->input->POST('dataNasc3');
-        $nomeFilho4              = $this->input->POST('nomeFilho4');
-        $dataNasc4              = $this->input->POST('dataNasc4');
-        $nomeFilho5              = $this->input->POST('nomeFilho5');
-        $dataNasc5              = $this->input->POST('dataNasc5');
-        $nomeFilho6              = $this->input->POST('nomeFilho6');
-        $dataNasc6              = $this->input->POST('dataNasc6');
-        
-        $setor = $this->input->POST('setor');
-        $desativado = $this->input->POST('desativado');
+        $anexoExame              = $this->input->POST('anexoExame');
         
         
         
         
         
                         
-        $this->load->model('cadastrofuncionariosmodel');
+        $this->load->model('cadastroasomodel');
 
-        $retorno = $this->cadastrofuncionariosmodel->salvar($idFuncionario, $empresa, $filial, $livro, $pagina, $nomeFuncionario, $dataNasc, $cidadeNasc, $estadoNasc, $dataCadastro,
-                                                        $matricula, $funcao, $salarioValor, $salarioPagamento, $dataAdmissao, $experiencia, $horarioInicial1, $horarioFinal1, $horarioInicial2,
-                                                        $horarioFinal2, $imagem, $cep, $endereco, $numero, $bairro, $cidade, $estado, $email, $telefone1, $telefone2, $telefone3, $cpf, $identidade,
-                                                        $expedidorIdentidade, $estadoIdentidade, $dataIdentidade, $ctps, $serieCtps, $pisPasep, $estadoCtps, $dataCtps, $tituloEleitor, $zonaEleitor,
-                                                        $secaoEleitor, $nomeMae, $nomePai, $sexo, $estadoCivil, $deficienteFisico, $grauInstrucao, $etnia, $corOlhos, $corCabelos, $altura, $peso, $nomeFilho1,
-                                                        $dataNasc1, $nomeFilho2, $dataNasc2, $nomeFilho3, $dataNasc3, $nomeFilho4, $dataNasc4, $nomeFilho5, $dataNasc5, $nomeFilho6, $dataNasc6, $setor, $desativado);
+        $retorno = $this->cadastroasomodel->salvar($idAso, $empresa, $filial, $funcionario, $matricula, $setor, $funcao, $dataNasc, $cpf, $ctps, $pisPasep, $tipoExames, $outrosExames,
+                                                                $medico, $crm, $agBiologico, $agFisico, $agQuimico, $riscoAcidente, $riscoErgonomico, $ausenciaRisco, $resultadoExame, $observacaoExame,
+                                                                $localRealizacao, $dataRealizacao, $exameComplementar1, $dataComplementar1, $exameComplementar2, $dataComplementar2, $exameComplementar3, $dataComplementar3,
+                                                                $exameComplementar4, $dataComplementar4, $exameComplementar5, $dataComplementar5, $exameComplementar6, $dataComplementar6, $exameComplementar7,
+                                                                $dataComplementar7, $exameComplementar8, $dataComplementar8, $pagamentoExame, $valorExame, $anexoExame);
 
         echo json_encode($retorno);
     }
@@ -123,20 +93,20 @@ class cadastroasocontroller extends CI_Controller {
     
     public function excluir(){
         
-        $idFuncionario = $this->input->POST('idFuncionario');
+        $idAso = $this->input->POST('idAso');
         
-        $this->load->model('cadastrofuncionariosmodel');
+        $this->load->model('cadastroasomodel');
         
-        $retorno = $this->cadastrofuncionariosmodel->excluir($idFuncionario);
+        $retorno = $this->cadastroasomodel->excluir($idAso);
             
     }
     
     
     public function buscaPrimeiroRegistro(){
         
-        $this->load->model('cadastrofuncionariosmodel');
+        $this->load->model('cadastroasomodel');
         
-        $retorno = $this->cadastrofuncionariosmodel->buscaPrimeiroRegistro();
+        $retorno = $this->cadastroasomodel->buscaPrimeiroRegistro();
         
         echo ($retorno);
                 
@@ -144,11 +114,11 @@ class cadastroasocontroller extends CI_Controller {
     
     public function buscaRegistroAnterior(){
         
-        $idFuncionario = $this->input->POST('idFuncionario');
+        $idAso = $this->input->POST('idAso');
         
-        $this->load->model('cadastrofuncionariosmodel');
+        $this->load->model('cadastroasomodel');
         
-        $retorno = $this->cadastrofuncionariosmodel->buscaRegistroAnterior($idFuncionario);
+        $retorno = $this->cadastroasomodel->buscaRegistroAnterior($idAso);
         
         echo ($retorno);
                 
@@ -156,11 +126,11 @@ class cadastroasocontroller extends CI_Controller {
     
     public function buscaRegistroProximo(){
         
-        $idFuncionario = $this->input->POST('idFuncionario');
+        $idAso = $this->input->POST('idAso');
         
-        $this->load->model('cadastrofuncionariosmodel');
+        $this->load->model('cadastroasomodel');
         
-        $retorno = $this->cadastrofuncionariosmodel->buscaRegistroProximo($idFuncionario);
+        $retorno = $this->cadastroasomodel->buscaRegistroProximo($idAso);
         
         echo ($retorno);
                 
@@ -168,9 +138,9 @@ class cadastroasocontroller extends CI_Controller {
             
     public function buscaUltimoRegistro(){
         
-        $this->load->model('cadastrofuncionariosmodel');
+        $this->load->model('cadastroasomodel');
         
-        $retorno = $this->cadastrofuncionariosmodel->buscaUltimoRegistro();
+        $retorno = $this->cadastroasomodel->buscaUltimoRegistro();
         
         echo ($retorno);                
     }
@@ -180,9 +150,9 @@ class cadastroasocontroller extends CI_Controller {
         $idInicial = $this->input->POST('idInicial');
         $nomeInicial = $this->input->POST('nomeInicial');
              
-        $this->load->model('cadastrofuncionariosmodel');
+        $this->load->model('cadastroasomodel');
         
-        $retorno = $this->cadastrofuncionariosmodel->pesquisaSimples($idInicial, $nomeInicial);
+        $retorno = $this->cadastroasomodel->pesquisaSimples($idInicial, $nomeInicial);
         
         echo ($retorno);
                 
@@ -202,9 +172,9 @@ class cadastroasocontroller extends CI_Controller {
         //$parametro1 = $this->input->GET('parametro1');
        // $parametro2 = $this->input->GET('parametro1');
 
-        $this->load->model('cadastrofuncionariosmodel');
+        $this->load->model('cadastroasomodel');
 
-        $retorno = $this->cadastrofuncionariosmodel->getGrid($indice, $ordem, $inicio, $tamanho, $draw);
+        $retorno = $this->cadastroasomodel->getGrid($indice, $ordem, $inicio, $tamanho, $draw);
 
         echo json_encode($retorno);
             
@@ -214,11 +184,11 @@ class cadastroasocontroller extends CI_Controller {
     
     public function selecionaGrid(){
         
-        $idFuncionario = $this->input->POST('idFuncionario');
+        $idAso = $this->input->POST('idAso');
                      
-        $this->load->model('cadastrofuncionariosmodel');
+        $this->load->model('cadastroasomodel');
         
-        $retorno = $this->cadastrofuncionariosmodel->selecionaGrid($idFuncionario);
+        $retorno = $this->cadastroasomodel->selecionaGrid($idAso);
         
         echo ($retorno);
                 
@@ -243,15 +213,6 @@ class cadastroasocontroller extends CI_Controller {
         echo json_encode($retorno);
     }
     
-    public function carregarFuncao() {
-
-        $this->load->model('cadastroasomodel');
-
-        $retorno = $this->cadastroasomodel->carregarFuncao();
-
-        echo json_encode($retorno);
-    }
-    
     public function carregarFuncionario() {
 
         $empresa = $this->input->POST('empresa');
@@ -263,6 +224,8 @@ class cadastroasocontroller extends CI_Controller {
 
         echo json_encode($retorno);
     }
+    
+    
     
     public function carregarDadosFuncionario() {
 
@@ -286,31 +249,26 @@ class cadastroasocontroller extends CI_Controller {
         echo json_encode($retorno);
     }
     
-    
-   
-    
-    
-    
-    
-    
-    
-    
-    
+    public function carregarListaExames() {
+
+        $this->load->model('cadastroasomodel');
+
+        $retorno = $this->cadastroasomodel->carregarListaExames();
+
+        echo json_encode($retorno);
+    }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+   public function getPdf() {
+                          
+        $idAso          = $this->input->POST('idAso');
+        
+        $this->load->model('cadastroasomodel');
+
+        $retorno = $this->cadastroasomodel->getPdf($idAso);
+
+        echo json_encode($retorno);
+    }
     
     
     
@@ -330,7 +288,7 @@ class cadastroasocontroller extends CI_Controller {
     
     
     
-    public function salvarAnexoImagem() {
+    public function salvarAnexo() {
         
         //PRINT_R("ANEXO"); exit();
         $this->load->library('session');
@@ -342,8 +300,8 @@ class cadastroasocontroller extends CI_Controller {
 
         $ret = "";
 
-        if (isset($_FILES['anexo1'])) {
-            $arq = $_FILES['anexo1'];
+        if (isset($_FILES['anexo'])) {
+            $arq = $_FILES['anexo'];
         }
         
         
@@ -376,11 +334,11 @@ class cadastroasocontroller extends CI_Controller {
                 mkdir($folder);
             }
 
-            $this->upload->do_upload('anexo1');
+            $this->upload->do_upload('anexo');
 
             $foto = $this->upload->data();
 
-            move_uploaded_file($_FILES['anexo1']['tmp_name'], $folder . $_FILES['anexo1']['name']);
+            move_uploaded_file($_FILES['anexo']['tmp_name'], $folder . $_FILES['anexo']['name']);
 
             $ret = $this->upload->display_errors();
         }

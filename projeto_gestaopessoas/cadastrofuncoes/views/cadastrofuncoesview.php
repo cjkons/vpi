@@ -75,20 +75,16 @@
                     <span class="glyphicon glyphicon glyphicon-refresh"></span> Atualizar
                 </a>
 
-                <br><br>
+              
                 
-            <ul id="abas" align="center">
-               <li><a href="#tab1">CADASTRO DE DADOS - FUNÇÃO</a></li>
-               <li><a href="#tab2">EXAMES PERIODICOS - FUNÇÃO</a></li>
-               
-            </ul>
+           
 
 
             </div>
         </nav>
         <br> 
         
-    <div id="tab1" class="contaba" >    
+     
         <table style="width: 85%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
             <tr>
                 <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
@@ -115,6 +111,27 @@
                         CBO
                         <input style="text-transform: uppercase;" type="number" class="form-control" id="cbo"   placeholder="CBO" readonly >
                     </div>
+                </td>
+                <td  style="width:10%; padding-right: 10px;font-size: 14px;">
+                    <div class="form">
+                            Período para Exame ASO
+                            <select style="text-transform: uppercase;" id="periodoExame" class="form-control"  readonly>
+                                     <option readonly value="0" >Selecione</option>
+                                     <option value ="1 MES"readonly>01 Mês</option>
+                                     <option value ="2 MESES"readonly>02 Meses</option>
+                                     <option value ="3 MESES"readonly>03 Meses</option>
+                                     <option value ="4 MESES"readonly>04 Meses</option>
+                                     <option value ="5 MESES"readonly>05 Meses</option>
+                                     <option value ="6 MESES"readonly>06 Meses</option>
+                                     <option value ="7 MESES"readonly>07 Meses</option>
+                                     <option value ="8 MESES"readonly>08 Meses</option>
+                                     <option value ="9 MESES"readonly>09 Meses</option>
+                                     <option value ="10 MESES"readonly>10 Meses</option>
+                                     <option value ="11 MESES"readonly>11 Meses</option>
+                                     <option value ="12 MESES"readonly>12 Meses</option>
+                                     
+                                </select>
+                        </div>
                 </td>
 
 
@@ -126,61 +143,7 @@
     </div> 
         
         
-    <div id="tab2" class="contaba" > 
-        
-        <table style="width: 85%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
-            <tr>
-                 <td  style="width: 22%; padding-right: 10px;font-size: 14px;">
-                       <div class="form-group">
-                            EXAME
-                            <select  style="text-transform: uppercase;" id="exames" class="form-control" readonly></select>
-                        </div>
-                   </td>
-                <td  style="width: 13%; padding-right: 10px;font-size: 14px;">
-                       <div class="form-group">
-                            Salário Pagamento
-                            <select style="text-transform: uppercase;" id="salarioPagamento" class="form-control" readonly>
-                                    <option readonly value="0">Selecione</option>
-                                    <option readonly value="MENSALISTA">Mensalista</option>
-                                    <option readonly value="QUINZENALISTA">Quinzenalista</option>
-                                    <option readonly value="SEMANALISTA">Semanalista</option>
-                                    <option readonly value="DIARISTA">Diarista</option>
-                            </select> 
-                        </div>
-                    </td>
-                <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
-                    <div class="form">
-                        ID
-                        <input style="text-transform: uppercase;" type="text" class="form-control" id="id"    placeholder="ID" readonly>
-                    </div>
-                </td>
-                
-               <td  style="width: 20%; padding-right: 10px;font-size: 14px;">
-                    <div class="form">
-                        Função
-                        <input style="text-transform: uppercase;" type="text" class="form-control" id="funcao"   placeholder="Função" readonly >
-                    </div>
-                </td>
-                <td  style="width: 20%; padding-right: 10px;font-size: 14px;">
-                    <div class="form">
-                        Descrição
-                        <input style="text-transform: uppercase;" type="text" class="form-control" id="descricao"   placeholder="Descrição" readonly >
-                    </div>
-                </td>
-                <td  style="width:10%; padding-right: 10px;font-size: 14px;">
-                    <div class="form">
-                        CBO
-                        <input style="text-transform: uppercase;" type="number" class="form-control" id="cbo"   placeholder="CBO" readonly >
-                    </div>
-                </td>
-
-
-
-
-            </tr>
-        </table>
-        
-    </div>     
+         
         <br><br>
         <HR WIDTH=100%>
         
