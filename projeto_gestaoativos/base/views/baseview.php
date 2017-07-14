@@ -113,7 +113,8 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                  <a onclick="adicionarAba('Help Desk', 'HELPDESK_01_01', 'helpdesk-01-01', 'index.php?m=chamadotecnico&c=visualizarchamadocontroller', 'resources/geral/images/visualizarchamado.png')" href="#" class="btn btn-default btn-flat">Help Desk</a>
+            
                 </div>
                 <div class="pull-right">
                   <a style="cursor: pointer" onclick="window.location = 'index.php?m=login&c=login&f=logoff&redirect=base'" class="btn btn-default btn-flat">Sair</a>

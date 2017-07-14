@@ -113,7 +113,9 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                  
+                  <a onclick="adicionarAba('Help Desk', 'HELPDESK_01_01', 'helpdesk-01-01', 'index.php?m=chamadotecnico&c=visualizarchamadocontroller', 'resources/geral/images/visualizarchamado.png')" href="#" class="btn btn-default btn-flat">Help Desk</a>
+            
                 </div>
                 <div class="pull-right">
                   <a style="cursor: pointer" onclick="window.location = 'index.php?m=login&c=login&f=logoff&redirect=base'" class="btn btn-default btn-flat">Sair</a>
@@ -187,6 +189,7 @@
             <li><a onclick="adicionarAba('Cadastro Funções', 'GESTAO_PESSOAS_01_01', 'gestaopessoas-01-01', 'index.php?m=cadastrofuncoes&c=cadastrofuncoescontroller', 'resources/geral/images/cadastrofuncoes.png')" href="#"><i class="fa fa-check-square"></i>Cadastro Funções</a></li> 
             <li><a onclick="adicionarAba('Cadastro Funcionários', 'GESTAO_PESSOAS_01_02', 'gestaopessoas-01-02', 'index.php?m=cadastrofuncionarios&c=cadastrofuncionarioscontroller', 'resources/geral/images/cadastrofuncionarios.png')" href="#"><i class="fa fa-check-square"></i>Cadastro Funcionários</a></li> 
             <li><a onclick="adicionarAba('Cadastro Setor', 'GESTAO_PESSOAS_01_03', 'gestaopessoas-01-03', 'index.php?m=cadastrosetor&c=cadastrosetorcontroller', 'resources/geral/images/cadastrosetor.png')" href="#"><i class="fa fa-check-square"></i>Cadastro Setor</a></li> 
+            <li><a onclick="adicionarAba('Relatório Aniversário', 'GESTAO_PESSOAS_01_04', 'gestaopessoas-01-04', 'index.php?m=relatorioaniversario&c=relatorioaniversariocontroller', 'resources/geral/images/relatorioaniversario.png')" href="#"><i class="fa fa-check-square"></i>Relatório Aniversário</a></li> 
             
           </ul>
         </li>
@@ -203,6 +206,7 @@
           <ul class="treeview-menu">
             <li><a onclick="adicionarAba('Cadastro Exames ASO', 'MEDICINAESEGURANCA_01_01', 'medicinaeseguranca-01-01', 'index.php?m=cadastroexames&c=cadastroexamescontroller', 'resources/geral/images/cadastroexames.png')" href="#"><i class="fa fa-check-square"></i>Cadastro Exames ASO</a></li> 
             <li><a onclick="adicionarAba('Cadastro ASO', 'MEDICINAESEGURANCA_01_02', 'medicinaeseguranca-01-02', 'index.php?m=cadastroaso&c=cadastroasocontroller', 'resources/geral/images/cadastroaso.png')" href="#"><i class="fa fa-heartbeat"></i>Cadastro ASO</a></li> 
+            <li><a onclick="adicionarAba('Relatório de Controle Exames ASO', 'MEDICINAESEGURANCA_01_03', 'medicinaeseguranca-01-03', 'index.php?m=relatoriocontroleexamesaso&c=relatoriocontroleexamesasocontroller', 'resources/geral/images/relatoriocontroleexamesaso.png')" href="#"><i class="fa fa-heartbeat"></i>Relatório de Exames ASO</a></li> 
           </ul>
         </li>
          

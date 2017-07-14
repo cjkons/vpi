@@ -1120,21 +1120,18 @@ class cadastroasomodel extends CI_Model {
         $html = "";
         $html .= "<table align='center'cellspacing='0'; cellpadding ='9'; style='width: 100%; border: 1 solid #000000;'>";
         $html .="<tr>";
-        $html .="<td colspan = '2' style= 'border: 1 solid #000000; padding-top: 10px; padding-botton: 5px; width: 50%; font-size: 30px; color: #000000;' align='center'>ATESTADO DE SAÚDE OCUPACIONAL (ASO)</td>";
+        $html .="<td colspan = '2' style= 'border: 1 solid #000000; padding-top: 10px; padding-botton: 5px; width: 50%; font-size: 30px; color: #000000;' align='center'><br>ATESTADO DE SAÚDE OCUPACIONAL (ASO)<br><br></td>";
         $html .=" </tr>";                               
+        
         $html .="<tr>";
-        $html .="<td align='center' style= 'width: 50%; font-size: 24px; color: #000000; border: 1 solid #000000;' ><b>Dados Empresa<b></td>";
-        $html .="<td align='center' style= 'width: 50%; height: 150px; font-size: 24px; color: #000000; border: 1 solid #000000;' ><b>Dados Empresa<b></td>";
-        $html .="</tr>";
-        $html .="<tr>";
-        $html .="<td  colspan = '2' align='left' style= 'width: 100%; height: 150px; font-size: 24px; color: #000000; border: 1 solid #000000;' ><b>Empresa:</b> $nomeEmpresa &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<b>Filial:</b> $nomeFilial <br><br> "
+        $html .="<td  colspan = '2' align='left' style= 'width: 100%; height: 150px; font-size: 24px; color: #000000; border: 1 solid #000000;' ><br><br><b>Empresa:</b> $nomeEmpresa &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<b>Filial:</b> $nomeFilial <br><br> "
                 . "<b>Funcionário:</b> $nomeFuncionario &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<b>Data Nascimento:</b> $dataNasc<br><br>"
                 . "<b>Setor:</b> $setor&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; <b>Função:</b> $funcao &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; <b>Matrícula:</b> $matricula<br><br>"
-                . "<b>CPF:</b> $cpf &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; <b>CTPS:</b> $ctps &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; <b>PIS/PASEP:</b> $pisPasep</td>";
+                . "<b>CPF:</b> $cpf &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; <b>CTPS:</b> $ctps &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; <b>PIS/PASEP:</b> $pisPasep</td><br><br>";
         
         $html .="</tr>";
         $html .="<tr>";
-        $html .="<td colspan = '2' style= 'width: 100%; border: 1 solid #000000; padding-top: 10px; padding-botton: 5px; width: 50%; font-size: 30px; color: #000000;' align='center'><b>Programa de Controle Médico de Saúde Ocupacional (P.C.M.S.O)<b></td>";
+        $html .="<td colspan = '2' style= 'width: 100%; border: 1 solid #000000; padding-top: 10px; padding-botton: 5px; width: 50%; font-size: 30px; color: #000000;' align='center'><br><b>Programa de Controle Médico de Saúde Ocupacional (P.C.M.S.O)<b><br></td>";
         $html .=" </tr>"; 
         $html .="<tr>";
         $html .="<td colspan = '2' style= 'width: 100%;font-size: 21px; color: #000000;'  align='left'><b>MOTIVO DO EXAME:</b><br><br></td>";
