@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <title>VPI Gestão</title>
+        <title>VPI | Clarify</title>
         <meta charset="UTF-8"/>
 
           <!--PROGRESS BAR-->
@@ -68,14 +68,14 @@
             <div class="container-fluid" align="center">
                     
              
-                <a onclick="getPdf()" class="btn btn-info">
+                <a onclick="getPdf()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-print"></span> Imprimir
                 </a>
-                <a onclick="getExcel()" class="btn btn-info">
+                <a onclick="getExcel()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-share"></span> Exportar
                 </a>
                        
-                <a href="#" class="btn btn-info">
+                <a href="#" class="btn btn-primary">
                     <span class="glyphicon glyphicon-question-sign"></span> Ajuda
                 </a>    
 
@@ -117,7 +117,7 @@
                     <td  style="padding-left:  0px;font-size: 14px;">
                         <div>
                          <br>
-                         <a onclick="filtro()"class="btn btn-info" ata-toggle="modal" data-target="#myModal">
+                         <a onclick="filtro()"class="btn btn-primary" ata-toggle="modal" data-target="#myModal">
                              <span class="glyphicon glyphicon-search"></span> Pesquisar
                          </a>
                         </div>

@@ -1,10 +1,11 @@
-/////////////////////////////////////////////
-// Relatorio COntas a pagar                ///
-// FIN_CONTAS_PAGAR                                     ///   
-// Desenvolvido por Matheus Jaschke     ///
-// agosto de 2016                        ///
-// VPI GESTAO                          ///
-/////////////////////////////////////////
+///////////////////////////////////////////////
+/// Cadastro de Aniversario                 ///
+/// CLARIFY - GESTAO DE PESSOAS             ///   
+/// Desenvolvido por HEITOR SIQUEIRA        ///
+/// JULHO DE 2017                           ///
+/// VPI TECNOLOGIA                          ///
+///////////////////////////////////////////////
+
 var totalLinhas = 0;
 var totalEditar = 0;
 
@@ -234,8 +235,8 @@ function abrirArquivoPdf() {
     //window.open('http://www.vpitecnologia.com.br/gcconcreto/relatoriostemp/relatorio/.contas_pagar.pdf'); //- GCCONCRETO
     //window.open('C:/teste/pdf/.teste1.pdf'); - local
     //window.open('http://www.vpitecnologia.com.br/vpi/relatoriostemp/relatorio/.contas_pagar.pdf'); - VPI
-    //window.open('http://192.168.100.30/engtopo/relatoriostemp/pdf/.Relatorio_Medicao.pdf'); - servidor
-    window.open('http://localhost/gestaopessoas/fwk/uploads/pdf/.relatorio_aniversario.pdf'); //- local
+    window.open('http://189.11.172.90/gestaopessoas/fwk/uploads/pdf/.relatorio_aniversario.pdf'); - servidor
+    //window.open('http://localhost/gestaopessoas/fwk/uploads/pdf/.relatorio_aniversario.pdf'); //- local
    // var nomePasta = data['nomePasta'];
    //var nomeArquivo = data['nomeArquivo'];
    // window.open('http://localhost/vpigestao/fwk/index.php?m=relatoriomedicao&c=relatoriomedicaocontroller&f=abrirArquivoExcel&nomePastaTemporaria=' + /teste/pdf + '&nomeArquivo=' + nomeArquivo, '_blank');
@@ -302,8 +303,8 @@ function abrirArquivoExcel(nomePastaTemporaria, nomeArquivo) {
     // servidor
     //window.open('http://192.168.100.30/engtopo/index.php?m=relatoriomedicao&c=relatoriomedicaocontroller&f=abrirArquivoExcel&nomePastaTemporaria=' + nomePastaTemporaria + '&nomeArquivo=' + nomeArquivo, '_blank');
     //VPI - window.open('http://www.vpitecnologia.com.br/vpi//index.php?m=relatoriocontasapagar&c=relatoriocontasapagarcontroller&f=abrirArquivoExcel&nomePastaTemporaria=' + nomePastaTemporaria + '&nomeArquivo=' + nomeArquivo, '_blank');
-    window.open('http://localhost/gestaopessoas/fwk//index.php?m=relatorioaniversario&c=relatorioaniversariocontroller&f=abrirArquivoExcel&nomePastaTemporaria=' + nomePastaTemporaria + '&nomeArquivo=' + nomeArquivo, '_blank'); 
-   // GCCONCRETO - window.open('http://www.vpitecnologia.com.br/gcconcreto/index.php?m=relatoriocontasapagar&c=relatoriocontasapagarcontroller&f=abrirArquivoExcel&nomePastaTemporaria=' + nomePastaTemporaria + '&nomeArquivo=' + nomeArquivo, '_blank');
+    //LOCALHOST window.open('http://localhost/gestaopessoas/fwk//index.php?m=relatorioaniversario&c=relatorioaniversariocontroller&f=abrirArquivoExcel&nomePastaTemporaria=' + nomePastaTemporaria + '&nomeArquivo=' + nomeArquivo, '_blank'); 
+    window.open('http://189.11.172.90/gestaopessoas/fwk/index.php?m=relatorioaniversario&c=relatorioaniversariocontroller&f=abrirArquivoExcel&nomePastaTemporaria=' + nomePastaTemporaria + '&nomeArquivo=' + nomeArquivo, '_blank');
     //alert(window);
 }
 function bloqueiaTela(texto) {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <title>VPI Gestão</title>
+        <title>VPI | Clarify</title>
         <meta charset="UTF-8"/>
 
         <!--PROGRESS BAR-->
