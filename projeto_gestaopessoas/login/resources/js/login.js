@@ -45,7 +45,7 @@ function logar() {
             if (data == 1) {
                 $("#u259-4").html("<span class='fa fa-thumbs-up'></span> Credenciais Aprovadas");
                 $("#u259-4").attr('disabled', 'disabled');
-                var url = $('#url').val() == "" ? "http://localhost/index.php?m=base" : $('#url').val();
+                var url = $('#url').val() == "" ? "http://localhost/gestaopessoas/fwk/index.php?m=base" : $('#url').val();
                 global_url = url;
                 window.location = global_url;
             } else {

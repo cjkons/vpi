@@ -42,6 +42,12 @@ $('#dataIdentidade').datepicker({
     format: "dd/mm/yyyy",
     language: "pt-BR"
   }); 
+  
+  $('#dataPisPasep').datepicker({
+    format: "dd/mm/yyyy",
+    language: "pt-BR"
+  });
+  
   $('#dataNasc1').datepicker({
     format: "dd/mm/yyyy",
     language: "pt-BR"
@@ -169,6 +175,7 @@ function novo(){
     document.getElementById("ctps").readOnly             = false;
     document.getElementById("serieCtps").readOnly             = false;
     document.getElementById("pisPasep").readOnly             = false;
+    document.getElementById("dataPisPasep").readOnly          = false;
     document.getElementById("estadoCtps").readOnly             = false;
     document.getElementById("dataCtps").readOnly             = false;
     document.getElementById("tituloEleitor").readOnly             = false;
@@ -197,6 +204,7 @@ function novo(){
     document.getElementById("dataNasc6").readOnly             = false;
     document.getElementById("setor").readOnly             = false;
     document.getElementById("desativado").disabled = false;
+    document.getElementById("valeTransporte").disabled = false;
     
     
     
@@ -241,6 +249,7 @@ function novo(){
     document.getElementById("ctps").value            = "";
     document.getElementById("serieCtps").value            = "";
     document.getElementById("pisPasep").value            = "";
+    document.getElementById("dataPisPasep").value            = "";
     document.getElementById("estadoCtps").value            = 0;
     document.getElementById("dataCtps").value            = "";
     document.getElementById("tituloEleitor").value            = "";
@@ -271,6 +280,8 @@ function novo(){
     document.getElementById("setor").value            = 0;
     
     $('#desativado').prop('checked', false);
+    
+    $('#valeTransporte').prop('checked', false);
     
     
     document.getElementById("imagemView").innerHTML = "";
@@ -342,6 +353,7 @@ function salvar(){
     var ctps           =   $('#ctps').val();
     var serieCtps           =   $('#serieCtps').val();
     var pisPasep           =   $('#pisPasep').val();
+    var dataPisPasep           =   $('#dataPisPasep').val();
     var estadoCtps           =   $('#estadoCtps').val();
     var dataCtps           =   $('#dataCtps').val();
     var tituloEleitor           =   $('#tituloEleitor').val();
@@ -379,6 +391,15 @@ function salvar(){
     }else{
         
         var desativado = "N";
+    }
+    
+    if ($('#valeTransporte').is(':checked') == true) {
+    
+        var valeTransporte = "S";
+        
+    }else{
+        
+        var valeTransporte = "N";
     }
     
     
@@ -557,6 +578,7 @@ function salvar(){
                 document.getElementById("ctps").readOnly = true;
                 document.getElementById("serieCtps").readOnly = true;
                 document.getElementById("pisPasep").readOnly = true;
+                document.getElementById("dataPisPasep").readOnly = true;
                 document.getElementById("estadoCtps").readOnly = true;
                 document.getElementById("dataCtps").readOnly = true;
                 document.getElementById("tituloEleitor").readOnly = true;
@@ -585,6 +607,7 @@ function salvar(){
                 document.getElementById("dataNasc6").readOnly = true;
                 document.getElementById("setor").readOnly             = true;
                 document.getElementById("desativado").disabled             = false;
+                document.getElementById("valeTransporte").disabled             = false;
                 
 
         
@@ -625,6 +648,7 @@ function salvar(){
                                     estadoNasc: estadoNasc,
                                     dataCadastro: dataCadastro,
                                     desativado: desativado,
+                                    valeTransporte: valeTransporte,
                                     
                                     matricula: matricula,
                                     funcao: funcao,
@@ -660,6 +684,7 @@ function salvar(){
                                     ctps: ctps,
                                     serieCtps: serieCtps,
                                     pisPasep: pisPasep,
+                                    dataPisPasep: dataPisPasep,
                                     estadoCtps: estadoCtps,
                                     dataCtps: dataCtps,
                                     tituloEleitor: tituloEleitor,
@@ -739,6 +764,7 @@ function salvar(){
                                     estadoNasc: estadoNasc,
                                     dataCadastro: dataCadastro,
                                     desativado: desativado,
+                                    valeTransporte: valeTransporte,
                                     
                                     
                                     matricula: matricula,
@@ -775,6 +801,7 @@ function salvar(){
                                     ctps: ctps,
                                     serieCtps: serieCtps,
                                     pisPasep: pisPasep,
+                                    dataPisPasep: dataPisPasep,
                                     estadoCtps: estadoCtps,
                                     dataCtps: dataCtps,
                                     tituloEleitor: tituloEleitor,
@@ -938,6 +965,7 @@ function editar(){
     document.getElementById("ctps").readOnly = false;
     document.getElementById("serieCtps").readOnly = false;
     document.getElementById("pisPasep").readOnly = false;
+    document.getElementById("dataPisPasep").readOnly = false;
     document.getElementById("estadoCtps").readOnly = false;
     document.getElementById("dataCtps").readOnly = false;
     document.getElementById("tituloEleitor").readOnly = false;
@@ -966,6 +994,7 @@ function editar(){
     document.getElementById("dataNasc6").readOnly = false;
     document.getElementById("setor").readOnly = false;
     document.getElementById("desativado").disabled = false;
+    document.getElementById("valeTransporte").disabled = false;
     
          
        
@@ -1015,6 +1044,7 @@ function buscaPrimeiroRegistro(){
     document.getElementById("ctps").readOnly = true;
     document.getElementById("serieCtps").readOnly = true;
     document.getElementById("pisPasep").readOnly = true;
+    document.getElementById("dataPisPasep").readOnly = false;
     document.getElementById("estadoCtps").readOnly = true;
     document.getElementById("dataCtps").readOnly = true;
     document.getElementById("tituloEleitor").readOnly = true;
@@ -1043,6 +1073,7 @@ function buscaPrimeiroRegistro(){
     document.getElementById("dataNasc6").readOnly = true;
     document.getElementById("setor").readOnly = true;
     document.getElementById("desativado").disabled = true;
+    document.getElementById("valeTransporte").disabled = true;
 
    
     
@@ -1132,6 +1163,9 @@ function buscaPrimeiroRegistro(){
             
              document.getElementById("setor").value = r[67];
             document.getElementById("desativado").value = r[68];
+            document.getElementById("dataPisPasep").value = r[69];
+            document.getElementById("valeTransporte").value = r[70];
+             
              
             if (r[68] == 'S' ) {
                 
@@ -1140,6 +1174,16 @@ function buscaPrimeiroRegistro(){
             }else{
                 
                 $('#desativado').prop('checked', false);
+            }
+            
+            
+             if (r[70] == 'S' ) {
+                
+                $('#valeTransporte').prop('checked', true);
+                
+            }else{
+                
+                $('#valeTransporte').prop('checked', false);
             }
             
             document.getElementById("imagem").value = "";
@@ -1201,6 +1245,7 @@ function buscaRegistroAnterior(){
     document.getElementById("ctps").readOnly = true;
     document.getElementById("serieCtps").readOnly = true;
     document.getElementById("pisPasep").readOnly = true;
+    document.getElementById("dataPisPasep").readOnly = true;
     document.getElementById("estadoCtps").readOnly = true;
     document.getElementById("dataCtps").readOnly = true;
     document.getElementById("tituloEleitor").readOnly = true;
@@ -1229,6 +1274,7 @@ function buscaRegistroAnterior(){
     document.getElementById("dataNasc6").readOnly = true;
     document.getElementById("setor").readOnly = true;
     document.getElementById("desativado").disabled = true;
+    document.getElementById("valeTransporte").disabled = true;
 
     
     var idFuncionario  =  $('#idFuncionario').val();  
@@ -1323,7 +1369,8 @@ function buscaRegistroAnterior(){
                 
                 document.getElementById("setor").value = r[67];
                 document.getElementById("desativado").value = r[68];
-             
+                document.getElementById("dataPisPasep").value = r[69];
+                document.getElementById("valeTransporte").value = r[70];
                 if (r[68] == 'S' ) {
 
                     $('#desativado').prop('checked', true);
@@ -1331,6 +1378,16 @@ function buscaRegistroAnterior(){
                 }else{
 
                     $('#desativado').prop('checked', false);
+                }
+                
+                
+                if (r[70] == 'S' ) {
+                
+                    $('#valeTransporte').prop('checked', true);
+                
+                }else{
+                
+                    $('#valeTransporte').prop('checked', false);
                 }
 
 
@@ -1398,6 +1455,7 @@ function buscaRegistroProximo(){
     document.getElementById("ctps").readOnly = true;
     document.getElementById("serieCtps").readOnly = true;
     document.getElementById("pisPasep").readOnly = true;
+    document.getElementById("dataPisPasep").readOnly = true;
     document.getElementById("estadoCtps").readOnly = true;
     document.getElementById("dataCtps").readOnly = true;
     document.getElementById("tituloEleitor").readOnly = true;
@@ -1426,6 +1484,7 @@ function buscaRegistroProximo(){
     document.getElementById("dataNasc6").readOnly = true;
     document.getElementById("setor").readOnly = true;
     document.getElementById("desativado").disabled = true;
+    document.getElementById("valeTransporte").disabled = true;
 
     
     var idFuncionario  =  $('#idFuncionario').val();             
@@ -1520,6 +1579,8 @@ function buscaRegistroProximo(){
                     
                     document.getElementById("setor").value = r[67];
                     document.getElementById("desativado").value = r[68];
+                    document.getElementById("dataPisPasep").value = r[69];
+                    document.getElementById("valeTransporte").value = r[70];
              
                     if (r[68] == 'S' ) {
 
@@ -1530,6 +1591,15 @@ function buscaRegistroProximo(){
                         $('#desativado').prop('checked', false);
                     }
 
+                    if (r[70] == 'S' ) {
+                
+                        $('#valeTransporte').prop('checked', true);
+
+                    }else{
+
+                        $('#valeTransporte').prop('checked', false);
+                    }
+                    
                     document.getElementById("imagem").value = "";
                     var imagemView = r[20];
                 
@@ -1590,6 +1660,7 @@ function buscaUltimoRegistro(){
     document.getElementById("ctps").readOnly = true;
     document.getElementById("serieCtps").readOnly = true;
     document.getElementById("pisPasep").readOnly = true;
+     document.getElementById("dataPisPasep").readOnly = true;
     document.getElementById("estadoCtps").readOnly = true;
     document.getElementById("dataCtps").readOnly = true;
     document.getElementById("tituloEleitor").readOnly = true;
@@ -1618,6 +1689,7 @@ function buscaUltimoRegistro(){
     document.getElementById("dataNasc6").readOnly = true;
     document.getElementById("setor").readOnly = true;
     document.getElementById("desativado").disabled = true;
+    document.getElementById("valeTransporte").disabled = true;
 
     
     $.ajax({
@@ -1706,6 +1778,8 @@ function buscaUltimoRegistro(){
                 
                 document.getElementById("setor").value = r[67];
                 document.getElementById("desativado").value = r[68];
+                document.getElementById("dataPisPasep").value = r[69];
+                document.getElementById("valeTransporte").value = r[70];
              
                     if (r[68] == 'S' ) {
 
@@ -1714,6 +1788,15 @@ function buscaUltimoRegistro(){
                     }else{
 
                         $('#desativado').prop('checked', false);
+                    }
+                    
+                    if (r[70] == 'S' ) {
+
+                        $('#valeTransporte').prop('checked', true);
+
+                    }else{
+
+                        $('#valeTransporte').prop('checked', false);
                     }
             
                 document.getElementById("imagem").value = "";
@@ -1828,6 +1911,8 @@ function pesquisaFiltro(){
                 
                 document.getElementById("setor").value = r[67];
                 document.getElementById("desativado").value = r[68];
+                document.getElementById("dataPisPasep").value = r[69];
+                 document.getElementById("valeTransporte").value = r[70];
              
                     if (r[68] == 'S' ) {
 
@@ -1836,6 +1921,15 @@ function pesquisaFiltro(){
                     }else{
 
                         $('#desativado').prop('checked', false);
+                    }
+                    
+                    if (r[70] == 'S' ) {
+
+                        $('#valeTransporte').prop('checked', true);
+
+                    }else{
+
+                        $('#valeTransporte').prop('checked', false);
                     }
             
             
@@ -1946,6 +2040,7 @@ function getGrid() {
     document.getElementById("ctps").readOnly = true;
     document.getElementById("serieCtps").readOnly = true;
     document.getElementById("pisPasep").readOnly = true;
+    document.getElementById("dataPisPasep").readOnly = true;
     document.getElementById("estadoCtps").readOnly = true;
     document.getElementById("dataCtps").readOnly = true;
     document.getElementById("tituloEleitor").readOnly = true;
@@ -1974,6 +2069,7 @@ function getGrid() {
     document.getElementById("dataNasc6").readOnly = true;
     document.getElementById("setor").readOnly = true;
     document.getElementById("desativado").disabled = true;
+    document.getElementById("valeTransporte").disabled = true;
     
 
     
@@ -2069,6 +2165,8 @@ function getGrid() {
                 
                 document.getElementById("setor").value = r[67];
                 document.getElementById("desativado").value = r[68];
+                document.getElementById("dataPisPasep").value = r[69];
+                document.getElementById("valeTransporte").value = r[70];
              
                     if (r[68] == 'S' ) {
 
@@ -2077,6 +2175,15 @@ function getGrid() {
                     }else{
 
                         $('#desativado').prop('checked', false);
+                    }
+                    
+                    if (r[70] == 'S' ) {
+
+                        $('#valeTransporte').prop('checked', true);
+
+                    }else{
+
+                        $('#valeTransporte').prop('checked', false);
                     }
             
              
@@ -2138,6 +2245,7 @@ function atualizar() {
     document.getElementById("ctps").readOnly = true;
     document.getElementById("serieCtps").readOnly = true;
     document.getElementById("pisPasep").readOnly = true;
+    document.getElementById("dataPisPasep").readOnly = true;
     document.getElementById("estadoCtps").readOnly = true;
     document.getElementById("dataCtps").readOnly = true;
     document.getElementById("tituloEleitor").readOnly = true;
@@ -2166,6 +2274,7 @@ function atualizar() {
     document.getElementById("dataNasc6").readOnly = true;
     document.getElementById("setor").readOnly = true;
     document.getElementById("desativado").disabled = true;
+    document.getElementById("valeTransporte").disabled = true;
 
 
 
@@ -2210,6 +2319,7 @@ function atualizar() {
     document.getElementById("ctps").value = "";
     document.getElementById("serieCtps").value = "";
     document.getElementById("pisPasep").value = "";
+    document.getElementById("dataPisPasep").value = "";
     document.getElementById("estadoCtps").value = 0;
     document.getElementById("dataCtps").value = "";
     document.getElementById("tituloEleitor").value = "";
@@ -2240,6 +2350,7 @@ function atualizar() {
     document.getElementById("setor").value = 0;
     
     $('#desativado').prop('checked', false);
+    $('#valeTransporte').prop('checked', false);
                    
     
     document.getElementById("imagemView").value = " ";

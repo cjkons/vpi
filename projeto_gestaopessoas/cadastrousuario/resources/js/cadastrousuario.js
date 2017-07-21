@@ -33,9 +33,7 @@ function novo(){
     document.getElementById("confirmacaoUsuarioSenha").readOnly = false;
     document.getElementById("loginUsuario").readOnly       = false;
     document.getElementById('ativoUsuario').disabled       = false;
-    document.getElementById("dataNascimento").readOnly     = false;
-    document.getElementById("matricula").readOnly          = false;
-    document.getElementById("cargo").readOnly              = false;
+    
     
         
        
@@ -47,9 +45,7 @@ function novo(){
     document.getElementById("senhaUsuario").value        = "";
     document.getElementById("confirmacaoUsuarioSenha").value  = "";
     document.getElementById("loginUsuario").value        = "";
-    document.getElementById("dataNascimento").value      = "";
-    document.getElementById("matricula").value           = "";
-    document.getElementById("cargo").value               = "";
+    
  
     
     $('#ativoUsuario').prop('checked', false);
@@ -88,10 +84,7 @@ function salvar(){
     var loginUsuario       =   $('#loginUsuario').val();          
     var senhaUsuario       =   $('#senhaUsuario').val();          
     var confirmacaoUsuario =   document.getElementById('confirmacaoUsuarioSenha').value;  // $('#confirmacaoUsuarioSenha').val;
-    var dataNascimento     =   $('#dataNascimento').val();
-    //var dataNascimento     =   document.getElementById('dataNascimento').value;//$('#dataNascimento').val;
-    var matricula          =   document.getElementById('matricula').value;//$('#matricula').val;
-    var cargo              =   document.getElementById('cargo').value;//$('#cargo').val;
+    
      
            
     var controleDePreenchimento = 'S';
@@ -114,15 +107,7 @@ function salvar(){
     if(senhaUsuario == ""){
         controleDePreenchimento = 'N';
     }
-    if(dataNascimento == ""){
-        controleDePreenchimento = 'N';
-    }
-    if(matricula == ""){
-        controleDePreenchimento = 'N';
-    }
-    if(cargo == ""){
-        controleDePreenchimento = 'N';
-    }   
+    
     if($("#ativoUsuario").is(':checked') == true){
         var ativoUsuario = 'S';
     }
@@ -146,9 +131,6 @@ function salvar(){
             document.getElementById("senhaUsuario").readOnly       = true;
             document.getElementById("confirmacaoUsuarioSenha").readOnly = true;
             document.getElementById("loginUsuario").readOnly       = true;
-            document.getElementById("dataNascimento").readOnly     = true;
-            document.getElementById("matricula").readOnly          = true;
-            document.getElementById("cargo").readOnly              = true;
             document.getElementById('ativoUsuario').disabled       = true;
       
       
@@ -163,9 +145,7 @@ function salvar(){
                     empresaUsuario: empresaUsuario,
                     ativoUsuario: ativoUsuario,
                     loginUsuario: loginUsuario,
-                    dataNascimento: dataNascimento,
-                    matricula:  matricula,
-                    cargo: cargo,
+                   
                     senhaUsuario: senhaUsuario
                    
                 },
@@ -267,9 +247,7 @@ function editar(){
     document.getElementById("confirmacaoUsuarioSenha").readOnly = false;
     document.getElementById("loginUsuario").readOnly       = false;
     document.getElementById('ativoUsuario').disabled       = false;
-    document.getElementById("dataNascimento").readOnly     = false;
-    document.getElementById("matricula").readOnly          = false;
-    document.getElementById("cargo").readOnly              = false;
+   
     
        
     
@@ -285,9 +263,7 @@ function buscaPrimeiroRegistro(){
     document.getElementById("senhaUsuario").readOnly       = true;
     document.getElementById("confirmacaoUsuarioSenha").readOnly = true;
     document.getElementById("loginUsuario").readOnly       = true;
-    document.getElementById("dataNascimento").readOnly     = true;
-    document.getElementById("matricula").readOnly          = true;
-    document.getElementById("cargo").readOnly              = true;
+    
    
     
     $.ajax({
@@ -308,9 +284,7 @@ function buscaPrimeiroRegistro(){
             document.getElementById("loginUsuario").value = r[6]; 
             document.getElementById("senhaUsuario").value = r[7]; 
             document.getElementById("confirmacaoUsuarioSenha").value = r[7];
-            document.getElementById("dataNascimento").value = r[8]; 
-            document.getElementById("matricula").value = r[9]; 
-            document.getElementById("cargo").value = r[10]; 
+            
             
             
                       
@@ -339,9 +313,7 @@ function buscaRegistroAnterior(){
     document.getElementById("senhaUsuario").readOnly       = true;
     document.getElementById("confirmacaoUsuarioSenha").readOnly = true;
     document.getElementById("loginUsuario").readOnly       = true;
-     document.getElementById("dataNascimento").readOnly     = true;
-    document.getElementById("matricula").readOnly          = true;
-    document.getElementById("cargo").readOnly              = true;
+    
     
     
     var idUsuario  =  $('#idUsuario').val();             
@@ -368,9 +340,7 @@ function buscaRegistroAnterior(){
                 document.getElementById("loginUsuario").value = r[6]; 
                 document.getElementById("senhaUsuario").value = r[7]; 
                 document.getElementById("confirmacaoUsuarioSenha").value = r[7];
-                document.getElementById("dataNascimento").value = r[8]; 
-                document.getElementById("matricula").value = r[9]; 
-                document.getElementById("cargo").value = r[10]; 
+                 
 
                 if(r[5] == 'S' ){
                      $('#ativoUsuario').prop('checked', true);
@@ -399,9 +369,7 @@ function buscaRegistroProximo(){
     document.getElementById("senhaUsuario").readOnly       = true;
     document.getElementById("confirmacaoUsuarioSenha").readOnly = true;
     document.getElementById("loginUsuario").readOnly       = true;
-     document.getElementById("dataNascimento").readOnly     = true;
-    document.getElementById("matricula").readOnly          = true;
-    document.getElementById("cargo").readOnly              = true;
+    
     
     
     var idUsuario  =  $('#idUsuario').val();             
@@ -428,9 +396,7 @@ function buscaRegistroProximo(){
                 document.getElementById("loginUsuario").value = r[6]; 
                 document.getElementById("senhaUsuario").value = r[7]; 
                 document.getElementById("confirmacaoUsuarioSenha").value = r[7];
-                document.getElementById("dataNascimento").value = r[8]; 
-                document.getElementById("matricula").value = r[9]; 
-                document.getElementById("cargo").value = r[10]; 
+                
 
                
                 if(r[5] == 'S' ){
@@ -462,9 +428,7 @@ function buscaUltimoRegistro(){
     document.getElementById("senhaUsuario").readOnly       = true;
     document.getElementById("confirmacaoUsuarioSenha").readOnly = true;
     document.getElementById("loginUsuario").readOnly       = true;
-    document.getElementById("dataNascimento").readOnly     = true;
-    document.getElementById("matricula").readOnly          = true;
-    document.getElementById("cargo").readOnly              = true;
+    
   
     
     $.ajax({
@@ -486,9 +450,7 @@ function buscaUltimoRegistro(){
             document.getElementById("loginUsuario").value = r[6]; 
             document.getElementById("senhaUsuario").value = r[7]; 
             document.getElementById("confirmacaoUsuarioSenha").value = r[7];
-            document.getElementById("dataNascimento").value = r[8]; 
-            document.getElementById("matricula").value = r[9]; 
-            document.getElementById("cargo").value = r[10]; 
+            
             
                         
             if(r[5] == 'S' ){
@@ -540,9 +502,7 @@ function pesquisaFiltro(){
             document.getElementById("loginUsuario").value = r[6]; 
             document.getElementById("senhaUsuario").value = r[7]; 
             document.getElementById("confirmacaoUsuarioSenha").value = r[7];
-            document.getElementById("dataNascimento").value = r[8]; 
-            document.getElementById("matricula").value = r[9]; 
-            document.getElementById("cargo").value = r[10]; 
+           
             
                         
             if(r[5] == 'S' ){
@@ -591,8 +551,8 @@ function getGrid() {
             {"data": "EMPRESA"},
             {"data": "ATIVO"},
             {"data": "LOGIN"},
-            {"data": "DATA_NASCIMENTO"},
             {"data": "CARGO"},
+            {"data": "DATA_CADASTRO"},
             {"data": "SELECIONAR"},
             
            
@@ -622,9 +582,7 @@ function getGrid() {
     document.getElementById("senhaUsuario").readOnly       = true;
     document.getElementById("confirmacaoUsuarioSenha").readOnly = true;
     document.getElementById("loginUsuario").readOnly       = true;
-    document.getElementById("dataNascimento").readOnly     = true;
-    document.getElementById("matricula").readOnly          = true;
-    document.getElementById("cargo").readOnly              = true;
+   
   
     
     
@@ -651,9 +609,7 @@ function getGrid() {
             document.getElementById("loginUsuario").value = r[6]; 
             document.getElementById("senhaUsuario").value = r[7]; 
             document.getElementById("confirmacaoUsuarioSenha").value = r[7];
-            document.getElementById("dataNascimento").value = r[8]; 
-            document.getElementById("matricula").value = r[9]; 
-            document.getElementById("cargo").value = r[10]; 
+            
             
                         
             if(r[5] == 'S' ){
@@ -685,7 +641,7 @@ function atualizar(){
     
     
     document.getElementById("idUsuario").value           = "";
-    document.getElementById("dataNascimento").value      = "";
+   
     document.getElementById("nomeUsuario").value         = "";
     document.getElementById("sobrenomeUsuario").value    = "";
     document.getElementById("emailUsuario").value        = "";

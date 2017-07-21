@@ -133,8 +133,21 @@
                                 </select>
                         </div>
                 </td>
+         </tr>
+        </table>       
+        <table style="width: 85%; border-collapse: collapse;"  cellpadding="0" cellspacing="5px" align="center" >        
+                <tr>
+                    <td style="width:10%; padding-top: 10px; padding-right: 10px; font-size: 14px;">
+                        Descrição PPRA
+                        <div class="input-group input-group-lg">
+                            
+                            <textarea style="width: 600px; height: 100px; background-color: white"  class="col-xs-9 cold-md-6" maxlength="350"  id="descricaoPpra" placeholder="" disabled>
 
+                            </textarea>
 
+                        </div>
+                    </td>
+                </tr>
 
 
             </tr>

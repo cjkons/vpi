@@ -2,7 +2,7 @@
 
 $appName = "chamadotecnico"; // nome da pasta do projeto 
 //$appPath = "C:\\server\\projetos\\projetos_clarifyGestaoAtivos"; // caminho onde esta o projeto no pc
-$appPath = "D:\\GITHUB - VPI\\vpi\\projeto_gestaopessoas"; // caminho onde esta o projeto no pc
+$appPath = "C:\\server\\projetos_vpi\\projeto_gestaopessoas"; // caminho onde esta o projeto no pc
 $wwwPath = "C:\\server\\htdocs\\gestaopessoas"; // caminho onde salva o projeto no servidor
 $fwkDir = "fwk"; 
 

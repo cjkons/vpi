@@ -15,7 +15,7 @@
         <script src="resources/geral/jquery/jquery-ui-1.11.2/jquery-ui.min.js"></script>
         <!--JQUERY 1.11-->
 
-        <link href="resources/relatorioaniversario/css/teste.css" rel="stylesheet">
+        <link href="resources/folhaponto/css/teste.css" rel="stylesheet">
         
         <!--NOTIFICAÇÕES-->
         <link href="resources/geral/notificacoes/pnotify.custom.min.css" rel="stylesheet">
@@ -52,12 +52,12 @@
         
         
 
-        <!-- RELATÓRIO CONTAS A PAGAR -->
-        <link href="resources/folhaponto/css/estilomodal.css" rel="stylesheet">
+        <!-- RELATÓRIO -->
+       
         <script src="resources/folhaponto/js/folhaponto.js"></script>
         
         
-        <!-- RELATÓRIO CONTAS A PAGAR -->
+        <!-- RELATÓRIO-->
     </head>
 
     <body style="zoom: 85%;" >

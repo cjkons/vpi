@@ -144,27 +144,7 @@
                 </td>
 
             </tr>
-             <tr>
-                <td  style="padding-right: 10px;font-size: 14px;">
-                    <div class="form-group">
-                        <font size="2">Data de Nascimento</font>
-                        <input type="text" class="calendario form-control" id="dataNascimento" maxlength="10" readonly>
-                    </div>
-                </td>
-                <td  style="padding-right: 10px;font-size: 14px;">
-                    <div class="form-group">
-                        <font size="2">Matrícula</font>
-                        <input type="" class="form-control" id="matricula"  placeholder="Matricula" readonly>
-                    </div>
-                </td>
-                <td  style="padding-right: 10px;font-size: 14px;">
-                    <div class="form-group">
-                        <font size="2">Cargo</font>
-                        <input type="" class="form-control" id="cargo"  placeholder="Cargo" readonly>
-                    </div>
-                </td>
-
-            </tr>
+             
             <tr>
                 <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">

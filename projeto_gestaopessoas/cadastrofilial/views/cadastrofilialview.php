@@ -141,7 +141,7 @@
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            <font size="2">Código Fornecedor</font>
+                            <font size="2">CNPJ</font>
                             <input type="text" class="form-control" id="codigoCNPJ" maxlength="18"  placeholder="CNPJ" readonly onkeypress="mascaraCNPJ(this)">
                         </div>
                     </td>
@@ -159,13 +159,7 @@
                    </td>
                 </tr>
                 <tr>
-                    <td  style="padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
-                            <input type="checkbox" id="projetoFilial" name="projetoFilial" disabled="true"/> 
-                            <font size="2">Projeto</font>
-                        </div>
-                    </td>
-                    <td  style="padding-right: 10px;font-size: 14px;">
+                   <td  style="padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             <font size="2">Inscrição Estadual</font>
                             <input type="text" class="form-control" id="inscricaoEstadual"  placeholder="Inscrição Estadual" readonly>
@@ -305,7 +299,6 @@
                               <th>ID Empresa</th>
                               <th>Nome Fantasia</th>
                               <th>Ativo</th>                            
-                              <th>Projeto</th>
                               <th>Cidade</th>                   
                               <th>Telefone</th>
                               <th>Celular</th>

@@ -45,9 +45,9 @@ class cadastrofuncionariosmodel extends CI_Model {
     public function salvar($idFuncionario, $empresa, $filial, $livro, $pagina, $nomeFuncionario, $dataNasc, $cidadeNasc, $estadoNasc, $dataCadastro,
                             $matricula, $funcao, $salarioValor, $salarioPagamento, $dataAdmissao, $experiencia, $horarioInicial1, $horarioFinal1, $horarioInicial2,
                             $horarioFinal2, $imagem, $cep, $endereco, $numero, $bairro, $cidade, $estado, $email, $telefone1, $telefone2, $telefone3, $cpf, $identidade,
-                            $expedidorIdentidade, $estadoIdentidade, $dataIdentidade, $ctps, $serieCtps, $pisPasep, $estadoCtps, $dataCtps, $tituloEleitor, $zonaEleitor,
+                            $expedidorIdentidade, $estadoIdentidade, $dataIdentidade, $ctps, $serieCtps, $pisPasep, $dataPisPasep, $estadoCtps, $dataCtps, $tituloEleitor, $zonaEleitor,
                             $secaoEleitor, $nomeMae, $nomePai, $sexo, $estadoCivil, $deficienteFisico, $grauInstrucao, $etnia, $corOlhos, $corCabelos, $altura, $peso, $nomeFilho1,
-                            $dataNasc1, $nomeFilho2, $dataNasc2, $nomeFilho3, $dataNasc3, $nomeFilho4, $dataNasc4, $nomeFilho5, $dataNasc5, $nomeFilho6, $dataNasc6, $setor, $desativado){
+                            $dataNasc1, $nomeFilho2, $dataNasc2, $nomeFilho3, $dataNasc3, $nomeFilho4, $dataNasc4, $nomeFilho5, $dataNasc5, $nomeFilho6, $dataNasc6, $setor, $desativado, $valeTransporte){
 
         $this->initConBanco();
         
@@ -61,7 +61,7 @@ class cadastrofuncionariosmodel extends CI_Model {
         $endereco = str_replace("'", '', $endereco);
         
          
-        $query = "SELECT * FROM GP_CAD_FUNCIONARIO  WHERE ID_FUNCIONARIO = $idFuncionario";
+        $query = "SELECT * FROM GP_CAD_FUNCIONARIO  WHERE ID_FUNCIONARIO = $idFuncionario AND CPF = '$cpf'";
         
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
@@ -79,7 +79,7 @@ class cadastrofuncionariosmodel extends CI_Model {
                     . " SERIE_CTPS = '$serieCtps', PIS_PASEP = '$pisPasep', ESTADO_CTPS = '$estadoCtps', DATA_CTPS = '$dataCtps', TITULO_ELEITOR = '$tituloEleitor', ZONA_ELEITOR = '$zonaEleitor', SECAO_ELEITOR = '$secaoEleitor',"
                     . " NOME_MAE = '$nomeMae', NOME_PAI = '$nomePai', SEXO = '$sexo', ESTADO_CIVIL = '$estadoCivil', DEFICIENTE_FISICO = '$deficienteFisico', GRAU_INSTRUCAO = '$grauInstrucao', ETNIA = '$etnia', COR_OLHOS = '$corOlhos',"
                     . " COR_CABELOS = '$corCabelos', ALTURA = '$altura', PESO = '$peso', NOME_FILHO_1 = '$nomeFilho1', DATA_NASC_1 = '$dataNasc1', NOME_FILHO_2 = '$nomeFilho2', DATA_NASC_2 = '$dataNasc2', NOME_FILHO_3 = '$nomeFilho3',"
-                    . " DATA_NASC_3 = '$dataNasc3', NOME_FILHO_4 = '$nomeFilho4', DATA_NASC_4 = '$dataNasc4', NOME_FILHO_5 = '$nomeFilho5', DATA_NASC_5 = '$dataNasc5', NOME_FILHO_6 = '$nomeFilho6', DATA_NASC_6 = '$dataNasc6', SETOR = '$setor', DESATIVADO = '$desativado', USUARIO_ALTERACAO = '$usuarioLogado', DATA_ALTERACAO = SYSDATE WHERE ID_FUNCIONARIO = $idFuncionario";
+                    . " DATA_NASC_3 = '$dataNasc3', NOME_FILHO_4 = '$nomeFilho4', DATA_NASC_4 = '$dataNasc4', NOME_FILHO_5 = '$nomeFilho5', DATA_NASC_5 = '$dataNasc5', NOME_FILHO_6 = '$nomeFilho6', DATA_NASC_6 = '$dataNasc6', SETOR = '$setor', DESATIVADO = '$desativado', DATA_PIS_PASEP ='$dataPisPasep', VALE_TRANSPORTE = '$valeTransporte', USUARIO_ALTERACAO = '$usuarioLogado', DATA_ALTERACAO = SYSDATE WHERE ID_FUNCIONARIO = $idFuncionario";
 
             //print_r($query);exit();
             $resultado = $this->conBanco->query($query);
@@ -93,39 +93,51 @@ class cadastrofuncionariosmodel extends CI_Model {
         }
         else{
             
-            $query = "SELECT MAX(ID_FUNCIONARIO)  AS ID_FUNCIONARIO FROM  GP_CAD_FUNCIONARIO";
-
+            $query = "SELECT * FROM GP_CAD_FUNCIONARIO  WHERE CPF = '$cpf'";
+        
             $cs = $this->conBanco->query($query);
             $rs = $cs->result();
             
-
-            if(count($rs) == 0 ){
-                $novoId = 1;            
-            }
-            else{
-                $novoId = $rs[0]->ID_FUNCIONARIO + 1;
-            }                       
-
-            $query = "INSERT INTO GP_CAD_FUNCIONARIO (ID_FUNCIONARIO, EMPRESA, FILIAL, LIVRO, PAGINA, NOME_FUNCIONARIO, DATA_NASC, CIDADE_NASC, ESTADO_NASC, MATRICULA, FUNCAO, SALARIO_VALOR,"
-                    . " SALARIO_PAGAMENTO, DATA_ADMISSAO, EXPERIENCIA, HORARIO_INICIAL_1, HORARIO_FINAL_1, HORARIO_INICIAL_2, HORARIO_FINAL_2, IMAGEM, CEP, ENDERECO, NUMERO, BAIRRO, CIDADE,"
-                    . " ESTADO, EMAIL, TELEFONE_1, TELEFONE_2, TELEFONE_3, CPF, IDENTIDADE, EXPEDIDOR_IDENTIDADE, ESTADO_IDENTIDADE, DATA_IDENTIDADE, CTPS, SERIE_CTPS, PIS_PASEP, ESTADO_CTPS,"
-                    . " DATA_CTPS, TITULO_ELEITOR, ZONA_ELEITOR, SECAO_ELEITOR, NOME_MAE, NOME_PAI, SEXO, ESTADO_CIVIL, DEFICIENTE_FISICO, GRAU_INSTRUCAO, ETNIA, COR_OLHOS, COR_CABELOS, ALTURA,"
-                    . " PESO, NOME_FILHO_1, DATA_NASC_1, NOME_FILHO_2, DATA_NASC_2, NOME_FILHO_3, DATA_NASC_3, NOME_FILHO_4, DATA_NASC_4, NOME_FILHO_5, DATA_NASC_5, NOME_FILHO_6, SETOR, DESATIVADO, USUARIO_CADASTRO, DATA_CADASTRO)
-                             
-                        VALUES ($novoId, '$empresa', '$filial', '$livro', '$pagina', '$nomeFuncionario', '$dataNasc', '$cidadeNasc', '$estadoNasc', '$matricula', '$funcao', $salarioValor, '$salarioPagamento',"
-                    . " '$dataAdmissao', '$experiencia', '$horarioInicial1', '$horarioFinal1', '$horarioInicial2', '$horarioFinal2', '$imagem', '$cep', '$endereco', $numero, '$bairro', '$cidade', '$estado', '$email',"
-                    . " '$telefone1', '$telefone2', '$telefone3', '$cpf', '$identidade', '$expedidorIdentidade', '$estadoIdentidade', '$dataIdentidade', '$ctps', '$serieCtps', '$pisPasep', '$estadoCtps', '$dataCtps', '$tituloEleitor',"
-                    . " '$zonaEleitor', '$secaoEleitor', '$nomeMae', '$nomePai', '$sexo', '$estadoCivil', '$deficienteFisico', '$grauInstrucao', '$etnia', '$corOlhos', '$corCabelos', '$altura', '$peso', '$nomeFilho1', '$dataNasc1', '$nomeFilho2',"
-                    . " '$dataNasc2', '$nomeFilho3', '$dataNasc3', '$nomeFilho4', '$dataNasc4', '$nomeFilho5', '$dataNasc5', '$nomeFilho6', '$setor', '$desativado', '$usuarioLogado', SYSDATE)";     
-
-            //print_r($query);exit();
-            $resultado = $this->conBanco->query($query);
-
-            if($resultado == true || $resultado == 1){
-                return true;            
-            }
-            else{
+            if (is_array($rs) && count($rs) > 0){
+                
                 return false;
+                
+            }else{
+                
+                $query = "SELECT MAX(ID_FUNCIONARIO)  AS ID_FUNCIONARIO FROM  GP_CAD_FUNCIONARIO";
+
+                $cs = $this->conBanco->query($query);
+                $rs = $cs->result();
+
+
+                if(count($rs) == 0 ){
+                    $novoId = 1;            
+                }
+                else{
+                    $novoId = $rs[0]->ID_FUNCIONARIO + 1;
+                }                       
+
+                $query = "INSERT INTO GP_CAD_FUNCIONARIO (ID_FUNCIONARIO, EMPRESA, FILIAL, LIVRO, PAGINA, NOME_FUNCIONARIO, DATA_NASC, CIDADE_NASC, ESTADO_NASC, MATRICULA, FUNCAO, SALARIO_VALOR,"
+                        . " SALARIO_PAGAMENTO, DATA_ADMISSAO, EXPERIENCIA, HORARIO_INICIAL_1, HORARIO_FINAL_1, HORARIO_INICIAL_2, HORARIO_FINAL_2, IMAGEM, CEP, ENDERECO, NUMERO, BAIRRO, CIDADE,"
+                        . " ESTADO, EMAIL, TELEFONE_1, TELEFONE_2, TELEFONE_3, CPF, IDENTIDADE, EXPEDIDOR_IDENTIDADE, ESTADO_IDENTIDADE, DATA_IDENTIDADE, CTPS, SERIE_CTPS, PIS_PASEP, ESTADO_CTPS,"
+                        . " DATA_CTPS, TITULO_ELEITOR, ZONA_ELEITOR, SECAO_ELEITOR, NOME_MAE, NOME_PAI, SEXO, ESTADO_CIVIL, DEFICIENTE_FISICO, GRAU_INSTRUCAO, ETNIA, COR_OLHOS, COR_CABELOS, ALTURA,"
+                        . " PESO, NOME_FILHO_1, DATA_NASC_1, NOME_FILHO_2, DATA_NASC_2, NOME_FILHO_3, DATA_NASC_3, NOME_FILHO_4, DATA_NASC_4, NOME_FILHO_5, DATA_NASC_5, NOME_FILHO_6, SETOR, DESATIVADO, DATA_PIS_PASEP, VALE_TRANSPORTE, USUARIO_CADASTRO, DATA_CADASTRO)
+
+                            VALUES ($novoId, '$empresa', '$filial', '$livro', '$pagina', '$nomeFuncionario', '$dataNasc', '$cidadeNasc', '$estadoNasc', '$matricula', '$funcao', $salarioValor, '$salarioPagamento',"
+                        . " '$dataAdmissao', '$experiencia', '$horarioInicial1', '$horarioFinal1', '$horarioInicial2', '$horarioFinal2', '$imagem', '$cep', '$endereco', $numero, '$bairro', '$cidade', '$estado', '$email',"
+                        . " '$telefone1', '$telefone2', '$telefone3', '$cpf', '$identidade', '$expedidorIdentidade', '$estadoIdentidade', '$dataIdentidade', '$ctps', '$serieCtps', '$pisPasep', '$estadoCtps', '$dataCtps', '$tituloEleitor',"
+                        . " '$zonaEleitor', '$secaoEleitor', '$nomeMae', '$nomePai', '$sexo', '$estadoCivil', '$deficienteFisico', '$grauInstrucao', '$etnia', '$corOlhos', '$corCabelos', '$altura', '$peso', '$nomeFilho1', '$dataNasc1', '$nomeFilho2',"
+                        . " '$dataNasc2', '$nomeFilho3', '$dataNasc3', '$nomeFilho4', '$dataNasc4', '$nomeFilho5', '$dataNasc5', '$nomeFilho6', '$setor', '$desativado', '$dataPisPasep', '$valeTransporte', '$usuarioLogado', SYSDATE)";     
+
+               // print_r($query);exit();
+                $resultado = $this->conBanco->query($query);
+
+                if($resultado == true || $resultado == 1){
+                    return true;            
+                }
+                else{
+                    return false;
+                }
             }
         }
     }
@@ -235,6 +247,8 @@ class cadastrofuncionariosmodel extends CI_Model {
             
             $obj[] = $rs[0]->SETOR;
             $obj[] = $rs[0]->DESATIVADO;
+            $obj[] = $rs[0]->DATA_PIS_PASEP;
+            $obj[] = $rs[0]->VALE_TRANSPORTE;
             
             
                     
@@ -337,6 +351,8 @@ class cadastrofuncionariosmodel extends CI_Model {
             
             $obj[] = $rs[$cont]->SETOR;
             $obj[] = $rs[$cont]->DESATIVADO;
+            $obj[] = $rs[$cont]->DATA_PIS_PASEP;
+            $obj[] = $rs[$cont]->VALE_TRANSPORTE;
         
             return json_encode($obj);
         }
@@ -441,6 +457,8 @@ class cadastrofuncionariosmodel extends CI_Model {
                 
                 $obj[] = $rs[0]->SETOR;
                 $obj[] = $rs[0]->DESATIVADO;
+                $obj[] = $rs[0]->DATA_PIS_PASEP;
+                $obj[] = $rs[0]->VALE_TRANSPORTE;
 
 
                 return json_encode($obj);
@@ -552,6 +570,8 @@ class cadastrofuncionariosmodel extends CI_Model {
 
                 $obj[] = $rs[0]->SETOR;
                 $obj[] = $rs[0]->DESATIVADO;
+                $obj[] = $rs[0]->DATA_PIS_PASEP;
+                $obj[] = $rs[0]->VALE_TRANSPORTE;
 
                 return json_encode($obj);
             }
@@ -652,6 +672,8 @@ class cadastrofuncionariosmodel extends CI_Model {
 
                 $obj[] = $rs[0]->SETOR;
                 $obj[] = $rs[0]->DESATIVADO;
+                $obj[] = $rs[0]->DATA_PIS_PASEP;
+                $obj[] = $rs[0]->VALE_TRANSPORTE;
 
                 return json_encode($obj);
             }
@@ -746,6 +768,8 @@ class cadastrofuncionariosmodel extends CI_Model {
 
                 $obj[] = $rs[0]->SETOR;
                 $obj[] = $rs[0]->DESATIVADO;
+                $obj[] = $rs[0]->DATA_PIS_PASEP;
+                $obj[] = $rs[0]->VALE_TRANSPORTE;
                 
                 return json_encode($obj);
             }
@@ -947,6 +971,8 @@ class cadastrofuncionariosmodel extends CI_Model {
             
             $obj[] = $rs[0]->SETOR;
             $obj[] = $rs[0]->DESATIVADO;
+            $obj[] = $rs[0]->DATA_PIS_PASEP;
+            $obj[] = $rs[0]->VALE_TRANSPORTE;
                 
             return json_encode($obj);
         }

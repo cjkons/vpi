@@ -31,13 +31,13 @@ class cadastrofuncoescontroller extends CI_Controller {
         $descricao      = $this->input->POST('descricao');
         $cbo            = $this->input->POST('cbo');
         $periodoExame   = $this->input->POST('periodoExame');
-              
+        $descricaoPpra  = $this->input->POST('descricaoPpra');      
         
                         
                                         
         $this->load->model('cadastrofuncoesmodel');
 
-        $retorno = $this->cadastrofuncoesmodel->salvar($id, $funcao, $descricao, $cbo, $periodoExame);
+        $retorno = $this->cadastrofuncoesmodel->salvar($id, $funcao, $descricao, $cbo, $periodoExame, $descricaoPpra);
 
         echo json_encode($retorno);
     }

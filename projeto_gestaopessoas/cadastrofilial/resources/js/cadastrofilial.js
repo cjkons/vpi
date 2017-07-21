@@ -65,7 +65,7 @@ function novo(){
     document.getElementById("celular").readOnly             = false;
     document.getElementById("email").readOnly               = false;
     document.getElementById('ativoFilial').disabled         = false; 
-    document.getElementById('projetoFilial').disabled       = false;     
+       
        
     document.getElementById("razaoSocial").value            = "";
     document.getElementById("nomeFantasia").value           = "";
@@ -90,7 +90,7 @@ function novo(){
     document.getElementById("tipoFilial").value            = 0;
     document.getElementById("empresa").value            = "Selecione";
     
-    $('#projetoFilial').prop('checked', false);
+   
     $('#ativoFilial').prop('checked', false);
     
    
@@ -196,12 +196,6 @@ function salvar(){
         var ativoFilial = 'N';
     }
     
-    if($("#projetoFilial").is(':checked') == true){
-        var projetoFilial = 'S';
-    }
-    else{
-        var projetoFilial = 'N';
-    }
     
     
    
@@ -237,7 +231,6 @@ function salvar(){
                     document.getElementById("dataCadastro").readOnly        = true;
                     document.getElementById("dataAlteracao").readOnly       = true;
                     document.getElementById('ativoFilial').disabled         = true; 
-                    document.getElementById('projetoFilial').disabled       = true;
                     document.getElementById("codigoCNPJ").readOnly          = true;
                     document.getElementById("codigoCEI").readOnly           = true;
                      
@@ -253,7 +246,6 @@ function salvar(){
                             codigoCNPJ: codigoCNPJ,
                             codigoCEI: codigoCEI,
                             ativoFilial: ativoFilial,
-                            projetoFilial: projetoFilial,
                             inscricaoEstadual: inscricaoEstadual,
                             inscricaoMunicipal: inscricaoMunicipal,
                             endereco: endereco,
@@ -280,6 +272,7 @@ function salvar(){
                                 mensagem('Sucesso', 'Salvo com sucesso', 'success');
                                 $('#basicModal').modal('hide');
                                 atualizar();
+                                
                             }
                             else {
                                 mensagem('Atenção', 'Erro ao salvar', 'error'); 
@@ -320,7 +313,6 @@ function salvar(){
                         document.getElementById("dataCadastro").readOnly        = true;
                         document.getElementById("dataAlteracao").readOnly       = true;
                         document.getElementById('ativoFilial').disabled         = true; 
-                        document.getElementById('projetoFilial').disabled       = true;
                         document.getElementById("codigoCNPJ").readOnly          = true;
                         document.getElementById("codigoCEI").readOnly           = true;
 
@@ -334,7 +326,6 @@ function salvar(){
                                   codigoCNPJ: codigoCNPJ,
                                   codigoCEI: codigoCEI,
                                   ativoFilial: ativoFilial,
-                                  projetoFilial: projetoFilial,
                                   inscricaoEstadual: inscricaoEstadual,
                                   inscricaoMunicipal: inscricaoMunicipal,
                                   endereco: endereco,
@@ -366,7 +357,6 @@ function salvar(){
                                     document.getElementById("codigoCNPJ").value             = "";
                                     document.getElementById("codigoCEI").value              = "";
                                     document.getElementById("ativoFilial").checkd           = false;
-                                    document.getElementById("projetoFilial").checkd         = false;
                                     document.getElementById("inscricaoEstadual").value      = "";
                                     document.getElementById("inscricaoMunicipal").value     = "";
                                     document.getElementById("endereco").value               = "";
@@ -383,6 +373,7 @@ function salvar(){
                                     document.getElementById('dataCadastro').value           = "";
                                     document.getElementById('dataAlteracao').value          = "";
                                     atualizar();
+                                    
 
                                 }
                                 else {
@@ -479,9 +470,8 @@ function editar(){
     document.getElementById("dataCadastro").readOnly        = false;
     document.getElementById("dataAlteracao").readOnly        = false;
     document.getElementById('ativoFilial').disabled         = false; 
-    document.getElementById('projetoFilial').disabled       = false;     
        
-    
+    selecionarTipo(); 
 }
 
 function buscaPrimeiroRegistro(){
@@ -505,7 +495,6 @@ function buscaPrimeiroRegistro(){
     document.getElementById("dataCadastro").readOnly        = true;
     document.getElementById("dataAlteracao").readOnly       = true;
     document.getElementById('ativoFilial').disabled         = true; 
-    document.getElementById('projetoFilial').disabled       = true;
     document.getElementById("codigoCNPJ").readOnly          = true;
     document.getElementById("codigoCEI").readOnly           = true;
 
@@ -528,22 +517,22 @@ function buscaPrimeiroRegistro(){
             document.getElementById("nomeFantasia").value = r[3]; 
             document.getElementById("codigoCNPJ").value = r[4]; 
             document.getElementById("codigoCEI").value = r[5]; 
-            document.getElementById("inscricaoEstadual").value = r[8]; 
-            document.getElementById("inscricaoMunicipal").value = r[9];
-            document.getElementById("endereco").value = r[10];
-            document.getElementById("numero").value = r[11];
-            document.getElementById("cep").value = r[12];
-            document.getElementById("cidade").value = r[13]; 
-            document.getElementById("bairro").value = r[14]; 
-            document.getElementById("estado").value = r[15]; 
-            document.getElementById("pais").value = r[16]; 
-            document.getElementById("telefone1").value = r[17]; 
-            document.getElementById("telefone2").value = r[18];
-            document.getElementById("celular").value = r[19];
-            document.getElementById("email").value = r[20];
-            document.getElementById("dataCadastro").value = r[21]; 
-            document.getElementById("dataAlteracao").value = r[22];
-            document.getElementById("tipoFilial").value = r[23];
+            document.getElementById("inscricaoEstadual").value = r[7]; 
+            document.getElementById("inscricaoMunicipal").value = r[8];
+            document.getElementById("endereco").value = r[9];
+            document.getElementById("numero").value = r[10];
+            document.getElementById("cep").value = r[11];
+            document.getElementById("cidade").value = r[12]; 
+            document.getElementById("bairro").value = r[13]; 
+            document.getElementById("estado").value = r[14]; 
+            document.getElementById("pais").value = r[15]; 
+            document.getElementById("telefone1").value = r[16]; 
+            document.getElementById("telefone2").value = r[17];
+            document.getElementById("celular").value = r[18];
+            document.getElementById("email").value = r[19];
+            document.getElementById("dataCadastro").value = r[20]; 
+            document.getElementById("dataAlteracao").value = r[21];
+            document.getElementById("tipoFilial").value = r[22];
             
                 
                       
@@ -554,13 +543,9 @@ function buscaPrimeiroRegistro(){
                  $('#ativoFilial').prop('checked', false);
                 
             }
-            if(r[7] == 'S' ){
-                  $('#projetoFilial').prop('checked', true);
-            }
-            else{
-                 $('#projetoFilial').prop('checked', false);
-                
-            }
+            
+            
+            
             
             
             
@@ -599,7 +584,6 @@ function buscaRegistroAnterior(){
     document.getElementById("dataCadastro").readOnly        = true;
     document.getElementById("dataAlteracao").readOnly       = true;
     document.getElementById('ativoFilial').disabled         = true; 
-    document.getElementById('projetoFilial').disabled       = true;
     document.getElementById("codigoCNPJ").readOnly          = true;
     document.getElementById("codigoCEI").readOnly           = true;
     
@@ -631,22 +615,22 @@ function buscaRegistroAnterior(){
                 document.getElementById("nomeFantasia").value = r[3]; 
                 document.getElementById("codigoCNPJ").value = r[4]; 
                 document.getElementById("codigoCEI").value = r[5]; 
-                document.getElementById("inscricaoEstadual").value = r[8]; 
-                document.getElementById("inscricaoMunicipal").value = r[9];
-                document.getElementById("endereco").value = r[10];
-                document.getElementById("numero").value = r[11];
-                document.getElementById("cep").value = r[12];
-                document.getElementById("cidade").value = r[13]; 
-                document.getElementById("bairro").value = r[14]; 
-                document.getElementById("estado").value = r[15]; 
-                document.getElementById("pais").value = r[16]; 
-                document.getElementById("telefone1").value = r[17]; 
-                document.getElementById("telefone2").value = r[18];
-                document.getElementById("celular").value = r[19];
-                document.getElementById("email").value = r[20];
-                document.getElementById("dataCadastro").value = r[21]; 
-                document.getElementById("dataAlteracao").value = r[22]
-                document.getElementById("tipoFilial").value = r[23];
+                document.getElementById("inscricaoEstadual").value = r[7]; 
+                document.getElementById("inscricaoMunicipal").value = r[8];
+                document.getElementById("endereco").value = r[9];
+                document.getElementById("numero").value = r[10];
+                document.getElementById("cep").value = r[11];
+                document.getElementById("cidade").value = r[12]; 
+                document.getElementById("bairro").value = r[13]; 
+                document.getElementById("estado").value = r[14]; 
+                document.getElementById("pais").value = r[15]; 
+                document.getElementById("telefone1").value = r[16]; 
+                document.getElementById("telefone2").value = r[17];
+                document.getElementById("celular").value = r[18];
+                document.getElementById("email").value = r[19];
+                document.getElementById("dataCadastro").value = r[20]; 
+                document.getElementById("dataAlteracao").value = r[21];
+                document.getElementById("tipoFilial").value = r[22];
 
 
 
@@ -657,13 +641,7 @@ function buscaRegistroAnterior(){
                      $('#ativoFilial').prop('checked', false);
 
                 }
-                if(r[7] == 'S' ){
-                     $('#projetoFilial').prop('checked', true);
-                }
-                else{
-                     $('#projetoFilial').prop('checked', false);
                 
-                }
               
 
             }
@@ -702,7 +680,6 @@ function buscaRegistroProximo(){
     document.getElementById("dataCadastro").readOnly        = true;
     document.getElementById("dataAlteracao").readOnly       = true;
     document.getElementById('ativoFilial').disabled         = true; 
-    document.getElementById('projetoFilial').disabled       = true;
     document.getElementById("codigoCNPJ").readOnly          = true;
     document.getElementById("codigoCEI").readOnly           = true;
     
@@ -729,22 +706,22 @@ function buscaRegistroProximo(){
                 document.getElementById("nomeFantasia").value = r[3]; 
                 document.getElementById("codigoCNPJ").value = r[4]; 
                 document.getElementById("codigoCEI").value = r[5]; 
-                document.getElementById("inscricaoEstadual").value = r[8]; 
-                document.getElementById("inscricaoMunicipal").value = r[9];
-                document.getElementById("endereco").value = r[10];
-                document.getElementById("numero").value = r[11];
-                document.getElementById("cep").value = r[12];
-                document.getElementById("cidade").value = r[13]; 
-                document.getElementById("bairro").value = r[14]; 
-                document.getElementById("estado").value = r[15]; 
-                document.getElementById("pais").value = r[16]; 
-                document.getElementById("telefone1").value = r[17]; 
-                document.getElementById("telefone2").value = r[18];
-                document.getElementById("celular").value = r[19];
-                document.getElementById("email").value = r[20];
-                document.getElementById("dataCadastro").value = r[21]; 
-                document.getElementById("dataAlteracao").value = r[22];
-                document.getElementById("tipoFilial").value = r[23];
+                document.getElementById("inscricaoEstadual").value = r[7]; 
+                document.getElementById("inscricaoMunicipal").value = r[8];
+                document.getElementById("endereco").value = r[9];
+                document.getElementById("numero").value = r[10];
+                document.getElementById("cep").value = r[11];
+                document.getElementById("cidade").value = r[12]; 
+                document.getElementById("bairro").value = r[13]; 
+                document.getElementById("estado").value = r[14]; 
+                document.getElementById("pais").value = r[15]; 
+                document.getElementById("telefone1").value = r[16]; 
+                document.getElementById("telefone2").value = r[17];
+                document.getElementById("celular").value = r[18];
+                document.getElementById("email").value = r[19];
+                document.getElementById("dataCadastro").value = r[20]; 
+                document.getElementById("dataAlteracao").value = r[21];
+                document.getElementById("tipoFilial").value = r[22];
 
 
 
@@ -755,12 +732,7 @@ function buscaRegistroProximo(){
                      $('#ativoFilial').prop('checked', false);
 
                 }
-                if(r[7] == 'S' ){
-                    $('#projetoFilial').prop('checked', true);
-                }
-                else{
-                    $('#projetoFilial').prop('checked', false);
-                }
+                
             
             }
            
@@ -795,7 +767,6 @@ function buscaUltimoRegistro(){
     document.getElementById("dataCadastro").readOnly        = true;
     document.getElementById("dataAlteracao").readOnly       = true;
     document.getElementById('ativoFilial').disabled         = true; 
-    document.getElementById('projetoFilial').disabled       = true; 
     document.getElementById("codigoCNPJ").readOnly          = true;
     document.getElementById("codigoCEI").readOnly           = true;
   
@@ -816,22 +787,22 @@ function buscaUltimoRegistro(){
             document.getElementById("nomeFantasia").value = r[3]; 
             document.getElementById("codigoCNPJ").value = r[4]; 
             document.getElementById("codigoCEI").value = r[5]; 
-            document.getElementById("inscricaoEstadual").value = r[8]; 
-            document.getElementById("inscricaoMunicipal").value = r[9];
-            document.getElementById("endereco").value = r[10];
-            document.getElementById("numero").value = r[11];
-            document.getElementById("cep").value = r[12];
-            document.getElementById("cidade").value = r[13]; 
-            document.getElementById("bairro").value = r[14]; 
-            document.getElementById("estado").value = r[15]; 
-            document.getElementById("pais").value = r[16]; 
-            document.getElementById("telefone1").value = r[17]; 
-            document.getElementById("telefone2").value = r[18];
-            document.getElementById("celular").value = r[19];
-            document.getElementById("email").value = r[20];
-            document.getElementById("dataCadastro").value = r[21]; 
-            document.getElementById("dataAlteracao").value = r[22];
-            document.getElementById("tipoFilial").value = r[23];
+            document.getElementById("inscricaoEstadual").value = r[7]; 
+            document.getElementById("inscricaoMunicipal").value = r[8];
+            document.getElementById("endereco").value = r[9];
+            document.getElementById("numero").value = r[10];
+            document.getElementById("cep").value = r[11];
+            document.getElementById("cidade").value = r[12]; 
+            document.getElementById("bairro").value = r[13]; 
+            document.getElementById("estado").value = r[14]; 
+            document.getElementById("pais").value = r[15]; 
+            document.getElementById("telefone1").value = r[16]; 
+            document.getElementById("telefone2").value = r[17];
+            document.getElementById("celular").value = r[18];
+            document.getElementById("email").value = r[19];
+            document.getElementById("dataCadastro").value = r[20]; 
+            document.getElementById("dataAlteracao").value = r[21];
+            document.getElementById("tipoFilial").value = r[22];
 
 
 
@@ -840,13 +811,6 @@ function buscaUltimoRegistro(){
             }
             else{
                 $('#ativoFilial').prop('checked', false);
-            }
-            if(r[7] == 'S' ){
-                  $('#projetoFilial').prop('checked', true);
-            }
-            else{
-                 $('#projetoFilial').prop('checked', false);
-                
             }
             
            
@@ -887,22 +851,22 @@ function pesquisaFiltro(){
             document.getElementById("nomeFantasia").value = r[3]; 
             document.getElementById("codigoCNPJ").value = r[4]; 
             document.getElementById("codigoCEI").value = r[5]; 
-            document.getElementById("inscricaoEstadual").value = r[8]; 
-            document.getElementById("inscricaoMunicipal").value = r[9];
-            document.getElementById("endereco").value = r[10];
-            document.getElementById("numero").value = r[11];
-            document.getElementById("cep").value = r[12];
-            document.getElementById("cidade").value = r[13]; 
-            document.getElementById("bairro").value = r[14]; 
-            document.getElementById("estado").value = r[15]; 
-            document.getElementById("pais").value = r[16]; 
-            document.getElementById("telefone1").value = r[17]; 
-            document.getElementById("telefone2").value = r[18];
-            document.getElementById("celular").value = r[19];
-            document.getElementById("email").value = r[20];
-            document.getElementById("dataCadastro").value = r[21]; 
-            document.getElementById("dataAlteracao").value = r[22];
-            document.getElementById("tipoFilial").value = r[23];
+            document.getElementById("inscricaoEstadual").value = r[7]; 
+            document.getElementById("inscricaoMunicipal").value = r[8];
+            document.getElementById("endereco").value = r[9];
+            document.getElementById("numero").value = r[10];
+            document.getElementById("cep").value = r[11];
+            document.getElementById("cidade").value = r[12]; 
+            document.getElementById("bairro").value = r[13]; 
+            document.getElementById("estado").value = r[14]; 
+            document.getElementById("pais").value = r[15]; 
+            document.getElementById("telefone1").value = r[16]; 
+            document.getElementById("telefone2").value = r[17];
+            document.getElementById("celular").value = r[18];
+            document.getElementById("email").value = r[19];
+            document.getElementById("dataCadastro").value = r[20]; 
+            document.getElementById("dataAlteracao").value = r[21];
+            document.getElementById("tipoFilial").value = r[22];
 
 
 
@@ -912,13 +876,7 @@ function pesquisaFiltro(){
             else{
                 $('#ativoFilial').prop('checked', false);
             }
-            if(r[7] == 'S' ){
-                  $('#projetoFilial').prop('checked', true);
-            }
-            else{
-                 $('#projetoFilial').prop('checked', false);
-                
-            }
+            
             
         
             $('#pesquisarModal').modal('hide');          
@@ -953,7 +911,6 @@ function getGrid() {
             {"data": "ID_EMPRESA"},
             {"data": "NOME_FANTASIA"},
             {"data": "ATIVO"},
-            {"data": "PROJETO"},
             {"data": "CIDADE"},
             {"data": "TELEFONE_1"},
             {"data": "CELULAR"},
@@ -1003,7 +960,6 @@ function getGrid() {
     document.getElementById("dataCadastro").readOnly        = true;
     document.getElementById("dataAlteracao").readOnly       = true;
     document.getElementById('ativoFilial').disabled         = true; 
-    document.getElementById('projetoFilial').disabled       = true; 
     document.getElementById("codigoCNPJ").readOnly          = true;
     document.getElementById("codigoCEI").readOnly           = true;
     
@@ -1030,22 +986,22 @@ function getGrid() {
             document.getElementById("nomeFantasia").value = r[3]; 
             document.getElementById("codigoCNPJ").value = r[4]; 
             document.getElementById("codigoCEI").value = r[5]; 
-            document.getElementById("inscricaoEstadual").value = r[8]; 
-            document.getElementById("inscricaoMunicipal").value = r[9];
-            document.getElementById("endereco").value = r[10];
-            document.getElementById("numero").value = r[11];
-            document.getElementById("cep").value = r[12];
-            document.getElementById("cidade").value = r[13]; 
-            document.getElementById("bairro").value = r[14]; 
-            document.getElementById("estado").value = r[15]; 
-            document.getElementById("pais").value = r[16]; 
-            document.getElementById("telefone1").value = r[17]; 
-            document.getElementById("telefone2").value = r[18];
-            document.getElementById("celular").value = r[19];
-            document.getElementById("email").value = r[20];
-            document.getElementById("dataCadastro").value = r[21]; 
-            document.getElementById("dataAlteracao").value = r[22]; 
-            document.getElementById("tipoFilial").value = r[23]; 
+            document.getElementById("inscricaoEstadual").value = r[7]; 
+            document.getElementById("inscricaoMunicipal").value = r[8];
+            document.getElementById("endereco").value = r[9];
+            document.getElementById("numero").value = r[10];
+            document.getElementById("cep").value = r[11];
+            document.getElementById("cidade").value = r[12]; 
+            document.getElementById("bairro").value = r[13]; 
+            document.getElementById("estado").value = r[14]; 
+            document.getElementById("pais").value = r[15]; 
+            document.getElementById("telefone1").value = r[16]; 
+            document.getElementById("telefone2").value = r[17];
+            document.getElementById("celular").value = r[18];
+            document.getElementById("email").value = r[19];
+            document.getElementById("dataCadastro").value = r[20]; 
+            document.getElementById("dataAlteracao").value = r[21];
+            document.getElementById("tipoFilial").value = r[22]; 
 
 
             if(r[6] == 'S' ){
@@ -1054,13 +1010,6 @@ function getGrid() {
             else{
                 $('#ativoFilial').prop('checked', false);
             }
-            if(r[7] == 'S' ){
-                  $('#projetoFilial').prop('checked', true);
-            }
-            else{
-                 $('#projetoFilial').prop('checked', false);
-                
-            } 
             
             
             
@@ -1082,7 +1031,6 @@ function atualizar(){
     document.getElementById("codigoCNPJ").value = "";
     document.getElementById("codigoCEI").value = "";
     document.getElementById("ativoFilial").checkd = false;
-    document.getElementById("projetoFilial").checkd = false;
     document.getElementById("inscricaoEstadual").value = "";
     document.getElementById("inscricaoMunicipal").value = "";
     document.getElementById("endereco").value = "";

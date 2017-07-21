@@ -32,13 +32,11 @@ class cadastrousuariocontroller extends CI_Controller {
         $ativoUsuario       = $this->input->POST('ativoUsuario');
         $loginUsuario       = $this->input->POST('loginUsuario');
         $senha              = $this->input->POST('senhaUsuario');      
-        $dataNascimento     = $this->input->POST('dataNascimento');
-        $matricula          = $this->input->POST('matricula');
-        $cargo              = $this->input->POST('cargo');
+        
         
         $this->load->model('cadastrousuariomodel');
 
-        $retorno = $this->cadastrousuariomodel->salvar($idUsuario, $nomeUsuario, $sobrenomeUsuario, $emailUsuario, $empresaUsuario, $ativoUsuario, $loginUsuario, $senha, $dataNascimento, $matricula, $cargo);
+        $retorno = $this->cadastrousuariomodel->salvar($idUsuario, $nomeUsuario, $sobrenomeUsuario, $emailUsuario, $empresaUsuario, $ativoUsuario, $loginUsuario, $senha);
 
         echo json_encode($retorno);
     }

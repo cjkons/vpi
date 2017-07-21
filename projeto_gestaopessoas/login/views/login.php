@@ -22,8 +22,8 @@
         <script src="resources/login/js/login.js"></script>
         <script src="resources/geral/geral.js"></script>
         <link href="resources/login/css/login.css" rel="stylesheet">
- 
   
+    
   <script type="text/javascript">
    // Update the 'nojs'/'js' class on the html node
 document.documentElement.className = document.documentElement.className.replace(/\bnojs\b/g, 'js');
@@ -31,8 +31,8 @@ document.documentElement.className = document.documentElement.className.replace(
 // Check that all required assets are uploaded and up-to-date
 if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required":["resources/login/scripts/museutils.js", "resources/login/scripts/museconfig.js", "resources/login/scripts/jquery.musepolyfill.bgsize.js", "resources/login/scripts/jquery.watch.js", "resources/login/scripts/jquery.museresponsive.js", "resources/login/scripts/require.js", "resources/login/scripts/index.css"], "outOfDate":[]};
 </script>
-   
-  <title>VPI Tecnologia - Clarify GA</title>
+    
+  <title>VPI Tecnologia - Clarify GA</title> 
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="resources/login/css/site_global.css?crc=3936898828"/>
   <link rel="stylesheet" type="text/css" href="resources/login/css/index.css?crc=4153243950" id="pagesheet"/> 

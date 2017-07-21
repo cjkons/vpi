@@ -42,7 +42,7 @@ class cadastrofuncoesmodel extends CI_Model {
          
     }   
 
-   public function salvar($id, $funcao, $descricao, $cbo, $periodoExame){
+   public function salvar($id, $funcao, $descricao, $cbo, $periodoExame, $descricaoPpra){
         
         $this->initConBanco();
         
@@ -57,7 +57,7 @@ class cadastrofuncoesmodel extends CI_Model {
         
         if (is_array($rs) && count($rs) > 0){
             
-            $query = "UPDATE GP_CAD_FUNCOES SET FUNCAO = '$funcao', DESCRICAO = '$descricao', CBO = '$cbo', PERIODO_EXAME_ASO = '$periodoExame',  DATA_ALTERACAO = SYSDATE, USUARIO_ALTERACAO = '$usuarioLogado' WHERE CBO = '$cbo'";
+            $query = "UPDATE GP_CAD_FUNCOES SET FUNCAO = '$funcao', DESCRICAO = '$descricao', CBO = '$cbo', PERIODO_EXAME_ASO = '$periodoExame', DESCRICAO_PPRA = '$descricaoPpra',  DATA_ALTERACAO = SYSDATE, USUARIO_ALTERACAO = '$usuarioLogado' WHERE CBO = '$cbo'";
 
             
             //print_r($query);exit();
@@ -73,8 +73,8 @@ class cadastrofuncoesmodel extends CI_Model {
         else{
                                    
 
-            $query = "INSERT INTO GP_CAD_FUNCOES (ID_FUNCAO, FUNCAO, DESCRICAO, CBO, PERIODO_EXAME_ASO, DATA_CADASTRO, USUARIO_CADASTRO)
-                             VALUES ($id, '$funcao', '$descricao', '$cbo', '$periodoExame', SYSDATE, '$usuarioLogado')";     
+            $query = "INSERT INTO GP_CAD_FUNCOES (ID_FUNCAO, FUNCAO, DESCRICAO, CBO, PERIODO_EXAME_ASO, DESCRICAO_PPRA, DATA_CADASTRO, USUARIO_CADASTRO)
+                             VALUES ($id, '$funcao', '$descricao', '$cbo', '$periodoExame', '$descricaoPpra', SYSDATE, '$usuarioLogado')";     
 
             //print_r($query);exit();
             $resultado = $this->conBanco->query($query);
@@ -211,6 +211,7 @@ class cadastrofuncoesmodel extends CI_Model {
             $obj[] = $rs[0]->DESCRICAO;
             $obj[] = $rs[0]->CBO;
             $obj[] = $rs[0]->PERIODO_EXAME_ASO;
+            $obj[] = $rs[0]->DESCRICAO_PPRA;
 
 
             return json_encode($obj);
@@ -259,6 +260,8 @@ class cadastrofuncoesmodel extends CI_Model {
                 $obj[] = $rs[0]->DESCRICAO;
                 $obj[] = $rs[0]->CBO;
                 $obj[] = $rs[0]->PERIODO_EXAME_ASO;
+                $obj[] = $rs[0]->DESCRICAO_PPRA;
+
 
                 return json_encode($obj);
             }

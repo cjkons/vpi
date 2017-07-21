@@ -3,7 +3,7 @@
     <head>
         <title>VPI | Clarify</title>
         <meta charset="UTF-8"/> 
-
+  
           <!--PROGRESS BAR-->
         <script src="resources/geral/progress-bar/pace.min.js"></script>
         <link href="resources/geral/progress-bar/dataurl.css" rel="stylesheet">

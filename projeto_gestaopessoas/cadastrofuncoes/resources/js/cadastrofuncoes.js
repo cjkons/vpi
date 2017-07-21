@@ -30,6 +30,7 @@ function novo(){
     document.getElementById("descricao").readOnly       = false;
     document.getElementById("cbo").readOnly             = false;
     document.getElementById("periodoExame").readOnly    = false;
+    document.getElementById("descricaoPpra").disabled   = false;
     
     
     document.getElementById("id").value             = "";
@@ -37,6 +38,7 @@ function novo(){
     document.getElementById("descricao").value      = "";
     document.getElementById("cbo").value            = "";
     document.getElementById("periodoExame").value   = 0;
+    document.getElementById("descricaoPpra").value  = "";
     
        
     
@@ -77,7 +79,7 @@ function salvar(){
     var descricao       =   $('#descricao').val();
     var cbo             =   $('#cbo').val();
     var periodoExame    =   $('#periodoExame').val();
-    
+    var descricaoPpra   =   $('#descricaoPpra').val();
     
     var controleDePreenchimento = 'S';
  
@@ -94,6 +96,9 @@ function salvar(){
     if(periodoExame == 0){
         controleDePreenchimento = 'N';
     }
+    if(descricaoPpra == ""){
+        controleDePreenchimento = 'N';
+    }
     
    
     
@@ -104,7 +109,8 @@ function salvar(){
         document.getElementById("funcao").readOnly          = true;
         document.getElementById("descricao").readOnly       = true;
         document.getElementById("cbo").readOnly             = true;
-        document.getElementById("periodoExame").readOnly             = true;
+        document.getElementById("periodoExame").readOnly    = true;
+        document.getElementById("descricaoPpra").disabled   = true;
         
         $.ajax({
             url: 'index.php?m=cadastrofuncoes&c=cadastrofuncoescontroller&f=salvar',
@@ -113,7 +119,8 @@ function salvar(){
                 funcao: funcao,
                 descricao: descricao,
                 cbo: cbo,
-                periodoExame: periodoExame
+                periodoExame: periodoExame,
+                descricaoPpra: descricaoPpra,
                 
                 
                 
@@ -157,7 +164,7 @@ function  getAdicionarFuncao(id, cbo) {
         document.getElementById("descricao").readOnly       = true;
         document.getElementById("cbo").readOnly             = true;
         document.getElementById("periodoExame").readOnly    = true;
-    
+        document.getElementById("descricaoPpra").disabled   = true;
 
     $.ajax({
         url: 'index.php?m=cadastrofuncoes&c=cadastrofuncoescontroller&f=getAdicionarFuncao',
@@ -195,6 +202,7 @@ function editarFuncao(id, cbo) {
         document.getElementById("descricao").readOnly       = true;
         document.getElementById("cbo").readOnly             = true;
         document.getElementById("periodoExame").readOnly    = true;
+        document.getElementById("descricaoPpra").disabled   = true;
     
     $.ajax({
             url: 'index.php?m=cadastrofuncoes&c=cadastrofuncoescontroller&f=editarFuncao',
@@ -217,6 +225,7 @@ function editarFuncao(id, cbo) {
                     document.getElementById("descricao").readOnly       = false;
                     document.getElementById("cbo").readOnly             = false;
                     document.getElementById("periodoExame").readOnly    = true;
+                    document.getElementById("descricaoPpra").disabled   = false;
                   
                     
                     document.getElementById("id").value             = r[0];
@@ -224,6 +233,7 @@ function editarFuncao(id, cbo) {
                     document.getElementById("descricao").value      = r[2];
                     document.getElementById("cbo").value            = r[3];
                     document.getElementById("periodoExame").value   = r[4];
+                    document.getElementById("descricaoPpra").value  = r[5];
                     
                                        
                    //$('#itemModalEditar').modal('show');
@@ -316,6 +326,7 @@ function pesquisaFiltro(){
                     document.getElementById("descricao").value      = r[2];
                     document.getElementById("cbo").value            = r[3];
                     document.getElementById("periodoExame").value   = r[4];
+                    document.getElementById("descricaoPpra").value  = r[5];
                     
 
 
@@ -343,12 +354,14 @@ function atualizar() {
     document.getElementById("descricao").readOnly = true;
     document.getElementById("cbo").readOnly = true;
     document.getElementById("periodoExame").readOnly = true;
-
+    document.getElementById("descricaoPpra").disabled   = true;
+     
     document.getElementById("id").value             = "";
     document.getElementById("funcao").value         = "";
     document.getElementById("descricao").value      = "";
     document.getElementById("cbo").value            = "";
     document.getElementById("periodoExame").value   = 0;
+     document.getElementById("descricaoPpra").value = "";
     
 
 

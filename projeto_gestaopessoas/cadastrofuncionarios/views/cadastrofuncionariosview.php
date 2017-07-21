@@ -96,7 +96,7 @@
                 </a>
               
              <br><br>
-          
+         * CAMPO OBRIGATÓRIO 
         <ul id="abas" align="center">
                <li><a href="#tab1">DADOS FUNCIONÁRIO</a></li>
                <li><a href="#tab2">DADOS EMPREGATÍCIOS</a></li>
@@ -121,25 +121,25 @@
                 <tr>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
-                            Identificação
-                            <input style="text-transform: uppercase;" type="number" class="form-control" id="idFuncionario" placeholder="Identificação" readonly>
+                            ID
+                            <input style="text-transform: uppercase;" type="number" class="form-control" id="idFuncionario" placeholder="ID" readonly>
                         </div>
                     </td>
                     <td  style="width: 30%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Empresa
+                            Empresa *
                             <select style="text-transform: uppercase;"  id="empresa" class="form-control" onchange="carregarFilial()"  readonly></select>
                         </div>
                    </td>
                    <td  style="width: 30%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Filial
+                            Filial *
                             <select  style="text-transform: uppercase;"  id="filial" class="form-control"  readonly></select>
                         </div>
                    </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
-                           Livro
+                           Livro *
                             <input style="text-transform: uppercase;" type="livro" class="form-control" id="livro"  placeholder="Livro" readonly>
                         </div>
                     </td>
@@ -155,13 +155,13 @@
                 <tr>
                     <td  style="width: 40%; padding-right: 10px;font-size: 14px; ">
                        <div class="form-group">
-                            Nome Funcionário
+                            Nome Funcionário *
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="nomeFuncionario" placeholder="Funcionário" readonly>
                         </div>
                    </td>
                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Data Nascimento
+                            Data Nascimento *
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="dataNasc" maxlength="18"  placeholder="Data" readonly>
                         </div>
                    </td>
@@ -222,10 +222,15 @@
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="dataCadastro"   placeholder="Data Cadastro" readonly>
                         </div>
                     </td>
-                    <td  style="width: 65%;padding-right: 10px;font-size: 14px;">
+                    <td  style="width: 15%; padding-right: 10px; font-size: 14px;">
+                       <div class="form">
+                           <input type="checkbox" style="width: 30px; height: 30px;" id="valeTransporte" /> Receberá Vale Transporte
+                       </div>
+                    </td>
+                    <td  style="width: 40%;padding-right: 10px;font-size: 14px;">
                             
                     </td>
-                    <td  style="width: 15%; padding-right: 10px; font-size: 20px;">
+                    <td  style="width: 15%; padding-right: 10px; font-size: 14px;">
                        <div class="form">
                            <input type="checkbox" style="width: 30px; height: 30px;" id="desativado" /> Funcionário Demitido
                        </div>
@@ -240,31 +245,31 @@
                 <tr>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Matrícula
+                            Matrícula *
                             <input style="text-transform: uppercase;" type="number" class="form-control" id="matricula" maxlength="8" placeholder="Matrícula" readonly>
                         </div>
                    </td>
                     <td  style="width: 22%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Função
+                            Função *
                             <select  style="text-transform: uppercase;" id="funcao" class="form-control" readonly></select>
                         </div>
                    </td>
                    <td  style="width: 22%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Setor
+                            Setor *
                             <select  style="text-transform: uppercase;" id="setor" class="form-control" readonly></select>
                         </div>
                    </td>
                    <td  style="width: 13%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Salário Valor
+                            Salário Valor *
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="salarioValor" placeholder="Salário Valor" onkeypress="mascaraValor(this, mvalorValor);" maxlength="14" readonly>
                         </div>
                    </td>
                    <td  style="width: 13%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Salário Pagamento
+                            Modalidade Salário *
                             <select style="text-transform: uppercase;" id="salarioPagamento" class="form-control" readonly>
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="MENSALISTA">Mensalista</option>
@@ -284,13 +289,13 @@
                 <tr> 
                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Data Admissão
+                            Data Admissão *
                             <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataAdmissao" placeholder="Data Admissão" readonly>
                         </div>
                    </td>
                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Contrato Experiência
+                            Contrato Experiência *
                             <select style="text-transform: uppercase;"  id="experiencia" class="form-control" readonly>
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="30">30 Dias</option>
@@ -327,7 +332,7 @@
                     
                     <td  style="width: 20%;padding-right: 10px;font-size: 14px;">
                             <div class="form-group">
-                               Foto
+                               Foto *
                                <input type="file" class="form-control" id="imagem" enctype="multipart/form-data" placeholder="imagem"  readonly>
                         </div>
                     </td>
@@ -345,13 +350,13 @@
                 <tr>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            CEP
+                            CEP *
                             <input style="text-transform: uppercase;"  type="text" class="form-control" id="cep"  maxlength="9"  placeholder="Cep"  onkeypress="mascaraCEP(this)" readonly>
                         </div>
                    </td>
                    <td  style="width: 35%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            Endereço
+                            Endereço *
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="endereco"   placeholder="Endereço" readonly>
                         </div>
                     </td>
@@ -363,7 +368,7 @@
                     </td>
                     <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            Bairro
+                            Bairro *
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="bairro"  placeholder="Bairro" readonly>
                         </div>
                     </td>
@@ -373,13 +378,13 @@
                 <tr>
                     <td style="width: 25%; padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
-                            Cidade
+                            Cidade *
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="cidade"   placeholder="Cidade" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            <font size="2">Estado</font>
+                            <font size="2">Estado *</font>
                             <select style="text-transform: uppercase;" id="estado" class="form-control"  readonly>
                                      <option readonly value="0" >Selecione</option>
                                      <option value ="AC"readonly>Acre</option>
@@ -426,7 +431,7 @@
                 <tr>
                  <td style="padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
-                            <font size="2">Telefone 1</font>
+                            <font size="2">Telefone 1 *</font>
                             <input style="text-transform: uppercase;"  type="text" class="form-control" id="telefone1" size="20" maxlength="14"   placeholder="Telefone 1" readonly onkeypress="mascaraTelefone(this)">
                         </div>
                     </td>
@@ -457,25 +462,28 @@
                    <tr> 
         <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            CPF
+                            CPF *
                             <input type="text" class="form-control" id="cpf"  maxlength="14"  placeholder="CPF"  onkeypress="mascaraCPF(this)" readonly>
                         </div>
                    </td>
-                   <td  style="width: 20%; padding-right: 10px;font-size: 14px;">
+                   <td  style="width: 2%; padding-right: 10px;font-size: 13px;">
+                       
+                    </td>
+                   <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            Identidade
+                            Identidade *
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="identidade"   placeholder="Identidade" readonly>
                         </div>
                     </td>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                           Expedidor
+                           Orgão Expedidor *
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="expedidorIdentidade"   placeholder="Expedidor" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            <font size="2">Estado</font>
+                            <font size="2">Estado *</font>
                             <select  style="text-transform: uppercase;" id="estadoIdentidade" class="form-control"  readonly>
                                      <option readonly value="0" >Selecione</option>
                                      <option value ="AC"readonly>Acre</option>
@@ -510,8 +518,13 @@
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            Data Expedição
+                            Data Expedição *
                             <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataIdentidade"  placeholder="Data Expedição" readonly>
+                        </div>
+                    </td>
+                    <td  style="width: 17%; padding-right: 10px;font-size: 14px;">
+                          <div class="form-group">
+                            
                         </div>
                     </td>
                     </tr>
@@ -519,25 +532,19 @@
         <table style="width: 90%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
                     <td style="width: 15%; padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
-                            CTPS
+                            CTPS *
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="ctps"   placeholder="CTPS" readonly>
                         </div>
                     </td>
                     <td style="width: 15%; padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
-                            Série
+                            Série *
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="serieCtps"   placeholder="Série" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            PIS/PASEP
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="pisPasep"  placeholder="PIS/PASEP" readonly>
-                        </div>
-                    </td>
-                    <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
-                            <font size="2">Estado</font>
+                            <font size="2">Estado *</font>
                             <select style="text-transform: uppercase;" id="estadoCtps" class="form-control"  readonly>
                                      <option readonly value="0" >Selecione</option>
                                      <option value ="AC"readonly>Acre</option>
@@ -572,8 +579,13 @@
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            Data Expedição
+                            Data Expedição *
                             <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataCtps"  placeholder="Data Expedição" readonly>
+                        </div>
+                    </td>
+                    <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
+                          <div class="form-group">
+                           
                         </div>
                     </td>
                    
@@ -582,7 +594,22 @@
        
         <table style="width: 90%;  height: 79px; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
                     
-                    <td  style="width: 20%; padding-right: 10px;font-size: 14px;">
+                    <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
+                          <div class="form-group">
+                            PIS/PASEP *
+                            <input style="text-transform: uppercase;" type="text" class="form-control" id="pisPasep"  placeholder="PIS/PASEP" readonly>
+                        </div>
+                    </td>
+                    <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
+                          <div class="form-group">
+                            Data Expedição *
+                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataPisPasep"  placeholder="Data Expedição" readonly>
+                        </div>
+                    </td>
+                    <td  style="width: 2%; padding-right: 10px;font-size: 13px;">
+                       
+                    </td>
+                    <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Título Eleitor
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="tituloEleitor" maxlength="18"  placeholder="Título Eleitor" readonly>
@@ -594,13 +621,13 @@
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="zonaEleitor" maxlength="18"  placeholder="Zona Eleitoral" readonly>
                         </div>
                     </td>
-                    <td  style="width: 13%; padding-right: 10px;font-size: 13px;">
+                    <td  style="width: 15%; padding-right: 10px;font-size: 13px;">
                        <div class="form-group">
                             Seção Eleitoral
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="secaoEleitor" maxlength="18"  placeholder="Seção Eleitoral" readonly>
                         </div>
                     </td>
-                    <td  style="width: 47%; padding-right: 10px;font-size: 13px;">
+                    <td  style="width: 8%; padding-right: 10px;font-size: 13px;">
                        
                     </td>
                    
@@ -619,7 +646,7 @@
                 <tr>
                     <td  style="width: 30%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Nome Mãe
+                            Nome Mãe *
                             <input style="text-transform: uppercase;" type="text" class="form-control" id="nomeMae" placeholder="Nome Mãe" readonly>
                         </div>
                    </td>
@@ -637,7 +664,7 @@
                 <tr>             
                     <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Sexo
+                            Sexo *
                             <select style="text-transform: uppercase;" id="sexo" class="form-control" readonly>
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="M">Masculino</option>
@@ -647,7 +674,7 @@
                     </td>
                     <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Estado Civil
+                            Estado Civil *
                             <select style="text-transform: uppercase;" id="estadoCivil" class="form-control" readonly>
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="CASADO">Casado</option>
@@ -660,7 +687,7 @@
                     </td>
                     <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
-                            Deficiente Físico
+                            Deficiente Físico *
                             <select style="text-transform: uppercase;" id="deficienteFisico" class="form-control" readonly>
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="S">Sim</option>

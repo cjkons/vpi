@@ -31,7 +31,6 @@ class cadastrofilialcontroller extends CI_Controller {
         $codigoCNPJ         = $this->input->POST('codigoCNPJ');
         $codigoCEI          = $this->input->POST('codigoCEI');
         $ativoFilial        = $this->input->POST('ativoFilial');
-        $projetoFilial      = $this->input->POST('projetoFilial');
         $inscricaoEstadual  = $this->input->POST('inscricaoEstadual');
         $inscricaoMunicipal = $this->input->POST('inscricaoMunicipal');
         $endereco           = $this->input->POST('endereco');
@@ -50,7 +49,7 @@ class cadastrofilialcontroller extends CI_Controller {
                         
         $this->load->model('cadastrofilialmodel');
 
-        $retorno = $this->cadastrofilialmodel->salvar($idFilial, $empresa, $razaoSocial, $nomeFantasia, $codigoCNPJ, $codigoCEI, $ativoFilial, $projetoFilial, $inscricaoEstadual, $inscricaoMunicipal, $endereco, $numero, $cep, $cidade, $bairro, $estado, $pais, $telefone1, $telefone2, $celular, $email, $tipo);
+        $retorno = $this->cadastrofilialmodel->salvar($idFilial, $empresa, $razaoSocial, $nomeFantasia, $codigoCNPJ, $codigoCEI, $ativoFilial, $inscricaoEstadual, $inscricaoMunicipal, $endereco, $numero, $cep, $cidade, $bairro, $estado, $pais, $telefone1, $telefone2, $celular, $email, $tipo);
 
         echo json_encode($retorno);
     }

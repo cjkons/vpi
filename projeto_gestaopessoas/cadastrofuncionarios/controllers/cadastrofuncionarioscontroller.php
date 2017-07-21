@@ -69,6 +69,7 @@ class cadastrofuncionarioscontroller extends CI_Controller {
         $ctps              = $this->input->POST('ctps');
         $serieCtps              = $this->input->POST('serieCtps');
         $pisPasep              = $this->input->POST('pisPasep');
+        $dataPisPasep              = $this->input->POST('dataPisPasep');
         $estadoCtps              = $this->input->POST('estadoCtps');
         $dataCtps              = $this->input->POST('dataCtps');
         $tituloEleitor              = $this->input->POST('tituloEleitor');
@@ -102,6 +103,7 @@ class cadastrofuncionarioscontroller extends CI_Controller {
         
         $setor = $this->input->POST('setor');
         $desativado = $this->input->POST('desativado');
+        $valeTransporte = $this->input->POST('valeTransporte');
         
         
         
@@ -113,9 +115,9 @@ class cadastrofuncionarioscontroller extends CI_Controller {
         $retorno = $this->cadastrofuncionariosmodel->salvar($idFuncionario, $empresa, $filial, $livro, $pagina, $nomeFuncionario, $dataNasc, $cidadeNasc, $estadoNasc, $dataCadastro,
                                                         $matricula, $funcao, $salarioValor, $salarioPagamento, $dataAdmissao, $experiencia, $horarioInicial1, $horarioFinal1, $horarioInicial2,
                                                         $horarioFinal2, $imagem, $cep, $endereco, $numero, $bairro, $cidade, $estado, $email, $telefone1, $telefone2, $telefone3, $cpf, $identidade,
-                                                        $expedidorIdentidade, $estadoIdentidade, $dataIdentidade, $ctps, $serieCtps, $pisPasep, $estadoCtps, $dataCtps, $tituloEleitor, $zonaEleitor,
+                                                        $expedidorIdentidade, $estadoIdentidade, $dataIdentidade, $ctps, $serieCtps, $pisPasep, $dataPisPasep, $estadoCtps, $dataCtps, $tituloEleitor, $zonaEleitor,
                                                         $secaoEleitor, $nomeMae, $nomePai, $sexo, $estadoCivil, $deficienteFisico, $grauInstrucao, $etnia, $corOlhos, $corCabelos, $altura, $peso, $nomeFilho1,
-                                                        $dataNasc1, $nomeFilho2, $dataNasc2, $nomeFilho3, $dataNasc3, $nomeFilho4, $dataNasc4, $nomeFilho5, $dataNasc5, $nomeFilho6, $dataNasc6, $setor, $desativado);
+                                                        $dataNasc1, $nomeFilho2, $dataNasc2, $nomeFilho3, $dataNasc3, $nomeFilho4, $dataNasc4, $nomeFilho5, $dataNasc5, $nomeFilho6, $dataNasc6, $setor, $desativado, $valeTransporte);
 
         echo json_encode($retorno);
     }
@@ -269,31 +271,6 @@ class cadastrofuncionarioscontroller extends CI_Controller {
 
         echo json_encode($retorno);
     }
-    
-    
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     

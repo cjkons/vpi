@@ -35,8 +35,8 @@
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
+  <![endif]--> 
+ 
         <!--JQUERY 1.11--> 
         <link href="resources/geral/jquery/jquery-ui-1.11.2/jquery-ui.min.css" rel="stylesheet">
         <script src="resources/geral/jquery/jquery-1.11.1.min.js"></script>
@@ -186,6 +186,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            <li><a onclick="adicionarAba('Cadastro Férias', 'GESTAO_PESSOAS_01_06', 'gestaopessoas-01-06', 'index.php?m=cadastroferias&c=cadastroferiascontroller', 'resources/geral/images/cadastroferias.png')" href="#"><i class="fa fa-user"></i>Cadastro Férias</a></li> 
             <li><a onclick="adicionarAba('Cadastro Funções', 'GESTAO_PESSOAS_01_01', 'gestaopessoas-01-01', 'index.php?m=cadastrofuncoes&c=cadastrofuncoescontroller', 'resources/geral/images/cadastrofuncoes.png')" href="#"><i class="fa fa-user"></i>Cadastro Funções</a></li> 
             <li><a onclick="adicionarAba('Cadastro Funcionários', 'GESTAO_PESSOAS_01_02', 'gestaopessoas-01-02', 'index.php?m=cadastrofuncionarios&c=cadastrofuncionarioscontroller', 'resources/geral/images/cadastrofuncionarios.png')" href="#"><i class="fa fa-user"></i>Cadastro Funcionários</a></li> 
             <li><a onclick="adicionarAba('Cadastro Setor', 'GESTAO_PESSOAS_01_03', 'gestaopessoas-01-03', 'index.php?m=cadastrosetor&c=cadastrosetorcontroller', 'resources/geral/images/cadastrosetor.png')" href="#"><i class="fa fa-user"></i>Cadastro Setor</a></li> 

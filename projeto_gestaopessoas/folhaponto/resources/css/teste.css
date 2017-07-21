@@ -13,3 +13,54 @@ float: left;
 width: 300px; 
 
 } 
+
+
+
+     #abas{
+     margin:14px;
+     padding: 3px;
+     
+     
+   }
+
+   #abas li{
+     display: inline;
+   }
+   #abas li a{
+     
+     
+     padding: 5px 5px 3px 8px;
+     margin: 0 1px 0 0;
+     
+     float: left;
+     background:#D1D1D1;
+     color: #000000;
+     text-decoration: none;
+     text-indent: 5px;
+   }
+   #abas li a.selected{
+     background: #2277b3;
+     font-size: 14px;
+     color:#FFF;
+     cursor: default;
+     
+   }
+
+
+   .contaba{
+     clear: none;
+   }
+   #tab1, #tab2, #tab3, #tab4, #tab5, #tab6 {margin:0 1px 0 0; padding:0;  
+     padding: 3px 8px;  }
+
+   label {display:block;}
+   input[type=text] {}
+
+.form-group{
+    
+     font-size: 14px;
+     color:#000;
+     text-decoration: none;
+     
+   }
+ 

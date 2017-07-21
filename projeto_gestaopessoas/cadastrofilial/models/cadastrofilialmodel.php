@@ -42,7 +42,7 @@ class cadastrofilialmodel extends CI_Model {
     }   
     
 
-    public function salvar($idFilial, $empresa, $razaoSocial, $nomeFantasia, $codigoCNPJ, $codigoCEI, $ativoFilial, $projetoFlial, $inscricaoEstadual, $inscricaoMunicipal, $endereco, $numero, $cep, $cidade, $bairro, $estado, $pais, $telefone1, $telefone2, $celular, $email, $tipo){
+    public function salvar($idFilial, $empresa, $razaoSocial, $nomeFantasia, $codigoCNPJ, $codigoCEI, $ativoFilial, $inscricaoEstadual, $inscricaoMunicipal, $endereco, $numero, $cep, $cidade, $bairro, $estado, $pais, $telefone1, $telefone2, $celular, $email, $tipo){
         
         $this->initConBanco();
         
@@ -55,7 +55,7 @@ class cadastrofilialmodel extends CI_Model {
         
         if (is_array($rs) && count($rs) > 0){
             
-            $query = "UPDATE GP_SYS_EMPRESA_FILIAL SET ID_EMPRESA_FILIAL= '$idFilial',  ID_EMPRESA  = '$empresa' , RAZAO_SOCIAL = '$razaoSocial', NOME_FANTASIA = '$nomeFantasia', COD_EMPRESA = '$codigoCNPJ', CEI = '$codigoCEI', ATIVO = '$ativoFilial', PROJETO  = '$projetoFlial', INSCRICAO_ESTADUAL = '$inscricaoEstadual', INSCRICAO_MUNICIPAL = '$inscricaoMunicipal', ENDERECO = '$endereco', NUMERO = '$numero',  CEP = '$cep', CIDADE = '$cidade', BAIRRO = '$bairro', ESTADO = '$estado',  PAIS = '$pais', TELEFONE_1 = '$telefone1', TELEFONE_2 = '$telefone2', CELULAR = '$celular', EMAIL = '$email', USUARIO_ALTERADOR = '$usuarioLogado', DATA_ALTERACAO = SYSDATE WHERE ID_EMPRESA_FILIAL = $idFilial";
+            $query = "UPDATE GP_SYS_EMPRESA_FILIAL SET ID_EMPRESA_FILIAL= '$idFilial',  ID_EMPRESA  = '$empresa' , RAZAO_SOCIAL = '$razaoSocial', NOME_FANTASIA = '$nomeFantasia', COD_EMPRESA = '$codigoCNPJ', CEI = '$codigoCEI', ATIVO = '$ativoFilial', INSCRICAO_ESTADUAL = '$inscricaoEstadual', INSCRICAO_MUNICIPAL = '$inscricaoMunicipal', ENDERECO = '$endereco', NUMERO = '$numero',  CEP = '$cep', CIDADE = '$cidade', BAIRRO = '$bairro', ESTADO = '$estado',  PAIS = '$pais', TELEFONE_1 = '$telefone1', TELEFONE_2 = '$telefone2', CELULAR = '$celular', EMAIL = '$email', USUARIO_ALTERADOR = '$usuarioLogado', DATA_ALTERACAO = SYSDATE WHERE ID_EMPRESA_FILIAL = $idFilial";
 
            // print_r($query);exit();
             $resultado = $this->conBanco->query($query);
@@ -83,8 +83,8 @@ class cadastrofilialmodel extends CI_Model {
                 $novoId = $rs[0]->ID + 1;
             }                       
 
-            $query = "INSERT INTO GP_SYS_EMPRESA_FILIAL (ID, ID_EMPRESA_FILIAL, ID_EMPRESA, RAZAO_SOCIAL, NOME_FANTASIA, COD_EMPRESA, CEI, ATIVO, INSCRICAO_ESTADUAL, INSCRICAO_MUNICIPAL, ENDERECO, NUMERO, CEP, CIDADE, BAIRRO, ESTADO, PAIS, TELEFONE_1, TELEFONE_2, CELULAR, EMAIL, USUARIO_CADASTRO, DATA_CADASTRO, TIPO_CODIGO, PROJETO)
-                             VALUES ($novoId, $idFilial, $empresa, '$razaoSocial', '$nomeFantasia', '$codigoCNPJ', '$codigoCEI', '$ativoFilial', '$inscricaoEstadual', '$inscricaoMunicipal', '$endereco', '$numero', '$cep', '$cidade', '$bairro', '$estado', '$pais', '$telefone1', '$telefone2', '$celular', '$email', '$usuarioLogado', SYSDATE, $tipo, '$projetoFlial')";     
+            $query = "INSERT INTO GP_SYS_EMPRESA_FILIAL (ID, ID_EMPRESA_FILIAL, ID_EMPRESA, RAZAO_SOCIAL, NOME_FANTASIA, COD_EMPRESA, CEI, ATIVO, INSCRICAO_ESTADUAL, INSCRICAO_MUNICIPAL, ENDERECO, NUMERO, CEP, CIDADE, BAIRRO, ESTADO, PAIS, TELEFONE_1, TELEFONE_2, CELULAR, EMAIL, USUARIO_CADASTRO, DATA_CADASTRO, TIPO_CODIGO)
+                             VALUES ($novoId, $idFilial, $empresa, '$razaoSocial', '$nomeFantasia', '$codigoCNPJ', '$codigoCEI', '$ativoFilial', '$inscricaoEstadual', '$inscricaoMunicipal', '$endereco', '$numero', '$cep', '$cidade', '$bairro', '$estado', '$pais', '$telefone1', '$telefone2', '$celular', '$email', '$usuarioLogado', SYSDATE, $tipo)";     
 
             //print_r($query);exit();
             $resultado = $this->conBanco->query($query);
@@ -135,7 +135,6 @@ class cadastrofilialmodel extends CI_Model {
             $obj[] = $rs[0]->COD_EMPRESA;
             $obj[] = $rs[0]->CEI;
             $obj[] = $rs[0]->ATIVO;
-            $obj[] = $rs[0]->PROJETO;
             $obj[] = $rs[0]->INSCRICAO_ESTADUAL;
             $obj[] = $rs[0]->INSCRICAO_MUNICIPAL;
             $obj[] = $rs[0]->ENDERECO;
@@ -182,7 +181,6 @@ class cadastrofilialmodel extends CI_Model {
             $obj[] = $rs[$cont]->COD_EMPRESA;
             $obj[] = $rs[$cont]->CEI;
             $obj[] = $rs[$cont]->ATIVO;
-            $obj[] = $rs[$cont]->PROJETO;
             $obj[] = $rs[$cont]->INSCRICAO_ESTADUAL;
             $obj[] = $rs[$cont]->INSCRICAO_MUNICIPAL;
             $obj[] = $rs[$cont]->ENDERECO;
@@ -235,7 +233,6 @@ class cadastrofilialmodel extends CI_Model {
                 $obj[] = $rs[0]->COD_EMPRESA;
                 $obj[] = $rs[0]->CEI;
                 $obj[] = $rs[0]->ATIVO;
-                $obj[] = $rs[0]->PROJETO;
                 $obj[] = $rs[0]->INSCRICAO_ESTADUAL;
                 $obj[] = $rs[0]->INSCRICAO_MUNICIPAL;
                 $obj[] = $rs[0]->ENDERECO;
@@ -294,7 +291,6 @@ class cadastrofilialmodel extends CI_Model {
                 $obj[] = $rs[0]->COD_EMPRESA;
                 $obj[] = $rs[0]->CEI;
                 $obj[] = $rs[0]->ATIVO;
-                $obj[] = $rs[0]->PROJETO;
                 $obj[] = $rs[0]->INSCRICAO_ESTADUAL;
                 $obj[] = $rs[0]->INSCRICAO_MUNICIPAL;
                 $obj[] = $rs[0]->ENDERECO;
@@ -343,7 +339,6 @@ class cadastrofilialmodel extends CI_Model {
                 $obj[] = $rs[0]->COD_EMPRESA;
                 $obj[] = $rs[0]->CEI;
                 $obj[] = $rs[0]->ATIVO;
-                $obj[] = $rs[0]->PROJETO;
                 $obj[] = $rs[0]->INSCRICAO_ESTADUAL;
                 $obj[] = $rs[0]->INSCRICAO_MUNICIPAL;
                 $obj[] = $rs[0]->ENDERECO;
@@ -386,7 +381,6 @@ class cadastrofilialmodel extends CI_Model {
                 $obj[] = $rs[0]->COD_EMPRESA;
                 $obj[] = $rs[0]->CEI;
                 $obj[] = $rs[0]->ATIVO;
-                $obj[] = $rs[0]->PROJETO;
                 $obj[] = $rs[0]->INSCRICAO_ESTADUAL;
                 $obj[] = $rs[0]->INSCRICAO_MUNICIPAL;
                 $obj[] = $rs[0]->ENDERECO;
@@ -449,7 +443,6 @@ class cadastrofilialmodel extends CI_Model {
             $obj['COD_EMPRESA'] = $item->COD_EMPRESA;
             $obj['CEI'] = $item->CEI;
             $obj['ATIVO'] = $item->ATIVO;
-            $obj['PROJETO'] = $item->PROJETO;
             $obj['INSCRICAO_ESTADUAL'] = $item->INSCRICAO_ESTADUAL;
             $obj['INSCRICAO_MUNICIPAL'] = $item->INSCRICAO_MUNICIPAL;
             $obj['ENDERECO'] = $item->ENDERECO;
@@ -519,7 +512,6 @@ class cadastrofilialmodel extends CI_Model {
             $obj[] = $rs[0]->COD_EMPRESA;
             $obj[] = $rs[0]->CEI;
             $obj[] = $rs[0]->ATIVO;
-            $obj[] = $rs[0]->PROJETO;
             $obj[] = $rs[0]->INSCRICAO_ESTADUAL;
             $obj[] = $rs[0]->INSCRICAO_MUNICIPAL;
             $obj[] = $rs[0]->ENDERECO;

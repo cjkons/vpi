@@ -42,7 +42,7 @@ class cadastrousuariomodel extends CI_Model {
     }   
     
 
-    public function salvar($idUsuario, $nomeUsuario, $sobrenomeUsuario, $emailUsuario, $empresaUsuario, $ativoUsuario, $loginUsuario, $senha, $dataNascimento, $matricula, $cargo){
+    public function salvar($idUsuario, $nomeUsuario, $sobrenomeUsuario, $emailUsuario, $empresaUsuario, $ativoUsuario, $loginUsuario, $senha){
         
         $this->initConBanco();
         
@@ -60,7 +60,7 @@ class cadastrousuariomodel extends CI_Model {
                 
         if (is_array($rs) && count($rs) > 0){
             
-            $query = "UPDATE GP_CADASTRO_USUARIO SET ID_EMPRESA = '$empresaUsuario',  NOME  = '$nomeUsuario' , SOBRENOME = '$sobrenomeUsuario', EMAIL = '$emailUsuario', DATA_NASCIMENTO = '$dataNascimento', LOGIN = '$loginUsuario', SENHA = '$senha', IES_ATIVO = '$ativoUsuario', DATA_ALTERACAO = SYSDATE, USUARIO_ALTERADOR = '$usuarioLogado' WHERE ID = $idUsuario";
+            $query = "UPDATE GP_CADASTRO_USUARIO SET ID_EMPRESA = '$empresaUsuario',  NOME  = '$nomeUsuario' , SOBRENOME = '$sobrenomeUsuario', EMAIL = '$emailUsuario', LOGIN = '$loginUsuario', SENHA = '$senha', IES_ATIVO = '$ativoUsuario', DATA_ALTERACAO = SYSDATE, USUARIO_ALTERADOR = '$usuarioLogado' WHERE ID = $idUsuario";
             
             $resultado = $this->conBanco->query($query);
                
@@ -85,8 +85,8 @@ class cadastrousuariomodel extends CI_Model {
                 $novoId = $rs[0]->ID + 1;
             }                       
 
-            $query = "INSERT INTO GP_CADASTRO_USUARIO (ID, ID_EMPRESA, NOME, SOBRENOME, LOGIN, EMAIL, SENHA, IES_ATIVO, DATA_CADASTRO, USUARIO_CADASTRO, MATRICULA, CARGO, DATA_NASCIMENTO)
-                            VALUES ($idUsuario,'$empresaUsuario', '$nomeUsuario', '$sobrenomeUsuario', '$loginUsuario', '$emailUsuario', '$senha', '$ativoUsuario', SYSDATE, '$usuarioLogado', '$matricula', '$cargo', '$dataNascimento')";     
+            $query = "INSERT INTO GP_CADASTRO_USUARIO (ID, ID_EMPRESA, NOME, SOBRENOME, LOGIN, EMAIL, SENHA, IES_ATIVO, DATA_CADASTRO, USUARIO_CADASTRO)
+                            VALUES ($idUsuario,'$empresaUsuario', '$nomeUsuario', '$sobrenomeUsuario', '$loginUsuario', '$emailUsuario', '$senha', '$ativoUsuario', SYSDATE, '$usuarioLogado')";     
 
              
             $resultado = $this->conBanco->query($query);
@@ -144,9 +144,7 @@ class cadastrousuariomodel extends CI_Model {
             $obj[] = $rs[0]->IES_ATIVO;
             $obj[] = $rs[0]->LOGIN;
             $obj[] = $rs[0]->SENHA;
-            $obj[] = $rs[0]->DATA_NASCIMENTO;
-            $obj[] = $rs[0]->MATRICULA;
-            $obj[] = $rs[0]->CARGO;
+            
         
             return json_encode($obj);
         }
@@ -180,9 +178,7 @@ class cadastrousuariomodel extends CI_Model {
             $obj[] = $rs[$cont]->IES_ATIVO;
             $obj[] = $rs[$cont]->LOGIN;
             $obj[] = $rs[$cont]->SENHA;
-            $obj[] = $rs[$cont]->DATA_NASCIMENTO;
-            $obj[] = $rs[$cont]->MATRICULA;
-            $obj[] = $rs[$cont]->CARGO;
+            
         
             return json_encode($obj);
         }
@@ -221,9 +217,7 @@ class cadastrousuariomodel extends CI_Model {
                 $obj[] = $rs[0]->IES_ATIVO;
                 $obj[] = $rs[0]->LOGIN;
                 $obj[] = $rs[0]->SENHA;
-                $obj[] = $rs[0]->DATA_NASCIMENTO;
-                $obj[] = $rs[0]->MATRICULA;
-                $obj[] = $rs[0]->CARGO;
+                
 
                 return json_encode($obj);
             }
@@ -261,9 +255,7 @@ class cadastrousuariomodel extends CI_Model {
                 $obj[] = $rs[0]->IES_ATIVO;
                 $obj[] = $rs[0]->LOGIN;
                 $obj[] = $rs[0]->SENHA;
-                $obj[] = $rs[0]->DATA_NASCIMENTO;
-                $obj[] = $rs[0]->MATRICULA;
-                $obj[] = $rs[0]->CARGO;
+                
 
                 return json_encode($obj);
             }
@@ -298,9 +290,7 @@ class cadastrousuariomodel extends CI_Model {
                 $obj[] = $rs[0]->IES_ATIVO;
                 $obj[] = $rs[0]->LOGIN;
                 $obj[] = $rs[0]->SENHA;
-                $obj[] = $rs[0]->DATA_NASCIMENTO;
-                $obj[] = $rs[0]->MATRICULA;
-                $obj[] = $rs[0]->CARGO;
+                
 
                 return json_encode($obj);
             }
@@ -331,9 +321,7 @@ class cadastrousuariomodel extends CI_Model {
                 $obj[] = $rs[0]->IES_ATIVO;
                 $obj[] = $rs[0]->LOGIN;
                 $obj[] = $rs[0]->SENHA;
-                $obj[] = $rs[0]->DATA_NASCIMENTO;
-                $obj[] = $rs[0]->MATRICULA;
-                $obj[] = $rs[0]->CARGO;
+                
 
                 return json_encode($obj);
             }
@@ -385,8 +373,8 @@ class cadastrousuariomodel extends CI_Model {
             $obj['EMPRESA'] = $item->ID_EMPRESA;
             $obj['ATIVO'] = $item->IES_ATIVO;
             $obj['LOGIN'] = $item->LOGIN;
-            $obj['DATA_NASCIMENTO'] = $item->DATA_NASCIMENTO;
             $obj['CARGO'] = $item->CARGO;
+            $obj['DATA_CADASTRO'] = $item->DATA_CADASTRO;
             
             $obj['SELECIONAR'] = "<button type='submit' class='btn-primary' onclick='selecionaGrid($aux)'>Selecionar</button>";
           
@@ -445,9 +433,7 @@ class cadastrousuariomodel extends CI_Model {
             $obj[] = $rs[0]->IES_ATIVO;
             $obj[] = $rs[0]->LOGIN;
             $obj[] = $rs[0]->SENHA;
-            $obj[] = $rs[0]->DATA_NASCIMENTO;
-            $obj[] = $rs[0]->MATRICULA;
-            $obj[] = $rs[0]->CARGO;
+            
 
             return json_encode($obj);
         }

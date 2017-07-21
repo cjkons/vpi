@@ -206,8 +206,17 @@ class folhapontomodel extends CI_Model {
                         $dataExameFuturo1 = implode("/", array_reverse(explode("-", $dataExameFuturo)));
                     }
                     $diasemana_numero = date('w', strtotime($dataExameFuturo1));
+                    //print_r($diasemana_numero);
                     
-                    $diaSemanaTexto1 =  $diasemana[$diasemana_numero - intval(1)];
+                    if ($diasemana_numero == 0 ) {
+                     
+                        $diaSemanaTexto1 = $diasemana[$diasemana_numero + 6];
+                        
+                    }else{
+                        
+                        $diaSemanaTexto1 =  $diasemana[$diasemana_numero - 1]; 
+                    }
+                    
                     $diaSemanaTexto2 =  $diasemana[$diasemana_numero];
         
         
@@ -564,7 +573,14 @@ class folhapontomodel extends CI_Model {
                     }
                     $diasemana_numero = date('w', strtotime($dataExameFuturo1));
                     
-                    $diaSemanaTexto1 =  $diasemana[$diasemana_numero - 1];
+                    if ($diasemana_numero == 0 ) {
+                     
+                    $diaSemanaTexto1 = $diasemana[$diasemana_numero + 6];
+                        
+                    }else{
+                        
+                        $diaSemanaTexto1 =  $diasemana[$diasemana_numero - intval(1)]; 
+                    }
                     $diaSemanaTexto2 =  $diasemana[$diasemana_numero];
         
         
@@ -694,6 +710,7 @@ class folhapontomodel extends CI_Model {
                         $dataExameFuturo2 = implode("/", array_reverse(explode("-", $dataExameFuturo)));
                     }
                     $diasemana_numero = date('w', strtotime($dataExameFuturo2));
+                    
                     
                     $diaSemanaTexto =  $diasemana[$diasemana_numero];
                 
@@ -880,7 +897,14 @@ class folhapontomodel extends CI_Model {
                     }
                     $diasemana_numero = date('w', strtotime($dataExameFuturo1));
                     
-                    $diaSemanaTexto1 =  $diasemana[$diasemana_numero - 1];
+                    if ($diasemana_numero == 0 ) {
+                     
+                    $diaSemanaTexto1 = $diasemana[$diasemana_numero + 6];
+                        
+                    }else{
+                        
+                        $diaSemanaTexto1 =  $diasemana[$diasemana_numero - intval(1)]; 
+                    }
                     $diaSemanaTexto2 =  $diasemana[$diasemana_numero];
         
         
@@ -1296,7 +1320,14 @@ class folhapontomodel extends CI_Model {
                     }
                     $diasemana_numero = date('w', strtotime($dataExameFuturo1));
                     
-                    $diaSemanaTexto1 =  $diasemana[$diasemana_numero - 1];
+                    if ($diasemana_numero == 0 ) {
+                     
+                    $diaSemanaTexto1 = $diasemana[$diasemana_numero + 6];
+                        
+                    }else{
+                        
+                        $diaSemanaTexto1 =  $diasemana[$diasemana_numero - intval(1)]; 
+                    }
                     $diaSemanaTexto2 =  $diasemana[$diasemana_numero];
         
         

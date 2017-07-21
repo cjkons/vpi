@@ -123,7 +123,7 @@
                     </td>
                      <td  style="padding-right: 10px;font-size: 14px;">
                        <div class="form">
-                                Código Fornecedor
+                                CNPJ
                                 <input type="text" class="form-control" id="codigoCNPJ" maxlength="18"  placeholder="CNPJ" readonly onkeypress="mascaraCNPJ(this)">
                         </div>
                    </td>
