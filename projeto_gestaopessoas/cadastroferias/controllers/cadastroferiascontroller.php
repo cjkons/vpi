@@ -13,6 +13,14 @@ class cadastroferiascontroller extends CI_Controller {
         $this->load->view('cadastroferiasview');
     }
     
+    public function novo() {
+        
+        $this->load->model('cadastroferiasmodel');
+
+        $retorno = $this->cadastroferiasmodel->novo();
+
+        echo json_encode($retorno);
+    }
    
      
     public function salvar() {
@@ -23,9 +31,9 @@ class cadastroferiascontroller extends CI_Controller {
         $idFilial       = $this->input->POST('idFilial');
            
                         
-        $this->load->model('cadastrogrupoequipamentomodel');
+        $this->load->model('cadastroferiasmodel');
 
-        $retorno = $this->cadastrogrupoequipamentomodel->salvar($codGrupo, $descricaoGrupo, $idEmpresa, $idFilial);
+        $retorno = $this->cadastroferiasmodel->salvar($codGrupo, $descricaoGrupo, $idEmpresa, $idFilial);
 
         echo json_encode($retorno);
     }

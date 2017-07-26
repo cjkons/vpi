@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8"> 
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>VPI | Clarify</title>
   <!-- Tell the browser to be responsive to screen width -->
@@ -28,7 +28,7 @@
   <!-- Daterange picker -->
   <link rel="stylesheet" href="resources/geral/plugins/daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
-  <link rel="stylesheet" href="resources/geral/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <link rel="stylesheet" href="resources/geral/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"> 
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -210,17 +210,41 @@
          <li class="active treeview">
           <a href="#">
             <i class="fa fa-medkit"></i>
-            <span>Gestão de Medicina e Segurança</span>
+            <span>Medicina e Segurança</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
               
-            <li><a onclick="adicionarAba('Cadastro ASO', 'MEDICINAESEGURANCA_01_02', 'medicinaeseguranca-01-02', 'index.php?m=cadastroaso&c=cadastroasocontroller', 'resources/geral/images/cadastroaso.png')" href="#"><i class="fa fa-heartbeat"></i>Cadastro ASO</a></li> 
-            <li><a onclick="adicionarAba('Cadastro Atestado', 'MEDICINAESEGURANCA_01_04', 'medicinaeseguranca-01-04', 'index.php?m=cadastroatestado&c=cadastroatestadocontroller', 'resources/geral/images/cadastroAtestado.png')" href="#"><i class="fa fa-heartbeat"></i>Cadastro Atestado</a></li> 
-            <li><a onclick="adicionarAba('Cadastro Exames ASO', 'MEDICINAESEGURANCA_01_01', 'medicinaeseguranca-01-01', 'index.php?m=cadastroexames&c=cadastroexamescontroller', 'resources/geral/images/cadastroexames.png')" href="#"><i class="fa fa-heartbeat"></i>Cadastro Exames ASO</a></li> 
-            <li class="active treeview">
+             <li class="active treeview">
+            <a href="#">
+              <i class="fa fa-print"></i>
+              <span>Gestão EPI's</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a onclick="adicionarAba('Cadastro de EPI', 'GESTAOEPI_01_01', 'gestaoepi-01-05', 'index.php?m=cadastroepi&c=cadastroepicontroller', 'resources/geral/images/cadastroepi.png')" href="#"><i class="fa fa-file-code-o"></i>Cadastro de EPI</a></li> 
+              <li><a onclick="adicionarAba('Cadastro Tipo de EPI', 'GESTAOEPI_01_02', 'gestaoepi-01-02', 'index.php?m=cadastroepitipo&c=cadastroepitipocontroller', 'resources/geral/images/cadastroepitipo.png')" href="#"><i class="fa fa-file-code-o"></i>Cadastro Tipo de EPI</a></li> 
+             </ul>
+        </li>
+        <li class="active treeview">
+            <a href="#">
+              <i class="fa fa-print"></i>
+              <span>Gestão Medicina</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a onclick="adicionarAba('Cadastro ASO', 'MEDICINAESEGURANCA_01_02', 'medicinaeseguranca-01-02', 'index.php?m=cadastroaso&c=cadastroasocontroller', 'resources/geral/images/cadastroaso.png')" href="#"><i class="fa fa-heartbeat"></i>Cadastro ASO</a></li> 
+                <li><a onclick="adicionarAba('Cadastro Atestado', 'MEDICINAESEGURANCA_01_04', 'medicinaeseguranca-01-04', 'index.php?m=cadastroatestado&c=cadastroatestadocontroller', 'resources/geral/images/cadastroAtestado.png')" href="#"><i class="fa fa-heartbeat"></i>Cadastro Atestado</a></li> 
+                <li><a onclick="adicionarAba('Cadastro Exames ASO', 'MEDICINAESEGURANCA_01_01', 'medicinaeseguranca-01-01', 'index.php?m=cadastroexames&c=cadastroexamescontroller', 'resources/geral/images/cadastroexames.png')" href="#"><i class="fa fa-heartbeat"></i>Cadastro Exames ASO</a></li> 
+             </ul>
+        </li>
+        <li class="active treeview">
             <a href="#">
               <i class="fa fa-print"></i>
               <span>Relatórios</span>

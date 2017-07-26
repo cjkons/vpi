@@ -50,6 +50,7 @@
 
         <!-- CADASTRO EVENTO -->
         <script src="resources/cadastroferias/js/cadastroferias.js"></script>
+        
         <!-- CADASTRO EVENTO -->
     </head>
 
@@ -104,7 +105,7 @@
                     <td  style="width: 5%;padding-right: 10px;font-size: 14px;">
                          <div class="form-group">
                              ID
-                             <input style="text-transform: uppercase;" type="text" class="form-control" id="ID" placeholder="ID" readonly>
+                             <input style="text-transform: uppercase;" type="text" class="form-control" id="id" placeholder="ID" readonly>
                          </div>
                     </td>
                     <td  style="width: 20%;padding-right: 10px;font-size: 14px;">
@@ -177,16 +178,17 @@
                     </td>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
+                            Dia Fim
+                            <input style="text-transform: uppercase;" type="text" class="form-control" id="dataFimFerias" onchange="calculaDias()" placeholder="Dia Fim" readonly>
+                        </div>
+                   </td>
+                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
+                       <div class="form-group">
                             Quantidade Dias
                             <input style="text-transform: uppercase;" type="number" class="form-control" id="diasFerias" placeholder="Quantidade" readonly>
                         </div>
                     </td>
-                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
-                       <div class="form-group">
-                            Dia Fim
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="dataFimFerias" placeholder="Dia Fim" readonly>
-                        </div>
-                   </td>
+                    
                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Comprado Dias?

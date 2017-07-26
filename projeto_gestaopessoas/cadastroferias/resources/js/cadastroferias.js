@@ -7,17 +7,29 @@
 ///////////////////////////////////////////////
 
 $(document).ready(function() {
-  
+ 
   //getGrid();
   carregarEmpresa();
   carregarFilial();
   carregarFuncionario();
   
- 
+  $('#dataInicioFerias').datepicker({
+    format: "dd/mm/yyyy",
+    language: "pt-BR"
+  });
+  $('#dataFimFerias').datepicker({
+    format: "dd/mm/yyyy",
+    language: "pt-BR"
+  });
+  
+  
             
     
 
 });
+
+
+            
 function novo() {
 
     document.getElementById("id").readOnly = true;
@@ -29,9 +41,10 @@ function novo() {
     document.getElementById("setor").readOnly = true;
     document.getElementById("funcao").readOnly = true;
     document.getElementById("dataInicioFerias").readOnly = false;
-    document.getElementById("diasFerias").readOnly = false;
-    document.getElementById("dataFimFerias").readOnly = true;
-    document.getElementById("diasComprados").readOnly = true;
+    document.getElementById("dataFimFerias").readOnly = false;
+    document.getElementById("diasFerias").readOnly = true;
+    document.getElementById("comprouDias").readOnly = true;
+    document.getElementById("diasComprados").disabled = true;
     document.getElementById("diasHaver").readOnly = false;
 
 
@@ -44,10 +57,32 @@ function novo() {
     document.getElementById("setor").value = "";
     document.getElementById("funcao").value = "";
     document.getElementById("dataInicioFerias").value = "";
+    document.getElementById("dataFimFerias").value = "";
     document.getElementById("diasFerias").value = "";
-    document.getElementById("dataFimFerias").value = 0;
+    document.getElementById("comprouDias").value = 0;
     document.getElementById("diasComprados").value = "";
     document.getElementById("diasHaver").value = "";
+    
+     $.ajax({
+            url: 'index.php?m=cadastroferias&c=cadastroferiascontroller&f=novo',
+            data: {
+                            
+                
+                
+                 },
+            type: 'POST',
+            dataType: 'json',
+            async: true,
+            success: function(r) {
+                  
+                   document.getElementById("id").value         =  r;
+                   
+             
+            },
+            error: function(e) {
+             
+            }
+        });
 
 
 }
@@ -86,7 +121,7 @@ function salvar(){
       
 
         $.ajax({
-            url: 'index.php?m=cadastrogrupoequipamento&c=cadastrogrupoequipamentocontroller&f=salvar',
+            url: 'index.php?m=cadastroferias&c=cadastroferiascontroller&f=salvar',
             data: {
                 codGrupo: codGrupo,
                 descricaoGrupo:  descricaoGrupo,
@@ -593,7 +628,7 @@ function carregarDiasComprados(){
     
     var comprouDias                 =   $('#comprouDias').val(); 
     
-    if (comprouDias != "S"){
+    if (comprouDias != 'S'){
          
          document.getElementById("diasComprados").value = "";
          document.getElementById("diasComprados").disabled = true; 

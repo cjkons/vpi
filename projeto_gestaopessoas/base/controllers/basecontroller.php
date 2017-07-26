@@ -10,7 +10,7 @@ class basecontroller extends CI_Controller {
         
     }
 
-    public function index() {
+    public function index() { 
 
         $this->load->model('basemodel');
 

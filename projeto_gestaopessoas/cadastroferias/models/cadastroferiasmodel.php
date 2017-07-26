@@ -19,6 +19,27 @@ class cadastroferiasmodel extends CI_Model {
 
         return $this->access->getUsuarioLogado();
     }
+    
+    public function novo(){
+        
+        $this->initConBanco();
+        
+        $query = "SELECT MAX(ID_FERIAS) AS ID_FERIAS FROM GP_CAD_FERIAS";
+              //     print_r($query);exit();     
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+                       
+        if(count($rs) > 0){
+            $novoId = $rs[0]->ID_FERIAS + 1;
+        }
+        else{
+            $novoId = 1;
+            
+        }
+                
+        return $novoId;
+         
+    } 
 
    
 
