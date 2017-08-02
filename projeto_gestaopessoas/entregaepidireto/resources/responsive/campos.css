@@ -1,0 +1,116 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18/03/2016, 13:59:13
+    Author     : heitor.siqueira
+*/
+
+/* Smaller than standard 960 (devices and browsers) */
+/* 
+    BTN-INFO - TAMANHO DOS BOTOES DE NAVEGA��O
+    FORM - TAMANHO DO TEXTO ACIMA DOS CAMPOS DE INSER�AO  
+
+
+
+*/ 
+@media only screen and (max-width: 1617px) {
+
+    .btn-info{
+        font-size:90%;
+        color:  red;
+    }
+
+}
+@media only screen and (min-width: 1375px) and (max-width: 1616px) {
+    .btn-info {
+        font-size: 90%;
+        color: orange ;
+    }
+    .form {
+        font-size: 50%;
+        color: yellow ;
+    }
+
+}
+@media only screen and (min-width: 1189px) and (max-width: 1374px) {
+    .btn-info {
+        font-size: 80%;
+        color: beige;
+    }
+    .form {
+        font-size: 50%;
+        color: yellow ;
+    }
+
+}
+
+/* AJUSTES IDEAIS PARA TELA DE 14"*/
+/* Tablet Portrait size to standard  (devices and browsers) */
+@media only screen and (min-width: 1000px) and (max-width: 1188px) {
+    .btn-info {
+        font-size: 80%;
+        color: green;
+    }
+    .form {
+        font-size: 50%;
+        color: yellow ;
+    }
+
+
+}
+
+/* Tablet Portrait size to standard (devices and browsers) */
+@media only screen and (min-width: 880px) and (max-width: 1188px) {
+    .btn-info {
+        font-size: 70%;
+        color: yellow ;
+    }
+    .form {
+        font-size: 50%;
+        color: yellow ;
+    }
+    
+
+}
+/* Tablet Portrait size to standard  (devices and browsers) */
+@media only screen and (min-width: 598px) and (max-width: 879px) {
+    .btn-info {
+        font-size: 60%;
+        color:  blue ;
+    }
+    .form {
+        font-size: 50%;
+        color: yellow ;
+    }
+
+}
+
+
+/* Tablet Portrait size to standard  (devices and browsers) */
+@media only screen and (min-width: 497px) and (max-width: 597px) {
+    .btn-info {
+        font-size: 55%;
+        color: white ;
+    }
+    .form {
+        font-size: 50%;
+        color: yellow ;
+    }
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 496px) {
+    .btn-info {
+        font-size: 50%;
+    }
+    .form {
+        font-size: 50%;
+        
+    }
+}
+
+
+

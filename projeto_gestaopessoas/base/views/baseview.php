@@ -226,9 +226,12 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a onclick="adicionarAba('Cadastro de EPI', 'GESTAOEPI_01_01', 'gestaoepi-01-05', 'index.php?m=cadastroepi&c=cadastroepicontroller', 'resources/geral/images/cadastroepi.png')" href="#"><i class="fa fa-file-code-o"></i>Cadastro de EPI</a></li> 
-              <li><a onclick="adicionarAba('Cadastro Tipo de EPI', 'GESTAOEPI_01_02', 'gestaoepi-01-02', 'index.php?m=cadastroepitipo&c=cadastroepitipocontroller', 'resources/geral/images/cadastroepitipo.png')" href="#"><i class="fa fa-file-code-o"></i>Cadastro Tipo de EPI</a></li> 
-             </ul>
+                <li><a onclick="adicionarAba('Cadastro de EPI', 'GESTAOEPI_01_01', 'gestaoepi-01-01', 'index.php?m=cadastroepi&c=cadastroepicontroller', 'resources/geral/images/cadastroepi.png')" href="#"><i class="fa fa-file-code-o"></i>Cadastro de EPI</a></li> 
+                <li><a onclick="adicionarAba('Cadastro Tipo de EPI', 'GESTAOEPI_01_02', 'gestaoepi-01-02', 'index.php?m=cadastroepitipo&c=cadastroepitipocontroller', 'resources/geral/images/cadastroepitipo.png')" href="#"><i class="fa fa-file-code-o"></i>Cadastro Tipo de EPI</a></li> 
+                <li><a onclick="adicionarAba('Entrega EPI Bloco', 'GESTAOEPI_01_05', 'gestaoepi-01-05', 'index.php?m=entregaepibloco&c=entregaepiblococontroller', 'resources/geral/images/entregaepibloco.png')" href="#"><i class="fa fa-file-code-o"></i>Entrega EPI Bloco</a></li> 
+                <li><a onclick="adicionarAba('Entrega EPI Direto', 'GESTAOEPI_01_03', 'gestaoepi-01-03', 'index.php?m=entregaepidireto&c=entregaepidiretocontroller', 'resources/geral/images/entregaepidireto.png')" href="#"><i class="fa fa-file-code-o"></i>Entrega EPI Direto</a></li> 
+                <li><a onclick="adicionarAba('Quantidade de EPI/Função', 'GESTAOEPI_01_04', 'gestaoepi-01-04', 'index.php?m=quantidadeepifuncao&c=quantidadeepifuncaocontroller', 'resources/geral/images/quantidadeepifuncao.png')" href="#"><i class="fa fa-file-code-o"></i>Quantidade EPI/Função</a></li> 
+            </ul>
         </li>
         <li class="active treeview">
             <a href="#">
