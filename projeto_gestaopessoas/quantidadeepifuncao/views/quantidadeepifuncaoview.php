@@ -118,9 +118,10 @@
                 <thead>
                     <tr>
                        
-                        <th style='width: 10%;'>ID</th>
-                        <th style='width: 25%;'>Função</th>
-                        <th style='width: 10%;'>Selecionar</th>
+                        <th style='width: 15%;'>ID</th>
+                        <th style='width: 45%;'>Função</th>
+                        <th style='width: 15%;'>Edição do Cadastro</th>
+                        <th style='width: 15%;'>Selecionar Funcionários</th>
                         
                     </tr>
                 </thead>
@@ -149,7 +150,7 @@
                             <a onclick="salvar()" class="btn btn-primary">
                                 <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
                             </a>
-                            <a onclick="excluir()" class="btn btn-primary">
+                            <a onclick="validarExcluir()" class="btn btn-primary">
                                 <span class="glyphicon glyphicon-trash"></span> Excluir
                             </a>
 
@@ -167,12 +168,13 @@
 
                         </div>
                     </nav>
+                    
                     <fieldset class="fieldset-border">
                         <legend class="legend-border">Dados Função</legend>
                         <table style="width: 90%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
                             <tr>
 
-                                <td  style="width: 20%; padding-right: 5px;font-size: 14px;">
+                                <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
 
                                 </td>
 
@@ -189,6 +191,26 @@
 
                                     </div>
                                 </td>
+                                <td  style="width: 20%; padding-right: 5px;font-size: 14px;">
+                                    <div class="form">
+                                        Frequência de Impressao Ficha EPI
+                                        <select  id="impressaoEpi" class="form-control" >
+                                            <option readonly value="0">Selecione</option>
+                                            <option readonly value="1">01 MÊS</option>
+                                            <option readonly value="2">02 MESES</option>
+                                            <option readonly value="3">03 MESES</option>
+                                            <option readonly value="4">04 MESES</option>
+                                            <option readonly value="5">05 MESES</option>
+                                            <option readonly value="6">06 MESES</option>
+                                            <option readonly value="7">07 MESES</option>
+                                            <option readonly value="8">08 MESES</option>
+                                            <option readonly value="9">09 MESES</option>
+                                            <option readonly value="10">10 MESES</option>
+                                            <option readonly value="11">11 MESES</option>
+                                            <option readonly value="12">12 MESES</option>
+
+                                    </div>
+                                </td>
 
                                 <td  id="botaoAdicionarItem" style="width: 10%; padding-left:  0px;font-size: 14px;">
                                     <div>
@@ -200,13 +222,14 @@
                                 </td>  
 
 
-                                <td  style="width: 70%; padding-right: 5px;font-size: 14px;">
+                                <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
 
                                 </td>
                             </tr>   
 
                         </table> 
-                    </fieldset>   
+                    </fieldset>
+                     
 
                     <br>  
                     <fieldset class="fieldset-border">
@@ -451,13 +474,92 @@
             </div>
         </div>
     </div>
+        <!-- Modal para botão Excluir -->
+    <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Excluir</h4>
+          </div>
+          <div class="modal-body">
+              <p><h4> Tem certeza que deseja excluir ?</h4></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Sair</button>
+            <button type="button" onclick="excluir()"class="btn btn-primary" data-dismiss="modal">Excluir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ------------------------------------------------------------------------------------------------------------------------------------------
+    ********************************************************Modal item *********************************************************************
+    ***********************************************************************************************************************************************
+    ---------------------------------------------------------------------------------------------------------------------------------------------->
+
+    <!-- Modal item -->
+    <div class="modal fade" data-backdrop="static" id="listaFuncionariosModal" tabindex="50" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog-esp">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title" id="myModalLabel">Listagem de Funcionarios</h4>
+                     
+                </div>
+                <br><br>
+                <table style="width: 45%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
+                            <tr>
+                                <td  style="width: 25%; padding-right: 5px;font-size: 14px;">
+                                    <div class="form">
+                                         
+                                         <input type="text" class="form-control" id="idFuncaoLista" placeholder="Função" readonly>
+                                    </div>
+                                </td>
+                                <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
+                                    <a onclick="botaoFuncionariosSair()" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-refresh"></span> Sair
+
+                                    </a>
+                                </td>
+                            </tr>
+
+                </table>
+                <div style="height: 90%;"class="modal-body">
+                    
+                    <fieldset class="fieldset-border">
+                        <legend class="legend-border">Informe os EPI's para Funcionário</legend>
+                        <div style="overflow: auto;" align="center"> 
+                            
+
+                            <table id="tabelaFuncionarios" class="tabela" style="width:90%" align="center"></table> 
+
+
+
+
+                        </div>   
+                        <br><br><br> 
+                    </fieldset>        
+                    <br><br><br> 
+
+                </div>
+                <div class="modal-footer">
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
 
 
 
 
     <div class="modal-footer">
 
-
+    
 
 
 

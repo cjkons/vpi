@@ -140,6 +140,9 @@ function pesquisar() {
     document.getElementById("nomePesquisarFim").checkd   = "";
   
 }
+function validarExcluir(){
+    $('#excluirModal').modal('show');
+}
 
 function editar(){
     
@@ -309,8 +312,8 @@ function getGrid() {
  
    
     $('#grid').DataTable({
-        "processing": true,
-        "serverSide": true,
+        "destroy": true,
+        
         ajax: {
             "url": "index.php?m=cadastrogrupoempresa&c=cadastrogrupoempresacontroller&f=getGrid",
               
@@ -370,7 +373,8 @@ function getGrid() {
     
 }
 function atualizar(){
-          
+    getGrid();
+    
     document.getElementById("denominacaoGrupoEmpresa").value    = " ";
     document.getElementById("idGrupoEmpresa").value    = " ";   
     

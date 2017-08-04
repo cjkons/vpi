@@ -42,6 +42,7 @@
         <!--GRID-->
 
         <!--GERAL-->
+        <link href="resources/cadastrofilial/css/teste.css" rel="stylesheet">
         <link href="resources/geral/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <link href="resources/geral/geral.css" rel="stylesheet">
         <link href="resources/geral/resetarScrollBar.css" rel="stylesheet">
@@ -69,7 +70,7 @@
                 <a onclick="pesquisar()"class="btn btn-primary" ata-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-search"></span> Pesquisar
                 </a>
-                <a onclick="excluir()" class="btn btn-primary">
+                <a onclick="validarExcluir()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-trash"></span> Excluir
                 </a>
                 <a onclick="buscaPrimeiroRegistro()"  class="btn btn-primary">
@@ -101,37 +102,41 @@
 
             </div>
         </nav>
+    <br>
+        <div class="container" align="center" style="width: 90%;">
+            <fieldset class="fieldset-border">
+                <legend class="legend-border">Dados Filial</legend>    
         <table style="width: 80%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
              <tr>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                        <div class="form-group">
-                            <font size="2">Identificação</font>
+                        <div class="form">
+                            Identificação
                             <input type="number" class="form-control" id="idFilial" placeholder="Identificação" readonly>
                         </div>
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                       <div class="form-group">
-                            <font size="2">Empresa</font>
+                       <div class="form">
+                            Empresa
                             <select  id="empresa" class="form-control"  readonly></select>
                         </div>
                    </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                        <div class="form-group">
-                            <font size="2">Razão Social</font>
+                        <div class="form">
+                            Razão Social
                             <input type="text" class="form-control" id="razaoSocial"  placeholder="Razão Social" readonly>
                         </div>
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                        <div class="form-group">
-                             <font size="2">Nome Fantasia</font>
+                        <div class="form">
+                             Nome Fantasia
                             <input type="text" class="form-control" id="nomeFantasia" placeholder="Nome Fantasia" readonly>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                       <div class="form-group">
-                            <font size="2">Tipo</font>
+                       <div class="form">
+                            Tipo
                             <select  id="tipoFilial" class="form-control" readonly onchange="selecionarTipo()">
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="1">CEI</option>
@@ -140,40 +145,40 @@
                         </div>
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                       <div class="form-group">
-                            <font size="2">CNPJ</font>
+                       <div class="form">
+                            CNPJ
                             <input type="text" class="form-control" id="codigoCNPJ" maxlength="18"  placeholder="CNPJ" readonly onkeypress="mascaraCNPJ(this)">
                         </div>
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
-                            <font size="2">CEI</font>
+                          <div class="form">
+                            CEI
                             <input type="text" class="form-control" id="codigoCEI" maxlength="14"  placeholder="CNPJ" readonly onkeypress="mascaraCEI(this)">
                         </div>
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                      <div class="form-group">
+                      <div class="form">
                             <input type="checkbox" id="ativoFilial" name="ativoFilial" disabled="true"/>
-                            <font size="2">Ativo</font>
+                            Ativo
                         </div>
                    </td>
                 </tr>
                 <tr>
                    <td  style="padding-right: 10px;font-size: 14px;">
-                       <div class="form-group">
-                            <font size="2">Inscrição Estadual</font>
+                       <div class="form">
+                            Inscrição Estadual
                             <input type="text" class="form-control" id="inscricaoEstadual"  placeholder="Inscrição Estadual" readonly>
                         </div>
                    </td>
                     <td style="padding-right: 10px;font-size: 14px;">
-                       <div class="form-group">
-                            <font size="2">Inscrição Municipal</font>
+                       <div class="form">
+                            Inscrição Municipal
                             <input type="text" class="form-control" id="inscricaoMunicipal"  placeholder="Inscrição Municipal" readonly>
                         </div>
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                      <div class="form-group">
-                            <font size="2">Cep</font>
+                      <div class="form">
+                            CEP
                             <input type="text" class="form-control" id="cep"  maxlength="9"  placeholder="Cep" readonly onkeypress="mascaraCEP(this)">
                         </div>
                    </td>
@@ -181,34 +186,34 @@
                 </tr>
                 <tr>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
-                            <font size="2">Endereço</font>
+                          <div class="form">
+                            Endereço
                             <input type="text" class="form-control" id="endereco"   placeholder="Endereço" readonly>
                         </div>
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
-                            <font size="2">Número</font>
+                          <div class="form">
+                            Número
                             <input type="text" class="form-control" id="numero"   placeholder="Número" readonly>
                         </div>
                     </td>
                     <td style="padding-right: 10px;font-size: 14px;">
-                        <div class="form-group">
-                            <font size="2">Cidade</font>
+                        <div class="form">
+                            Cidade
                             <input type="text" class="form-control" id="cidade"   placeholder="Cidade" readonly>
                         </div>
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
-                            <font size="2">Bairro</font>
+                          <div class="form">
+                            Bairro
                             <input type="text" class="form-control" id="bairro"  placeholder="Bairro" readonly>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
-                            <font size="2">Estado</font>
+                          <div class="form">
+                            Estado
                             <select id="estado" class="form-control"  readonly>
                                      <option readonly >Selecione</option>
                                      <option value ="AC"readonly>Acre</option>
@@ -242,46 +247,46 @@
                         </div>
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                      <div class="form-group">
-                            <font size="2">País</font>
+                      <div class="form">
+                            País
                             <input type="text" class="form-control" id="pais"   placeholder="País" readonly>
                         </div>
                    </td>
                     <td style="padding-right: 10px;font-size: 14px;">
-                        <div class="form-group">
-                            <font size="2">Telefone</font>
+                        <div class="form">
+                            Telefone
                             <input type="text" class="form-control" id="telefone1" size="20" maxlength="15"   placeholder="Telefone 1" readonly onkeypress="mascara(this)">
                         </div>
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
-                            <font size="2">Telefone</font>
+                          <div class="form">
+                            Telefone
                             <input type="text" class="form-control" id="telefone2" size="20" maxlength="15"   placeholder="Telefone 2" readonly onkeypress="mascara(this)">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
-                            <font size="2">Celular</font>
+                          <div class="form">
+                            Celular
                             <input type="text" class="form-control" id="celular" size="20" maxlength="15"  placeholder="Celular" readonly onkeypress="mascara(this)">
                         </div>
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                      <div class="form-group">
-                            <font size="2">Email</font>
+                      <div class="form">
+                            Email
                             <input type="email" class="form-control" id="email"   placeholder="E-mail" readonly>
                         </div>
                    </td>
                     <td style="padding-right: 10px;font-size: 14px;">
-                        <div class="form-group">
-                            <font size="2">Data Cadastro</font>
+                        <div class="form">
+                            Data Cadastro
                             <input type="text" class="form-control" id="dataCadastro"   placeholder="Data Cadastro" readonly>
                         </div>
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
-                          <div class="form-group">
-                            <font size="2">Data Alteração</font>
+                          <div class="form">
+                            Data Alteração
                             <input type="text" class="form-control" id="dataAlteracao"  placeholder="Data Alteração" readonly>
                         </div>
                     </td>
@@ -289,8 +294,9 @@
              
            
         </table>
-       
-           <br><br>
+    </fieldset>                
+        </div>   
+           
            <div style='width: 99%; margin-left: 7px; margin-right: 4px; overflow-x: hidden'>
                   <table id="grid" class="display" cellspacing="0" width="100%">
                       <thead>
@@ -377,5 +383,24 @@
         </div>
       </div>
     </div>
+    <!-- Modal para botão Excluir -->
+    <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Excluir</h4>
+          </div>
+          <div class="modal-body">
+              <p><h4> Tem certeza que deseja excluir ?</h4></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Sair</button>
+            <button type="button" onclick="excluir()"class="btn btn-primary" data-dismiss="modal">Excluir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     
 </html>

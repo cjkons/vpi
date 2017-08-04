@@ -105,6 +105,8 @@ class cadastrofuncionarioscontroller extends CI_Controller {
         $desativado = $this->input->POST('desativado');
         $valeTransporte = $this->input->POST('valeTransporte');
         
+        $dataDemissao = $this->input->POST('dataDemissao');
+        
         
         
         
@@ -117,7 +119,7 @@ class cadastrofuncionarioscontroller extends CI_Controller {
                                                         $horarioFinal2, $imagem, $cep, $endereco, $numero, $bairro, $cidade, $estado, $email, $telefone1, $telefone2, $telefone3, $cpf, $identidade,
                                                         $expedidorIdentidade, $estadoIdentidade, $dataIdentidade, $ctps, $serieCtps, $pisPasep, $dataPisPasep, $estadoCtps, $dataCtps, $tituloEleitor, $zonaEleitor,
                                                         $secaoEleitor, $nomeMae, $nomePai, $sexo, $estadoCivil, $deficienteFisico, $grauInstrucao, $etnia, $corOlhos, $corCabelos, $altura, $peso, $nomeFilho1,
-                                                        $dataNasc1, $nomeFilho2, $dataNasc2, $nomeFilho3, $dataNasc3, $nomeFilho4, $dataNasc4, $nomeFilho5, $dataNasc5, $nomeFilho6, $dataNasc6, $setor, $desativado, $valeTransporte);
+                                                        $dataNasc1, $nomeFilho2, $dataNasc2, $nomeFilho3, $dataNasc3, $nomeFilho4, $dataNasc4, $nomeFilho5, $dataNasc5, $nomeFilho6, $dataNasc6, $setor, $desativado, $valeTransporte, $dataDemissao);
 
         echo json_encode($retorno);
     }

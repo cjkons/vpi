@@ -3,7 +3,7 @@
 $appName = "cadastroferias"; // nome da pasta do projeto 
 $appPath = "C:\\server\\projetos_vpi\\projeto_gestaopessoas"; // caminho onde esta o projeto no pc
 $wwwPath = "C:\\server\\htdocs\\gestaopessoas"; // caminho onde salva o projeto no servidor
-$fwkDir = "fwk";
+$fwkDir = "fwk"; 
 
 if(!is_dir($wwwPath . "\\" . $fwkDir . "\\application\\" . $appName)){
     mkdir($wwwPath . "\\" . $fwkDir . "\\application\\" . $appName);

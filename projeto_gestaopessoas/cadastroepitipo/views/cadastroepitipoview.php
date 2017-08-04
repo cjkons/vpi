@@ -42,6 +42,7 @@
         <!--GRID-->
 
         <!--GERAL-->
+        <link href="resources/cadastroepitipo/css/teste.css" rel="stylesheet">
         <link href="resources/geral/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <link href="resources/geral/geral.css" rel="stylesheet">
         <link href="resources/geral/resetarScrollBar.css" rel="stylesheet">
@@ -69,7 +70,7 @@
                 <a onclick="pesquisar()"class="btn btn-primary" ata-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-search"></span> Pesquisar
                 </a>
-                <a onclick="excluir()" class="btn btn-primary">
+                <a onclick="validarExcluir()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-trash"></span> Excluir
                 </a>
                 <a onclick="buscaPrimeiroRegistro()"  class="btn btn-primary">
@@ -97,6 +98,9 @@
             </div>
         </nav>
         <br>
+        <div class="container" align="center" style="width: 90%;">
+            <fieldset class="fieldset-border">
+                <legend class="legend-border" >Dados Tipo EPI</legend>
         <table style="width: 80%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
              <tr>
                 <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
@@ -124,6 +128,9 @@
              
            
         </table>
+        </fieldset>    
+        </div>        
+                
        <br>
         <HR WIDTH=100%>
         <br>
@@ -205,6 +212,25 @@
             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Sair</button>
             <button onclick="pesquisaFiltro()" type="button" class="btn btn-outline" data-dismiss="modal">Ok</button>
           
+          </div>
+        </div>
+      </div>
+    </div>
+    
+     <!-- Modal para botão Excluir -->
+    <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Excluir</h4>
+          </div>
+          <div class="modal-body">
+              <p><h4> Tem certeza que deseja excluir ?</h4></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Sair</button>
+            <button type="button" onclick="excluir()"class="btn btn-primary" data-dismiss="modal">Excluir</button>
           </div>
         </div>
       </div>

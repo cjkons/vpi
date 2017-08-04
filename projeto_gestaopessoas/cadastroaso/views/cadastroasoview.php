@@ -74,7 +74,7 @@
                 <a onclick="pesquisar()"class="btn btn-primary" ata-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-search"></span> Pesquisar
                 </a>
-                <a onclick="excluir()" class="btn btn-primary">
+                <a onclick="validarExcluir()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-trash"></span> Excluir
                 </a>
                 <a onclick="buscaPrimeiroRegistro()"  class="btn btn-primary">
@@ -669,6 +669,25 @@
             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Sair</button>
             <button onclick="pesquisaFiltro()" type="button" class="btn btn-outline" data-dismiss="modal">Ok</button>
           
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal para botão Excluir -->
+    <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Excluir</h4>
+          </div>
+          <div class="modal-body">
+              <p><h4> Tem certeza que deseja excluir ?</h4></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Sair</button>
+            <button type="button" onclick="excluir()"class="btn btn-primary" data-dismiss="modal">Excluir</button>
           </div>
         </div>
       </div>

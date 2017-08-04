@@ -34,7 +34,7 @@ class cadastroasomodel extends CI_Model {
         if(count($rs) > 0 && is_array($rs)){
             $novoIdUsuario = $rs[0]->ID_ASO + 1;
         }
-        else{
+        else{ 
             $novoIdUsuario = 1;
             
         }

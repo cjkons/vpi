@@ -680,7 +680,7 @@ function excluir(){
                
                atualizar();
             }
-            else {
+            else { 
                mensagem('Sucesso', 'Excluído  com Sucesso', 'success');
               
                atualizar();
@@ -695,7 +695,9 @@ function excluir(){
     }); 
      
 }
-
+function validarExcluir(){
+    $('#excluirModal').modal('show');
+}
 
 function pesquisar() {
     
@@ -1650,8 +1652,8 @@ function getGrid() {
     
     
     $('#grid').DataTable({
-        "processing": true,
-        "serverSide": true,
+        "destroy": true,
+        
         ajax: {
             "url": "index.php?m=cadastroaso&c=cadastroasocontroller&f=getGrid",
               
@@ -1980,7 +1982,7 @@ function atualizar() {
     document.getElementById("anexoExame").value = "";
     document.getElementById("anexoView").value = "";
     
-    
+    getGrid();
 }
 
 
@@ -2574,7 +2576,7 @@ function abrirArquivoPdf() {
     //window.open('C:/teste/pdf/.teste1.pdf'); - local
     //window.open('http://www.vpitecnologia.com.br/gcconcreto/relatoriostemp/relatorio/.cadastro_orcamento.pdf'); //gcconcreto
    // window.open('http://localhost/gestaopessoas/fwk/uploads/pdf/.atestado_aso.pdf'); // localhost
-    window.open('http://192.168.8.70/gestaopessoas/fwk/uploads/pdf/.atestado_aso.pdf'); // pc local
+    window.open('http://189.11.172.90/gestaopessoas/fwk/uploads/pdf/.atestado_aso.pdf'); // pc local
   
 }
 
@@ -2587,7 +2589,7 @@ function vizualizarAnexo() {
     if (anexoView != ""){
         
         //var enderecoContrato = "http://localhost/gestaopessoas/fwk/uploads/pdf/examesAso/"; // localhost
-        var enderecoContrato = "http://192.168.8.70/gestaopessoas/fwk/uploads/pdf/examesAso/"; // pc local
+        var enderecoContrato = "http://189.11.172.90/gestaopessoas/fwk/uploads/pdf/examesAso/"; // pc local
         //var enderecoContrato = "http://sig.sulcatarinense.com.br/uploadsPermuta/Contratos/"; // servidor
 
         window.open(enderecoContrato + anexoView, '_blank');

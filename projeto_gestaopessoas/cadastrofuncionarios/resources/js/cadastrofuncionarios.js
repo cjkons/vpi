@@ -20,7 +20,12 @@ $(document).ready(function() {
 $('#dataAdmissao').datepicker({
     format: "dd/mm/yyyy",
     language: "pt-BR"
-  });     
+  }); 
+  
+$('#dataDemissao').datepicker({
+    format: "dd/mm/yyyy",
+    language: "pt-BR"
+  });   
 
 $('#dataNasc').datepicker({
     format: "dd/mm/yyyy",
@@ -205,6 +210,7 @@ function novo(){
     document.getElementById("setor").readOnly             = false;
     document.getElementById("desativado").disabled = false;
     document.getElementById("valeTransporte").disabled = false;
+     document.getElementById("dataDemissao").disabled = true;
     
     
     
@@ -283,6 +289,7 @@ function novo(){
     
     $('#valeTransporte').prop('checked', false);
     
+    document.getElementById("dataDemissao").value            = "";
     
     document.getElementById("imagemView").innerHTML = "";
          
@@ -382,6 +389,8 @@ function salvar(){
     var dataNasc6           =   $('#dataNasc6').val();
     var imagemView           =   $('#imagemView').val();
     
+    var dataDemissao           =   $('#dataDemissao').val();
+    
     var setor           =   $('#setor').val();
     
     if ($('#desativado').is(':checked') == true) {
@@ -391,6 +400,7 @@ function salvar(){
     }else{
         
         var desativado = "N";
+       
     }
     
     if ($('#valeTransporte').is(':checked') == true) {
@@ -530,6 +540,16 @@ function salvar(){
        
     }
     
+    if(desativado == "S"){
+       //alert(desativado);
+        if(dataDemissao == ""){
+            controleDePreenchimento = 'N';
+        }else{
+           controleDePreenchimento ==  'S'; 
+        }
+       
+    }
+    
     
     if(controleDePreenchimento ==  'S'){
         
@@ -608,6 +628,7 @@ function salvar(){
                 document.getElementById("setor").readOnly             = true;
                 document.getElementById("desativado").disabled             = false;
                 document.getElementById("valeTransporte").disabled             = false;
+                document.getElementById("dataDemissao").disabled             = true;
                 
 
         
@@ -714,9 +735,9 @@ function salvar(){
                                     nomeFilho5: nomeFilho5,
                                     dataNasc5: dataNasc5,
                                     nomeFilho6: nomeFilho6,
-                                    dataNasc6: dataNasc6
+                                    dataNasc6: dataNasc6,
                             
-                            
+                                    dataDemissao: dataDemissao
                                  
                             
 
@@ -833,9 +854,9 @@ function salvar(){
                                     nomeFilho5: nomeFilho5,
                                     dataNasc5: dataNasc5,
                                     nomeFilho6: nomeFilho6,
-                                    dataNasc6: dataNasc6
+                                    dataNasc6: dataNasc6,
                             
-                            
+                                    dataDemissao: dataDemissao
                                  
                             
 
@@ -922,6 +943,10 @@ function pesquisar() {
   
 }
 
+function validarExcluir(){
+    $('#excluirModal').modal('show');
+}
+
 function editar(){
     
     document.getElementById("idFuncionario").readOnly = true;
@@ -995,6 +1020,8 @@ function editar(){
     document.getElementById("setor").readOnly = false;
     document.getElementById("desativado").disabled = false;
     document.getElementById("valeTransporte").disabled = false;
+    
+    document.getElementById("dataDemissao").disabled = true;
     
          
        
@@ -1074,6 +1101,8 @@ function buscaPrimeiroRegistro(){
     document.getElementById("setor").readOnly = true;
     document.getElementById("desativado").disabled = true;
     document.getElementById("valeTransporte").disabled = true;
+    
+    document.getElementById("dataDemissao").disabled = true;
 
    
     
@@ -1165,6 +1194,8 @@ function buscaPrimeiroRegistro(){
             document.getElementById("desativado").value = r[68];
             document.getElementById("dataPisPasep").value = r[69];
             document.getElementById("valeTransporte").value = r[70];
+            
+            document.getElementById("dataDemissao").value = r[71];
              
              
             if (r[68] == 'S' ) {
@@ -1275,6 +1306,7 @@ function buscaRegistroAnterior(){
     document.getElementById("setor").readOnly = true;
     document.getElementById("desativado").disabled = true;
     document.getElementById("valeTransporte").disabled = true;
+    document.getElementById("dataDemissao").disabled = true;
 
     
     var idFuncionario  =  $('#idFuncionario').val();  
@@ -1371,6 +1403,9 @@ function buscaRegistroAnterior(){
                 document.getElementById("desativado").value = r[68];
                 document.getElementById("dataPisPasep").value = r[69];
                 document.getElementById("valeTransporte").value = r[70];
+                
+                document.getElementById("dataDemissao").value = r[71];
+                
                 if (r[68] == 'S' ) {
 
                     $('#desativado').prop('checked', true);
@@ -1486,6 +1521,7 @@ function buscaRegistroProximo(){
     document.getElementById("desativado").disabled = true;
     document.getElementById("valeTransporte").disabled = true;
 
+    document.getElementById("dataDemissao").disabled = true;
     
     var idFuncionario  =  $('#idFuncionario').val();             
    
@@ -1581,6 +1617,8 @@ function buscaRegistroProximo(){
                     document.getElementById("desativado").value = r[68];
                     document.getElementById("dataPisPasep").value = r[69];
                     document.getElementById("valeTransporte").value = r[70];
+                    
+                    document.getElementById("dataDemissao").value = r[71];
              
                     if (r[68] == 'S' ) {
 
@@ -1690,6 +1728,8 @@ function buscaUltimoRegistro(){
     document.getElementById("setor").readOnly = true;
     document.getElementById("desativado").disabled = true;
     document.getElementById("valeTransporte").disabled = true;
+    
+    document.getElementById("dataDemissao").disabled = true;
 
     
     $.ajax({
@@ -1781,6 +1821,8 @@ function buscaUltimoRegistro(){
                 document.getElementById("dataPisPasep").value = r[69];
                 document.getElementById("valeTransporte").value = r[70];
              
+                document.getElementById("dataDemissao").value = r[71];
+                
                     if (r[68] == 'S' ) {
 
                         $('#desativado').prop('checked', true);
@@ -1912,7 +1954,9 @@ function pesquisaFiltro(){
                 document.getElementById("setor").value = r[67];
                 document.getElementById("desativado").value = r[68];
                 document.getElementById("dataPisPasep").value = r[69];
-                 document.getElementById("valeTransporte").value = r[70];
+                document.getElementById("valeTransporte").value = r[70];
+                 
+                document.getElementById("dataDemissao").value = r[71];
              
                     if (r[68] == 'S' ) {
 
@@ -1955,8 +1999,8 @@ function getGrid() {
     
     
     $('#grid').DataTable({
-        "processing": true,
-        "serverSide": true,
+        "destroy": true,
+        
         ajax: {
             "url": "index.php?m=cadastrofuncionarios&c=cadastrofuncionarioscontroller&f=getGrid",
               
@@ -2071,6 +2115,8 @@ function getGrid() {
     document.getElementById("desativado").disabled = true;
     document.getElementById("valeTransporte").disabled = true;
     
+    document.getElementById("dataDemissao").disabled = true;
+    
 
     
       
@@ -2167,6 +2213,10 @@ function getGrid() {
                 document.getElementById("desativado").value = r[68];
                 document.getElementById("dataPisPasep").value = r[69];
                 document.getElementById("valeTransporte").value = r[70];
+                
+                document.getElementById("dataDemissao").value = r[71];
+                
+                
              
                     if (r[68] == 'S' ) {
 
@@ -2203,7 +2253,7 @@ function getGrid() {
 }
 function atualizar() {
 
-
+    getGrid();
     document.getElementById("idFuncionario").readOnly = true;
     document.getElementById("empresa").readOnly = true;
     document.getElementById("filial").readOnly = true;
@@ -2275,6 +2325,7 @@ function atualizar() {
     document.getElementById("setor").readOnly = true;
     document.getElementById("desativado").disabled = true;
     document.getElementById("valeTransporte").disabled = true;
+     document.getElementById("dataDemissao").disabled = true;
 
 
 
@@ -2352,7 +2403,7 @@ function atualizar() {
     $('#desativado').prop('checked', false);
     $('#valeTransporte').prop('checked', false);
                    
-    
+    document.getElementById("dataDemissao").value = " ";
     document.getElementById("imagemView").value = " ";
 
 }
@@ -2705,4 +2756,23 @@ function verificaCarregamento(){
     {
         setTimeout( "verificaCarregamento()", 1 );
     }
+}
+
+
+function habilitarDataDemissao(){
+    
+    if ($('#desativado').is(':checked') == true) {
+    
+         document.getElementById("dataDemissao").disabled = false;
+        
+    }else{
+        
+        document.getElementById("dataDemissao").value = "";
+        document.getElementById("dataDemissao").disabled = true; 
+        document.getElementById("desativado").checked = false; 
+        
+    }
+    
+    
+    
 }

@@ -164,6 +164,10 @@ function novo(){
     
   
 }
+
+function validarExcluir(){
+    $('#excluirModal').modal('show');
+}
    
 function salvar(){
      
@@ -247,7 +251,7 @@ function salvar(){
                     //salvarAtividades();
                     mensagem('Sucesso', 'Salvo com sucesso', 'success');
                     //getAdicionarAtestado(id, funcionario, dataAtestado, cid );
-                    getGrid();
+                    atualizar();
                     //document.getElementById('tabelaPreco2').innerHTML = "";
                 }
                 else {
@@ -545,8 +549,8 @@ function getGrid() {
     
     
     $('#grid').DataTable({
-        "processing": true,
-        "serverSide": true,
+        "destroy": true,
+        
         ajax: {
             "url": "index.php?m=cadastroatestado&c=cadastroatestadocontroller&f=getGrid",
               

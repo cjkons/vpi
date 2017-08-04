@@ -42,6 +42,7 @@
         <!--GRID-->
 
         <!--GERAL-->
+        <link href="resources/cadastrosetor/css/teste.css" rel="stylesheet">
         <link href="resources/geral/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <link href="resources/geral/geral.css" rel="stylesheet">
         <link href="resources/boletimcaminhaobetoneira/css/zoom.css" rel="stylesheet">
@@ -67,7 +68,7 @@
                 </a>
                 
                 
-                <a onclick="excluir()" class="btn btn-primary">
+                <a onclick="validarExcluir()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-trash"></span> Excluir
                 </a>
                 <a onclick="atualizar()" class="btn btn-primary">
@@ -79,7 +80,10 @@
 
             </div>
         </nav>
-        <br>       
+        <br> 
+        <div class="container" align="center" style="width: 90%;">
+            <fieldset class="fieldset-border">
+                <legend class="legend-border" >Dados Setor</legend>
         <table style="width: 50%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
             <tr>
                 <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
@@ -103,7 +107,8 @@
 
             </tr>
         </table>
-    
+    </fieldset>    
+        </div>
 
         <br><br>
         <HR WIDTH=100%>
@@ -111,7 +116,25 @@
         
         <table id="tabelaCadastro1" style="width: 50%; border-collapse: collapse" cellpadding="0" cellspacing="2px" align="center" >                    
 
-        
+         
+            <!-- Modal para botão Excluir -->
+    <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Excluir</h4>
+          </div>
+          <div class="modal-body">
+              <p><h4> Tem certeza que deseja excluir ?</h4></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Sair</button>
+            <button type="button" onclick="excluir()"class="btn btn-primary" data-dismiss="modal">Excluir</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
         </body>
 </html>

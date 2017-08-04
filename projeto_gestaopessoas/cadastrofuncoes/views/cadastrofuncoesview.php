@@ -68,7 +68,7 @@
                 </a>
                 
                 
-                <a onclick="excluir()" class="btn btn-primary">
+                <a onclick="validarExcluir()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-trash"></span> Excluir
                 </a>
                 <a onclick="atualizar()" class="btn btn-primary">
@@ -83,77 +83,97 @@
             </div>
         </nav>
         <br> 
-        
-     
-        <table style="width: 85%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
-            <tr>
-                <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
-                    <div class="form">
-                        ID
-                        <input style="text-transform: uppercase;" type="text" class="form-control" id="id"    placeholder="ID" readonly>
-                    </div>
-                </td>
-                
-               <td  style="width: 20%; padding-right: 10px;font-size: 14px;">
-                    <div class="form">
-                        Função
-                        <input style="text-transform: uppercase;" type="text" class="form-control" id="funcao"   placeholder="Função" readonly >
-                    </div>
-                </td>
-                <td  style="width: 20%; padding-right: 10px;font-size: 14px;">
-                    <div class="form">
-                        Descrição
-                        <input style="text-transform: uppercase;" type="text" class="form-control" id="descricao"   placeholder="Descrição" readonly >
-                    </div>
-                </td>
-                <td  style="width:10%; padding-right: 10px;font-size: 14px;">
-                    <div class="form">
-                        CBO
-                        <input style="text-transform: uppercase;" type="number" class="form-control" id="cbo"   placeholder="CBO" readonly >
-                    </div>
-                </td>
-                <td  style="width:10%; padding-right: 10px;font-size: 14px;">
-                    <div class="form">
-                            Período para Exame ASO
-                            <select style="text-transform: uppercase;" id="periodoExame" class="form-control"  readonly>
-                                     <option readonly value="0" >Selecione</option>
-                                     <option value ="1 MES"readonly>01 Mês</option>
-                                     <option value ="2 MESES"readonly>02 Meses</option>
-                                     <option value ="3 MESES"readonly>03 Meses</option>
-                                     <option value ="4 MESES"readonly>04 Meses</option>
-                                     <option value ="5 MESES"readonly>05 Meses</option>
-                                     <option value ="6 MESES"readonly>06 Meses</option>
-                                     <option value ="7 MESES"readonly>07 Meses</option>
-                                     <option value ="8 MESES"readonly>08 Meses</option>
-                                     <option value ="9 MESES"readonly>09 Meses</option>
-                                     <option value ="10 MESES"readonly>10 Meses</option>
-                                     <option value ="11 MESES"readonly>11 Meses</option>
-                                     <option value ="12 MESES"readonly>12 Meses</option>
-                                     
+        <div class="container" align="center" style="width: 90%;">
+            <fieldset class="fieldset-border">
+                <legend class="legend-border">Dados Funcão</legend>
+                <table style="width: 85%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
+                    <tr>
+                        <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
+                            <div class="form">
+                                ID
+                                <input style="text-transform: uppercase;" type="text" class="form-control" id="id"    placeholder="ID" readonly>
+                            </div>
+                        </td>
+
+                        <td  style="width: 20%; padding-right: 10px;font-size: 14px;">
+                            <div class="form">
+                                Função
+                                <input style="text-transform: uppercase;" type="text" class="form-control" id="funcao"   placeholder="Função" readonly >
+                            </div>
+                        </td>
+                        <td  style="width: 20%; padding-right: 10px;font-size: 14px;">
+                            <div class="form">
+                                Descrição
+                                <input style="text-transform: uppercase;" type="text" class="form-control" id="descricao"   placeholder="Descrição" readonly >
+                            </div>
+                        </td>
+                        <td  style="width:10%; padding-right: 10px;font-size: 14px;">
+                            <div class="form">
+                                CBO
+                                <input style="text-transform: uppercase;" type="number" class="form-control" id="cbo"   placeholder="CBO" readonly >
+                            </div>
+                        </td>
+                        <td  style="width:10%; padding-right: 10px;font-size: 14px;">
+                            <div class="form">
+                                Período para Exame ASO
+                                <select style="text-transform: uppercase;" id="periodoExame" class="form-control"  readonly>
+                                    <option readonly value="0" >Selecione</option>
+                                    <option value ="1 MES"readonly>01 Mês</option>
+                                    <option value ="2 MESES"readonly>02 Meses</option>
+                                    <option value ="3 MESES"readonly>03 Meses</option>
+                                    <option value ="4 MESES"readonly>04 Meses</option>
+                                    <option value ="5 MESES"readonly>05 Meses</option>
+                                    <option value ="6 MESES"readonly>06 Meses</option>
+                                    <option value ="7 MESES"readonly>07 Meses</option>
+                                    <option value ="8 MESES"readonly>08 Meses</option>
+                                    <option value ="9 MESES"readonly>09 Meses</option>
+                                    <option value ="10 MESES"readonly>10 Meses</option>
+                                    <option value ="11 MESES"readonly>11 Meses</option>
+                                    <option value ="12 MESES"readonly>12 Meses</option>
+
                                 </select>
-                        </div>
-                </td>
-         </tr>
-        </table>       
-        <table style="width: 85%; border-collapse: collapse;"  cellpadding="0" cellspacing="5px" align="center" >        
-                <tr>
-                    <td style="width:10%; padding-top: 10px; padding-right: 10px; font-size: 14px;">
-                        Descrição PPRA
-                        <div class="input-group input-group-lg">
-                            
-                            <textarea style="width: 600px; height: 100px; background-color: white"  class="col-xs-9 cold-md-6" maxlength="350"  id="descricaoPpra" placeholder="" disabled>
+                            </div>
+                        </td>
+                    </tr>
+                </table>       
+                <table style="width: 85%; border-collapse: collapse;"  cellpadding="0" cellspacing="5px" align="center" >        
+                    <tr>
+                        <td style="width:10%; padding-top: 10px; padding-right: 10px; font-size: 14px;">
+                            Descrição PPRA
+                            <div class="input-group input-group-lg">
 
-                            </textarea>
+                                <textarea style="width: 600px; height: 100px; background-color: white"  class="col-xs-9 cold-md-6" maxlength="350"  id="descricaoPpra" placeholder="" disabled>
 
-                        </div>
-                    </td>
-                </tr>
+                                </textarea>
+
+                            </div>
+                        </td>
+                    </tr>
 
 
-            </tr>
-        </table>
-    
-    </div> 
+                    </tr>
+                </table>
+            </fieldset>                
+        </div> 
+        
+        <!-- Modal para botão Excluir -->
+    <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Excluir</h4>
+          </div>
+          <div class="modal-body">
+              <p><h4> Tem certeza que deseja excluir ?</h4></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Sair</button>
+            <button type="button" onclick="excluir()"class="btn btn-primary" data-dismiss="modal">Excluir</button>
+          </div>
+        </div>
+      </div>
+    </div>
         
         
          

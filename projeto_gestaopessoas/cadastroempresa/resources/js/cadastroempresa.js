@@ -337,6 +337,10 @@ function pesquisar() {
      
 }
 
+function validarExcluir(){
+    $('#excluirModal').modal('show');
+}
+
 function editar(){
     
     document.getElementById("grupoEmpresa").readOnly       = false;
@@ -714,8 +718,8 @@ function pesquisaFiltro(){
 function getGrid() {
  
     $('#grid').DataTable({
-        "processing": true,
-        "serverSide": true,
+        "destroy": true,
+        
         ajax: {
             "url": "index.php?m=cadastroempresa&c=cadastroempresacontroller&f=getGrid",
               
@@ -833,9 +837,6 @@ function atualizar(){
      
    getGrid();
   
-   $(window).bind('resize', function() {
-        $("#grid").setGridWidth($(window).width() - 10);
-   }).trigger('resize');
    
          
    document.getElementById("grupoEmpresa").value       = "Seleicone";

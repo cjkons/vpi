@@ -56,6 +56,9 @@ function novo(){
     
   
 }
+function validarExcluir(){
+    $('#excluirModal').modal('show');
+}
    
 function salvar(){
      

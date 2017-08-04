@@ -22,6 +22,7 @@ $(document).ready(function () {
     
     carregarFuncao();
     carregarFuncaoFiltro();
+   
     
     carregarTipoEpi();
     carregarTipoEpiEd();
@@ -41,13 +42,16 @@ function verificarSalvarLancamento() {
 
     var id       = $('#id').val();
     var tipoEpi = $('#tipoEpi').val();
+    var impressaoEpi = $('#impressaoEpi').val();
+    
     
     $.ajax({
         url: 'index.php?m=quantidadeepifuncao&c=quantidadeepifuncaocontroller&f=verificarSalvarLancamento',
         data: {
             
             id: id,
-            tipoEpi: tipoEpi
+            tipoEpi: tipoEpi,
+            impressaoEpi: impressaoEpi
         
         },
         type: 'POST',
@@ -144,12 +148,15 @@ function salvarLancamento() {
 
 
 }
-
-
+function validarExcluir(){
+    $('#excluirModal').modal('show');
+}
+ 
 function salvar() {
 
     var id = $('#id').val();
     var idFuncao = $('#idFuncao').val();
+    var impressaoEpi = $('#impressaoEpi').val();
     
 
 
@@ -159,6 +166,9 @@ function salvar() {
         controleDePreenchimento = 'N';
     }
     if (idFuncao == 0) {
+        controleDePreenchimento = 'N';
+    }
+    if (impressaoEpi == 0) {
         controleDePreenchimento = 'N';
     }
     
@@ -176,7 +186,8 @@ function salvar() {
             url: 'index.php?m=quantidadeepifuncao&c=quantidadeepifuncaocontroller&f=salvar',
             data: {
                 id: id,
-                idFuncao: idFuncao
+                idFuncao: idFuncao,
+                impressaoEpi: impressaoEpi
                 
 
 
@@ -852,7 +863,8 @@ function getGrid() {
         "columns": [
             {"data": "ID_EPI_QTD_FUNCAO"},
             {"data": "FUNCAO"},
-            {"data": "EDITAR"}
+            {"data": "EDITAR_LANCAMENTO"},
+            {"data": "LISTA_FUNCIONARIOS"}
         ],
         searching: false
     });
@@ -1030,7 +1042,7 @@ function editarLancamento(id) {
     excluirDadosTemp();
 
 
-    document.getElementById("idFuncao").readOnly = true;
+    document.getElementById("idFuncao").disabled = true;
     
     document.getElementById('tabelaItem3').innerHTML = "";
 
@@ -1050,6 +1062,7 @@ function editarLancamento(id) {
 
             document.getElementById("id").value = r[0];
             document.getElementById("idFuncao").value = r[1];
+            document.getElementById("impressaoEpi").value = r[2];
             
 
             $('#pesquisarModal').modal('show');
@@ -1086,10 +1099,11 @@ function novoModal() {
 
     document.getElementById("id").readOnly = true;
     document.getElementById("idFuncao").readOnly = false;
-   
+    document.getElementById("impressaoEpi").readOnly = false;;
 
     document.getElementById("id").value = "";
     document.getElementById("idFuncao").value = 0;
+    document.getElementById("impressaoEpi").value = 0;
    
     document.getElementById('tabelaItem2').innerHTML = "";
     document.getElementById('tabelaItem3').innerHTML = "";
@@ -1121,12 +1135,14 @@ function verificarLancamentoEpi() {
     var id       = $('#id').val();
     var idFuncao = $('#idFuncao').val();
     
+    
     $.ajax({
         url: 'index.php?m=quantidadeepifuncao&c=quantidadeepifuncaocontroller&f=verificarLancamentoEpi',
         data: {
             
             id: id,
             idFuncao: idFuncao
+            
         
         },
         type: 'POST',
@@ -1157,6 +1173,7 @@ function lancamentoEpi() {
 
     var id = $('#id').val();
     var idFuncao = $('#idFuncao').val();
+    var impressaoEpi = $('#impressaoEpi').val();
    
 
 
@@ -1166,6 +1183,9 @@ function lancamentoEpi() {
         controleDePreenchimento = 'N';
     }
     if (idFuncao == 0) {
+        controleDePreenchimento = 'N';
+    }
+    if (impressaoEpi == 0) {
         controleDePreenchimento = 'N';
     }
     
@@ -1304,6 +1324,82 @@ function carregarFuncaoFiltro() {
             desbloqueiaTela();
         }
     });
+}
+
+function carregarFuncaoFuncionarios(id) {
+
+
+    $.ajax({
+        url: 'index.php?m=quantidadeepifuncao&c=quantidadeepifuncaocontroller&f=carregarFuncaoFuncionarios',
+        data: {
+            
+            id:id
+        },
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        success: function (r) {
+
+            if (r != false) {
+                document.getElementById('idFuncaoLista').value = r;
+                
+            } else {
+                mensagem('Atenção', 'Erro ao carregar a lista de Funcionarios', 'error');
+
+            }
+
+        },
+        error: function () {
+            desbloqueiaTela();
+        }
+    });
+}
+
+
+
+////////////////////// SISTEMA DE IMPRESSAO POR FUNCAO PERIODO
+
+
+
+function botaoFuncionariosSair() {
+
+
+    $('#listaFuncionariosModal').modal('hide');
+
+
+}
+
+function  carregarListaFuncionarios(id) {
+
+   
+    
+    $('#listaFuncionariosModal').modal('show');
+
+    $.ajax({
+        url: 'index.php?m=quantidadeepifuncao&c=quantidadeepifuncaocontroller&f=carregarListaFuncionarios',
+        data: {
+            id: id
+        },
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        success: function (r) {
+
+
+            document.getElementById('tabelaFuncionarios').innerHTML = r;
+            carregarFuncaoFuncionarios(id);
+            
+
+
+            //atualizarItem();
+
+        },
+        error: function (e) {
+            //atualizarItem();
+        }
+    });
+
+
 }
 
 

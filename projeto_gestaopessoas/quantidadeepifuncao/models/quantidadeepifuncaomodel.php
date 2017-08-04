@@ -38,7 +38,7 @@ class quantidadeepifuncaomodel extends CI_Model {
         return $novoIdUsuario;
     }
 
-    public function salvar($id, $idFuncao) {
+    public function salvar($id, $idFuncao, $impressaoEpi) {
 
         $this->initConBanco();
 
@@ -54,8 +54,8 @@ class quantidadeepifuncaomodel extends CI_Model {
 
         if (is_array($rs) && count($rs) > 0) {
 
-            $query = "UPDATE GP_EPI_QTD_FUNCAO SET FUNCAO  = '$idFuncao', DATA_ALTERACAO = SYSDATE, USUARIO_ALTERACAO = '$usuarioLogado' WHERE FUNCAO = '$idFuncao'";
-
+            $query = "UPDATE GP_EPI_QTD_FUNCAO SET FUNCAO  = '$idFuncao', IMPRESSAO_FL_EPI = '$impressaoEpi', DATA_ALTERACAO = SYSDATE, USUARIO_ALTERACAO = '$usuarioLogado' WHERE FUNCAO = '$idFuncao'";
+             //print_r($query);exit();
             $resultado = $this->conBanco->query($query);
 
             if ($resultado == true) {
@@ -67,10 +67,10 @@ class quantidadeepifuncaomodel extends CI_Model {
 
 
 
-            $query = "INSERT INTO GP_EPI_QTD_FUNCAO (ID_EPI_QTD_FUNCAO, FUNCAO, DATA_CADASTRO, USUARIO_CADASTRO)
-                            VALUES ($id,'$idFuncao', SYSDATE, '$usuarioLogado')";
+            $query = "INSERT INTO GP_EPI_QTD_FUNCAO (ID_EPI_QTD_FUNCAO, FUNCAO, IMPRESSAO_FL_EPI, DATA_CADASTRO, USUARIO_CADASTRO)
+                            VALUES ($id,'$idFuncao', '$impressaoEpi', SYSDATE, '$usuarioLogado')";
 
-
+             //print_r($query);exit();
             $resultado = $this->conBanco->query($query);
 
             if ($resultado == true) {
@@ -412,7 +412,8 @@ class quantidadeepifuncaomodel extends CI_Model {
             $obj['ID_EPI_QTD_FUNCAO'] = $id;
             $obj['FUNCAO'] = $nomeFuncao;
            
-            $obj['EDITAR'] = "<button type='submit' class='btn-primary' onclick='editarLancamento($id)'>Editar</button>";
+            $obj['EDITAR_LANCAMENTO'] = "<button type='submit' class='btn-primary' onclick='editarLancamento($id)'>Editar Cadastro</button>";
+            $obj['LISTA_FUNCIONARIOS'] = "<button type='submit' class='btn-primary' onclick='carregarListaFuncionarios($id,)'>Listagem de Funcionários</button>";
 
             $data[] = $obj;
         }
@@ -491,9 +492,10 @@ class quantidadeepifuncaomodel extends CI_Model {
 
             foreach ($rs as $item) {
 
-                $idEpiTipo = $item->ID_EPI_TIPO;
+                $idTipoEpi = $item->ID_EPI_TIPO;
                 $equipamento = $item->EQUIPAMENTO;
-                $html .= "<option value='$idEpiTipo'>$equipamento</option>";
+                $descricao       = $item->DESCRICAO;
+                $html .= "<option value='$idTipoEpi'>$equipamento ($descricao)</option>";
             }
 
             return $html;
@@ -520,9 +522,10 @@ class quantidadeepifuncaomodel extends CI_Model {
 
             foreach ($rs as $item) {
 
-                $idEpiTipo1 = $item->ID_EPI_TIPO;
-                $equipamento1 = $item->EQUIPAMENTO;
-                $html .= "<option value='$idEpiTipo1'>$equipamento1</option>";
+                $idTipoEpi = $item->ID_EPI_TIPO;
+                $equipamento = $item->EQUIPAMENTO;
+                $descricao       = $item->DESCRICAO;
+                $html .= "<option value='$idTipoEpi'>$equipamento ($descricao)</option>";
             }
 
             return $html;
@@ -560,126 +563,151 @@ class quantidadeepifuncaomodel extends CI_Model {
             return "<option value='0'>Nenhuma Funcionário Cadastrado</option>";
         }
     }
-
     
-    public function getItemLancamentoEditarEd($id) {
+    public function carregarFuncaoFuncionarios($id) {
 
         $this->initConBanco();
 
 
-        $query = "SELECT COUNT(*) AS TOTAL FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO =  '$id'";
+        $query = "SELECT * FROM GP_CAD_FUNCOES WHERE ID_FUNCAO = $id ";
 
-        // print_r($query);exit();
+         // print_r($query);exit();
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
 
-        $totalSalvo = number_format($rs[0]->TOTAL);
+        
 
-        $query = "SELECT COUNT(*) AS TOTAL FROM GP_EPI_QTD_FUNCAO_ITEM_TEMP WHERE ID_EPI_QTD_FUNCAO =  '$id'";
+        if (is_array($rs) && count($rs) > 0) {
 
-        // print_r($query);exit();
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-
-        $totalNovo = number_format($rs[0]->TOTAL);
-
-
-        $totalGeral = $totalNovo + $totalSalvo;
-
-        //print_r($totalGeral);exit();
-
-        $query = "SELECT * FROM GP_EPI_QTD_FUNCAO_ITEM_TEMP WHERE ID_EPI_QTD_FUNCAO =  '$id' ORDER BY ID_FUNCAO_ITEM";
-
-        //print_r($query);exit();
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-
-
-        $html = "";
-
-        $i = $totalSalvo;
-
-        $s = 0;
-
-        $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
-                        <td  style='width: 5%;  padding-right: 0px;font-size: 14px;'>Editar</td>
-                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Tipo EPI</td>
-                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Quantidade Disponível</td>
-                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Durabilidade</td>
-                        
-
-
-
-                  </tr>";
-
-            for ($i = $i; $i < $totalGeral; $i++) {
-
-                //print_r($i);exit();
-
-                $id = $i;
-                $j = $i + 1;
-
-
-
-                $tipoEpi = $j;
-                $tipoEpi .= "_";
-                $tipoEpi .= $j;
-
-                $quantidade = $j;
-                $quantidade .= "_";
-                $quantidade .= $j;
-                $quantidade .= "_";
-                $quantidade .= $j;
-
-                $durabilidade = $j;
-                $durabilidade .= "_";
-                $durabilidade .= $j;
-                $durabilidade .= "_";
-                $durabilidade .= $j;
-                $durabilidade .= "_";
-                $durabilidade .= $j;
-                $durabilidade .= "_";
-                $durabilidade .= $j;
-
-                
-
-
-                $tipoEpiValor = $rs[$s]->TIPO_EPI;
-                // print_r($itemValor); exit();
-                $quantidadeValor = $rs[$s]->QUANTIDADE;
-                $durabilidadeValor = $rs[$s]->DURABILIDADE;
-                
-                $idTipoEpi = $rs[$s]->ID_FUNCAO_ITEM;
-
-                $s = $s + 1;
-                
-                
-                $query = "SELECT * FROM GP_CAD_EPI_TIPO WHERE ID_EPI_TIPO = $tipoEpiValor ";
-
-                $cs = $this->conBanco->query($query);
-                $rs1 = $cs->result();
-
-                    
-                $idEpiTipo = $rs1[0]->EQUIPAMENTO;
-
-                
-
-
-
-                $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
-                        <td  style='width: 5%; padding-right: 0px;font-size: 14px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarItemLancamento($idTipoEpi)' readonly ></button></div></td>
-                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$tipoEpi'   value='$idEpiTipo' readonly></div></td>
-                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$quantidade'  value='$quantidadeValor' readonly></div></td>
-                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$durabilidade'   value='$durabilidadeValor'   readonly></div></td>
-                        
-
-
-                  </tr>";
-            }
-
-
-            return $html;
+            $funcao = $rs[0]->FUNCAO;
+             
+            return $funcao;
+        }
+        else {
+            return "<option value='0'>Nenhuma Funcionário Cadastrado</option>";
+        }
     }
+
+    
+//    public function getItemLancamentoEditarEd($id) {
+//
+//        $this->initConBanco();
+//
+//
+//        $query = "SELECT COUNT(*) AS TOTAL FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO =  '$id'";
+//
+//        // print_r($query);exit();
+//        $cs = $this->conBanco->query($query);
+//        $rs = $cs->result();
+//
+//        $totalSalvo = number_format($rs[0]->TOTAL);
+//
+//        $query = "SELECT COUNT(*) AS TOTAL FROM GP_EPI_QTD_FUNCAO_ITEM_TEMP WHERE ID_EPI_QTD_FUNCAO =  '$id'";
+//
+//        // print_r($query);exit();
+//        $cs = $this->conBanco->query($query);
+//        $rs = $cs->result();
+//
+//        $totalNovo = number_format($rs[0]->TOTAL);
+//
+//
+//        $totalGeral = $totalNovo + $totalSalvo;
+//
+//        //print_r($totalGeral);exit();
+//
+//        $query = "SELECT * FROM GP_EPI_QTD_FUNCAO_ITEM_TEMP WHERE ID_EPI_QTD_FUNCAO =  '$id' ORDER BY ID_FUNCAO_ITEM";
+//
+//        //print_r($query);exit();
+//        $cs = $this->conBanco->query($query);
+//        $rs = $cs->result();
+//
+//
+//        $html = "";
+//
+//        $i = $totalSalvo;
+//
+//        $s = 0;
+//
+//        $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
+//                        <td  style='width: 5%;  padding-right: 0px;font-size: 14px;'>Editar</td>
+//                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Tipo EPI</td>
+//                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Quantidade Disponível</td>
+//                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Durabilidade</td>
+//                        
+//
+//
+//
+//                  </tr>";
+//
+//            for ($i = $i; $i < $totalGeral; $i++) {
+//
+//                //print_r($i);exit();
+//
+//                $id = $i;
+//                $j = $i + 1;
+//
+//
+//
+//                $tipoEpi = $j;
+//                $tipoEpi .= "_";
+//                $tipoEpi .= $j;
+//
+//                $quantidade = $j;
+//                $quantidade .= "_";
+//                $quantidade .= $j;
+//                $quantidade .= "_";
+//                $quantidade .= $j;
+//
+//                $durabilidade = $j;
+//                $durabilidade .= "_";
+//                $durabilidade .= $j;
+//                $durabilidade .= "_";
+//                $durabilidade .= $j;
+//                $durabilidade .= "_";
+//                $durabilidade .= $j;
+//                $durabilidade .= "_";
+//                $durabilidade .= $j;
+//
+//                
+//
+//
+//                $tipoEpiValor = $rs[$s]->TIPO_EPI;
+//                // print_r($itemValor); exit();
+//                $quantidadeValor = $rs[$s]->QUANTIDADE;
+//                $durabilidadeValor = $rs[$s]->DURABILIDADE;
+//                
+//                $idTipoEpi = $rs[$s]->ID_FUNCAO_ITEM;
+//
+//                $s = $s + 1;
+//                
+//                
+////                $query = "SELECT * FROM GP_CAD_EPI_TIPO WHERE ID_EPI_TIPO = $tipoEpiValor ";
+////
+////                $cs = $this->conBanco->query($query);
+////                $rs1 = $cs->result();
+////
+////                    
+////                $idtipoEpi = $rs1[0]->EQUIPAMENTO;
+////                $idEpidescricao = $rs1[0]->DESCRICAO;
+////
+////                $idEpiTipo = "$idtipoEpi ($idEpidescricao)";
+//
+//
+//
+//                $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
+//                        <td  style='width: 5%; padding-right: 0px;font-size: 14px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarItemLancamento($idTipoEpi)' readonly ></button></div></td>
+//                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$tipoEpi'   value='$tipoEpiValor' readonly></div></td>
+//                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$quantidade'  value='$quantidadeValor' readonly></div></td>
+//                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$durabilidade'   value='$durabilidadeValor'   readonly></div></td>
+//                        
+//
+//
+//                  </tr>";
+//            }
+//
+//
+//            return $html;
+//    }
 
     public function getItemLancamento($id) {
 
@@ -732,6 +760,7 @@ class quantidadeepifuncaomodel extends CI_Model {
             $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
                         <td  style='width: 5%;  padding-right: 0px;font-size: 14px;'>Editar</td>
                         <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Tipo EPI</td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Descrição</td>
                         <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Quantidade Disponível</td>
                         <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Durabilidade</td>
                         
@@ -758,6 +787,15 @@ class quantidadeepifuncaomodel extends CI_Model {
                 $quantidade .= $j;
                 $quantidade .= "_";
                 $quantidade .= $j;
+                
+                $descricao = $j;
+                $descricao .= "_";
+                $descricao .= $j;
+                $descricao .= "_";
+                $descricao .= $j;
+                $descricao .= "_";
+                $descricao .= $j;
+                
 
                 $durabilidade = $j;
                 $durabilidade .= "_";
@@ -787,7 +825,9 @@ class quantidadeepifuncaomodel extends CI_Model {
                 $rs1 = $cs->result();
 
                     
-                $idEpiTipo = $rs1[0]->EQUIPAMENTO;
+                $idtipoEpi = $rs1[0]->EQUIPAMENTO;
+                $descricaoTipoEpi = $rs1[0]->DESCRICAO;
+                
                 
                 
                
@@ -796,7 +836,8 @@ class quantidadeepifuncaomodel extends CI_Model {
 
                 $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
                         <td  style='width: 5%; padding-right: 0px;font-size: 14px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarItemLancamento($idTipoEpi)' readonly ></button></div></td>
-                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$tipoEpi'   value='$idEpiTipo' readonly></div></td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$tipoEpi'   value='$idtipoEpi' readonly></div></td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$descricao'   value='$descricaoTipoEpi' readonly></div></td>
                         <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$quantidade'  value='$quantidadeValor' readonly></div></td>
                         <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$durabilidade'   value='$durabilidadeValor'   readonly></div></td>
                         
@@ -825,6 +866,7 @@ class quantidadeepifuncaomodel extends CI_Model {
             $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
                         <td  style='width: 5%;  padding-right: 0px;font-size: 14px;'>Editar</td>
                         <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Tipo EPI</td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Descrição</td>
                         <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Quantidade Disponível</td>
                         <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Durabilidade</td>
                         
@@ -851,6 +893,14 @@ class quantidadeepifuncaomodel extends CI_Model {
                 $quantidade .= "_";
                 $quantidade .= $j;
 
+                $descricao = $j;
+                $descricao .= "_";
+                $descricao .= $j;
+                $descricao .= "_";
+                $descricao .= $j;
+                $descricao .= "_";
+                $descricao .= $j;
+                
                 $durabilidade = $j;
                 $durabilidade .= "_";
                 $durabilidade .= $j;
@@ -865,7 +915,7 @@ class quantidadeepifuncaomodel extends CI_Model {
 
 
                 $tipoEpiValor = $rs[$s]->TIPO_EPI;
-                // print_r($tipoEpiValor); exit();
+                // print_r($tipoEpiValor);// exit();
                 $quantidadeValor = $rs[$s]->QUANTIDADE;
                 $durabilidadeValor = $rs[$s]->DURABILIDADE;
                 
@@ -874,19 +924,21 @@ class quantidadeepifuncaomodel extends CI_Model {
                 $s = $s + 1;
                 
                 $query = "SELECT * FROM GP_CAD_EPI_TIPO WHERE ID_EPI_TIPO = $tipoEpiValor ";
-
+                //print_r($query);
                 $cs = $this->conBanco->query($query);
                 $rs1 = $cs->result();
 
                     
-                $idEpiTipo = $rs1[0]->EQUIPAMENTO;
+                $idtipoEpi = $rs1[0]->EQUIPAMENTO;
+                $idEpidescricao = $rs1[0]->DESCRICAO;
 
                 
 
 
                 $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
                         <td  style='width: 5%; padding-right: 0px;font-size: 14px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarItemLancamento($idTipoEpi)' readonly ></button></div></td>
-                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$tipoEpi'   value='$idEpiTipo' readonly></div></td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$tipoEpi'   value='$idtipoEpi' readonly></div></td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$descricao'   value='$idEpidescricao' readonly></div></td>
                         <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$quantidade'  value='$quantidadeValor' readonly></div></td>
                         <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$durabilidade'   value='$durabilidadeValor'   readonly></div></td>
                         
@@ -942,6 +994,7 @@ class quantidadeepifuncaomodel extends CI_Model {
         $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
                         <td  style='width: 5%;  padding-right: 0px;font-size: 14px;'>Editar</td>
                         <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Tipo EPI</td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Descrição</td>
                         <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Quantidade Disponível</td>
                         <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Durabilidade</td>
                         
@@ -968,6 +1021,14 @@ class quantidadeepifuncaomodel extends CI_Model {
                 $quantidade .= $j;
                 $quantidade .= "_";
                 $quantidade .= $j;
+                
+                $descricao = $j;
+                $descricao .= "_";
+                $descricao .= $j;
+                $descricao .= "_";
+                $descricao .= $j;
+                $descricao .= "_";
+                $descricao .= $j;
 
                 $durabilidade = $j;
                 $durabilidade .= "_";
@@ -991,19 +1052,23 @@ class quantidadeepifuncaomodel extends CI_Model {
 
                 $s = $s + 1;
                 
-                 $query = "SELECT * FROM GP_CAD_EPI_TIPO WHERE ID_EPI_TIPO = $tipoEpiValor ";
-
+                $query = "SELECT * FROM GP_CAD_EPI_TIPO WHERE ID_EPI_TIPO = $tipoEpiValor ";
+                // print_r($query); exit();
                 $cs = $this->conBanco->query($query);
                 $rs1 = $cs->result();
 
                     
-                $idEpiTipo = $rs1[0]->EQUIPAMENTO;
+                $idtipoEpi = $rs1[0]->EQUIPAMENTO;
+                $idEpidescricao = $rs1[0]->DESCRICAO;
+
                 
+//                
                
 
                 $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
                         <td  style='width: 5%; padding-right: 0px;font-size: 14px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarItemLancamento($idTipoEpi)' readonly ></button></div></td>
-                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$tipoEpi'   value='$idEpiTipo' readonly></div></td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$tipoEpi'   value='$idtipoEpi' readonly></div></td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$descricao'   value='$idEpidescricao' readonly></div></td>
                         <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$quantidade'  value='$quantidadeValor' readonly></div></td>
                         <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$durabilidade'   value='$durabilidadeValor'   readonly></div></td>
                         
@@ -1016,221 +1081,221 @@ class quantidadeepifuncaomodel extends CI_Model {
             return $html;
     }
 
-    public function getEditarItemLancamentoEd($id) {
-
-        $this->initConBanco();
-
-
-        $query = "SELECT COUNT(*) AS TOTAL FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO =  '$id'";
-
-        // print_r($query);exit();
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-
-        $totalSalvo = number_format($rs[0]->TOTAL);
-
-        $query = "SELECT COUNT(*) AS TOTAL FROM GP_EPI_QTD_FUNCAO_ITEM_TEMP WHERE ID_EPI_QTD_FUNCAO =  '$id'";
-
-        //print_r($query);exit();
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-
-        $totalNovo = number_format($rs[0]->TOTAL);
-
-
-        $totalGeral = $totalNovo + $totalSalvo;
-
-        //print_r($totalGeral);exit();
-
-        $query = "SELECT * FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO = '$id' ORDER BY ID_FUNCAO_ITEM";
-
-        //print_r($query);exit();
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-
-
-        $html = "";
-
-        $i = 0;
-
-        $s = 0;
-
-        $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
-                        <td  style='width: 5%;  padding-right: 0px;font-size: 14px;'>Editar</td>
-                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Tipo EPI</td>
-                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Quantidade Disponível</td>
-                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Durabilidade</td>
-                        
-
-
-
-                  </tr>";
-
-            for ($i = $i; $i < $totalGeral; $i++) {
-
-                //print_r($i);exit();
-
-                $id = $i;
-                $j = $i + 1;
-
-
-
-                $tipoEpi = $j;
-                $tipoEpi .= "_";
-                $tipoEpi .= $j;
-
-                $quantidade = $j;
-                $quantidade .= "_";
-                $quantidade .= $j;
-                $quantidade .= "_";
-                $quantidade .= $j;
-
-                $durabilidade = $j;
-                $durabilidade .= "_";
-                $durabilidade .= $j;
-                $durabilidade .= "_";
-                $durabilidade .= $j;
-                $durabilidade .= "_";
-                $durabilidade .= $j;
-                $durabilidade .= "_";
-                $durabilidade .= $j;
-
-                
-
-
-                $tipoEpiValor = $rs[$s]->TIPO_EPI;
-                // print_r($itemValor); exit();
-                $quantidadeValor = $rs[$s]->QUANTIDADE;
-                $durabilidadeValor = $rs[$s]->DURABILIDADE;
-                
-                $idTipoEpi = $rs[$s]->ID_FUNCAO_ITEM;
-
-                $s = $s + 1;
-                
-                
-
-                $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
-                        <td  style='width: 5%; padding-right: 0px;font-size: 14px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarItemLancamento($idTipoEpi)' readonly ></button></div></td>
-                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$tipoEpi'   value='$tipoEpiValor' readonly></div></td>
-                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$quantidade'  value='$quantidadeValor' readonly></div></td>
-                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$durabilidade'   value='$durabilidadeValor'   readonly></div></td>
-                        
-
-
-                  </tr>";
-            }
-
-
-            return $html;
-    }
-
-    public function getItemLancamentoEditar($id) {
-
-        $this->initConBanco();
-
-
-        $query = "SELECT COUNT(*) AS TOTAL FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO =  '$id'";
-
-        // print_r($query);exit();
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-
-        $totalSalvo = number_format($rs[0]->TOTAL);
-
-        $query = "SELECT COUNT(*) AS TOTAL FROM GP_EPI_QTD_FUNCAO_ITEM_TEMP WHERE ID_EPI_QTD_FUNCAO =  '$id'";
-
-        // print_r($query);exit();
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-
-        $totalNovo = number_format($rs[0]->TOTAL);
-
-
-        $totalGeral = $totalNovo + $totalSalvo;
-
-        //print_r($totalGeral);exit();
-
-        $query = "SELECT * FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO =  '$id' ORDER BY ID_FUNCAO_ITEM";
-
-        //print_r($query);exit();
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-
-
-        $html = "";
-
-        $i = $totalSalvo;
-
-        $s = 0;
-
-        $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
-                        <td  style='width: 5%;  padding-right: 0px;font-size: 14px;'>Editar</td>
-                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Tipo EPI</td>
-                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Quantidade Disponível</td>
-                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Durabilidade</td>
-                        
-
-
-
-                  </tr>";
-
-            for ($i = $i; $i < $totalGeral; $i++) {
-
-                //print_r($i);exit();
-
-                $id = $i;
-                $j = $i + 1;
-
-
-
-                $tipoEpi = $j;
-                $tipoEpi .= "_";
-                $tipoEpi .= $j;
-
-                $quantidade = $j;
-                $quantidade .= "_";
-                $quantidade .= $j;
-                $quantidade .= "_";
-                $quantidade .= $j;
-
-                $durabilidade = $j;
-                $durabilidade .= "_";
-                $durabilidade .= $j;
-                $durabilidade .= "_";
-                $durabilidade .= $j;
-                $durabilidade .= "_";
-                $durabilidade .= $j;
-                $durabilidade .= "_";
-                $durabilidade .= $j;
-
-                
-
-
-                $tipoEpiValor = $rs[$s]->TIPO_EPI;
-                // print_r($itemValor); exit();
-                $quantidadeValor = $rs[$s]->QUANTIDADE;
-                $durabilidadeValor = $rs[$s]->DURABILIDADE;
-                
-                $idTipoEpi = $rs[$s]->ID_FUNCAO_ITEM;
-
-                $s = $s + 1;
-
-                
-
-                $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
-                        <td  style='width: 5%; padding-right: 0px;font-size: 14px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarItemLancamento($idTipoEpi)' readonly ></button></div></td>
-                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$tipoEpi'   value='$tipoEpiValor' readonly></div></td>
-                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$quantidade'  value='$quantidadeValor' readonly></div></td>
-                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$durabilidade'   value='$durabilidadeValor'   readonly></div></td>
-                        
-
-
-                  </tr>";
-            }
-
-
-            return $html;
-    }
+//    public function getEditarItemLancamentoEd($id) {
+//
+//        $this->initConBanco();
+//
+//
+//        $query = "SELECT COUNT(*) AS TOTAL FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO =  '$id'";
+//
+//        // print_r($query);exit();
+//        $cs = $this->conBanco->query($query);
+//        $rs = $cs->result();
+//
+//        $totalSalvo = number_format($rs[0]->TOTAL);
+//
+//        $query = "SELECT COUNT(*) AS TOTAL FROM GP_EPI_QTD_FUNCAO_ITEM_TEMP WHERE ID_EPI_QTD_FUNCAO =  '$id'";
+//
+//        //print_r($query);exit();
+//        $cs = $this->conBanco->query($query);
+//        $rs = $cs->result();
+//
+//        $totalNovo = number_format($rs[0]->TOTAL);
+//
+//
+//        $totalGeral = $totalNovo + $totalSalvo;
+//
+//        //print_r($totalGeral);exit();
+//
+//        $query = "SELECT * FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO = '$id' ORDER BY ID_FUNCAO_ITEM";
+//
+//        //print_r($query);exit();
+//        $cs = $this->conBanco->query($query);
+//        $rs = $cs->result();
+//
+//
+//        $html = "";
+//
+//        $i = 0;
+//
+//        $s = 0;
+//
+//        $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
+//                        <td  style='width: 5%;  padding-right: 0px;font-size: 14px;'>Editar</td>
+//                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Tipo EPI</td>
+//                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Quantidade Disponível</td>
+//                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Durabilidade</td>
+//                        
+//
+//
+//
+//                  </tr>";
+//
+//            for ($i = $i; $i < $totalGeral; $i++) {
+//
+//                //print_r($i);exit();
+//
+//                $id = $i;
+//                $j = $i + 1;
+//
+//
+//
+//                $tipoEpi = $j;
+//                $tipoEpi .= "_";
+//                $tipoEpi .= $j;
+//
+//                $quantidade = $j;
+//                $quantidade .= "_";
+//                $quantidade .= $j;
+//                $quantidade .= "_";
+//                $quantidade .= $j;
+//
+//                $durabilidade = $j;
+//                $durabilidade .= "_";
+//                $durabilidade .= $j;
+//                $durabilidade .= "_";
+//                $durabilidade .= $j;
+//                $durabilidade .= "_";
+//                $durabilidade .= $j;
+//                $durabilidade .= "_";
+//                $durabilidade .= $j;
+//
+//                
+//
+//
+//                $tipoEpiValor = $rs[$s]->TIPO_EPI;
+//                // print_r($itemValor); exit();
+//                $quantidadeValor = $rs[$s]->QUANTIDADE;
+//                $durabilidadeValor = $rs[$s]->DURABILIDADE;
+//                
+//                $idTipoEpi = $rs[$s]->ID_FUNCAO_ITEM;
+//
+//                $s = $s + 1;
+//                
+//                
+//
+//                $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
+//                        <td  style='width: 5%; padding-right: 0px;font-size: 14px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarItemLancamento($idTipoEpi)' readonly ></button></div></td>
+//                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$tipoEpi'   value='$tipoEpiValor' readonly></div></td>
+//                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$quantidade'  value='$quantidadeValor' readonly></div></td>
+//                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$durabilidade'   value='$durabilidadeValor'   readonly></div></td>
+//                        
+//
+//
+//                  </tr>";
+//            }
+//
+//
+//            return $html;
+//    }
+//
+//    public function getItemLancamentoEditar($id) {
+//
+//        $this->initConBanco();
+//
+//
+//        $query = "SELECT COUNT(*) AS TOTAL FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO =  '$id'";
+//
+//        // print_r($query);exit();
+//        $cs = $this->conBanco->query($query);
+//        $rs = $cs->result();
+//
+//        $totalSalvo = number_format($rs[0]->TOTAL);
+//
+//        $query = "SELECT COUNT(*) AS TOTAL FROM GP_EPI_QTD_FUNCAO_ITEM_TEMP WHERE ID_EPI_QTD_FUNCAO =  '$id'";
+//
+//        // print_r($query);exit();
+//        $cs = $this->conBanco->query($query);
+//        $rs = $cs->result();
+//
+//        $totalNovo = number_format($rs[0]->TOTAL);
+//
+//
+//        $totalGeral = $totalNovo + $totalSalvo;
+//
+//        //print_r($totalGeral);exit();
+//
+//        $query = "SELECT * FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO =  '$id' ORDER BY ID_FUNCAO_ITEM";
+//
+//        //print_r($query);exit();
+//        $cs = $this->conBanco->query($query);
+//        $rs = $cs->result();
+//
+//
+//        $html = "";
+//
+//        $i = $totalSalvo;
+//
+//        $s = 0;
+//
+//        $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
+//                        <td  style='width: 5%;  padding-right: 0px;font-size: 14px;'>Editar</td>
+//                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Tipo EPI</td>
+//                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Quantidade Disponível</td>
+//                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Durabilidade</td>
+//                        
+//
+//
+//
+//                  </tr>";
+//
+//            for ($i = $i; $i < $totalGeral; $i++) {
+//
+//                //print_r($i);exit();
+//
+//                $id = $i;
+//                $j = $i + 1;
+//
+//
+//
+//                $tipoEpi = $j;
+//                $tipoEpi .= "_";
+//                $tipoEpi .= $j;
+//
+//                $quantidade = $j;
+//                $quantidade .= "_";
+//                $quantidade .= $j;
+//                $quantidade .= "_";
+//                $quantidade .= $j;
+//
+//                $durabilidade = $j;
+//                $durabilidade .= "_";
+//                $durabilidade .= $j;
+//                $durabilidade .= "_";
+//                $durabilidade .= $j;
+//                $durabilidade .= "_";
+//                $durabilidade .= $j;
+//                $durabilidade .= "_";
+//                $durabilidade .= $j;
+//
+//                
+//
+//
+//                $tipoEpiValor = $rs[$s]->TIPO_EPI;
+//                // print_r($itemValor); exit();
+//                $quantidadeValor = $rs[$s]->QUANTIDADE;
+//                $durabilidadeValor = $rs[$s]->DURABILIDADE;
+//                
+//                $idTipoEpi = $rs[$s]->ID_FUNCAO_ITEM;
+//
+//                $s = $s + 1;
+//
+//                
+//
+//                $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
+//                        <td  style='width: 5%; padding-right: 0px;font-size: 14px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarItemLancamento($idTipoEpi)' readonly ></button></div></td>
+//                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$tipoEpi'   value='$tipoEpiValor' readonly></div></td>
+//                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$quantidade'  value='$quantidadeValor' readonly></div></td>
+//                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$durabilidade'   value='$durabilidadeValor'   readonly></div></td>
+//                        
+//
+//
+//                  </tr>";
+//            }
+//
+//
+//            return $html;
+//    }
 
     public function editarItemLancamentoTemporario($idLancamentoItem, $id) {
 
@@ -1420,7 +1485,7 @@ class quantidadeepifuncaomodel extends CI_Model {
         
         $this->initConBanco();
 
-        $query = "SELECT * FROM GP_EPI_QTD_FUNCAO WHERE ID_EPI_QTD_FUNCAO = '$id' AND FUNCAO = '$idFuncao'";
+        $query = "SELECT * FROM GP_EPI_QTD_FUNCAO WHERE ID_EPI_QTD_FUNCAO = '$id'";
 
         //print_r($query);exit();
         $cs = $this->conBanco->query($query);
@@ -1428,10 +1493,22 @@ class quantidadeepifuncaomodel extends CI_Model {
 
         if (is_array($rs) && count($rs) > 0) {
 
-                return false;
+                 $query = "SELECT * FROM GP_EPI_QTD_FUNCAO WHERE ID_EPI_QTD_FUNCAO = '$id' AND FUNCAO = '$idFuncao'";
+
+                //print_r($query);exit();
+                $cs = $this->conBanco->query($query);
+                $rs = $cs->result();
+
+                if (is_array($rs) && count($rs) > 0) {
+
+                        return false;
+                } else {
+
+                        return true;
+                }
         } else {
 
-                return true;
+                return false;
         }
         
     }
@@ -1494,7 +1571,7 @@ class quantidadeepifuncaomodel extends CI_Model {
 
 
 
-            $query = "UPDATE GP_EPI_QTD_FUNCAO_ITEM SET TIPO_EPI = '$tipoEpi1', QUANTIDADE = '$quantidade', DURABILIDADE = '$durabilidade', DATA_ALTERACAO = SYSDATE, USUARIO_ALTERACAO = '$usuarioLogado' WHERE ID_EPI_QTD_FUNCAO '%$id%' AND TIPO_EPI = '$tipoEpi1'";
+            $query = "UPDATE GP_EPI_QTD_FUNCAO_ITEM SET TIPO_EPI = '$tipoEpi1', QUANTIDADE = '$quantidade', DURABILIDADE = '$durabilidade', DATA_ALTERACAO = SYSDATE, USUARIO_ALTERACAO = '$usuarioLogado' WHERE ID_EPI_QTD_FUNCAO = '$id' AND TIPO_EPI = '$tipoEpi1'";
 
             //print_r($query);//exit();
             $resultado = $this->conBanco->query($query);
@@ -1554,6 +1631,7 @@ class quantidadeepifuncaomodel extends CI_Model {
 
             $obj[] = $rs[0]->ID_EPI_QTD_FUNCAO;
             $obj[] = $rs[0]->FUNCAO;
+            $obj[] = $rs[0]->IMPRESSAO_FL_EPI;
            
             return json_encode($obj);
         } else {
@@ -1621,5 +1699,124 @@ class quantidadeepifuncaomodel extends CI_Model {
             return false;
         }
     }
+    
+    
+    //////////// LISTA FUNCIONARIOS
+    
+    public function carregarListaFuncionarios($id) {
+
+        $this->initConBanco();
+
+        $query = "SELECT COUNT(*) AS TOTAL FROM GP_CAD_FUNCIONARIO WHERE FUNCAO = '$id'";
+
+        // print_r($query);exit();
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+
+        $total = number_format($rs[0]->TOTAL);
+        
+        
+        $query = "SELECT * FROM GP_CAD_FUNCIONARIO WHERE FUNCAO = '$id' ORDER BY NOME_FUNCIONARIO";
+
+
+        //print_r($query);exit();
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+
+
+        
+
+        $html = "";
+
+        $i = 0;
+
+        $s = 0;
+
+        $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
+                        <td  style='width: 5%;  padding-right: 0px;font-size: 14px;'>Matricula</td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Funcionário</td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Setor</td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Data Admissao</td>
+                        
+
+
+
+                  </tr>";
+
+            for ($i = $i; $i < $total; $i++) {
+
+                //print_r($i);exit();
+
+                $id = $i;
+                $j = $i + 1;
+
+
+
+                $matricula = $j;
+                $matricula .= "_";
+                $matricula .= $j;
+
+                $nome = $j;
+                $nome .= "_";
+                $nome .= $j;
+                $nome .= "_";
+                $nome .= $j;
+
+                $setor = $j;
+                $setor .= "_";
+                $setor .= $j;
+                $setor .= "_";
+                $setor .= $j;
+                $setor .= "_";
+                $setor .= $j;
+                $setor .= "_";
+                $setor .= $j;
+                
+                $dataAdmissao = $j;
+                $dataAdmissao .= "_";
+                $dataAdmissao .= $j;
+                $dataAdmissao .= "_";
+                $dataAdmissao .= $j;
+                $dataAdmissao .= "_";
+                $dataAdmissao .= $j;
+                $dataAdmissao .= "_";
+                $dataAdmissao .= $j;
+                $dataAdmissao .= "_";
+                $dataAdmissao .= $j;
+
+                
+                $matriculaValor = $rs[$s]->MATRICULA;
+                $nomeValor = $rs[$s]->NOME_FUNCIONARIO;
+                $setorValor = $rs[$s]->SETOR;
+                $dataAdmissaoValor = $rs[$s]->DATA_ADMISSAO;
+
+                $s = $s + 1;
+                
+                $query = "SELECT * FROM GP_CAD_SETOR WHERE ID_SETOR = '$setorValor'";
+
+
+                //print_r($query);exit();
+                $cs1 = $this->conBanco->query($query);
+                $rs1 = $cs1->result();
+
+                $setorValor1 = $rs1[0]->SETOR;
+
+                
+
+                $html .="<tr  style='width: 45%; padding-right: 5px; font-size: 14px;' align='center' >
+                        <td  style='width: 5%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$matricula'   value='$matriculaValor' readonly></div></td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$nome'  value='$nomeValor' readonly></div></td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$setor'   value='$setorValor1'   readonly></div></td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$dataAdmissao'   value='$dataAdmissaoValor'   readonly></div></td>
+                        
+
+
+                  </tr>";
+            }
+
+
+            return $html;
+    }
+    
 
 }

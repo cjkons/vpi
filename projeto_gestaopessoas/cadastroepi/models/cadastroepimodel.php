@@ -24,7 +24,7 @@ class cadastroepimodel extends CI_Model {
         
         $this->initConBanco();
 
-        $query = "SELECT ID_EPI_TIPO, EQUIPAMENTO FROM GP_CAD_EPI_TIPO ORDER BY EQUIPAMENTO ";
+        $query = "SELECT ID_EPI_TIPO, EQUIPAMENTO, DESCRICAO FROM GP_CAD_EPI_TIPO ORDER BY EQUIPAMENTO ";
                   
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
@@ -38,7 +38,8 @@ class cadastroepimodel extends CI_Model {
 
                 $idTipoEpi         = $item->ID_EPI_TIPO;
                 $equipamento       = $item->EQUIPAMENTO;
-                $html .= "<option value='$idTipoEpi'>$equipamento</option>";
+                $descricao       = $item->DESCRICAO;
+                $html .= "<option value='$idTipoEpi'>$equipamento ($descricao)</option>";
             }
 
             return $html;

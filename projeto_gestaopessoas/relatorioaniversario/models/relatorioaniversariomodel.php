@@ -831,7 +831,7 @@ class relatorioaniversariomodel extends CI_Model {
         $canvas = $dompdf->get_canvas();
         $font = Font_Metrics::get_font("helvetica", "normal");
         $canvas->page_text(540, 820, "Pág. {PAGE_NUM} de {PAGE_COUNT}", $font, 6, array(0, 0, 0)); //header
-        $canvas->page_text(270, 820, "VPI TECNOLOGIA  -  GESTÃO", $font, 6, array(0, 0, 0)); //footer 
+        $canvas->page_text(270, 820, "VPI TECNOLOGIA  -  CLARIFY People", $font, 6, array(0, 0, 0)); //footer 
         header("Content-type: application/pdf");
         $pdf = $dompdf->output(); // Cria o pdf
         $nomeDoArquivo = "relatorio_aniversario.pdf";

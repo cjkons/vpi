@@ -72,7 +72,7 @@
                 <a onclick="pesquisar()"class="btn btn-primary" ata-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-search"></span> Pesquisar
                 </a>
-                <a onclick="excluir()" class="btn btn-primary">
+                <a onclick="validarExcluir()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-trash"></span> Excluir
                 </a>
                 <a onclick="buscaPrimeiroRegistro()"  class="btn btn-primary">
@@ -113,7 +113,9 @@
         
 
 <!-- conteudo das abas -->
-
+<div class="container" align="center" style="width: 98%;">
+            <fieldset class="fieldset-border">
+                <legend class="legend-border" >Dados Funcionário</legend>
     <div id="tab1" class="contaba" >
    
     
@@ -122,31 +124,31 @@
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
                             ID
-                            <input style="text-transform: uppercase;" type="number" class="form-control" id="idFuncionario" placeholder="ID" readonly>
+                            <input  type="number" class="form-control" id="idFuncionario" placeholder="ID" readonly>
                         </div>
                     </td>
                     <td  style="width: 30%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Empresa *
-                            <select style="text-transform: uppercase;"  id="empresa" class="form-control" onchange="carregarFilial()"  readonly></select>
+                            <select   id="empresa" class="form-control" onchange="carregarFilial()"  readonly></select>
                         </div>
                    </td>
                    <td  style="width: 30%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Filial *
-                            <select  style="text-transform: uppercase;"  id="filial" class="form-control"  readonly></select>
+                            <select    id="filial" class="form-control"  readonly></select>
                         </div>
                    </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
                            Livro *
-                            <input style="text-transform: uppercase;" type="livro" class="form-control" id="livro"  placeholder="Livro" readonly>
+                            <input  type="livro" class="form-control" id="livro"  placeholder="Livro" readonly>
                         </div>
                     </td>
                     <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
                              Pag.
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="pagina" placeholder="Pag." readonly>
+                            <input  type="text" class="form-control" id="pagina" placeholder="Pag." readonly>
                         </div>
                     </td>
                         </tr>
@@ -156,27 +158,27 @@
                     <td  style="width: 40%; padding-right: 10px;font-size: 14px; ">
                        <div class="form-group">
                             Nome Funcionário *
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="nomeFuncionario" placeholder="Funcionário" readonly>
+                            <input  type="text" class="form-control" id="nomeFuncionario" placeholder="Funcionário" readonly>
                         </div>
                    </td>
                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Data Nascimento *
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="dataNasc" maxlength="18"  placeholder="Data" readonly>
+                            <input  type="text" class="form-control" id="dataNasc" maxlength="18"  placeholder="Data" readonly>
                         </div>
                    </td>
                    
                    <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Naturalidade
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="cidadeNasc" placeholder="Naturalidade" readonly>
+                            <input  type="text" class="form-control" id="cidadeNasc" placeholder="Naturalidade" readonly>
                         </div>
                    </td>
                    
                    <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            <font size="2">Estado</font>
-                            <select style="text-transform: uppercase;" id="estadoNasc" class="form-control"  readonly>
+                            Estado
+                            <select style="" id="estadoNasc" class="form-control"  readonly>
                                      <option readonly value="0" >Selecione</option>
                                      <option value ="AC"readonly>Acre</option>
                                      <option value ="AL"readonly>Alagoas</option>
@@ -219,7 +221,7 @@
                     <td style="width: 10%;padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
                             Data Cadastro
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="dataCadastro"   placeholder="Data Cadastro" readonly>
+                            <input  type="text" class="form-control" id="dataCadastro"   placeholder="Data Cadastro" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px; font-size: 14px;">
@@ -227,13 +229,19 @@
                            <input type="checkbox" style="width: 30px; height: 30px;" id="valeTransporte" /> Receberá Vale Transporte
                        </div>
                     </td>
-                    <td  style="width: 40%;padding-right: 10px;font-size: 14px;">
+                    <td  style="width: 30%;padding-right: 10px;font-size: 14px;">
                             
                     </td>
                     <td  style="width: 15%; padding-right: 10px; font-size: 14px;">
                        <div class="form">
-                           <input type="checkbox" style="width: 30px; height: 30px;" id="desativado" /> Funcionário Demitido
+                           <input type="checkbox" style="width: 30px; height: 30px;" id="desativado" onchange="habilitarDataDemissao()"/> Funcionário Demitido
                        </div>
+                    </td>
+                    <td style="width: 10%;padding-right: 10px;font-size: 14px;">
+                        <div class="form-group">
+                            Data Demissão
+                            <input type="text" class="form-control" id="dataDemissao"   placeholder="Data Demissão" disabled>
+                        </div>
                     </td>
             </tr>
         </table>
@@ -246,31 +254,31 @@
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Matrícula *
-                            <input style="text-transform: uppercase;" type="number" class="form-control" id="matricula" maxlength="8" placeholder="Matrícula" readonly>
+                            <input  type="number" class="form-control" id="matricula" maxlength="8" placeholder="Matrícula" readonly>
                         </div>
                    </td>
                     <td  style="width: 22%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Função *
-                            <select  style="text-transform: uppercase;" id="funcao" class="form-control" readonly></select>
+                            <select   id="funcao" class="form-control" readonly></select>
                         </div>
                    </td>
                    <td  style="width: 22%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Setor *
-                            <select  style="text-transform: uppercase;" id="setor" class="form-control" readonly></select>
+                            <select  id="setor" class="form-control" readonly></select>
                         </div>
                    </td>
                    <td  style="width: 13%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Salário Valor *
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="salarioValor" placeholder="Salário Valor" onkeypress="mascaraValor(this, mvalorValor);" maxlength="14" readonly>
+                            <input type="text" class="form-control" id="salarioValor" placeholder="Salário Valor" onkeypress="mascaraValor(this, mvalorValor);" maxlength="14" readonly>
                         </div>
                    </td>
                    <td  style="width: 13%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Modalidade Salário *
-                            <select style="text-transform: uppercase;" id="salarioPagamento" class="form-control" readonly>
+                            <select id="salarioPagamento" class="form-control" readonly>
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="MENSALISTA">Mensalista</option>
                                     <option readonly value="QUINZENALISTA">Quinzenalista</option>
@@ -290,13 +298,13 @@
                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Data Admissão *
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataAdmissao" placeholder="Data Admissão" readonly>
+                            <input   type="text" class="form-control" id="dataAdmissao" placeholder="Data Admissão" readonly>
                         </div>
                    </td>
                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Contrato Experiência *
-                            <select style="text-transform: uppercase;"  id="experiencia" class="form-control" readonly>
+                            <select   id="experiencia" class="form-control" readonly>
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="30">30 Dias</option>
                                     <option readonly value="60">60 Dias</option>
@@ -308,25 +316,25 @@
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
                             Horário Inicial 1
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="horarioInicial1"  placeholder="Horário Inicial" onkeypress="mascara( this, mvalor );" maxlength="5" readonly>
+                            <input   type="text" class="form-control" id="horarioInicial1"  placeholder="Horário Inicial" onkeypress="mascara( this, mvalor );" maxlength="5" readonly>
                         </div>
                     </td>
                     <td  style="width: 10%; padding-right: 15px;font-size: 14px;">
                         <div class="form-group">
                             Horário Final 1
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="horarioFinal1"  placeholder="Horário Final" onkeypress="mascara( this, mvalor );" maxlength="5" readonly>
+                            <input  type="text" class="form-control" id="horarioFinal1"  placeholder="Horário Final" onkeypress="mascara( this, mvalor );" maxlength="5" readonly>
                         </div>
                     </td>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
                             Horário Inicial 2
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="horarioInicial2"  placeholder="Horário Inicial" onkeypress="mascara( this, mvalor );" maxlength="5" readonly>
+                            <input type="text" class="form-control" id="horarioInicial2"  placeholder="Horário Inicial" onkeypress="mascara( this, mvalor );" maxlength="5" readonly>
                         </div>
                     </td>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
                             Horário Final 2
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="horarioFinal2"  placeholder="Horário Final" onkeypress="mascara( this, mvalor );" maxlength="5" readonly>
+                            <input  type="text" class="form-control" id="horarioFinal2"  placeholder="Horário Final" onkeypress="mascara( this, mvalor );" maxlength="5" readonly>
                         </div>
                     </td>
                     
@@ -351,25 +359,25 @@
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             CEP *
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="cep"  maxlength="9"  placeholder="Cep"  onkeypress="mascaraCEP(this)" readonly>
+                            <input  type="text" class="form-control" id="cep"  maxlength="9"  placeholder="Cep"  onkeypress="mascaraCEP(this)" readonly>
                         </div>
                    </td>
                    <td  style="width: 35%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Endereço *
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="endereco"   placeholder="Endereço" readonly>
+                            <input  type="text" class="form-control" id="endereco"   placeholder="Endereço" readonly>
                         </div>
                     </td>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                            Número
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="numero" maxlength="6"  placeholder="Número" readonly>
+                            <input  type="text" class="form-control" id="numero" maxlength="6"  placeholder="Número" readonly>
                         </div>
                     </td>
                     <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Bairro *
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="bairro"  placeholder="Bairro" readonly>
+                            <input type="text" class="form-control" id="bairro"  placeholder="Bairro" readonly>
                         </div>
                     </td>
                       </tr>
@@ -384,8 +392,8 @@
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            <font size="2">Estado *</font>
-                            <select style="text-transform: uppercase;" id="estado" class="form-control"  readonly>
+                            Estado *
+                            <select id="estado" class="form-control"  readonly>
                                      <option readonly value="0" >Selecione</option>
                                      <option value ="AC"readonly>Acre</option>
                                      <option value ="AL"readonly>Alagoas</option>
@@ -420,7 +428,7 @@
                     <td style="width: 20%; padding-right: 10px;font-size: 14px;">
                     
                     <div class="form-group">
-                            <font size="2">Email</font>
+                            Email
                             <input style="text-transform: uppercase;" type="email" class="form-control" id="email"   placeholder="E-mail" readonly>
                         </div>
                      </td>
@@ -431,22 +439,22 @@
                 <tr>
                  <td style="padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
-                            <font size="2">Telefone 1 *</font>
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="telefone1" size="20" maxlength="14"   placeholder="Telefone 1" readonly onkeypress="mascaraTelefone(this)">
+                            Telefone 1 *
+                            <input type="text" class="form-control" id="telefone1" size="20" maxlength="14"   placeholder="Telefone 1" readonly onkeypress="mascaraTelefone(this)">
                         </div>
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            <font size="2">Telefone 2</font>
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="telefone2" size="20" maxlength="14"   placeholder="Telefone 2" readonly onkeypress="mascaraTelefone(this)">
+                            Telefone 2
+                            <input  type="text" class="form-control" id="telefone2" size="20" maxlength="14"   placeholder="Telefone 2" readonly onkeypress="mascaraTelefone(this)">
                         </div>
                     </td>
                 
                 
                     <td  style="padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            <font size="2">Telefone 3</font>
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="telefone3" size="20" maxlength="14"  placeholder="Telefone 3" readonly onkeypress="mascaraTelefone(this)">
+                            Telefone 3
+                            <input type="text" class="form-control" id="telefone3" size="20" maxlength="14"  placeholder="Telefone 3" readonly onkeypress="mascaraTelefone(this)">
                         </div>
                     </td>
                     <td  style="padding-right: 10px;font-size: 14px;">
@@ -472,19 +480,19 @@
                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Identidade *
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="identidade"   placeholder="Identidade" readonly>
+                            <input type="text" class="form-control" id="identidade"   placeholder="Identidade" readonly>
                         </div>
                     </td>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                            Orgão Expedidor *
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="expedidorIdentidade"   placeholder="Expedidor" readonly>
+                            <input  type="text" class="form-control" id="expedidorIdentidade"   placeholder="Expedidor" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            <font size="2">Estado *</font>
-                            <select  style="text-transform: uppercase;" id="estadoIdentidade" class="form-control"  readonly>
+                            Estado *
+                            <select   id="estadoIdentidade" class="form-control"  readonly>
                                      <option readonly value="0" >Selecione</option>
                                      <option value ="AC"readonly>Acre</option>
                                      <option value ="AL"readonly>Alagoas</option>
@@ -519,7 +527,7 @@
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Data Expedição *
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataIdentidade"  placeholder="Data Expedição" readonly>
+                            <input  type="text" class="form-control" id="dataIdentidade"  placeholder="Data Expedição" readonly>
                         </div>
                     </td>
                     <td  style="width: 17%; padding-right: 10px;font-size: 14px;">
@@ -533,19 +541,19 @@
                     <td style="width: 15%; padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
                             CTPS *
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="ctps"   placeholder="CTPS" readonly>
+                            <input  type="text" class="form-control" id="ctps"   placeholder="CTPS" readonly>
                         </div>
                     </td>
                     <td style="width: 15%; padding-right: 10px;font-size: 14px;">
                         <div class="form-group">
                             Série *
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="serieCtps"   placeholder="Série" readonly>
+                            <input  type="text" class="form-control" id="serieCtps"   placeholder="Série" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
-                            <font size="2">Estado *</font>
-                            <select style="text-transform: uppercase;" id="estadoCtps" class="form-control"  readonly>
+                            Estado *
+                            <select id="estadoCtps" class="form-control"  readonly>
                                      <option readonly value="0" >Selecione</option>
                                      <option value ="AC"readonly>Acre</option>
                                      <option value ="AL"readonly>Alagoas</option>
@@ -580,7 +588,7 @@
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Data Expedição *
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataCtps"  placeholder="Data Expedição" readonly>
+                            <input   type="text" class="form-control" id="dataCtps"  placeholder="Data Expedição" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
@@ -597,13 +605,13 @@
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             PIS/PASEP *
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="pisPasep"  placeholder="PIS/PASEP" readonly>
+                            <input  type="text" class="form-control" id="pisPasep"  placeholder="PIS/PASEP" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Data Expedição *
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataPisPasep"  placeholder="Data Expedição" readonly>
+                            <input  type="text" class="form-control" id="dataPisPasep"  placeholder="Data Expedição" readonly>
                         </div>
                     </td>
                     <td  style="width: 2%; padding-right: 10px;font-size: 13px;">
@@ -612,19 +620,19 @@
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Título Eleitor
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="tituloEleitor" maxlength="18"  placeholder="Título Eleitor" readonly>
+                            <input  type="text" class="form-control" id="tituloEleitor" maxlength="18"  placeholder="Título Eleitor" readonly>
                         </div>
                     </td>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Zona Eleitoral
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="zonaEleitor" maxlength="18"  placeholder="Zona Eleitoral" readonly>
+                            <input  type="text" class="form-control" id="zonaEleitor" maxlength="18"  placeholder="Zona Eleitoral" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 13px;">
                        <div class="form-group">
                             Seção Eleitoral
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="secaoEleitor" maxlength="18"  placeholder="Seção Eleitoral" readonly>
+                            <input  type="text" class="form-control" id="secaoEleitor" maxlength="18"  placeholder="Seção Eleitoral" readonly>
                         </div>
                     </td>
                     <td  style="width: 8%; padding-right: 10px;font-size: 13px;">
@@ -647,13 +655,13 @@
                     <td  style="width: 30%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Nome Mãe *
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="nomeMae" placeholder="Nome Mãe" readonly>
+                            <input type="text" class="form-control" id="nomeMae" placeholder="Nome Mãe" readonly>
                         </div>
                    </td>
                    <td  style="width: 30%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Nome Pai
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="nomePai" placeholder="Nome Pai" readonly>
+                            <input  type="text" class="form-control" id="nomePai" placeholder="Nome Pai" readonly>
                         </div>
                    </td>
               </tr>       
@@ -665,7 +673,7 @@
                     <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Sexo *
-                            <select style="text-transform: uppercase;" id="sexo" class="form-control" readonly>
+                            <select id="sexo" class="form-control" readonly>
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="M">Masculino</option>
                                     <option readonly value="F">Feminino</option>
@@ -675,7 +683,7 @@
                     <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Estado Civil *
-                            <select style="text-transform: uppercase;" id="estadoCivil" class="form-control" readonly>
+                            <select  id="estadoCivil" class="form-control" readonly>
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="CASADO">Casado</option>
                                     <option readonly value="DIVORCIADO">Divorciado</option>
@@ -688,7 +696,7 @@
                     <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Deficiente Físico *
-                            <select style="text-transform: uppercase;" id="deficienteFisico" class="form-control" readonly>
+                            <select  id="deficienteFisico" class="form-control" readonly>
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="S">Sim</option>
                                     <option readonly value="N">Não</option>
@@ -699,7 +707,7 @@
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Grau de Instrução
-                            <select style="text-transform: uppercase;" id="grauInstrucao" class="form-control" readonly>
+                            <select  id="grauInstrucao" class="form-control" readonly>
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="ANALFABETO">Analfabeto</option>
                                     <option readonly value="F_INCOMPLETO">Fundamental Incompleto</option>
@@ -720,7 +728,7 @@
                     <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Etnia
-                            <select style="text-transform: uppercase;" id="etnia" class="form-control" readonly>
+                            <select  id="etnia" class="form-control" readonly>
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="BRANCO">Branco</option>
                                     <option readonly value="CABOCLO">Caboclo</option>
@@ -736,25 +744,25 @@
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Cor Olhos
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="corOlhos"   placeholder="Cor Olhos" readonly>
+                            <input  type="text" class="form-control" id="corOlhos"   placeholder="Cor Olhos" readonly>
                         </div>
                     </td>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Cor Cabelos
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="corCabelos"   placeholder="Cor Cabelos" readonly>
+                            <input  type="text" class="form-control" id="corCabelos"   placeholder="Cor Cabelos" readonly>
                         </div>
                     </td>
                     <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Altura
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="altura"   placeholder="Altura" maxlength="3" onkeypress="mascaraValor(this, mvalorValor);" readonly>
+                            <input  type="text" class="form-control" id="altura"   placeholder="Altura" maxlength="3" onkeypress="mascaraValor(this, mvalorValor);" readonly>
                         </div>
                     </td>
                     <td  style="width: 5%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Peso
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="peso"   placeholder="Peso" maxlength="6" onkeypress="mascaraValor(this, mvalorValor);" readonly>
+                            <input  type="text" class="form-control" id="peso"   placeholder="Peso" maxlength="6" onkeypress="mascaraValor(this, mvalorValor);" readonly>
                         </div>
                     </td>
                              </tr>
@@ -770,13 +778,13 @@
                     <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Nome Filho 01:
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="nomeFilho1"   placeholder="Nome Filho" readonly>
+                            <input  type="text" class="form-control" id="nomeFilho1"   placeholder="Nome Filho" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Data Nascimento Filho 01:
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataNasc1"   placeholder="Data Nascimento" readonly>
+                            <input   type="text" class="form-control" id="dataNasc1"   placeholder="Data Nascimento" readonly>
                         </div>
                     </td>
                     
@@ -787,13 +795,13 @@
                     <td  style="width:25%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Nome Filho 02:
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="nomeFilho2"   placeholder="Nome Filho" readonly>
+                            <input  type="text" class="form-control" id="nomeFilho2"   placeholder="Nome Filho" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Data Nascimento Filho 02:
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataNasc2"   placeholder="Data Nascimento" readonly>
+                            <input  type="text" class="form-control" id="dataNasc2"   placeholder="Data Nascimento" readonly>
                         </div>
                     </td>
                 </tr>
@@ -804,13 +812,13 @@
                     <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Nome Filho 03:
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="nomeFilho3"   placeholder="Nome Filho" readonly>
+                            <input type="text" class="form-control" id="nomeFilho3"   placeholder="Nome Filho" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Data Nascimento Filho 03:
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataNasc3"   placeholder="Data Nascimento" readonly>
+                            <input   type="text" class="form-control" id="dataNasc3"   placeholder="Data Nascimento" readonly>
                         </div>
                     </td>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
@@ -819,13 +827,13 @@
                     <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Nome Filho 04:
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="nomeFilho4"   placeholder="Nome Filho" readonly>
+                            <input  type="text" class="form-control" id="nomeFilho4"   placeholder="Nome Filho" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Data Nascimento Filho 04:
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataNasc4"   placeholder="Data Nascimento" readonly>
+                            <input type="text" class="form-control" id="dataNasc4"   placeholder="Data Nascimento" readonly>
                         </div>
                     </td>
                 </tr>
@@ -836,13 +844,13 @@
                     <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Nome Filho 05:
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="nomeFilho5"   placeholder="Nome Filho" readonly>
+                            <input  type="text" class="form-control" id="nomeFilho5"   placeholder="Nome Filho" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Data Nascimento Filho 05:
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataNasc5"   placeholder="Data Nascimento" readonly>
+                            <input   type="text" class="form-control" id="dataNasc5"   placeholder="Data Nascimento" readonly>
                         </div>
                     </td>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
@@ -851,13 +859,13 @@
                     <td  style="width: 25%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Nome Filho 06:
-                            <input   style="text-transform: uppercase;" type="text" class="form-control" id="nomeFilho6"   placeholder="Nome Filho" readonly>
+                            <input   type="text" class="form-control" id="nomeFilho6"   placeholder="Nome Filho" readonly>
                         </div>
                     </td>
                     <td  style="width: 15%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Data Nascimento Filho 06:
-                            <input style="text-transform: uppercase;"  type="text" class="form-control" id="dataNasc6"   placeholder="Data Nascimento" readonly>
+                            <input  type="text" class="form-control" id="dataNasc6"   placeholder="Data Nascimento" readonly>
                         </div>
                     </td>
                 </tr>
@@ -865,10 +873,11 @@
     
    </div>
        
-        
+</fieldset>    
+        </div>        
         
        
-           <br><br>
+           
            <div style='width: 99%; margin-left: 7px; margin-right: 4px; overflow-x: hidden'>
                   <table id="grid" class="display" cellspacing="0" width="100%">
                       <thead >
@@ -950,6 +959,25 @@
             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Sair</button>
             <button onclick="pesquisaFiltro()" type="button" class="btn btn-outline" data-dismiss="modal">Ok</button>
           
+          </div>
+        </div>
+      </div>
+    </div>
+    
+     <!-- Modal para botão Excluir -->
+    <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Informação</h4>
+          </div>
+          <div class="modal-body">
+              <p><h4>Funcionário não pode ser excluido, <br> Selecione Campo "Funcionário Demitido" caso Necessário.</h4></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Sair</button>
+            
           </div>
         </div>
       </div>

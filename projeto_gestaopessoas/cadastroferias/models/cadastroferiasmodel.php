@@ -19,76 +19,92 @@ class cadastroferiasmodel extends CI_Model {
 
         return $this->access->getUsuarioLogado();
     }
-    
+
     public function novo(){
         
         $this->initConBanco();
         
-        $query = "SELECT MAX(ID_FERIAS) AS ID_FERIAS FROM GP_CAD_FERIAS";
-              //     print_r($query);exit();     
+        $query = "SELECT max(ID_FERIAS) AS ID_FERIAS FROM GP_CAD_FERIAS";
+                     
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
-                       
-        if(count($rs) > 0){
-            $novoId = $rs[0]->ID_FERIAS + 1;
+        if(count($rs) > 0 && is_array($rs)){
+            $novoIdUsuario = $rs[0]->ID_FERIAS + 1;
         }
         else{
-            $novoId = 1;
-            
+            $novoIdUsuario = 1;
         }
                 
-        return $novoId;
+        return $novoIdUsuario;
          
     } 
 
-   
-
-    public function salvar($codGrupo, $descricaoGrupo, $idEmpresa, $idFilial){
+    public function salvar($ID, $idEmpresa,$idFilial, $funcionario, $dataAdmissao,
+                           $matricula,$setor,$funcao,$dataInicioFerias,
+                           $diasFerias,$dataFimFerias,$comprouDias,$diasComprados,
+                           $diasHaver){
         
         $this->initConBanco();
         
-        $query = "SELECT * FROM GP_EQP_GRUPO_EQUIPAMENTO  WHERE COD_GRUPO LIKE '%$codGrupo%' AND ID_EMPRESA = $idEmpresa AND ID_FILIAL = $idFilial";
-        
+        $query = "SELECT * FROM GP_CAD_FERIAS WHERE ID_FERIAS= $ID";
+         
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
+        $usuarioLogado = $this->getUsuarioLogado()->NOME_COMPLETO; 
         
-        //print_r($query);exit();
         
-        $usuarioLogado = "TESTE SISTEMA"; // IMPLEMENTAR A FUNÇÃO PRA PEGAR O USUÁRIO LOGADO
         
         if (is_array($rs) && count($rs) > 0){
             
-            $query = "UPDATE GP_EQP_GRUPO_EQUIPAMENTO  SET DESCRICAO = '$descricaoGrupo', ID_EMPRESA = '$idEmpresa', ID_FILIAL = '$idFilial',  DATA_ALTERACAO = SYSDATE, USUARIO_ALTERACAO = '$usuarioLogado' WHERE COD_GRUPO LIKE '$codGrupo'  AND ID_EMPRESA = $idEmpresa AND ID_FILIAL = $idFilial";
-
-            $resultado = $this->conBanco->query($query);
+            $query2 = "SELECT DATA_FIM FROM GP_CAD_FERIAS WHERE ID_FERIAS= $ID";
+            $cs2 = $this->conBanco->query($query2);
+            $rs2 = $cs2->result();
+            if (is_array($rs2) && count($rs2) > 0){
+                $oldDataFim = $rs2[0]->DATA_FIM;
+                $query3 =" UPDATE GP_CAD_FERIAS  SET ID_FERIAS = '$ID',"
+                        ." EMPRESA = '$idEmpresa', FILIAL = '$idFilial',"
+                        ." FUNCIONARIO = '$funcionario', DATA_ADMISSAO = '$dataAdmissao', "
+                        ." MATRICULA = '$matricula', SETOR = '$setor', "
+                        ." FUNCAO = '$funcao', DATA_INICIO = '$dataInicioFerias', "
+                        ." DATA_FIM = '$dataFimFerias', COMPRA_DIAS = '$comprouDias', "
+                        ." DIAS_COMPRADO = '$diasComprados', DIAS_HAVER = '$diasHaver', "
+                        ." USUARIO_CADASTRO = '$usuarioLogado', DATA_CADASTRO = SYSDATE "
+                        ." WHERE ID_FERIAS LIKE '$ID'  AND DATA_FIM = '$oldDataFim'";
                 
-            if($resultado == true || $resultado == 1){
-                return true;            
-            }
-            else{
-                return false;
+                //print_r($query3);exit();        
+                $resultado = $this->conBanco->query($query3);
+                if($resultado == true || $resultado == 1){
+                    return true;            
+                }
+                else{
+                    return false;
+                }
             }
         }
         else{
-            
-            $query = "SELECT MAX(ID_GRUPO) AS ID FROM  GP_EQP_GRUPO_EQUIPAMENTO";
-
+            $query = "SELECT MAX(ID_FERIAS)  AS ID_FERIAS FROM  GP_CAD_FERIAS";
+            //print_r('aqui');
             $cs = $this->conBanco->query($query);
             $rs = $cs->result();
-
             if(count($rs) == 0 ){
-                $novoId = 1;            
+                $novoId = 1;
             }
             else{
-                $novoId = $rs[0]->ID + 1;
-            }                       
-
-            $query = "INSERT INTO GP_EQP_GRUPO_EQUIPAMENTO (ID_GRUPO, ID_EMPRESA, ID_FILIAL, COD_GRUPO, DESCRICAO, DATA_CADASTRO, USUARIO_CADASTRO)
-                             VALUES ($novoId, $idEmpresa, $idFilial, '$codGrupo','$descricaoGrupo', SYSDATE, '$usuarioLogado')";     
-
-            //print_r($query);exit();
+                $novoId = $rs[0]->ID_FERIAS + 1;
+            }
+            
+            $query = "INSERT INTO GP_CAD_FERIAS(ID_FERIAS,EMPRESA, FILIAL, FUNCIONARIO,
+                                                DATA_ADMISSAO, MATRICULA, SETOR, FUNCAO,
+                                                DATA_INICIO, DIAS_FERIAS, DATA_FIM, 
+                                                COMPRA_DIAS, DIAS_COMPRADO, DIAS_HAVER,
+                                                USUARIO_CADASTRO,DATA_CADASTRO)
+                     VALUES ($ID, '$idEmpresa', '$idFilial', '$funcionario', '$dataAdmissao',
+                           '$matricula','$setor','$funcao','$dataInicioFerias',
+                           '$diasFerias','$dataFimFerias','$comprouDias','$diasComprados',
+                           '$diasHaver','$usuarioLogado',SYSDATE)";
+            //print_r($query);
             $resultado = $this->conBanco->query($query);
-
+            
             if($resultado == true || $resultado == 1){
                 return true;            
             }
@@ -98,11 +114,11 @@ class cadastroferiasmodel extends CI_Model {
         }
     }
     
-    public function excluir($codGrupo){
+    public function excluir($ID){
         
         $this->initConBanco();
         
-        $query = "DELETE FROM GP_EQP_GRUPO_EQUIPAMENTO WHERE COD_GRUPO = '$codGrupo'";
+        $query = "DELETE FROM GP_CAD_FERIAS WHERE ID_FERIAS = '$ID'";
         
         //print_r($query);exit();
         
@@ -116,174 +132,40 @@ class cadastroferiasmodel extends CI_Model {
         }
          
     }
+
     
-    public function buscaPrimeiroRegistro(){
-        
+    public function pesquisaSimples($matricula, $funcionario,$funcionarioAno,$matriculaAno){
         $this->initConBanco();
-        
-        $query = "SELECT * FROM GP_EQP_GRUPO_EQUIPAMENTO ORDER BY ID_GRUPO";
-        
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-        
-        $obj = array();
-        
-        if (is_array($rs) && count($rs) > 0){
-           
-            $obj[] = $rs[0]->COD_GRUPO;
-            $obj[] = $rs[0]->DESCRICAO;
-            $obj[] = $rs[0]->ID_EMPRESA;
-            $obj[] = $rs[0]->ID_FILIAL;
-               
-            return json_encode($obj);
-        }
-        else{
-            return false;
-        }
-    }
-    
-    public function buscaUltimoRegistro(){
-        
-        $this->initConBanco();
-        
-        $query = "SELECT * FROM GP_EQP_GRUPO_EQUIPAMENTO ORDER BY ID_GRUPO";
-        
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-        
-        $obj = array();
-        
-        $cont = count($rs) - 1;
-      
-        if (is_array($rs) && count($rs) > 0){
+        if($matricula == "" || $matricula == null ){
             
-            
-            $obj[] = $rs[$cont]->COD_GRUPO;
-            $obj[] = $rs[$cont]->DESCRICAO;
-            $obj[] = $rs[$cont]->ID_EMPRESA;
-            $obj[] = $rs[$cont]->ID_FILIAL;
-           
-        
-            return json_encode($obj);
-        }
-        else{
-            return false;
-        }
-           
-    }
-    
-    public function buscaRegistroAnterior($codGrupo){
-        
-        $this->initConBanco();
-        
-        $cont = 1;
-                
-        for($i =0; $i < 10; $i++){
-            
-            
-            
-            $query = "SELECT * FROM GP_EQP_GRUPO_EQUIPAMENTO WHERE COD_GRUPO =  '$codGrupo'";
-
-            $cs = $this->conBanco->query($query);
-            $rs = $cs->result();
-        
-            $idGrupo = $rs[0]->ID_GRUPO;
-                    
-            $idProcura = $idGrupo - $cont;  
-
-            $query = "SELECT * FROM GP_EQP_GRUPO_EQUIPAMENTO WHERE ID_GRUPO =  $idProcura";
-
-            $cs = $this->conBanco->query($query);
-            $rs = $cs->result();
-
-            $obj = array();
-
-            if (is_array($rs) && count($rs) > 0){
-
-                $obj[] = $rs[0]->COD_GRUPO;
-                $obj[] = $rs[0]->DESCRICAO;
-                $obj[] = $rs[0]->ID_EMPRESA;
-                $obj[] = $rs[0]->ID_FILIAL;
-                
-               
-                return json_encode($obj);
-            }
-            
-            $cont++;
-       
-        }
-           
-    }
-    
-     public function buscaRegistroProximo($codGrupo){
-        
-        $this->initConBanco();
-        
-        $cont = 1;
-                
-        for($i =0; $i < 10; $i++){
-            
-                       
-            $query = "SELECT * FROM GP_EQP_GRUPO_EQUIPAMENTO WHERE COD_GRUPO =  '$codGrupo'";
-
-            $cs = $this->conBanco->query($query);
-            $rs = $cs->result();
-        
-            //print_r($query);exit();
-            
-            $idGrupo = $rs[0]->ID_GRUPO;
-                    
-            $idProcura = $idGrupo + $cont;                  
-
-            $query = "SELECT * FROM GP_EQP_GRUPO_EQUIPAMENTO WHERE ID_GRUPO =  '$idProcura'";
-            
-            //print_r($query);exit();
-
-            $cs = $this->conBanco->query($query);
-            $rs = $cs->result();
-
-            $obj = array();
-
-            if (is_array($rs) && count($rs) > 0){
-
-                $obj[] = $rs[0]->COD_GRUPO;
-                $obj[] = $rs[0]->DESCRICAO;
-                $obj[] = $rs[0]->ID_EMPRESA;
-                $obj[] = $rs[0]->ID_FILIAL;
-               
-
-                return json_encode($obj);
-            }
-            
-            $cont++;
-       
-        }
-           
-    }
-    
-    public function pesquisaSimples($idInicial, $nomeInicial){
-        
-       
-        $this->initConBanco();
-         
-        if($idInicial == "" || $idInicial == null ){
-            
-            $query = "SELECT * FROM GP_EQP_GRUPO_EQUIPAMENTO WHERE DESCRICAO LIKE '%$nomeInicial%'";
-             
+            $query = "SELECT ID_FUNCIONARIO FROM GP_CAD_FUNCIONARIO WHERE UPPER(NOME_FUNCIONARIO) LIKE UPPER('%$funcionario%')";
             //print_r($query);exit();
             $cs = $this->conBanco->query($query);
             $rs = $cs->result();
-                                
-            $obj = array();
+            $funcionario = $rs[0]->ID_FUNCIONARIO;
+            $query = "SELECT * FROM GP_CAD_FERIAS WHERE FUNCIONARIO ='$funcionario' AND DATA_INICIO LIKE ('%$funcionarioAno%')";
             
+            //print_r($query);exit();
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+            $obj = array();                  
             if (is_array($rs) && count($rs) > 0){
             
-                $obj[] = $rs[0]->COD_GRUPO;
-                $obj[] = $rs[0]->DESCRICAO;
-                $obj[] = $rs[0]->ID_EMPRESA;
-                $obj[] = $rs[0]->ID_FILIAL;
+                $obj[] = $rs[0]->ID_FERIAS;
+                $obj[] = $rs[0]->EMPRESA;
+                $obj[] = $rs[0]->FILIAL;
+                $obj[] = $rs[0]->FUNCIONARIO;
+                $obj[] = $rs[0]->DATA_ADMISSAO;
+                $obj[] = $rs[0]->MATRICULA;
+                $obj[] = $rs[0]->SETOR;
+                $obj[] = $rs[0]->FUNCAO;
+                $obj[] = $rs[0]->DATA_INICIO;
+                $obj[] = $rs[0]->DIAS_FERIAS;
+                $obj[] = $rs[0]->DATA_FIM;
+                $obj[] = $rs[0]->COMPRA_DIAS;
+                $obj[] = $rs[0]->DIAS_COMPRADO;
+                $obj[] = $rs[0]->DIAS_HAVER;
                 
-
                 return json_encode($obj);
             }
             else{
@@ -291,21 +173,29 @@ class cadastroferiasmodel extends CI_Model {
             }
         }
         else{
-            $query = "SELECT * FROM GP_EQP_GRUPO_EQUIPAMENTO WHERE COD_GRUPO = '$idInicial'";
+            $query = "SELECT * FROM GP_CAD_FERIAS WHERE MATRICULA = '$matricula' AND DATA_INICIO LIKE ('%$matriculaAno%')";
             
             //print_r($query);exit();
             $cs = $this->conBanco->query($query);
             $rs = $cs->result();
-        
-                        
-            $obj = array();
+            $obj = array(); 
             
             if (is_array($rs) && count($rs) > 0){
-            
-                $obj[] = $rs[0]->COD_GRUPO;
-                $obj[] = $rs[0]->DESCRICAO;
-                $obj[] = $rs[0]->ID_EMPRESA;
-                $obj[] = $rs[0]->ID_FILIAL;
+                
+                $obj[] = $rs[0]->ID_FERIAS;
+                $obj[] = $rs[0]->EMPRESA;
+                $obj[] = $rs[0]->FILIAL;
+                $obj[] = $rs[0]->FUNCIONARIO;
+                $obj[] = $rs[0]->DATA_ADMISSAO;
+                $obj[] = $rs[0]->MATRICULA;
+                $obj[] = $rs[0]->SETOR;
+                $obj[] = $rs[0]->FUNCAO;
+                $obj[] = $rs[0]->DATA_INICIO;
+                $obj[] = $rs[0]->DIAS_FERIAS;
+                $obj[] = $rs[0]->DATA_FIM;
+                $obj[] = $rs[0]->COMPRA_DIAS;
+                $obj[] = $rs[0]->DIAS_COMPRADO;
+                $obj[] = $rs[0]->DIAS_HAVER;
                 
                 return json_encode($obj);
             }
@@ -315,6 +205,218 @@ class cadastroferiasmodel extends CI_Model {
             
         }    
     }
+    
+    public function buscaPrimeiroRegistro(){
+        
+        $this->initConBanco();
+        
+        $query = "SELECT FUNCIONARIO,ID_FERIAS FROM GP_CAD_FERIAS ORDER BY ID_FERIAS";
+        
+        $cs = $this->conBanco->query($query);
+        $funcionarios = $cs->result();
+        $maxIds = count($funcionarios);
+        $counter = 0;
+        $desativado = "S";
+        while(($desativado == "S") && ($maxIds>$counter)){
+            $funcionario = $funcionarios[$counter]->FUNCIONARIO[0];
+            $ID          = $funcionarios[$counter]->ID_FERIAS[0];
+            $query2 = "SELECT * FROM GP_CAD_FUNCIONARIO WHERE ID_FUNCIONARIO='$funcionario'";
+            //print_r($query2);exit();
+            $cs2 = $this->conBanco->query($query2);
+            $rs2 = $cs2->result();
+            $desativado = $rs2[0]->DESATIVADO[0];
+            $counter++;
+        } 
+        
+        $query3 = "SELECT * FROM GP_CAD_FERIAS WHERE FUNCIONARIO='$funcionario' AND ID_FERIAS = '$ID'";
+        //print_r($query3);exit();
+        $cs3 = $this->conBanco->query($query3);
+        $rs = $cs3->result();
+        
+        $obj = array();
+        if (is_array($rs) && count($rs) > 0){
+            
+            $obj[] = $rs[0]->ID_FERIAS;
+            $obj[] = $rs[0]->EMPRESA;
+            $obj[] = $rs[0]->FILIAL;
+            $obj[] = $rs[0]->FUNCIONARIO;
+            $obj[] = $rs[0]->DATA_ADMISSAO;
+            $obj[] = $rs[0]->MATRICULA;
+            $obj[] = $rs[0]->SETOR;
+            $obj[] = $rs[0]->FUNCAO;
+            $obj[] = $rs[0]->DATA_INICIO;
+            $obj[] = $rs[0]->DIAS_FERIAS;
+            $obj[] = $rs[0]->DATA_FIM;
+            $obj[] = $rs[0]->COMPRA_DIAS;
+            $obj[] = $rs[0]->DIAS_COMPRADO;
+            $obj[] = $rs[0]->DIAS_HAVER;
+                    
+            return json_encode($obj);
+        }
+        else{
+            return false;
+        }
+    }
+    
+    
+    public function buscaUltimoRegistro(){
+        
+        $this->initConBanco();
+        
+        $query = "SELECT FUNCIONARIO,ID_FERIAS FROM GP_CAD_FERIAS ORDER BY ID_FERIAS DESC";
+        //print_r($query);exit();
+        $funcionarios = $this->conBanco->query($query)->result();
+        $maxIds = count($funcionarios);
+        $counter = 0;
+        $desativado = "S";
+        
+        while(($desativado == "S") && ($counter < $maxIds)){
+            $funcionario = $funcionarios[$counter]->FUNCIONARIO;
+            $ID = $funcionarios[$counter]->ID_FERIAS;
+            $query2 = "SELECT * FROM GP_CAD_FUNCIONARIO WHERE ID_FUNCIONARIO='$funcionario'";
+            //print_r($query2);exit();
+            $cs2 = $this->conBanco->query($query2);
+            $rs2 = $cs2->result();
+            $desativado = $rs2[0]->DESATIVADO[0];
+            $counter++;
+        } 
+        $query3 = "SELECT * FROM GP_CAD_FERIAS WHERE FUNCIONARIO='$funcionario' AND ID_FERIAS='$ID'";
+        //print_r($query3);exit();
+        $cs3 = $this->conBanco->query($query3);
+        $rs = $cs3->result();
+        if (is_array($rs) && count($rs) > 0){
+            
+            $obj[] = $rs[0]->ID_FERIAS;
+            $obj[] = $rs[0]->EMPRESA;
+            $obj[] = $rs[0]->FILIAL;
+            $obj[] = $rs[0]->FUNCIONARIO;
+            $obj[] = $rs[0]->DATA_ADMISSAO;
+            $obj[] = $rs[0]->MATRICULA;
+            $obj[] = $rs[0]->SETOR;
+            $obj[] = $rs[0]->FUNCAO;
+            $obj[] = $rs[0]->DATA_INICIO;
+            $obj[] = $rs[0]->DIAS_FERIAS;
+            $obj[] = $rs[0]->DATA_FIM;
+            $obj[] = $rs[0]->COMPRA_DIAS;
+            $obj[] = $rs[0]->DIAS_COMPRADO;
+            $obj[] = $rs[0]->DIAS_HAVER;
+                    
+            return json_encode($obj);
+        }
+        else{
+            return false;
+        }
+           
+    }
+    
+    
+    public function buscaRegistroAnterior($ID){
+        
+        $this->initConBanco();
+        
+        $query = "SELECT FUNCIONARIO,ID_FERIAS FROM GP_CAD_FERIAS WHERE CAST(ID_FERIAS AS INT) < $ID ORDER BY ID_FERIAS DESC";
+        //print_r($query);exit();
+        $funcionarios = $this->conBanco->query($query)->result();
+        $maxIds = count($funcionarios);
+        $counter = 0;
+        $desativado = "S";
+        
+        if (is_array($funcionarios) && count($funcionarios) > 0){
+            
+            while(($desativado == "S") && ($counter>=0)){
+                $funcionario = $funcionarios[$counter]->FUNCIONARIO;
+                $ID = $funcionarios[$counter]->ID_FERIAS;
+                $query2 = "SELECT * FROM GP_CAD_FUNCIONARIO WHERE ID_FUNCIONARIO='$funcionario'";
+                //print_r($query2);exit();
+                $cs2 = $this->conBanco->query($query2);
+                $rs2 = $cs2->result();
+                $desativado = $rs2[0]->DESATIVADO[0];
+                $counter++;
+            }
+            
+            $query3 = "SELECT * FROM GP_CAD_FERIAS WHERE FUNCIONARIO='$funcionario' AND ID_FERIAS='$ID'";
+            //print_r($query3);exit();
+            $cs3 = $this->conBanco->query($query3);
+            $rs = $cs3->result();
+            if (is_array($rs) && count($rs) > 0){
+
+                $obj[] = $rs[0]->ID_FERIAS;
+                $obj[] = $rs[0]->EMPRESA;
+                $obj[] = $rs[0]->FILIAL;
+                $obj[] = $rs[0]->FUNCIONARIO;
+                $obj[] = $rs[0]->DATA_ADMISSAO;
+                $obj[] = $rs[0]->MATRICULA;
+                $obj[] = $rs[0]->SETOR;
+                $obj[] = $rs[0]->FUNCAO;
+                $obj[] = $rs[0]->DATA_INICIO;
+                $obj[] = $rs[0]->DIAS_FERIAS;
+                $obj[] = $rs[0]->DATA_FIM;
+                $obj[] = $rs[0]->COMPRA_DIAS;
+                $obj[] = $rs[0]->DIAS_COMPRADO;
+                $obj[] = $rs[0]->DIAS_HAVER;
+
+                return json_encode($obj);
+            }
+            else{
+                return false;
+            }
+        }
+    }
+    
+    
+    public function buscaRegistroProximo($ID){
+        
+        $this->initConBanco();
+        
+        $query = "SELECT FUNCIONARIO,ID_FERIAS FROM GP_CAD_FERIAS WHERE CAST(ID_FERIAS AS INT) > $ID ORDER BY ID_FERIAS ASC";
+        //print_r($query);exit();
+        $funcionarios = $this->conBanco->query($query)->result();
+        $maxIds = count($funcionarios);
+        $counter = 0;
+        $desativado = "S";
+        
+        if (is_array($funcionarios) && count($funcionarios) > 0){
+            
+            while(($desativado == "S") && ($counter>=0)){
+                $funcionario = $funcionarios[$counter]->FUNCIONARIO;
+                $ID = $funcionarios[$counter]->ID_FERIAS;
+                $query2 = "SELECT * FROM GP_CAD_FUNCIONARIO WHERE ID_FUNCIONARIO='$funcionario'";
+                //print_r($query2);exit();
+                $cs2 = $this->conBanco->query($query2);
+                $rs2 = $cs2->result();
+                $desativado = $rs2[0]->DESATIVADO[0];
+                $counter++;
+            }
+            
+            $query3 = "SELECT * FROM GP_CAD_FERIAS WHERE FUNCIONARIO='$funcionario' AND ID_FERIAS='$ID'";
+            //print_r($query3);exit();
+            $cs3 = $this->conBanco->query($query3);
+            $rs = $cs3->result();
+            if (is_array($rs) && count($rs) > 0){
+
+                $obj[] = $rs[0]->ID_FERIAS;
+                $obj[] = $rs[0]->EMPRESA;
+                $obj[] = $rs[0]->FILIAL;
+                $obj[] = $rs[0]->FUNCIONARIO;
+                $obj[] = $rs[0]->DATA_ADMISSAO;
+                $obj[] = $rs[0]->MATRICULA;
+                $obj[] = $rs[0]->SETOR;
+                $obj[] = $rs[0]->FUNCAO;
+                $obj[] = $rs[0]->DATA_INICIO;
+                $obj[] = $rs[0]->DIAS_FERIAS;
+                $obj[] = $rs[0]->DATA_FIM;
+                $obj[] = $rs[0]->COMPRA_DIAS;
+                $obj[] = $rs[0]->DIAS_COMPRADO;
+                $obj[] = $rs[0]->DIAS_HAVER;
+
+                return json_encode($obj);
+            }
+            else{
+                return false;
+            }
+        }
+    }
+    
     
     public function getGrid($indice, $ordem, $inicio, $tamanho, $draw){
         
@@ -332,60 +434,54 @@ class cadastroferiasmodel extends CI_Model {
         $data = array(); // linhas
         //$itens = $this->getDataGrid($indice, $ordem, $inicio, $tamanho, $parametro1, $parametro2);
         
-        $query = "SELECT * FROM GP_EQP_GRUPO_EQUIPAMENTO ORDER BY ID_GRUPO";
-               
-        $cs = $this->conBanco->query($query);
-        $itens = $cs->result();
+        $query = "SELECT * FROM GP_CAD_FERIAS ORDER BY ID_FERIAS";
+        
+        $itens = $this->conBanco->query($query)->result();
         
         $obj = array();
 
         foreach ($itens as $item) {
             
-            $aux = $item->ID_GRUPO;
+            $aux           = $item->ID_FERIAS;
+            $idFuncionario = $item->FUNCIONARIO;
+            $empresa       = $item->EMPRESA;
+            $filial        = $item->FILIAL;
             
-            $query = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA WHERE ID_EMPRESA = $item->ID_EMPRESA";
-               
-            $cs = $this->conBanco->query($query);
-            $rs = $cs->result();
+            $query  = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA  WHERE ID_EMPRESA = $empresa";
+            //print_r($query);exit();
+            $rs = $this->conBanco->query($query)->result();
+            $nomeEmpresa  = $rs[0]->NOME_FANTASIA;
             
-            if(is_array($rs) && count($rs)> 0){
-                $empresa = $rs[0]->NOME_FANTASIA;
-            }
-            else{
-                $empresa = '-';
-            }
+            $query2 = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA_FILIAL  WHERE ID_EMPRESA_FILIAL = $filial";
+            //print_r($query2);exit();
+            $rs2 = $this->conBanco->query($query2)->result();
+            $nomeFilial  = $rs2[0]->NOME_FANTASIA;
             
-            
-            $query = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA_FILIAL WHERE ID_EMPRESA_FILIAL = $item->ID_FILIAL";
-               
-            $cs = $this->conBanco->query($query);
-            $rs = $cs->result();
-            
-            if(is_array($rs) && count($rs)> 0){
-                $filial = $rs[0]->NOME_FANTASIA;
-            }
-            else{
-                $filial = '-';
-            }
-            
-            
-            $obj['EMPRESA'] = $empresa;
-            $obj['FILIAL'] = $filial;
-            $obj['COD_GRUPO'] = $item->COD_GRUPO;
-            $obj['DESCRICAO'] = $item->DESCRICAO;
-            $obj['SELECIONAR'] = "<button type='submit' class='btn-primary' onclick='selecionaGrid($aux)'>Selecionar</button>";
-           
-                
+            $query3 = "SELECT NOME_FUNCIONARIO FROM GP_CAD_FUNCIONARIO  WHERE EMPRESA = '$empresa' AND ID_FUNCIONARIO='$idFuncionario'";
+            //print_r($query3);exit();
+            $rs3 = $this->conBanco->query($query3)->result();
+            $funcionario  = $rs3[0]->NOME_FUNCIONARIO;
+            $obj['EMPRESA'] = $nomeEmpresa;
+            $obj['FILIAL'] = $nomeFilial;
+            $obj['FUNCIONARIO'] = $funcionario;
+            $obj['DATA_ADMISSAO'] = $item->DATA_ADMISSAO;
+            $obj['MATRICULA'] = $item->MATRICULA;
+            $obj['FUNCAO'] = $item->FUNCAO;
+            $obj['SETOR'] = $item->SETOR;
+            $obj['SELECIONAR'] = "<button type='submit' class='btn-primary' onclick='selecionaGrid($aux)'>SELECIONAR</button>";
+          
             $data[] = $obj;
         }
 
         $grid['data'] = $data;
 
         return $grid;
-              
-   
+        
+        
+       
             
     }
+    
     
     private function getCountGrid(){
         
@@ -406,25 +502,32 @@ class cadastroferiasmodel extends CI_Model {
           
     }
     
-    public function selecionaGrid($idGrupo){
-        
-       
+    public function selecionaGrid($ID){
         $this->initConBanco();
-       
-        $query = "SELECT * FROM GP_EQP_GRUPO_EQUIPAMENTO WHERE ID_GRUPO = $idGrupo";
-            
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-                                
+        
+        $query = "SELECT * FROM GP_CAD_FERIAS WHERE ID_FERIAS = $ID";
+        //print_r($query);exit();
+        $rs    = $this->conBanco->query($query)->result();
+        
         $obj = array();
            
         if (is_array($rs) && count($rs) > 0){
             
-            $obj[] = $rs[0]->COD_GRUPO;
-            $obj[] = $rs[0]->DESCRICAO;
-            $obj[] = $rs[0]->ID_EMPRESA;
-            $obj[] = $rs[0]->ID_FILIAL;
-          
+            $obj[] = $ID;
+            $obj[] = $rs[0]->EMPRESA;
+            $obj[] = $rs[0]->FILIAL;
+            $obj[] = $rs[0]->FUNCIONARIO;
+            $obj[] = $rs[0]->DATA_ADMISSAO;
+            $obj[] = $rs[0]->MATRICULA;
+            $obj[] = $rs[0]->FUNCAO;
+            $obj[] = $rs[0]->SETOR;
+            $obj[] = $rs[0]->DATA_INICIO;
+            $obj[] = $rs[0]->DIAS_FERIAS;
+            $obj[] = $rs[0]->DATA_FIM;
+            $obj[] = $rs[0]->COMPRA_DIAS;
+            $obj[] = $rs[0]->DIAS_COMPRADO;
+            $obj[] = $rs[0]->DIAS_HAVER;
+                
             return json_encode($obj);
         }
         else{

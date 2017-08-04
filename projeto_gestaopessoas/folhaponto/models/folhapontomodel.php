@@ -914,6 +914,7 @@ class folhapontomodel extends CI_Model {
         $html .= "<table style = 'width:100%;' border = '0'; cellpadding ='0'; cellspacing = '0';>";
         $html .= "<tr style = 'background-color: #579CE9; height: 50px;'><td colspan = '4' rowspan = '6' align = 'left' style = 'font-size: 30px; color: #ffffff;'><b>&nbsp;&nbsp;<b>Empresa:</b> $nomeEmpresa <br>&nbsp;<b> Filial:</b> $nomeFilial</td>";
         $html .= "<td rowspan = '2' colspan = '2'  align = 'center' style = 'font-size: 28px; color: #ffffff;'><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FOLHA DE FREQUÊNCIA</b></td></tr>";
+        $html .= "</tr>";
         $html .= "<tr style = 'background-color: #579CE9; height: 50px;'></tr>";
         $html .= "<tr style = 'background-color: #579CE9; height: 50px;'><td rowspan = '2'     align = 'right' style = 'font-size: 26px; color: #ffffff;'><b>Período:</b></td>";
         $html .= "<td rowspan = '2'     align = 'center' style = 'font-size: 26px; color: #ffffff;'>$mes / $mesProx </td></tr>";
@@ -924,7 +925,7 @@ class folhapontomodel extends CI_Model {
         
         
         $html .= "<table style = 'width:100%;' border = '0'; cellpadding ='0'; cellspacing = '0';>";
-        $html .= "<tr '><td style = 'color: #ffffff; font-size: 5px;' align = 'center'></td></tr>";
+        $html .= "<tr'><td style = 'color: #ffffff; font-size: 5px;' align = 'center'></td></tr>";
         $html .= "<tr style = 'width:90%; border-width: 10px; height: 20px;'>";
         $html .= "<td colspan = '2' style = 'width: 5%; color: #000000; border: 1px; border-style: solid; border-color: black; font-size: 30px;'  align = 'center'><b>&nbsp;FUNCIONÁRIO:</b></td>";
         $html .= "<td colspan = '3' style = 'text-transform: uppercase; width: 5%; color: #000000; border: 1px; border-style: solid; border-color: black; font-size: 22px;'  align = 'center'><b>$nomeFuncionario</b></td>";
@@ -1100,7 +1101,7 @@ class folhapontomodel extends CI_Model {
                         $html .= "<td style = 'width: 10%; border: 1px; border-style: solid; border-color: black; color: #000000; font-size: 25px;'  align = 'left'><b>ASS. EMPREGADOR</b></td>";
                         $html .= "<td colspan = '2'style = 'width: 10%; border: 1px; border-style: solid; border-color: black; color: #ffffff; font-size: 14px;'  align = 'left'><b></b></td>";
                         $html .= "<td style = 'width: 10%;  color: #000000; font-size: 16px;'  align = 'center'><b></b></td>";
-            
+                        $html .= "</tr>";
                         
             
         

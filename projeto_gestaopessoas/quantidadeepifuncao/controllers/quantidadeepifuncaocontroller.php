@@ -26,10 +26,11 @@ class quantidadeepifuncaocontroller extends CI_Controller {
 
         $id = $this->input->POST('id');
         $idFuncao = $this->input->POST('idFuncao');
+        $impressaoEpi = $this->input->POST('impressaoEpi');
         
         $this->load->model('quantidadeepifuncaomodel');
 
-        $retorno = $this->quantidadeepifuncaomodel->salvar($id, $idFuncao);
+        $retorno = $this->quantidadeepifuncaomodel->salvar($id, $idFuncao, $impressaoEpi);
 
         echo json_encode($retorno);
     }
@@ -38,10 +39,11 @@ class quantidadeepifuncaocontroller extends CI_Controller {
 
         $id = $this->input->POST('id');
         $idFuncao = $this->input->POST('idFuncao');
+        $impressaoEpi = $this->input->POST('impressaoEpi');
 
         $this->load->model('quantidadeepifuncaomodel');
 
-        $retorno = $this->quantidadeepifuncaomodel->verificarLancamentoEpi($id, $idFuncao);
+        $retorno = $this->quantidadeepifuncaomodel->verificarLancamentoEpi($id, $idFuncao, $impressaoEpi);
 
         echo json_encode($retorno);
     }
@@ -50,10 +52,11 @@ class quantidadeepifuncaocontroller extends CI_Controller {
 
         $id = $this->input->POST('id');
         $tipoEpi = $this->input->POST('tipoEpi');
+        $impressaoEpi = $this->input->POST('impressaoEpi');
 
         $this->load->model('quantidadeepifuncaomodel');
 
-        $retorno = $this->quantidadeepifuncaomodel->verificarSalvarLancamento($id, $tipoEpi);
+        $retorno = $this->quantidadeepifuncaomodel->verificarSalvarLancamento($id, $tipoEpi, $impressaoEpi);
 
         echo json_encode($retorno);
     }
@@ -175,6 +178,17 @@ class quantidadeepifuncaocontroller extends CI_Controller {
         $this->load->model('quantidadeepifuncaomodel');
 
         $retorno = $this->quantidadeepifuncaomodel->carregarFuncao();
+
+        echo json_encode($retorno);
+    }
+    
+    public function carregarFuncaoFuncionarios() {
+
+        $this->load->model('quantidadeepifuncaomodel');
+        
+        $id = $this->input->POST('id');
+
+        $retorno = $this->quantidadeepifuncaomodel->carregarFuncaoFuncionarios($id);
 
         echo json_encode($retorno);
     }
@@ -324,6 +338,7 @@ class quantidadeepifuncaocontroller extends CI_Controller {
         echo ($retorno);
     }
 
+    
     public function excluirDadosTemp() {
 
         $this->load->model('quantidadeepifuncaomodel');
@@ -339,6 +354,21 @@ class quantidadeepifuncaocontroller extends CI_Controller {
 
 
         $retorno = $this->quantidadeepifuncaomodel->getNumeroLinhas($id);
+
+        echo json_encode($retorno);
+    }
+    
+    
+    //////////// lista funcionarios
+    
+    
+    public function carregarListaFuncionarios() {
+
+        $this->load->model('quantidadeepifuncaomodel');
+
+        $id = $this->input->POST('id');
+
+        $retorno = $this->quantidadeepifuncaomodel->carregarListaFuncionarios($id);
 
         echo json_encode($retorno);
     }

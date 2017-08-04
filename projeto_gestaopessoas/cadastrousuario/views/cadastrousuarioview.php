@@ -36,6 +36,7 @@
         <!--BLOCKUI-->
 
         <!--GRID-->
+        <link href="resources/cadastrousuario/css/teste.css" rel="stylesheet">
         <link href="resources/geral/grid/css/dataTables.bootstrap.css" rel="stylesheet">
         <script src="resources/geral/grid/js/jquery.dataTables.min.js"></script>
         <script src="resources/geral/grid/js/dataTables.bootstrap.js"></script>
@@ -69,7 +70,7 @@
                 <a onclick="pesquisar()"class="btn btn-primary" ata-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-search"></span> Pesquisar
                 </a>
-                <a onclick="excluir()" class="btn btn-primary">
+                <a onclick="validarExcluir()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-trash"></span> Excluir
                 </a>
                 <a onclick="buscaPrimeiroRegistro()"  class="btn btn-primary">
@@ -101,23 +102,28 @@
 
             </div>
         </nav>
-        <table style="width: 80%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
+        <br>
+        <div class="container" align="center" style="width: 90%;">
+            <fieldset class="fieldset-border">
+                <legend class="legend-border" >Dados Usuário do Sistema</legend>
+       
+                <table style="width: 80%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
              <tr>
                 <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
-                        <font size="2">Identificação</font>
+                        Identificação
                         <input type="number" class="form-control" id="idUsuario"   placeholder="Identificação usuario" readonly>
                     </div>
                 </td>
                 <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
-                        <font size="2">Nome</font>
+                        Nome
                         <input type="text" class="form-control" id="nomeUsuario"   placeholder="Nome" readonly>
                     </div>
                 </td>
                 <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
-                        <font size="2">Sobrenome</font>
+                        Sobrenome
                         <input type="text" class="form-control" id="sobrenomeUsuario"   placeholder="Identificação usuario" readonly>
                     </div>
                 </td>
@@ -126,20 +132,20 @@
             <tr>
                 <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
-                        <font size="2">Email</font>
+                        Email
                         <input type="email" class="form-control" id="emailUsuario" placeholder="nome.sobrenome@empresa.com.br" readonly>
                     </div>
                 </td>
                 <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
-                        <font size="2">Empresa</font>
+                       Empresa
                         <select  id="empresaUsuario" class="form-control"  readonly></select>
                      </div>
                 </td>
                 <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
                         <input type="checkbox" id="ativoUsuario" name="ativoUsuario" disabled="true"/>
-                        <font size="2">Ativo</font>
+                        Ativo
                     </div>
                 </td>
 
@@ -148,20 +154,20 @@
             <tr>
                 <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
-                        <font size="2">Login</font>  
+                        Login  
                         <input type="text" class="form-control" id="loginUsuario"   placeholder="Login" readonly>
 
                     </div>
                 </td>
                 <td  style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
-                        <font size="2">Senha</font>
+                        Senha
                         <input type="password" class="form-control" id="senhaUsuario"   placeholder="Senha" readonly>
                     </div>
                 </td>
                 <td style="padding-right: 10px;font-size: 14px;">
                     <div class="form-group">
-                        <font size="2">Confirmação de Senha</font>
+                        Confirmação de Senha
                           <input type="password" class="form-control" id="confirmacaoUsuarioSenha"   placeholder="Senha" readonly>
                     </div>
                 </td>
@@ -170,7 +176,8 @@
              
            
         </table>
-       
+    </fieldset>    
+        </div>   
            <br><br>
            <div style='width: 99%; margin-left: 7px; margin-right: 4px; overflow-x: hidden'>
                 <table id="grid" class="display" cellspacing="0" width="100%">
@@ -255,6 +262,25 @@
             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Sair</button>
             <button onclick="pesquisaFiltro()" type="button" class="btn btn-outline" data-dismiss="modal">Ok</button>
           
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal para botão Excluir -->
+    <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Excluir</h4>
+          </div>
+          <div class="modal-body">
+              <p><h4> Tem certeza que deseja excluir ?</h4></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Sair</button>
+            <button type="button" onclick="excluir()"class="btn btn-primary" data-dismiss="modal">Excluir</button>
           </div>
         </div>
       </div>

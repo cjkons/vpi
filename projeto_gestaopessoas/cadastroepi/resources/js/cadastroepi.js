@@ -251,6 +251,9 @@ function excluir(){
      
 }
 
+function validarExcluir(){
+    $('#excluirModal').modal('show');
+}
 
 function pesquisar() {
     

@@ -51,8 +51,9 @@
         <!--GERAL-->
         
         <!--GERAL AJUSTE RESPONSIVO TABELA E TEXTO-->
-        <link href="resources/relatorioaniversario/css/campos.css" rel="stylesheet">
-        <link href="resources/relatorioaniversario/css/texto.css" rel="stylesheet">
+        <link href="resources/relatorioatestado/css/campos.css" rel="stylesheet">
+        <link href="resources/relatorioatestado/css/texto.css" rel="stylesheet">
+        <link href="resources/relatorioatestado/css/teste.css" rel="stylesheet">
         <!--GERAL-->
 
         <!-- RELATÓRIO CONTAS A PAGAR -->
@@ -81,15 +82,21 @@
 
             </div>
         </nav>
-        <table style="width: 90%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
+        
+    <br>
+        <div class="container" align="center" style="width: 90%;">
+            <fieldset class="fieldset-border">
+                <legend class="legend-border">Informe os Campos </legend>    
+        <table style="width: 80%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
                 <tr>
-                    <td  style="padding-right: 5px;font-size: 14px;">
+                    
+                    <td  style="width: 25%;padding-right: 5px;font-size: 14px;">
                         <div class="form">
                             Empresa
                             <select  id="idEmpresaFiltro" class="form-control"  required="" onchange="carregarFilial()" ></select>
                         </div>
                     </td>
-                    <td  style="padding-right: 5px;font-size: 14px;">
+                    <td  style="width: 25%;padding-right: 5px;font-size: 14px;">
                         <div class="form">
                             Filial
                             <select  id="idFilialFiltro"  required="" class="form-control"  ></select>
@@ -107,11 +114,12 @@
                             <input type="text" class="form-control" id="periodoFim" maxlength="10"   placeholder="Data Final" >
                         </div>
                     </td>
+                    
 
                    
                     
                     
-                    <td  style="padding-left:0px; font-size: 14px;">
+                    <td  style="width:10%;padding-left:0px; font-size: 14px;">
                         <div>
                          <br>
                          <a onclick="filtro()"class="btn btn-primary" ata-toggle="modal" data-target="#myModal">
@@ -119,12 +127,13 @@
                          </a>
                         </div>
                     </td>
-
+                    
                   
                 </tr>
                
         </table>
-   
+   </fieldset>    
+        </div>
      
             <div style='width: 100%; overflow-x: hidden'>
              

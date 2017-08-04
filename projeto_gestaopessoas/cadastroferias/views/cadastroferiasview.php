@@ -7,7 +7,7 @@
           <!--PROGRESS BAR-->
         <script src="resources/geral/progress-bar/pace.min.js"></script>
         <link href="resources/geral/progress-bar/dataurl.css" rel="stylesheet">
-        <!--PROGRESS BAR-->
+        <!--PROGRESS BAR--> 
 
         <!--JQUERY 1.11-->
         <link href="resources/geral/jquery/jquery-ui-1.11.2/jquery-ui.min.css" rel="stylesheet">
@@ -49,8 +49,7 @@
         <!--GERAL-->
 
         <!-- CADASTRO EVENTO -->
-        <script src="resources/cadastroferias/js/cadastroferias.js"></script>
-        
+        <script src="resources/cadastroferias/js/cadastroferias-tmp.js"></script>
         <!-- CADASTRO EVENTO -->
     </head>
 
@@ -70,7 +69,7 @@
                 <a onclick="pesquisar()"class="btn btn-primary" ata-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-search"></span> Pesquisar
                 </a>
-                <a onclick="excluir()" class="btn btn-primary">
+                <a onclick="validarExcluir()" class="btn btn-primary">
                     <span class="glyphicon glyphicon-trash"></span> Excluir
                 </a>
                 <a onclick="buscaPrimeiroRegistro()"  class="btn btn-primary">
@@ -105,7 +104,7 @@
                     <td  style="width: 5%;padding-right: 10px;font-size: 14px;">
                          <div class="form-group">
                              ID
-                             <input style="text-transform: uppercase;" type="text" class="form-control" id="id" placeholder="ID" readonly>
+                             <input style="text-transform: uppercase;" type="text" class="form-control" id="ID" placeholder="ID" readonly>
                          </div>
                     </td>
                     <td  style="width: 20%;padding-right: 10px;font-size: 14px;">
@@ -173,26 +172,25 @@
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Dia Início
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="dataInicioFerias" placeholder="Dia Início" readonly>
+                            <input style="text-transform: uppercase;" type="text" class="form-control" id="dataInicioFerias" onchange="atualizarDias()" placeholder="Dia Início" readonly>
+                        </div>
+                    </td>
+                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
+                       <div class="form-group">
+                            Quantidade Dias
+                            <input min="0" max ="30" style="text-transform: uppercase;" type="number" class="form-control" id="diasFerias" placeholder="Quantidade" onchange="atualizarDias()" onblur="validarNumerico('diasFerias',30)" readonly>
                         </div>
                     </td>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Dia Fim
-                            <input style="text-transform: uppercase;" type="text" class="form-control" id="dataFimFerias" onchange="calculaDias()" placeholder="Dia Fim" readonly>
+                            <input style="text-transform: uppercase;" type="text" class="form-control" id="dataFimFerias" placeholder="Dia Fim" readonly>
                         </div>
                    </td>
-                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
-                       <div class="form-group">
-                            Quantidade Dias
-                            <input style="text-transform: uppercase;" type="number" class="form-control" id="diasFerias" placeholder="Quantidade" readonly>
-                        </div>
-                    </td>
-                    
                    <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                        <div class="form-group">
                             Comprado Dias?
-                            <select style="text-transform: uppercase;" id="comprouDias" class="form-control" onchange="carregarDiasComprados()"readonly>
+                            <select style="text-transform: uppercase;" id="comprouDias" class="form-control" onchange="atualizarDias()"readonly>
                                     <option readonly value="0">Selecione</option>
                                     <option readonly value="S">SIM</option>
                                     <option readonly value="N">NÃO</option>
@@ -203,7 +201,7 @@
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                           <div class="form-group">
                             Quantos Dias?
-                            <input style="text-transform: uppercase;" type="number" class="form-control" id="diasComprados"  placeholder="Dias Comprados" disabled>
+                            <input maxlength="30" minlength="0" min="0" max ="30" style="text-transform: uppercase;" type="number" class="form-control" id="diasComprados"  placeholder="Dias Comprados" onchange="atualizarDias()" onblur="validarNumerico('diasComprados',30)" readonly>
                         </div>
                     </td>
                     <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
@@ -228,8 +226,11 @@
                           <tr>
                               <th>Empresa</th>
                               <th>Filial</th>
-                              <th>Código Gupo</th>
-                              <th>Descrição</th>
+                              <th>Funcionário</th>
+                              <th>Data admissão</th>
+                              <th>Matrícula</th>
+                              <th>Função</th>
+                              <th>Setor</th>
                               <th>Selecionar</th>
                           </tr>
                       </thead>
@@ -248,26 +249,30 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Pesquisar</h4>
+            
           </div>
           <div class="modal-body">
               
             <table style="width: 50%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
                 <tr>
                     <td  style="padding-right: 5px;font-size: 14px;">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Identificação</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">Matrícula</label>
                     </td>
                     
                     
                     <td  style="padding-right: 5px;font-size: 14px;">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="idPesquisarInicio" style="width: 150px" placeholder="ID">
-                            <div class="input-group-addon"> <span class="glyphicon glyphicon-fast-backward"></span> </div>
+                            <input type="text" class="form-control" id="pesquisaMatricula" style="width: 150px" placeholder="Matricula">
+                           
                         </div>
                     </td>
                     <td  style="padding-right: 5px;font-size: 14px;">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Ano</label>
+                    </td>
+                    <td  style="padding-right: 5px;font-size: 14px;">
                         <div class="input-group">
-                            <div class="input-group-addon"> <span class="glyphicon glyphicon-fast-forward"></span>  </div>
-                            <input type="text" class="form-control" id="idPesquisarFim" style="width: 150px" placeholder="ID">
+                            <input type="text" class="form-control" id="pesquisaMatriculaAno" style="width: 150px" placeholder="Ano">
+                            
                         </div>
                     </td>
                 </tr>
@@ -279,28 +284,51 @@
                     
                     <td  style="padding-right: 5px;font-size: 14px;">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="nomePesquisarInicio" style="width: 150px" placeholder="Nome">
-                            <div class="input-group-addon"> <span class="glyphicon glyphicon-fast-backward"></span> </div>
+                            <input type="text" class="form-control" id="pesquisaFuncionario" style="width: 150px" placeholder="Nome">
                         </div>
                     </td>
                     <td  style="padding-right: 5px;font-size: 14px;">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Ano</label>
+                    </td>
+                    <td  style="padding-right: 5px;font-size: 14px;">
                         <div class="input-group">
-                            <div class="input-group-addon"> <span class="glyphicon glyphicon-fast-forward"></span>  </div>
-                            <input type="text" class="form-control" id="nomePesquisarFim" style="width: 150px" placeholder="Nome">
+                            <input type="text" class="form-control" id="pesquisaFuncionarioAno" style="width: 150px" placeholder="Ano">
+                            
                         </div>
                     </td>
+                    
                 </tr>
                
                
              </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Sair</button>
-            <button onclick="pesquisaFiltro()" type="button" class="btn btn-outline" data-dismiss="modal">Ok</button>
+              <button type="button" style="font-size : 18px; text-align:center;" class="btn btn-primary pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"> Sair</button>
+            <button onclick="pesquisaFiltro()" style="font-size : 18px; text-align:center;" type="button" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-ok"> Ok</button>
           
           </div>
         </div>
       </div>
     </div>
+    
+    <!-- Modal para botão Excluir -->
+    <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Excluir</h4>
+          </div>
+          <div class="modal-body">
+              <p><h4> Tem certeza que deseja excluir ?</h4></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Sair</button>
+            <button type="button" onclick="excluir()"class="btn btn-primary">Excluir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     
 </html>

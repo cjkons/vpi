@@ -79,6 +79,10 @@
 
             </div>
         </nav>
+        <br>
+        <div class="container" align="center" style="width: 90%;">
+            <fieldset class="fieldset-border">
+                <legend class="legend-border" >Informe os Campos</legend>
         <table style="width: 90%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
                 <tr>
                     <td  style="padding-right: 5px;font-size: 14px;">
@@ -129,7 +133,8 @@
                
         </table>
    
-     
+    </fieldset>    
+        </div> 
             <div style='width: 100%; overflow-x: hidden'>
              
            </div> 

@@ -13,6 +13,7 @@ class cadastroferiascontroller extends CI_Controller {
         $this->load->view('cadastroferiasview');
     }
     
+   
     public function novo() {
         
         $this->load->model('cadastroferiasmodel');
@@ -21,19 +22,28 @@ class cadastroferiascontroller extends CI_Controller {
 
         echo json_encode($retorno);
     }
-   
-     
+    
     public function salvar() {
-                
-        $codGrupo       = $this->input->POST('codGrupo');
-        $descricaoGrupo = $this->input->POST('descricaoGrupo');
-        $idEmpresa      = $this->input->POST('idEmpresa');
-        $idFilial       = $this->input->POST('idFilial');
-           
-                        
-        $this->load->model('cadastroferiasmodel');
-
-        $retorno = $this->cadastroferiasmodel->salvar($codGrupo, $descricaoGrupo, $idEmpresa, $idFilial);
+         
+        $ID                    = $this->input->POST('ID');
+        $idFilial              = $this->input->POST('idFilial');
+        $idEmpresa             = $this->input->POST('idEmpresa');
+        $funcionario           = $this->input->POST('funcionario');
+        $dataAdmissao          = $this->input->POST('dataAdmissao');
+        $matricula             = $this->input->POST('matricula');
+        $setor                 = $this->input->POST('setor');
+        $funcao                = $this->input->POST('funcao');
+        $dataInicioFerias      = $this->input->POST('dataInicioFerias');
+        $diasFerias            = $this->input->POST('diasFerias');
+        $dataFimFerias         = $this->input->POST('dataFimFerias');
+        $comprouDias           = $this->input->POST('comprouDias');
+        $diasComprados         = $this->input->POST('diasComprados');
+        $diasHaver             = $this->input->POST('diasHaver');
+        
+        $this->load->model('cadastroferiasmodel');     
+        $retorno = $this->cadastroferiasmodel->salvar($ID,$idEmpresa,$idFilial,$funcionario,
+             $dataAdmissao,$matricula,$setor,$funcao,$dataInicioFerias,$diasFerias,
+             $dataFimFerias,$comprouDias,$diasComprados,$diasHaver);
 
         echo json_encode($retorno);
     }
@@ -41,74 +51,77 @@ class cadastroferiascontroller extends CI_Controller {
     
     public function excluir(){
         
-        $codGrupo = $this->input->POST('codGrupo');
+        $ID = $this->input->POST('ID');
         
-        $this->load->model('cadastrogrupoequipamentomodel');
+        $this->load->model('cadastroferiasmodel');
         
-        $retorno = $this->cadastrogrupoequipamentomodel->excluir($codGrupo);
+        $retorno = $this->cadastroferiasmodel->excluir($ID);
             
+    }
+    
+    
+    public function pesquisaSimples(){
+        
+        $matricula =  $this->input->POST('matricula');
+        $funcionario = $this->input->POST('funcionario');
+        $funcionarioAno = $this->input->POST('funcionarioAno');
+        $matriculaAno = $this->input->POST('matriculaAno');
+        $this->load->model('cadastroferiasmodel');
+        
+        $retorno = $this->cadastroferiasmodel->pesquisaSimples($matricula, $funcionario, $funcionarioAno,$matriculaAno);
+        echo ($retorno);
+                
     }
     
     
     public function buscaPrimeiroRegistro(){
         
-        $this->load->model('cadastrogrupoequipamentomodel');
+        $this->load->model('cadastroferiasmodel');
         
-        $retorno = $this->cadastrogrupoequipamentomodel->buscaPrimeiroRegistro();
-        
-        echo ($retorno);
-                
-    }
-    
-    public function buscaRegistroAnterior(){
-        
-        $codGrupo = $this->input->POST('codGrupo');
-        
-        $this->load->model('cadastrogrupoequipamentomodel');
-        
-        $retorno = $this->cadastrogrupoequipamentomodel->buscaRegistroAnterior($codGrupo);
+        $retorno = $this->cadastroferiasmodel->buscaPrimeiroRegistro();
         
         echo ($retorno);
                 
     }
     
-    public function buscaRegistroProximo(){
-        
-        $codGrupo = $this->input->POST('codGrupo');
-        
-        $this->load->model('cadastrogrupoequipamentomodel');
-        
-        $retorno = $this->cadastrogrupoequipamentomodel->buscaRegistroProximo($codGrupo);
-        
-        echo ($retorno);
-                
-    }  
-            
+    
     public function buscaUltimoRegistro(){
         
-        $this->load->model('cadastrogrupoequipamentomodel');
+        $this->load->model('cadastroferiasmodel');
         
-        $retorno = $this->cadastrogrupoequipamentomodel->buscaUltimoRegistro();
+        $retorno = $this->cadastroferiasmodel->buscaUltimoRegistro();
         
         echo ($retorno);                
     }
     
-    public function pesquisaSimples(){
+    
+    public function buscaRegistroAnterior(){
         
-        $idInicial = $this->input->POST('idInicial');
-        $nomeInicial = $this->input->POST('nomeInicial');
-             
-        $this->load->model('cadastrogrupoequipamentomodel');
+        $ID = $this->input->POST('ID');
         
-        $retorno = $this->cadastrogrupoequipamentomodel->pesquisaSimples($idInicial, $nomeInicial);
+        $this->load->model('cadastroferiasmodel');
+        
+        $retorno = $this->cadastroferiasmodel->buscaRegistroAnterior($ID);
         
         echo ($retorno);
                 
     }
     
-    public function getGrid() {
+    
+    public function buscaRegistroProximo(){
         
-           
+        $ID = $this->input->POST('ID');
+        
+        $this->load->model('cadastroferiasmodel');
+        
+        $retorno = $this->cadastroferiasmodel->buscaRegistroProximo($ID);
+        
+        echo ($retorno);
+                
+    }  
+    
+    
+    public function getGrid() {
         $pOrdem = $this->input->POST('order');
         $pColumn = $this->input->POST('columns');
         $indice = $pColumn[$pOrdem[0]['column']]['data'];
@@ -117,35 +130,39 @@ class cadastroferiascontroller extends CI_Controller {
         $inicio = $this->input->POST('start');
         $tamanho = $this->input->POST('length');
         $draw = $this->input->POST('draw');
-       
-       
-        $this->load->model('cadastrogrupoequipamentomodel');
 
-        $retorno = $this->cadastrogrupoequipamentomodel->getGrid($indice, $ordem, $inicio, $tamanho, $draw);
+        //$parametro1 = $this->input->GET('parametro1');
+        //$parametro2 = $this->input->GET('parametro1');    
+        $this->load->model('cadastroferiasmodel');
+
+        $retorno = $this->cadastroferiasmodel->getGrid($indice, $ordem, $inicio, $tamanho, $draw);
 
         echo json_encode($retorno);
-           
-     
+            
     }
+    
     
     public function selecionaGrid(){
         
-        $idGrupo = $this->input->POST('idGrupo');
+        $ID = $this->input->POST('ID');
                      
-        $this->load->model('cadastrogrupoequipamentomodel');
+        $this->load->model('cadastroferiasmodel');
         
-        $retorno = $this->cadastrogrupoequipamentomodel->selecionaGrid($idGrupo);
+        $retorno = $this->cadastroferiasmodel->selecionaGrid($ID);
         
         echo ($retorno);
                 
     }
     
     public function carregarGrupoEmpresa() {
-
+        /*
         $this->load->model('cadastrogrupoequipamentomodel');
 
         $retorno = $this->cadastrogrupoequipamentomodel->carregarGrupoEmpresa();
+        */
+        $this->load->model('cadastroferiasmodel');
 
+        $retorno = $this->cadastroferiasmodel->carregarGrupoEmpresa();
         echo json_encode($retorno);
     }
     

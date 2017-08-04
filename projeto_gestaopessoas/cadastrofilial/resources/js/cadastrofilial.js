@@ -24,7 +24,7 @@ $(document).ready( function() {
              
            /* Configura a requisição AJAX */
            $.ajax({
-                url : 'index.php?m=cadastroagencia&c=cadastroagenciacontroller&f=consultarCep', /* URL que será chamada */ 
+                url : 'index.php?m=cadastrofilial&c=cadastrofilialcontroller&f=consultarCep', /* URL que será chamada */ 
                 type : 'POST', /* Tipo da requisição */ 
                 data: 'cep=' + $('#cep').val(), /* dado que será enviado via POST */
                 dataType: 'json', /* Tipo de transmissão */
@@ -445,6 +445,10 @@ function pesquisar() {
     document.getElementById("nomePesquisarInicio").value = "";
     document.getElementById("nomePesquisarFim").value   = "";
   
+}
+
+function validarExcluir(){
+    $('#excluirModal').modal('show');
 }
 
 function editar(){
@@ -896,8 +900,8 @@ function getGrid() {
     
     
     $('#grid').DataTable({
-        "processing": true,
-        "serverSide": true,
+        "destroy": true,
+        
         ajax: {
             "url": "index.php?m=cadastrofilial&c=cadastrofilialcontroller&f=getGrid",
               
@@ -1024,7 +1028,8 @@ function getGrid() {
 }
 function atualizar(){
          
-  
+    getGrid();
+    
     document.getElementById("tipoFilial").value    = 0;
     document.getElementById("razaoSocial").value = "";
     document.getElementById("nomeFantasia").value = "";

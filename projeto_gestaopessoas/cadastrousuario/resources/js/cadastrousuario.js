@@ -236,6 +236,10 @@ function pesquisar() {
   
 }
 
+function validarExcluir(){
+    $('#excluirModal').modal('show');
+}
+
 function editar(){
     
     document.getElementById("nomeUsuario").readOnly        = false;
