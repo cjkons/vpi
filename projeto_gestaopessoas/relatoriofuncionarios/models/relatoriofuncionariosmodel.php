@@ -121,52 +121,18 @@ class relatoriofuncionariosmodel extends CI_Model {
         else if (count(explode("-", $data)) > 1) {
             $dataMes = implode("/", array_reverse(explode("-", $data)));
         }
-                
+        return $dataMes;    
     }
     
     
-    private function selectionarMes($mesAdmissao){
+    private function selecionarMes($mesAdmissao){
+       
+        $meses = ["01"=>"JANEIRO","02"=>"FEVEREIRO","03"=>"MARÇO","04"=>"ABRIL",
+                  "05"=>"MAIO","06"=>"JUNHO","07"=>"JULHO","08"=>"AGOSTO",
+                  "09"=>"SETEMBRO","10"=>"OUTUBRO","11"=>"NOVEMBRO","12"=>"DEZEMBRO"];
         
-        switch ("$mesAdmissao") {
-
-                    case "01":
-                        $mesAdmissao = "JANEIRO";
-                        break;
-                    case "02":
-                        $mesAdmissao = "FEVEREIRO";
-                        break;
-                    case "03":
-                        $mesAdmissao = "MARÇO";
-                        break;
-                    case "04":
-                        $mesAdmissao = "ABRIL";
-                        break;
-                    case "05":
-                        $mesAdmissao = "MAIO";
-                        break;
-                    case "06":
-                        $mesAdmissao = "JUNHO";
-                        break;
-                    case "07":
-                        $mesAdmissao = "JULHO";
-                        break;
-                    case "08":
-                        $mesAdmissao = "AGOSTO";
-                        break;
-                    case "09":
-                        $mesAdmissao = "SETEMBRO";
-                        break;
-                    case "10":
-                        $mesAdmissao = "OUTUBRO";
-                        break;
-                    case "11":
-                        $mesAdmissao = "NOVEMBRO";
-                        break;
-                    case "12":
-                        $mesAdmissao = "DEZEMBRO";
-                        break;
-                }
-        return $mesAdmissao;
+        return $meses["$mesAdmissao"];
+        
     }
     
     
@@ -227,7 +193,7 @@ class relatoriofuncionariosmodel extends CI_Model {
         $html .= "</tr>";
 
 
-        $query3 = " SELECT   T1.MATRICULA, T1.ID_FUNCIONARIO, T1.NOME_FUNCIONARIO,
+        $query3 = " SELECT  T1.MATRICULA, T1.ID_FUNCIONARIO, T1.NOME_FUNCIONARIO,
                             T1.DATA_NASC, T1.DATA_ADMISSAO, T1.EMPRESA, T1.FILIAL,
                             T1.DESATIVADO, T1.DATA_DEMISSAO,
                             
@@ -264,12 +230,9 @@ class relatoriofuncionariosmodel extends CI_Model {
                 $funcao             = $item->FUNCAO;
                     
                 $dataAdmissaoMes = $this->converterData($dataAdmissao);
-                
                 $mesAdmissao = date('m', strtotime($dataAdmissaoMes));
-
-                $mesAdmissao = $this->selectionarMes($mesAdmissao);
-
-                //print_r($mesAdmissao); exit();   
+                
+                $mesAdmissao = $this->selecionarMes($mesAdmissao);
                 
                 $query4 = " SELECT      T1.MATRICULA, T1.ID_FUNCIONARIO, T1.NOME_FUNCIONARIO,
                                         T1.DATA_NASC, T1.DATA_ADMISSAO, T1.EMPRESA, T1.FILIAL,
@@ -288,6 +251,7 @@ class relatoriofuncionariosmodel extends CI_Model {
                 if(!($mes == 0)){
                     $query4 .= " AND T1.DATA_ADMISSAO LIKE '%/$mes/%'";
                 }
+                
                 $query4 .= " ORDER BY TO_DATE(DATA_ADMISSAO,'dd/mm/yyyy')";
  
                 //print_r($query4);exit();
@@ -308,26 +272,32 @@ class relatoriofuncionariosmodel extends CI_Model {
                         // PASSAR COR NA LINHA QUE A DATA DE ADMISSAO COINCIDIR COM A DATA ATUAL        
                         $dataAdmissaoComparacao = date('m-d', strtotime($dataTeste));
                         $dataAtualizadaComparacao = date('m-d');
-
+                        if($desativado == "N"){
+                           $dataDemmissao = "Não demitido";
+                        }
+                        
                         if ($dataAdmissaoComparacao == $dataAtualizadaComparacao) {
-
+                            
                             $html .= "<tr class = 'linhaOc' style = 'width:100%;'>";
                             $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 10%; font-size: 14px;' align = 'left'><b>$matricula</b></td>";
                             $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
                             $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$funcao</b></td>";
                             $html .= "<td  style = ' background-color: #FFC0CB;width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataAdmissao</b></td>";
                             $html .= "<td  style = ' background-color: #FFC0CB;width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$mesAdmissao</b></td>";
+                            $html .= "<td  style = ' background-color: #FFC0CB;width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataDemmissao</b></td>";
                             $html .= "<td  colspan = '2' style = ' background-color: #FFC0CB; width: 20%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$tempoEmpresa</b></td>";
 
                             $html .= "</tr>";
-                    
-                            } else {
+                            
+                            } 
+                            else {
                                 $html .= "<tr class = 'linhaOc' style = 'width:100%;'>";
                                 $html .= "<td  style = 'text-transform: uppercase; width: 10%; font-size: 14px;' align = 'left'><b>$matricula</b></td>";
                                 $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
                                 $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$funcao</b></td>";
                                 $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataAdmissao</b></td>";
                                 $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$mesAdmissao</b></td>";
+                                $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataDemmissao</b></td>";
                                 $html .= "<td  colspan = '2' style = 'width: 20%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$tempoEmpresa</b></td>";
 
                                 $html .= "</tr>";
