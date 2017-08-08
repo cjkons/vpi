@@ -62,6 +62,7 @@ function carregarEmpresa(){
     });
 }
 
+
 function carregarFilial(){
     
     var idEmpresa = document.getElementById("idEmpresaFiltro").value;
@@ -124,17 +125,13 @@ function carregarDataAtual(){
     
 }
 
+
 function filtro(){
     
-  
-   var idEmpresa         = $("#idEmpresaFiltro").val();      
-   var idFilial          = $("#idEmpresaFiltro").val();
-   var mes               = $("#mes").val();
-  
-  
-   
-   
-   var controleDePreenchimento = 'S';
+    var idEmpresa         = $("#idEmpresaFiltro").val();      
+    var idFilial          = $("#idEmpresaFiltro").val();
+    var mes               = $("#mes").val();
+    var controleDePreenchimento = 'S';
     
     if(idEmpresa == 0){
         controleDePreenchimento = 'N';
@@ -142,7 +139,6 @@ function filtro(){
     if(idFilial == 0){
         controleDePreenchimento = 'N';
     } 
-    
     
         
     if(controleDePreenchimento ==  'S'){
@@ -154,8 +150,6 @@ function filtro(){
                 idEmpresa: idEmpresa,
                 idFilial: idFilial
                
-
-
             },
             type: 'POST',
             dataType: 'json',
@@ -163,7 +157,6 @@ function filtro(){
             success: function(r) {
 
                 document.getElementById('relatorio').innerHTML         = r;   
-
 
             },
             error: function(e) {
@@ -184,7 +177,7 @@ function getPdf() {
    var idEmpresa         = $("#idEmpresaFiltro").val();      
    var idFilial          = $("#idEmpresaFiltro").val();
    var mes               = $("#mes").val();
-  
+   alert(mes);
    
    var controleDePreenchimento = 'S';
     

@@ -111,125 +111,23 @@ class relatoriofuncionariosmodel extends CI_Model {
 
         return $dataAtual;
     }
-
-    public function filtro($mes, $idEmpresa, $idFilial) {
-
-        $dataAtualizada = date('d/m/Y');
-
-        $this->initConBanco();
-
-        $query = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA  WHERE ID_EMPRESA = $idEmpresa ";
-
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-
-        $empresa = $rs[0]->NOME_FANTASIA;
-
-
-        $query = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA_FILIAL WHERE ID_EMPRESA_FILIAL = '$idFilial'";
-
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-
-        $filial = $rs[0]->NOME_FANTASIA;
-
-        $periodoRelatorio = 7;
-
-        $html = "";
-
-        //CABECALHO INICIO
-        $html .= "<table class = 'awesome-text-box' style = 'width:100%;' border = '1';>";
-        $html .= "<tr style = 'background-color: #579CE9;'>";
-        $html .= "<td class = 'nomeempresa' rowspan = '6' colspan = '4' align = 'left'  style = 'text-transform: uppercase; color: #ffffff; ' align = 'center';><b>&nbsp;&nbsp;Empresa:</b> $empresa <br>&nbsp;&nbsp;<b>Filial:</b> $filial</b></td>";
-        $html .= "</tr>";
-
-        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
-        $html .= "<td colspan = '3'></td>";
-        $html .= "</tr>";
-
-        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
-        $html .= "<td class = 'nomerelatorio'colspan = '3' style = 'color: #ffffff;' align = 'CENTER'><b>RELATÓRIO DE ANIVERSÁRIO</b></td>";
-        $html .= "</tr>";
-
-        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
-        $html .= "<td colspan = '3'></td>";
-        $html .= "</tr>";
-
-        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
-        $html .= "<td  colspan = '2' class = 'datas' style = 'text-transform: uppercase; color: #ffffff; ' align = 'right'><b>Data Emissão:</b></td>";
-        $html .= "<td  colspan = '2'  style = 'color: #ffffff; font-size: 16px; ' align = 'center'>$dataAtualizada</td>";
-        $html .= "</tr>";
-
-//        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
-//        $html .= "<td  colspan = '2' class = 'datas' style = 'color: #ffffff; ' align = 'right'><b> Período:</b></td>";
-//        $html .= "<td  colspan = '3'  style = 'color: #ffffff; ' align = 'center'>$periodoIni à $periodoFim</td>";
-//        $html .= "</tr>";
-        $html .= "</table>";
-        //CABECALHO FIM
-
-
-        $html .= "<table class = 'awesome-text-box' style = 'width:100%;' border = '1'>";
-        $html .= "<tr style = 'width:100%; background-color: #ffffff; height: 10px; font-size: 16px;'>";
-        $html .= "<tr style = 'width:100%; background-color: #579CE9; height: 17px;'>";
-
-        
-        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>&nbsp;&nbsp;Matrícula</b></td>";
-        $html .= "<td style = 'width: 20%; color: #ffffff; font-size: 14px;'  align = 'left'><b>&nbsp;&nbsp;Funcionário</b></td>";
-        $html .= "<td style = 'width: 20%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Função</b></td>";
-        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Data Admissão</b></td>";
-        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Mês</b></td>";
-        $html .= "<td colspan = '2' style = 'width: 20%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Tempo de Empresa</b></td>";
-
-        $html .= "</tr>";
-
-
-
-        $query = " SELECT  T1.MATRICULA, T1.ID_FUNCIONARIO, T1.NOME_FUNCIONARIO, T1.DATA_NASC, T1.DATA_ADMISSAO, T1.EMPRESA, T1.FILIAL, T2.ID_FUNCAO, T2.FUNCAO
-                            FROM GP_CAD_FUNCIONARIO T1 INNER JOIN GP_CAD_FUNCOES T2
-                            ON  T1.FUNCAO = T2.ID_FUNCAO
-                            WHERE
-                            T1.EMPRESA = '$idEmpresa' AND T1.FILIAL = '$idFilial'";
-
-        if ($mes != 0 || $mes != "0") {
-
-            $query .= " AND T1.DATA_ADMISSAO LIKE '%/$mes/%'";
+    
+    
+    private function converterData($data){
+       
+        if (count(explode("/", $data)) > 1) {
+                    $dataMes = implode("-", array_reverse(explode("/", $data)));
+        } 
+        else if (count(explode("-", $data)) > 1) {
+            $dataMes = implode("/", array_reverse(explode("-", $data)));
         }
-
-        $query .= " ORDER BY TO_DATE(DATA_ADMISSAO,'dd/mm/yyyy')"; 
-
-
-        //print_r($query);exit();
-
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-
-        if (is_array($rs) && count($rs) > 0) {
-
-
-            //print_r($tamanho);
-
-            foreach ($rs as $item) {
-
-                $dataAdmissao = $item->DATA_ADMISSAO;
-                $matricula = $item->MATRICULA;
-                $nomeFuncionario = $item->NOME_FUNCIONARIO;
-                $funcao = $item->FUNCAO;
-
-
-                if (count(explode("/", $dataAdmissao)) > 1) {
-                    $dataMes = implode("-", array_reverse(explode("/", $dataAdmissao)));
-                } elseif (count(explode("-", $dataAdmissao)) > 1) {
-                    $dataMes = implode("/", array_reverse(explode("-", $dataAdmissao)));
-                }
                 
-           // print_r($dataMes);    
-
-                $mesAdmissao = date('m', strtotime($dataMes));
-               
-                 
-                
-
-                switch ("$mesAdmissao") {
+    }
+    
+    
+    private function selectionarMes($mesAdmissao){
+        
+        switch ("$mesAdmissao") {
 
                     case "01":
                         $mesAdmissao = "JANEIRO";
@@ -268,192 +166,177 @@ class relatoriofuncionariosmodel extends CI_Model {
                         $mesAdmissao = "DEZEMBRO";
                         break;
                 }
-                
-                //print_r($mesAdmissao);    
-                
-                if ($mes != 0 || $mes != "0") {
+        return $mesAdmissao;
+    }
+    
+    
+    public function filtro($mes, $idEmpresa, $idFilial) {
 
-                    $query = " SELECT  T1.MATRICULA, T1.ID_FUNCIONARIO, T1.NOME_FUNCIONARIO, T1.DATA_NASC, T1.DATA_ADMISSAO, T1.EMPRESA, T1.FILIAL, T2.ID_FUNCAO, T2.FUNCAO
-                                            FROM GP_CAD_FUNCIONARIO T1 INNER JOIN GP_CAD_FUNCOES T2
-                                            ON  T1.FUNCAO = T2.ID_FUNCAO
-                                            WHERE
-                                            T1.EMPRESA = '$idEmpresa' AND T1.FILIAL = '$idFilial' AND T1.MATRICULA = '$matricula' AND T1.DATA_ADMISSAO LIKE '%/$mes/%' ORDER BY TO_DATE(DATA_ADMISSAO,'dd/mm/yyyy')";
+        $dataAtualizada = date('d/m/Y');
 
+        $this->initConBanco();
 
-                    //print_r($query);exit();
-
-                    $cs = $this->conBanco->query($query);
-                    $rs = $cs->result();
-
-                    if (is_array($rs) && count($rs) > 0) {
-
-                        $j = 0;
-                        $tamanho = count($rs);
-
-                         //print_r($tamanho);exit();
-
-                        for ($i = 0; $i < $tamanho; $i++) {
-
-                            // CONVERTER FORMATO DE DATA DE D/M/Y PARA Y-M-D   
-                            if (count(explode("/", $dataAdmissao)) > 1) {
-                                $dataTeste = implode("-", array_reverse(explode("/", $dataAdmissao)));
-                            } elseif (count(explode("-", $dataAdmissao)) > 1) {
-                                $dataTeste = implode("/", array_reverse(explode("-", $dataAdmissao)));
-                            }
+        $query1 = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA  WHERE ID_EMPRESA = $idEmpresa ";
+        $rs1 = $this->conBanco->query($query1)->result();
+        $empresa = $rs1[0]->NOME_FANTASIA;
 
 
-                            // CALCULO PARA SABER IDADE APARTIR DA DATA DE ADMISSAO        
-                            $dataNascimento = $dataTeste;
-                            $date = new DateTime($dataNascimento);
-                            $interval = $date->diff(new DateTime(date('Y-m-d')));
-                            $tempoEmpresa = $interval->format('%Y Anos, %m Meses e %d Dias');
+        $query2 = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA_FILIAL WHERE ID_EMPRESA_FILIAL = '$idFilial'";
+        $rs2 = $this->conBanco->query($query2)->result();
+        $filial = $rs2[0]->NOME_FANTASIA;
+
+        $html = "";
+
+        //CABECALHO INICIO
+        $html .= "<table class = 'awesome-text-box' style = 'width:100%;' border = '1';>";
+        $html .= "<tr style = 'background-color: #579CE9;'>";
+        $html .= "<td class = 'nomeempresa' rowspan = '6' colspan = '4' align = 'left'  style = 'text-transform: uppercase; color: #ffffff; ' align = 'center';><b>&nbsp;&nbsp;Empresa:</b> $empresa <br>&nbsp;&nbsp;<b>Filial:</b> $filial</b></td>";
+        $html .= "</tr>";
+
+        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
+        $html .= "<td colspan = '3'></td>";
+        $html .= "</tr>";
+
+        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
+        $html .= "<td class = 'nomerelatorio'colspan = '3' style = 'color: #ffffff;' align = 'CENTER'><b>RELATÓRIO DE ANIVERSÁRIO</b></td>";
+        $html .= "</tr>";
+
+        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
+        $html .= "<td colspan = '3'></td>";
+        $html .= "</tr>";
+
+        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
+        $html .= "<td  colspan = '2' class = 'datas' style = 'text-transform: uppercase; color: #ffffff; ' align = 'right'><b>Data Emissão:</b></td>";
+        $html .= "<td  colspan = '2'  style = 'color: #ffffff; font-size: 16px; ' align = 'center'>$dataAtualizada</td>";
+        $html .= "</tr>";
+        
+        $html .= "</table>";
+        
+        //CABECALHO FIM
+
+        $html .= "<table class = 'awesome-text-box' style = 'width:100%;' border = '1'>";
+        $html .= "<tr style = 'width:100%; background-color: #ffffff; height: 10px; font-size: 16px;'>";
+        $html .= "<tr style = 'width:100%; background-color: #579CE9; height: 17px;'>";
+        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>&nbsp;&nbsp;Matrícula</b></td>";
+        $html .= "<td style = 'width: 20%; color: #ffffff; font-size: 14px;'  align = 'left'><b>&nbsp;&nbsp;Funcionário</b></td>";
+        $html .= "<td style = 'width: 20%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Função</b></td>";
+        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Data Admissão</b></td>";
+        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Mês</b></td>";
+        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Data Demissão</b></td>";
+        $html .= "<td colspan = '2' style = 'width: 20%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Tempo de Empresa</b></td>";
+        $html .= "</tr>";
 
 
-                            // PASSAR COR NA LINHA QUE A DATA DE ADMISSAO COINCIDIR COM A DATA ATUAL        
-                            $dataAdmissaoComparacao = date('m-d', strtotime($dataTeste));
-                            $dataAtualizadaComparacao = date('m-d');
-
-                            if ($dataAdmissaoComparacao == $dataAtualizadaComparacao) {
-
-                                $html .= "<tr class = 'linhaOc' style = 'width:100%;'>";
-                                $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 10%; font-size: 14px;' align = 'left'><b>$matricula</b></td>";
-                                $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
-                                $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$funcao</b></td>";
-                                $html .= "<td  style = ' background-color: #FFC0CB;width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataAdmissao</b></td>";
-                                $html .= "<td  style = ' background-color: #FFC0CB;width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$mesAdmissao</b></td>";
-                                $html .= "<td  colspan = '2' style = ' background-color: #FFC0CB; width: 20%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$tempoEmpresa</b></td>";
-
-                                $html .= "</tr>";
-                            } else {
-                                $html .= "<tr class = 'linhaOc' style = 'width:100%;'>";
-                                $html .= "<td  style = 'text-transform: uppercase; width: 10%; font-size: 14px;' align = 'left'><b>$matricula</b></td>";
-                                $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
-                                $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$funcao</b></td>";
-                                $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataAdmissao</b></td>";
-                                $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$mesAdmissao</b></td>";
-                                $html .= "<td  colspan = '2' style = 'width: 20%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$tempoEmpresa</b></td>";
-
-                                $html .= "</tr>";
-                            }
-
+        $query3 = " SELECT   T1.MATRICULA, T1.ID_FUNCIONARIO, T1.NOME_FUNCIONARIO,
+                            T1.DATA_NASC, T1.DATA_ADMISSAO, T1.EMPRESA, T1.FILIAL,
+                            T1.DESATIVADO, T1.DATA_DEMISSAO,
                             
-
+                            T2.ID_FUNCAO, T2.FUNCAO
                             
-                        }
-                    }
-                    
-        // SEM MES SELECIONADO            
-                } else {
-                    $query = " SELECT  T1.MATRICULA, T1.ID_FUNCIONARIO, T1.NOME_FUNCIONARIO, T1.DATA_NASC, T1.DATA_ADMISSAO, T1.EMPRESA, T1.FILIAL, T2.ID_FUNCAO, T2.FUNCAO
-                                            FROM GP_CAD_FUNCIONARIO T1 INNER JOIN GP_CAD_FUNCOES T2
-                                            ON  T1.FUNCAO = T2.ID_FUNCAO
-                                            WHERE
-                                            T1.EMPRESA = '$idEmpresa' AND T1.FILIAL = '$idFilial' AND T1.MATRICULA = '$matricula' ORDER BY TO_DATE(DATA_ADMISSAO,'dd/mm/yyyy')";
-
-
-                    //print_r($query);exit();
-
-                    $cs = $this->conBanco->query($query);
-                    $rs = $cs->result();
-
-                    if (is_array($rs) && count($rs) > 0) {
-
-                        
-                        $tamanho = count($rs);
-                        $dataAnterior = 0;
-                        
-
-                        for ($i = 0; $i < $tamanho; $i++) {
+                            FROM GP_CAD_FUNCIONARIO T1 
+                            INNER JOIN GP_CAD_FUNCOES T2
                             
-                            
-                            
-                             
-                            // CONVERTER FORMATO DE DATA DE D/M/Y PARA Y-M-D   
-                            if (count(explode("/", $dataAdmissao)) > 1) {
-                                $dataTeste = implode("-", array_reverse(explode("/", $dataAdmissao)));
-                            } elseif (count(explode("-", $dataAdmissao)) > 1) {
-                                $dataTeste = implode("/", array_reverse(explode("-", $dataAdmissao)));
-                            }
-                            
-                            $mesAdmissaoTeste = date('m', strtotime($dataTeste));
+                            ON  T1.FUNCAO = T2.ID_FUNCAO
+                            WHERE
+                            T1.EMPRESA = '$idEmpresa' AND T1.FILIAL = '$idFilial'";
 
-                            
-                            
-                            // CALCULO PARA SABER IDADE APARTIR DA DATA DE ADMISSAO        
-                            $dataNascimento = $dataTeste;
-                            $date = new DateTime($dataNascimento);
-                            $interval = $date->diff(new DateTime(date('Y-m-d')));
-                            $tempoEmpresa = $interval->format('%Y Anos, %m Meses e %d Dias');
+        if ($mes != 0 || $mes != "0") {
 
-
-                            // PASSAR COR NA LINHA QUE A DATA DE ADMISSAO COINCIDIR COM A DATA ATUAL        
-                            $dataAdmissaoComparacao = date('m-d', strtotime($dataTeste));
-                            $dataAtualizadaComparacao = date('m-d');
-
-                            if ($dataAdmissaoComparacao == $dataAtualizadaComparacao) {
-
-                                $html .= "<tr class = 'linhaOc' style = 'width:100%;'>";
-                                $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 10%; font-size: 14px;' align = 'left'><b>$matricula</b></td>";
-                                $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
-                                $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$funcao</b></td>";
-                                $html .= "<td  style = ' background-color: #FFC0CB;width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataAdmissao</b></td>";
-                                $html .= "<td  style = ' background-color: #FFC0CB;width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$mesAdmissao</b></td>";
-                                $html .= "<td  colspan = '2' style = ' background-color: #FFC0CB; width: 20%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$tempoEmpresa</b></td>";
-
-                                $html .= "</tr>";
-                            } else {
-                                $html .= "<tr class = 'linhaOc' style = 'width:100%;'>";
-                                $html .= "<td  style = 'text-transform: uppercase; width: 10%; font-size: 14px;' align = 'left'><b>$matricula</b></td>";
-                                $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
-                                $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$funcao</b></td>";
-                                $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataAdmissao</b></td>";
-                                $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$mesAdmissao</b></td>";
-                                $html .= "<td  colspan = '2' style = 'width: 20%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$tempoEmpresa</b></td>";
-
-                                $html .= "</tr>";
-                            }
-
-//                            // QUEBRA DE LINHA PRA SUB TOTAL EQUIPAMENTO E DATA
-//                            //print_r("mes anterior = ".$mesAnterior);
-//                            $query = " SELECT COUNT (T1.ID_FUNCIONARIO) AS TOTAL FROM GP_CAD_FUNCIONARIO T1 INNER JOIN GP_CAD_FUNCOES T2
-//                                            ON  T1.FUNCAO = T2.ID_FUNCAO
-//                                            WHERE
-//                                            T1.EMPRESA = '$idEmpresa' AND T1.FILIAL = '$idFilial' AND DATA_ADMISSAO LIKE '%/$mesAdmissaoValor/%' ";
-//
-//
-//                            //print_r($query);exit();
-//
-//                            $cs = $this->conBanco->query($query);
-//                            $rs = $cs->result();
-//
-//                            if (is_array($rs) && count($rs) > 0) {
-//                                
-//                                $total = $rs[0]->TOTAL;
-//                                
-//                                if($total == $tamanho){
-//                                    
-//                                    $html .= "<tr style = 'width:100%; background-color: #579CE9; height: 10px;'>";
-//                                    $html .= "<td  colspan = '7' style = 'width: 20%; font-size: 14px;' align = 'left'><b></b></td>";
-//
-//                                    $html .= "</tr>";
-//                                    
-//                                }
-//                                
-//                            }
-                            
-                        }
-                       
-                    }
-                     
-                }
-                
-                
-            }
+            $query3 .= " AND T1.DATA_ADMISSAO LIKE '%/$mes/%'";
         }
 
+        $query3 .= " ORDER BY TO_DATE(DATA_ADMISSAO,'dd/mm/yyyy')"; 
 
 
+        //print_r($query);exit();
 
+        $rs3 = $this->conBanco->query($query3)->result();
+
+        if (is_array($rs3) && count($rs3) > 0) {
+
+            foreach ($rs3 as $item) {
+
+                $dataAdmissao       = $item->DATA_ADMISSAO;
+                $dataDemmissao      = $item->DATA_DEMISSAO;
+                $desativado         = $item->DESATIVADO;
+                $matricula          = $item->MATRICULA;
+                $nomeFuncionario    = $item->NOME_FUNCIONARIO;
+                $funcao             = $item->FUNCAO;
+                    
+                $dataAdmissaoMes = $this->converterData($dataAdmissao);
+                
+                $mesAdmissao = date('m', strtotime($dataAdmissaoMes));
+
+                $mesAdmissao = $this->selectionarMes($mesAdmissao);
+
+                //print_r($mesAdmissao); exit();   
+                
+                $query4 = " SELECT      T1.MATRICULA, T1.ID_FUNCIONARIO, T1.NOME_FUNCIONARIO,
+                                        T1.DATA_NASC, T1.DATA_ADMISSAO, T1.EMPRESA, T1.FILIAL,
+                                        T1.DESATIVADO, T1.DATA_DEMISSAO,
+
+                                        T2.ID_FUNCAO, T2.FUNCAO
+
+                            FROM GP_CAD_FUNCIONARIO T1
+                            
+                            INNER JOIN GP_CAD_FUNCOES T2
+
+                            ON  T1.FUNCAO = T2.ID_FUNCAO
+                                
+                            WHERE
+                                        T1.EMPRESA = '$idEmpresa' AND T1.FILIAL = '$idFilial' AND T1.MATRICULA = '$matricula'";
+                if(!($mes == 0)){
+                    $query4 .= " AND T1.DATA_ADMISSAO LIKE '%/$mes/%'";
+                }
+                $query4 .= " ORDER BY TO_DATE(DATA_ADMISSAO,'dd/mm/yyyy')";
+ 
+                //print_r($query4);exit();
+                $rs4 = $this->conBanco->query($query4)->result();
+
+                if (is_array($rs4) && count($rs4) > 0) {
+
+                    for ($i = 0; $i < count($rs4); $i++) {
+
+                        // CONVERTER FORMATO DE DATA DE D/M/Y PARA Y-M-D  
+                        $dataTeste = $this->converterData($dataAdmissao);
+
+                        // CALCULO PARA SABER IDADE APARTIR DA DATA DE ADMISSAO        
+                        $date = new DateTime($dataTeste);
+                        $interval = $date->diff(new DateTime(date('Y-m-d')));
+                        $tempoEmpresa = $interval->format('%Y Anos, %m Meses e %d Dias');
+
+                        // PASSAR COR NA LINHA QUE A DATA DE ADMISSAO COINCIDIR COM A DATA ATUAL        
+                        $dataAdmissaoComparacao = date('m-d', strtotime($dataTeste));
+                        $dataAtualizadaComparacao = date('m-d');
+
+                        if ($dataAdmissaoComparacao == $dataAtualizadaComparacao) {
+
+                            $html .= "<tr class = 'linhaOc' style = 'width:100%;'>";
+                            $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 10%; font-size: 14px;' align = 'left'><b>$matricula</b></td>";
+                            $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
+                            $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$funcao</b></td>";
+                            $html .= "<td  style = ' background-color: #FFC0CB;width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataAdmissao</b></td>";
+                            $html .= "<td  style = ' background-color: #FFC0CB;width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$mesAdmissao</b></td>";
+                            $html .= "<td  colspan = '2' style = ' background-color: #FFC0CB; width: 20%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$tempoEmpresa</b></td>";
+
+                            $html .= "</tr>";
+                    
+                            } else {
+                                $html .= "<tr class = 'linhaOc' style = 'width:100%;'>";
+                                $html .= "<td  style = 'text-transform: uppercase; width: 10%; font-size: 14px;' align = 'left'><b>$matricula</b></td>";
+                                $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
+                                $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$funcao</b></td>";
+                                $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataAdmissao</b></td>";
+                                $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$mesAdmissao</b></td>";
+                                $html .= "<td  colspan = '2' style = 'width: 20%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$tempoEmpresa</b></td>";
+
+                                $html .= "</tr>";
+                            }
+                        }
+                    }
+                }
+            }
+        
         return $html;
     }
 

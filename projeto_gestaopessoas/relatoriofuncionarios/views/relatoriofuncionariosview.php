@@ -13,7 +13,7 @@
         <link href="resources/geral/jquery/jquery-ui-1.11.2/jquery-ui.min.css" rel="stylesheet">
         <script src="resources/geral/jquery/jquery-1.11.1.min.js"></script>
         <script src="resources/geral/jquery/jquery-ui-1.11.2/jquery-ui.min.js"></script>
-        <!--JQUERY 1.11-->
+        <!--JQUERY 1.11-->   
 
         <link href="resources/relatoriofuncionarios/css/teste.css" rel="stylesheet">
         
@@ -58,7 +58,7 @@
 
         <!-- RELATÓRIO CONTAS A PAGAR -->
         <link href="resources/relatoriofuncionarios/css/estilomodal.css" rel="stylesheet">
-        <script src="resources/relatoriofuncionarios/js/relatoriofuncionarios.js"></script>
+        <script src="resources/relatoriofuncionarios/js/relatoriofuncionarios-tmp.js"></script>
         
         
         <!-- RELATÓRIO CONTAS A PAGAR -->
