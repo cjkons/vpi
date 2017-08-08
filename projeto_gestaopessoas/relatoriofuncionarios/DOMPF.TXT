@@ -1,0 +1,2 @@
+pasta dompf em resources/dompf deve ser requisitada a algum membro da equipe
+como é um repositório do git
