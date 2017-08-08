@@ -190,7 +190,6 @@
             <li><a onclick="adicionarAba('Cadastro Funções', 'GESTAO_PESSOAS_01_01', 'gestaopessoas-01-01', 'index.php?m=cadastrofuncoes&c=cadastrofuncoescontroller', 'resources/geral/images/cadastrofuncoes.png')" href="#"><i class="fa fa-user"></i>Cadastro Funções</a></li> 
             <li><a onclick="adicionarAba('Cadastro Funcionários', 'GESTAO_PESSOAS_01_02', 'gestaopessoas-01-02', 'index.php?m=cadastrofuncionarios&c=cadastrofuncionarioscontroller', 'resources/geral/images/cadastrofuncionarios.png')" href="#"><i class="fa fa-user"></i>Cadastro Funcionários</a></li> 
             <li><a onclick="adicionarAba('Cadastro Férias', 'GESTAO_PESSOAS_01_06', 'gestaopessoas-01-06', 'index.php?m=cadastroferias&c=cadastroferiascontroller', 'resources/geral/images/cadastroferias.png')" href="#"><i class="fa fa-user"></i>Cadastro Férias</a></li> 
-            
             <li class="treeview">
             <a href="#">
               <i class="fa fa-print"></i>
@@ -202,6 +201,7 @@
             <ul class="treeview-menu">
                 <li><a onclick="adicionarAba('Impressão Folha Ponto', 'GESTAO_PESSOAS_01_05', 'gestaopessoas-01-05', 'index.php?m=folhaponto&c=folhapontocontroller', 'resources/geral/images/folhaponto.png')" href="#"><i class="fa fa-file-code-o"></i>Impressão Folha Ponto</a></li> 
                 <li><a onclick="adicionarAba('Relatório Aniversário', 'GESTAO_PESSOAS_01_04', 'gestaopessoas-01-04', 'index.php?m=relatorioaniversario&c=relatorioaniversariocontroller', 'resources/geral/images/relatorioaniversario.png')" href="#"><i class="fa fa-file-code-o"></i>Relatório Aniversário</a></li> 
+                <li><a onclick="adicionarAba('Relatório Funcionários', 'GESTAO_PESSOAS_01_07', 'gestaopessoas-01-07', 'index.php?m=relatoriofuncionarios&c=relatoriofuncionarioscontroller', 'resources/geral/images/relatorioaniversario.png')" href="#"><i class="fa fa-file-code-o"></i>Relatório Funcionários</a></li> 
             </ul>
         </li>
           </ul>
