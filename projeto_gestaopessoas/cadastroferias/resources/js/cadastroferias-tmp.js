@@ -520,8 +520,8 @@ function buscaRegistroProximo(){
 function getGrid() {
     
     var tableGrid = $('#grid').DataTable({
-        "processing": true,
-        "serverSide": true,
+        "destroy": true,
+        
         ajax: {
             "url": "index.php?m=cadastroferias&c=cadastroferiascontroller&f=getGrid",
             "type": "POST",

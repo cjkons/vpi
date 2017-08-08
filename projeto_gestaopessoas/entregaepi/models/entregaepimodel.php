@@ -3,7 +3,7 @@ require_once("resources/entregaepi/dompdf/dompdf_config.inc.php");
 
 class entregaepimodel extends CI_Model { 
 
-    private $conBanco;
+    private $conBanco; 
 
     public function __construct() {   
         parent::__construct();
@@ -1044,6 +1044,7 @@ class entregaepimodel extends CI_Model {
             
             
                 $idLancamentoItem = $rs[$s]->ID_EPI_ENT_ITEM;
+                
 
                 $s = $s + 1;
 
@@ -2350,9 +2351,10 @@ class entregaepimodel extends CI_Model {
 
         $idEpiTipo = $rs2[0]->ID_EPI_TIPO;
 
-        $query = "SELECT QUANTIDADE FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO = '$idFuncao' AND TIPO_EPI = '$idEpiTipo'";
-
-        print_r($query);//exit();
+        //$query = "SELECT QUANTIDADE FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO = '$idFuncao' AND TIPO_EPI = '$idEpiTipo'";
+        $query = "SELECT T2.QUANTIDADE FROM GP_EPI_QTD_FUNCAO T1 INNER JOIN GP_EPI_QTD_FUNCAO_ITEM T2 ON T1.ID_EPI_QTD_FUNCAO = T2.ID_EPI_QTD_FUNCAO
+                        WHERE T1.FUNCAO = '$idFuncao' AND T2.TIPO_EPI = '$idEpiTipo'";
+        //print_r($query);//exit();
         $cs = $this->conBanco->query($query);
         $rs = $cs->result();
 
@@ -2425,11 +2427,29 @@ class entregaepimodel extends CI_Model {
         $html .="<td colspan = '7' style= ' padding-top: 10px; padding-botton: 5px; width: 50%; font-size: 30px; color: #000000;' align='center'><br>DECLARO QUE<br><br></td>";
         $html .="</tr>";
         $html .="<tr>";
-        $html .="<td colspan = '7' style= 'width: 100%; border-bottom: 1 solid #000000;font-size: 30px; color: #000000;'  align='left'>&nbsp;&nbsp;&nbsp;Recebi da empresa Sulcatarinense M.A.C.B.C. Ltda. os equipamentos de proteção individual - EPI, nas <br>"
+        $html .="<td colspan = '7' style= 'width: 100%; font-size: 26px; color: #000000;'  align='left'>&nbsp;&nbsp;&nbsp;1 - Recebi da empresa Sulcatarinense M.A.C.B.C. Ltda. os equipamentos de proteção individual - EPI, nas "
                 . "                                                                                                                           datas aqui resgistradas, os quais desde já me comprometo a usá-los na execução de minhas atividades e tarefas, zelando"
                 . "                                                                                                                           pela sua perfeita guarda, conservação, uso e funcionamento."
-                . "                                                                                                                           Assumindo também o compromisso de devolvê-los quando solicitados ou por ocasião de recisão de contrato de trabalho.<br><br></td>";
+                . "                                                                                                                           Assumindo também o compromisso de devolvê-los quando solicitados ou por ocasião de recisão de contrato de trabalho.<br></td>";
         $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '7' style= 'width: 100%; font-size: 26px; color: #000000;'  align='left'>&nbsp;&nbsp;&nbsp;2 - O descumprimento dos termos aqui estabelecidos, importará em ato faltoso do empregado, com aplicação de penalidades, "
+                . "                                                                                                                           que a critério do empregador, poderão variar de advertência, por escrito à recisão do contrato de trabalho por justa causa, independente "
+                . "                                                                                                                            de outras medidas de orgem jurídica aplicáveis com base especialmente no artigo 158 da CLT e NR-01 da portaria do MTE nº 3214/78(1.8 e 1.8..1).<br></td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '7' style= 'width: 100%; font-size: 26px; color: #000000;'  align='left'>&nbsp;&nbsp;&nbsp;3 - No caso de perda, dano, extravio, ou avaria dos equipamentos referidos no item 1, autorizo desde já a dedução, do valor correspondente ao EPI, do"
+                . "                                                                                                                           meu salário.<br></td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '7' style= 'width: 100%; font-size: 26px; color: #000000;'  align='left'>&nbsp;&nbsp;&nbsp;4 - Declaro que os equipamentos que recebi estão em perfeitas condições e que utilizo conforme as normas de segurança e treinamento realizados pela Empresa"
+                . "                                                                                                                           Sulcatarinense M.A.C.B.C Ltda.<br></td>";
+        $html .="</tr>";
+        $html .="<tr>";
+        $html .="<td colspan = '7' style= 'width: 100%; border-bottom: 1 solid #000000;font-size: 26px; color: #000000;'  align='left'>&nbsp;&nbsp;&nbsp;5 - Declaro ainda ter recebido treinamento referente ao uso, guarda, conservação e funcionamento do EPI, estando Apto para usá-los."
+                . "                                                                                                                           Sulcatarinense M.A.C.B.C Ltda.<br></td>";
+        $html .="</tr>";
+        
         
         $html .="<tr>";
         $html .="<td colspan = '7' style= ' padding-top: 10px; padding-botton: 5px; width: 50%; font-size: 30px; color: #000000;' align='center'><br>DESCRIÇÃO DOS EPI'S FORNECIDOS<br><br></td>";
@@ -2481,18 +2501,15 @@ class entregaepimodel extends CI_Model {
         }
         
         $html .="<tr>";
-        $html .="<td colspan = '7' style= 'width: 100%; border-bottom: 1 solid #000000;font-size: 30px; color: #000000;'  align='left'><br><br><br><br><br><br></td>";
+        $html .="<td colspan = '7' style= 'width: 100%; border-bottom: 1 solid #000000;font-size: 30px; color: #000000;'  align='left'><br><br><br></td>";
         $html .="</tr>";
         $html .="<tr>";
-        $html .="<td colspan = '7' style= 'width: 100%; font-size: 30px; color: #000000;'  align='left'><br><br><br><br><br><br></td>";
+        $html .="<td colspan = '7' style= 'width: 100%; font-size: 30px; color: #000000;'  align='left'></td>";
         $html .="</tr>";
+        
         $html .="<tr>";
-        $html .="<td colspan = '3' style= 'text-transform: uppercase; text-decoration: overline; font-size: 23px; color: #000000;'  align='center'></td>";
-        $html .="<td colspan = '4' style= 'text-transform: uppercase; font-size: 23px; color: #000000;'  align='center'>Biguaçu, $dataAtualizada</td>";
-        $html .="</tr>";
-        $html .="<tr>";
-        $html .="<td colspan = '3' style= 'text-transform: uppercase; text-decoration: overline; font-size: 23px; color: #000000;'  align='center'></td>";
-        $html .="<td colspan = '4' style= 'text-transform: uppercase; text-decoration: overline; font-size: 23px; color: #000000;'  align='center'>&nbsp;&nbsp;&nbsp;LOCAL e DATA &nbsp;&nbsp;<br><br><br><br><br><br><br></td>";
+        $html .="<td colspan = '3' style= 'text-transform: uppercase; font-size: 23px; color: #000000;'  align='center'>Biguaçu, $dataAtualizada</td>";
+        $html .="<td colspan = '4' style= 'text-transform: uppercase; text-decoration: overline; font-size: 23px; color: #000000;'  align='center'><br><br><br><br><br><br><br></td>";
         $html .="</tr>";
         $html .="<tr>";
         $html .="<td colspan = '3' style= 'text-transform: uppercase; text-decoration: overline; font-size: 23px; color: #000000;'  align='center'>&nbsp;&nbsp;&nbsp;Assinatura: ($nomeFuncionario)&nbsp;&nbsp;&nbsp;</td>";

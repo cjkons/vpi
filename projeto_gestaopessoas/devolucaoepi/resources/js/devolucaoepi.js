@@ -1188,8 +1188,9 @@ function editarItemLancamento(idLancamentoItem) {
 
 
     var id = $('#id').val();
+    var matricula = $('#matricula').val();
 
-
+ 
     document.getElementById("codCaEd").disabled = true;
     document.getElementById("tipoEpiEd").readOnly = true;
     document.getElementById("qtdEpiEd").readOnly = false;
@@ -1203,7 +1204,8 @@ function editarItemLancamento(idLancamentoItem) {
         url: 'index.php?m=devolucaoepi&c=devolucaoepicontroller&f=editarItemLancamento',
         data: {
             id: id,
-            idLancamentoItem: idLancamentoItem
+            idLancamentoItem: idLancamentoItem,
+            matricula: matricula
 
 
 
@@ -1220,13 +1222,14 @@ function editarItemLancamento(idLancamentoItem) {
             document.getElementById("dataEpiEd").value = r[4];
             document.getElementById("tipoLancamentoEd").value = r[5];
             document.getElementById("blocoEpiEd").value = r[6];
+            document.getElementById("qtdEpiEntregueEd").value = r[7];
             
             if(r[5] == "D"){
                 
                 document.getElementById("blocoEpiEd").disabled = true;
             }
 
-
+            getItemHistorico(id, idLancamentoItem);
             $('#lancamentoEdicaoModal').modal('show');
 
         },
@@ -1241,7 +1244,7 @@ function editarItemLancamentoEd(idLancamentoItem) {
 
 
     var id = $('#id').val();
-
+    var matricula = $('#matricula').val();
 
     document.getElementById("codCaEdEd").disabled = true;
     document.getElementById("tipoEpiEdEd").readOnly = true;
@@ -1259,7 +1262,8 @@ function editarItemLancamentoEd(idLancamentoItem) {
         url: 'index.php?m=devolucaoepi&c=devolucaoepicontroller&f=editarItemLancamentoEd',
         data: {
             id: id,
-            idLancamentoItem: idLancamentoItem
+            idLancamentoItem: idLancamentoItem,
+            matricula: matricula
 
 
 
@@ -1276,6 +1280,7 @@ function editarItemLancamentoEd(idLancamentoItem) {
             document.getElementById("dataEpiEdEd").value = r[4];
             document.getElementById("tipoLancamentoEdEd").value = r[5];
             document.getElementById("blocoEpiEdEd").value = r[6];
+            document.getElementById("qtdEpiEntregueEdEd").value = r[7];
             
             if(r[5] == "D"){
                 
@@ -1329,7 +1334,7 @@ function editarLancamento(id) {
             document.getElementById("funcao").value = r[4];
             document.getElementById("dataAdmissao").value = r[5];
             
-            carregarCodCa1(r[4]);
+            carregarCodCa1(r[4], r[2]);
             
             $('#pesquisarModal').modal('show');
             getEditarItemLancamento(id);
@@ -1494,13 +1499,14 @@ function carregarCampoBlocoEdEd(){
     
 }
 
-function carregarCodCa1(funcao) {
+function carregarCodCa1(funcao, matricula) {
     
     $.ajax({
         url: 'index.php?m=devolucaoepi&c=devolucaoepicontroller&f=carregarCodCa1',
         data: {
           
-            funcao: funcao
+            funcao: funcao,
+            matricula: matricula
             
         },
         type: 'POST',
@@ -1753,7 +1759,7 @@ function carregarDadosFuncionario() {
             document.getElementById("funcao").value = r[2];
             document.getElementById("dataAdmissao").value = r[3];
 
-            carregarCodCa1(r[2]);
+            carregarCodCa1(r[2], r[0]);
 
         },
         error: function () {
@@ -1831,4 +1837,245 @@ function abrirArquivoPdf() {
    //var nomeArquivo = data['nomeArquivo'];
    // window.open('http://localhost/vpigestao/fwk/index.php?m=relatoriomedicao&c=relatoriomedicaocontroller&f=abrirArquivoExcel&nomePastaTemporaria=' + /teste/pdf + '&nomeArquivo=' + nomeArquivo, '_blank');
 }
+
+
+
+
+function verificarQuantidadeEntregue() {
+
+    
+    var codCa = $('#codCa').val();
+    var funcao = $('#funcao').val();
+    var matricula = $('#matricula').val();
+    var qtdEpi = $('#qtdEpi').val();
+    
+   
+
+    $.ajax({
+        url: 'index.php?m=devolucaoepi&c=devolucaoepicontroller&f=verificarQuantidadeEntregue',
+        data: {
+            funcao: funcao,
+            codCa: codCa,
+            matricula: matricula
+            
+
+        },
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        success: function (data) {
+
+            if (data != false) {
+                
+                document.getElementById("qtdEpiEntregue").value = data;
+                
+            }else{
+                mensagem('Erro', 'Saldo não encontrado!', 'error');  
+                document.getElementById("qtdEpiEntregue").value = "";
+            }
+            
+
+        },
+        error: function () {
+            desbloqueiaTela();
+        }
+    });
+}
+
+
+
+
+
+function verificarQuantidadeEntregueED() {
+
+    
+    var tipoEpi = $('#tipoEpiEd').val();
+    var funcao = $('#funcao').val();
+    var qtdEpi = $('#qtdEpiEd').val();
+    
+   
+
+    $.ajax({
+        url: 'index.php?m=devolucaoepi&c=devolucaoepicontroller&f=verificarQuantidadeEntregue',
+        data: {
+            funcao: funcao,
+            tipoEpi: tipoEpi
+            
+
+        },
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        success: function (data) {
+
+            if (data != false) {
+                
+                document.getElementById("qtdEpiEntregueEd").value = data;
+                
+            }else{
+                mensagem('Erro', 'Saldo não encontrado!', 'error');  
+                document.getElementById("qtdEpiEntregueEd").value = "";
+            }
+        
+        },
+        error: function () {
+            desbloqueiaTela();
+        }
+    });
+}
+
+function verificarQuantidadeEntregueEd() {
+
+    
+    var tipoEpi = $('#tipoEpiEdEd').val();
+    var funcao = $('#funcao').val();
+    var qtdEpi = $('#qtdEpiEdEd').val();
+    
+   
+
+    $.ajax({
+        url: 'index.php?m=devolucaoepi&c=devolucaoepicontroller&f=verificarQuantidadeEntregue',
+        data: {
+            funcao: funcao,
+            tipoEpi: tipoEpi
+            
+
+        },
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        success: function (data) {
+
+            if (data != false) {
+                
+                document.getElementById("qtdEpiEntregueEdEd").value = data;
+                
+            }else{
+                mensagem('Erro', 'Saldo não encontrado!', 'error');  
+                document.getElementById("qtdEpiEntregue").value = "";
+            }
+            
+
+        },
+        error: function () {
+            desbloqueiaTela();
+        }
+    });
+}
+
+function verificarSaldoEntregue() {
+    
+    var qtdEpiEntregue = $('#qtdEpiEntregue').val();
+    var qtdEpi = $('#qtdEpi').val();
+    
+    if(qtdEpi > 0){
+    
+        if(qtdEpiEntregue >= qtdEpi){
+
+        }else{
+            mensagem('Erro', 'Quantidade recebida maior que a quantidade entregue!', 'error');  
+            document.getElementById("qtdEpi").value = "";
+        }
+               
+    }else{
+        mensagem('Erro', 'Valor não pode ser negativo ou zero!', 'error');  
+        document.getElementById("qtdEpi").value = "";
+    }
+
+       
+}
+
+function verificarSaldoEntregueEd() {
+
+    var qtdEpiEntregue = $('#qtdEpiEntregueEd').val();
+    var qtdEpi = $('#qtdEpiEd').val();
+    
+   
+
+    if(qtdEpi > 0){
+    
+        if(qtdEpiEntregue >= qtdEpi){
+
+        }else{
+            mensagem('Erro', 'Quantidade recebida maior que a quantidade entregue!', 'error');  
+            document.getElementById("qtdEpiEd").value = "";
+        }
+               
+    }else{
+        mensagem('Erro', 'Valor não pode ser negativo ou zero!', 'error');  
+        document.getElementById("qtdEpiEd").value = "";
+    }
+               
+
+
+       
+}
+
+function verificarSaldoEntregueEdEd() {
+
+    var qtdEpiEntregue = $('#qtdEpiEntregueEdEd').val();
+    var qtdEpi = $('#qtdEpiEdEd').val();
+    
+   
+
+    if(qtdEpi > 0){
+    
+        if(qtdEpiEntregue >= qtdEpi){
+
+        var saldoEpi = parseint(qtdEpiEntregue) - parseInt(qtdEpi); 
+
+        alert(saldoEpi);
+
+
+
+
+        }else{
+            mensagem('Erro', 'Quantidade recebida maior que a quantidade entregue!', 'error');  
+            document.getElementById("qtdEpiEdEd").value = "";
+        }
+               
+    }else{
+        mensagem('Erro', 'Valor não pode ser negativo ou zero!', 'error');  
+        document.getElementById("qtdEpiEdEd").value = "";
+    }
+               
+
+
+       
+}
+
+function  getItemHistorico(id, idLancamentoItem) {
+
+
+    //var id = $("#id").val();
+
+
+    $.ajax({
+        url: 'index.php?m=devolucaoepi&c=devolucaoepicontroller&f=getItemHistorico',
+        data: {
+            id: id,
+            idLancamentoItem: idLancamentoItem
+        },
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        success: function (r) {
+
+
+            document.getElementById('tabelaItem2').innerHTML = "";
+            document.getElementById('tabelaItem3').innerHTML = "";
+            document.getElementById('tabelaHist').innerHTML = r;
+
+
+            atualizarItem();
+
+        },
+        error: function (e) {
+            atualizarItem();
+        }
+    });
+
+
+}
+
 
