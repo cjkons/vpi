@@ -49,6 +49,7 @@ class relatoriofuncionariosmodel extends CI_Model {
         }
     }
 
+    
     public function carregarFilial($idEmpresa) {
 
         $this->initConBanco();
@@ -136,6 +137,49 @@ class relatoriofuncionariosmodel extends CI_Model {
     }
     
     
+    private function exibirCabecalho($dataAtualizada,$empresa,$filial){
+        
+        $html = "";
+
+        $html .= "<table class = 'awesome-text-box' style = 'width:100%;' border = '1';>";
+        $html .= "<tr style = 'background-color: #579CE9;'>";
+        $html .= "<td class = 'nomeempresa' rowspan = '6' colspan = '4' align = 'left'  style = 'text-transform: uppercase; color: #ffffff; ' align = 'center';><b>&nbsp;&nbsp;Empresa:</b> $empresa <br>&nbsp;&nbsp;<b>Filial:</b> $filial</b></td>";
+        $html .= "</tr>";
+
+        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
+        $html .= "<td colspan = '3'></td>";
+        $html .= "</tr>";
+
+        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
+        $html .= "<td class = 'nomerelatorio'colspan = '3' style = 'color: #ffffff;' align = 'CENTER'><b>RELATÓRIO FUNCIONARIO</b></td>";
+        $html .= "</tr>";
+
+        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
+        $html .= "<td colspan = '3'></td>";
+        $html .= "</tr>";
+
+        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
+        $html .= "<td  colspan = '2' class = 'datas' style = 'text-transform: uppercase; color: #ffffff; ' align = 'right'><b>Data Emissão:</b></td>";
+        $html .= "<td  colspan = '2'  style = 'color: #ffffff; font-size: 16px; ' align = 'center'>$dataAtualizada</td>";
+        $html .= "</tr>";
+        $html .= "</table>";
+        
+        $html .= "<table class = 'awesome-text-box' style = 'width:100%;' border = '1'>";
+        $html .= "<tr style = 'width:100%; background-color: #ffffff; height: 10px; font-size: 16px;'>";
+        $html .= "<tr style = 'width:100%; background-color: #579CE9; height: 17px;'>";
+        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>&nbsp;&nbsp;Matrícula</b></td>";
+        $html .= "<td style = 'width: 20%; color: #ffffff; font-size: 14px;'  align = 'left'><b>&nbsp;&nbsp;Funcionário</b></td>";
+        $html .= "<td style = 'width: 20%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Função</b></td>";
+        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Data Admissão</b></td>";
+        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Mês</b></td>";
+        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Data Demissão</b></td>";
+        $html .= "<td colspan = '2' style = 'width: 20%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Tempo de Empresa</b></td>";
+        $html .= "</tr>";
+        
+        return $html;
+    }
+    
+    
     public function filtro($mes, $idEmpresa, $idFilial) {
 
         $dataAtualizada = date('d/m/Y');
@@ -150,49 +194,9 @@ class relatoriofuncionariosmodel extends CI_Model {
         $query2 = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA_FILIAL WHERE ID_EMPRESA_FILIAL = '$idFilial'";
         $rs2 = $this->conBanco->query($query2)->result();
         $filial = $rs2[0]->NOME_FANTASIA;
-
-        $html = "";
-
-        //CABECALHO INICIO
-        $html .= "<table class = 'awesome-text-box' style = 'width:100%;' border = '1';>";
-        $html .= "<tr style = 'background-color: #579CE9;'>";
-        $html .= "<td class = 'nomeempresa' rowspan = '6' colspan = '4' align = 'left'  style = 'text-transform: uppercase; color: #ffffff; ' align = 'center';><b>&nbsp;&nbsp;Empresa:</b> $empresa <br>&nbsp;&nbsp;<b>Filial:</b> $filial</b></td>";
-        $html .= "</tr>";
-
-        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
-        $html .= "<td colspan = '3'></td>";
-        $html .= "</tr>";
-
-        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
-        $html .= "<td class = 'nomerelatorio'colspan = '3' style = 'color: #ffffff;' align = 'CENTER'><b>RELATÓRIO DE ANIVERSÁRIO</b></td>";
-        $html .= "</tr>";
-
-        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
-        $html .= "<td colspan = '3'></td>";
-        $html .= "</tr>";
-
-        $html .= "<tr style = 'background-color: #579CE9; height: 20px;'>";
-        $html .= "<td  colspan = '2' class = 'datas' style = 'text-transform: uppercase; color: #ffffff; ' align = 'right'><b>Data Emissão:</b></td>";
-        $html .= "<td  colspan = '2'  style = 'color: #ffffff; font-size: 16px; ' align = 'center'>$dataAtualizada</td>";
-        $html .= "</tr>";
         
-        $html .= "</table>";
+        $html = $this->exibirCabecalho($dataAtualizada,$empresa,$filial); //CABECALHO 
         
-        //CABECALHO FIM
-
-        $html .= "<table class = 'awesome-text-box' style = 'width:100%;' border = '1'>";
-        $html .= "<tr style = 'width:100%; background-color: #ffffff; height: 10px; font-size: 16px;'>";
-        $html .= "<tr style = 'width:100%; background-color: #579CE9; height: 17px;'>";
-        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>&nbsp;&nbsp;Matrícula</b></td>";
-        $html .= "<td style = 'width: 20%; color: #ffffff; font-size: 14px;'  align = 'left'><b>&nbsp;&nbsp;Funcionário</b></td>";
-        $html .= "<td style = 'width: 20%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Função</b></td>";
-        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Data Admissão</b></td>";
-        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Mês</b></td>";
-        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Data Demissão</b></td>";
-        $html .= "<td colspan = '2' style = 'width: 20%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Tempo de Empresa</b></td>";
-        $html .= "</tr>";
-
-
         $query3 = " SELECT  T1.MATRICULA, T1.ID_FUNCIONARIO, T1.NOME_FUNCIONARIO,
                             T1.DATA_NASC, T1.DATA_ADMISSAO, T1.EMPRESA, T1.FILIAL,
                             T1.DESATIVADO, T1.DATA_DEMISSAO,
@@ -276,32 +280,17 @@ class relatoriofuncionariosmodel extends CI_Model {
                            $dataDemmissao = "Não demitido";
                         }
                         
-                        if ($dataAdmissaoComparacao == $dataAtualizadaComparacao) {
-                            
-                            $html .= "<tr class = 'linhaOc' style = 'width:100%;'>";
-                            $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 10%; font-size: 14px;' align = 'left'><b>$matricula</b></td>";
-                            $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
-                            $html .= "<td  style = ' background-color: #FFC0CB;text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$funcao</b></td>";
-                            $html .= "<td  style = ' background-color: #FFC0CB;width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataAdmissao</b></td>";
-                            $html .= "<td  style = ' background-color: #FFC0CB;width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$mesAdmissao</b></td>";
-                            $html .= "<td  style = ' background-color: #FFC0CB;width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataDemmissao</b></td>";
-                            $html .= "<td  colspan = '2' style = ' background-color: #FFC0CB; width: 20%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$tempoEmpresa</b></td>";
+                        $html .= "<tr class = 'linhaOc' style = 'width:100%;'>";
+                        $html .= "<td  style = 'text-transform: uppercase; width: 10%; font-size: 14px;' align = 'left'><b>$matricula</b></td>";
+                        $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
+                        $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$funcao</b></td>";
+                        $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataAdmissao</b></td>";
+                        $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$mesAdmissao</b></td>";
+                        $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataDemmissao</b></td>";
+                        $html .= "<td  colspan = '2' style = 'width: 20%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$tempoEmpresa</b></td>";
 
-                            $html .= "</tr>";
-                            
-                            } 
-                            else {
-                                $html .= "<tr class = 'linhaOc' style = 'width:100%;'>";
-                                $html .= "<td  style = 'text-transform: uppercase; width: 10%; font-size: 14px;' align = 'left'><b>$matricula</b></td>";
-                                $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
-                                $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$funcao</b></td>";
-                                $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataAdmissao</b></td>";
-                                $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$mesAdmissao</b></td>";
-                                $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataDemmissao</b></td>";
-                                $html .= "<td  colspan = '2' style = 'width: 20%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$tempoEmpresa</b></td>";
+                        $html .= "</tr>";
 
-                                $html .= "</tr>";
-                            }
                         }
                     }
                 }
