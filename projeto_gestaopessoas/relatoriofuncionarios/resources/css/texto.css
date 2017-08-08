@@ -1,0 +1,92 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18/03/2016, 13:59:13
+    Author     : heitor.siqueira
+*/
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 1617px) and (max-width: 2000px) {
+    html {
+        font-size: 13px;
+    }
+    table {
+        font-size: 13px;
+    }
+}
+@media only screen and (min-width: 1375px) and (max-width: 1616px) {
+    html {
+        font-size: 12px;
+        
+    }
+    table {
+        font-size: 12px;
+       
+    }
+}
+@media only screen and (min-width: 1189px) and (max-width: 1374px) {
+    html {
+        font-size: 11px;
+    }
+    table {
+        font-size: 11px;
+    }
+}
+/* Tablet Portrait size to standard  (devices and browsers) */
+@media only screen and (min-width: 1000px) and (max-width: 1188px) {
+    html {
+        font-size: 10px;
+        
+    }
+    table {
+        font-size: 10px;
+        
+    }
+}
+
+/* Tablet Portrait size to standard (devices and browsers) */
+@media only screen and (min-width: 880px) and (max-width: 999px) {
+    html {
+        font-size: 9px;
+    }
+    table {
+        font-size: 9px;
+    }
+}
+/* Tablet Portrait size to standard  (devices and browsers) */
+@media only screen and (min-width: 673px) and (max-width: 879px) {
+    html {
+        font-size: 8px;
+    }
+    table {
+        font-size: 8px;
+    }
+}
+
+
+/* Tablet Portrait size to standard  (devices and browsers) */
+@media only screen and (min-width: 497px) and (max-width: 672px) {
+    html {
+        font-size: 8px;
+    }
+    table {
+        font-size: 8px;
+    }
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 496px) {
+    html {
+ font-size: 6px;
+ }
+ table {
+font-size: 6px;
+
+}
+}
+
+
+
