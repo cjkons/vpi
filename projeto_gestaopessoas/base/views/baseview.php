@@ -158,7 +158,7 @@
         
         <!-- Menu Setup de Sistema --> 
         
-         <li class="active treeview">
+         <li class="treeview">
           <a href="#">
             <i class="fa fa-gears"></i>
             <span>Setup de Sistema</span>
@@ -177,7 +177,7 @@
         
         <!-- Menu Gestão Ativos --> 
         
-         <li class="active treeview">
+         <li class="treeview">
           <a href="#">
             <i class="fa fa-users"></i>
             <span>Gestão de Pessoas</span>
@@ -208,75 +208,87 @@
         </li>
         
         <!-- Menu Suprimentos -->  
-         <li class="active treeview">
+         <li class="treeview">
           <a href="#">
             <i class="fa fa-medkit"></i>
-            <span>Medicina e Segurança</span>
+            <span>Gestão de Medicina</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu">
-              
-             <li class="treeview">
-            <a href="#">
-              <i class="fa fa-print"></i>
-              <span>Gestão EPI's</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-                <li><a onclick="adicionarAba('Cadastro de EPI', 'GESTAOEPI_01_01', 'gestaoepi-01-01', 'index.php?m=cadastroepi&c=cadastroepicontroller', 'resources/geral/images/cadastroepi.png')" href="#"><i class="fa fa-thumbs-up"></i>Cadastro de EPI</a></li> 
-                <li><a onclick="adicionarAba('Cadastro Tipo de EPI', 'GESTAOEPI_01_02', 'gestaoepi-01-02', 'index.php?m=cadastroepitipo&c=cadastroepitipocontroller', 'resources/geral/images/cadastroepitipo.png')" href="#"><i class="fa fa-thumbs-up"></i>Cadastro Tipo de EPI</a></li> 
-                <li><a onclick="adicionarAba('Quantidade de EPI/Função', 'GESTAOEPI_01_04', 'gestaoepi-01-04', 'index.php?m=quantidadeepifuncao&c=quantidadeepifuncaocontroller', 'resources/geral/images/quantidadeepifuncao.png')" href="#"><i class="fa fa-thumbs-up"></i>Quantidade EPI/Função</a></li> 
-                <li><a onclick="adicionarAba('Entrega EPI', 'GESTAOEPI_01_05', 'gestaoepi-01-05', 'index.php?m=entregaepi&c=entregaepicontroller', 'resources/geral/images/entregaepi.png')" href="#"><i class="fa fa-thumbs-up"></i>Entrega EPI</a></li> 
-                <li><a onclick="adicionarAba('Devolução EPI', 'GESTAOEPI_01_03', 'gestaoepi-01-03', 'index.php?m=devolucaoepi&c=devolucaoepicontroller', 'resources/geral/images/devolucaoepi.png')" href="#"><i class="fa fa-thumbs-up"></i>Devolução EPI</a></li> 
-            </ul>
-        </li>
-        <li class="treeview">
-            <a href="#">
-              <i class="fa fa-print"></i>
-              <span>Gestão Medicina</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
+          
             <ul class="treeview-menu">
                 <li><a onclick="adicionarAba('Cadastro Exames ASO', 'MEDICINAESEGURANCA_01_01', 'medicinaeseguranca-01-01', 'index.php?m=cadastroexames&c=cadastroexamescontroller', 'resources/geral/images/cadastroexames.png')" href="#"><i class="fa fa-heartbeat"></i>Cadastro Exames ASO</a></li> 
                 <li><a onclick="adicionarAba('Cadastro ASO', 'MEDICINAESEGURANCA_01_02', 'medicinaeseguranca-01-02', 'index.php?m=cadastroaso&c=cadastroasocontroller', 'resources/geral/images/cadastroaso.png')" href="#"><i class="fa fa-heartbeat"></i>Cadastro ASO</a></li> 
                 <li><a onclick="adicionarAba('Cadastro Atestado', 'MEDICINAESEGURANCA_01_04', 'medicinaeseguranca-01-04', 'index.php?m=cadastroatestado&c=cadastroatestadocontroller', 'resources/geral/images/cadastroAtestado.png')" href="#"><i class="fa fa-heartbeat"></i>Cadastro Atestado</a></li> 
-                
-             </ul>
-        </li>
-        <li class="treeview">
-            <a href="#">
-              <i class="fa fa-print"></i>
-              <span>Relatórios</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a onclick="adicionarAba('Relatório de Atestados', 'MEDICINAESEGURANCA_01_05', 'medicinaeseguranca-01-05', 'index.php?m=relatorioatestado&c=relatorioatestadocontroller', 'resources/geral/images/relatorioatestado.png')" href="#"><i class="fa fa-file-code-o"></i>Relatório de Atestados</a></li> 
-              <li><a onclick="adicionarAba('Relatório de Controle Exames ASO', 'MEDICINAESEGURANCA_01_03', 'medicinaeseguranca-01-03', 'index.php?m=relatoriocontroleexamesaso&c=relatoriocontroleexamesasocontroller', 'resources/geral/images/relatoriocontroleexamesaso.png')" href="#"><i class="fa fa-file-code-o"></i>Relatório de Exames ASO</a></li> 
+                <li class="treeview">
+                    <a href="#">
+                      <i class="fa fa-print"></i>
+                      <span>Relatórios</span>
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+                      <li><a onclick="adicionarAba('Relatório de Atestados', 'MEDICINAESEGURANCA_01_05', 'medicinaeseguranca-01-05', 'index.php?m=relatorioatestado&c=relatorioatestadocontroller', 'resources/geral/images/relatorioatestado.png')" href="#"><i class="fa fa-file-code-o"></i>Relatório de Atestados</a></li> 
+                      <li><a onclick="adicionarAba('Relatório de Controle Exames ASO', 'MEDICINAESEGURANCA_01_03', 'medicinaeseguranca-01-03', 'index.php?m=relatoriocontroleexamesaso&c=relatoriocontroleexamesasocontroller', 'resources/geral/images/relatoriocontroleexamesaso.png')" href="#"><i class="fa fa-file-code-o"></i>Relatório de Exames ASO</a></li> 
+                    </ul>
+                </li>
             </ul>
+             
         </li>
-          
-          
-          </ul>
+        
+        <!-- Menu Suprimentos -->  
+         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-fire-extinguisher"></i>
+            <span>Gestão de Segurança</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+            <ul class="treeview-menu">
+                <li><a onclick="adicionarAba('Cadastro Tipo de EPI', 'GESTAOEPI_01_02', 'gestaoepi-01-02', 'index.php?m=cadastroepitipo&c=cadastroepitipocontroller', 'resources/geral/images/cadastroepitipo.png')" href="#"><i class="fa fa-thumbs-up"></i>Cadastro Tipo de EPI</a></li> 
+                <li><a onclick="adicionarAba('Cadastro de EPI', 'GESTAOEPI_01_01', 'gestaoepi-01-01', 'index.php?m=cadastroepi&c=cadastroepicontroller', 'resources/geral/images/cadastroepi.png')" href="#"><i class="fa fa-thumbs-up"></i>Cadastro de EPI</a></li> 
+                <li><a onclick="adicionarAba('Quantidade de EPI/Função', 'GESTAOEPI_01_04', 'gestaoepi-01-04', 'index.php?m=quantidadeepifuncao&c=quantidadeepifuncaocontroller', 'resources/geral/images/quantidadeepifuncao.png')" href="#"><i class="fa fa-thumbs-up"></i>Quantidade EPI/Função</a></li> 
+                <li><a onclick="adicionarAba('Entrega EPI', 'GESTAOEPI_01_05', 'gestaoepi-01-05', 'index.php?m=entregaepi&c=entregaepicontroller', 'resources/geral/images/entregaepi.png')" href="#"><i class="fa fa-thumbs-up"></i>Entrega EPI</a></li> 
+                <li><a onclick="adicionarAba('Devolução EPI', 'GESTAOEPI_01_03', 'gestaoepi-01-03', 'index.php?m=devolucaoepi&c=devolucaoepicontroller', 'resources/geral/images/devolucaoepi.png')" href="#"><i class="fa fa-thumbs-up"></i>Devolução EPI</a></li> 
+                <li><a onclick="adicionarAba('Histórico EPI Usuário', 'GESTAOEPI_01_06', 'gestaoepi-01-03', 'index.php?m=historicoepiusuario&c=historicoepiusuariocontroller', 'resources/geral/images/historicoepiusuario.png')" href="#"><i class="fa fa-thumbs-up"></i>Histórico EPI Usuário</a></li> 
+                <li class="treeview">
+                    <a href="#">
+                      <i class="fa fa-print"></i>
+                      <span>Relatórios</span>
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+                      <li><a onclick="adicionarAba('Relatório de Atestados', 'MEDICINAESEGURANCA_01_05', 'medicinaeseguranca-01-05', 'index.php?m=relatorioatestado&c=relatorioatestadocontroller', 'resources/geral/images/relatorioatestado.png')" href="#"><i class="fa fa-file-code-o"></i>Relatório de Atestados</a></li> 
+                      </ul>
+                </li>
+            </ul>
              
         </li>
          
         <!-- Menu Sair --> 
-        
-         <li class="active treeview">
-          <a style="cursor: pointer" onclick="window.location = 'index.php?m=login&c=login&f=logoff&redirect=base'">
-              <i class="glyphicon glyphicon-off"></i>
-              <span>Sair</span>
-          </a>
-         </li>
-        
+        <li class="treeview">
+            <a href="#">
+                <i class="glyphicon glyphicon-off"></i>
+                <span>Sair Sistema</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="active treeview">
+                    <a style="cursor: pointer" onclick="window.location = 'index.php?m=login&c=login&f=logoff&redirect=base'">
+                        <i class="glyphicon glyphicon-off"></i>
+                        <span>Sair</span>
+                    </a>
+                </li>
+            </ul>
+
+        </li>
         
 
     </section>

@@ -1865,17 +1865,111 @@ function verificarQuantidadePermitida() {
                 
                 var valorPermitido = data;
                 
-                if(valorPermitido <= qtdEpi){
+                if(valorPermitido >= qtdEpi){
                     
                 }else{
-                  mensagem('Erro', 'Quantidade EPI não permitida para esta Funçao!', 'error');  
+                  mensagem('Erro', 'Quantidade informada maior que a permitida para esta Funçao!', 'error');  
                   document.getElementById("qtdEpi").value = "";
                 }
                
 
             } else {
-                mensagem('Erro', 'Quantidade EPI não permitida para esta Funçao!', 'error');  
+                mensagem('Erro', 'Quantidade informada maior que a permitida para esta Funçao!', 'error');  
                 document.getElementById("qtdEpi").value = "";
+
+            }
+
+        },
+        error: function () {
+            desbloqueiaTela();
+        }
+    });
+}
+
+function verificarQuantidadePermitidaEd() {
+
+    
+    var tipoEpi = $('#tipoEpiEd').val();
+    var funcao = $('#funcao').val();
+    var qtdEpi = $('#qtdEpiEd').val();
+    
+   
+
+    $.ajax({
+        url: 'index.php?m=entregaepi&c=entregaepicontroller&f=verificarQuantidadePermitida',
+        data: {
+            funcao: funcao,
+            tipoEpi: tipoEpi
+            
+
+        },
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        success: function (data) {
+
+            if (data != false) {
+                
+                var valorPermitido = data;
+                
+                if(valorPermitido >= qtdEpi){
+                    
+                }else{
+                  mensagem('Erro', 'Quantidade informada maior que a permitida para esta Funçao!', 'error');  
+                  document.getElementById("qtdEpiEd").value = "";
+                }
+               
+
+            } else {
+                mensagem('Erro', 'Quantidade informada maior que a permitida para esta Funçao!', 'error');  
+                document.getElementById("qtdEpEd").value = "";
+
+            }
+
+        },
+        error: function () {
+            desbloqueiaTela();
+        }
+    });
+}
+
+function verificarQuantidadePermitidaEdEd() {
+
+    
+    var tipoEpi = $('#tipoEpiEdEd').val();
+    var funcao = $('#funcao').val();
+    var qtdEpi = $('#qtdEpiEdEd').val();
+    
+   
+
+    $.ajax({
+        url: 'index.php?m=entregaepi&c=entregaepicontroller&f=verificarQuantidadePermitida',
+        data: {
+            funcao: funcao,
+            tipoEpi: tipoEpi
+            
+
+        },
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        success: function (data) {
+
+            if (data != false) {
+                
+                var valorPermitido = data;
+                
+                if(valorPermitido >= qtdEpi){
+                    
+                }else{
+                  mensagem('Erro', 'Quantidade informada maior que a permitida para esta Funçao!', 'error');  
+                  document.getElementById("qtdEpiEdEd").value = "";
+                }
+               
+
+            } else {
+                mensagem('Erro', 'Quantidade informada maior que a permitida para esta Funçao!', 'error');  
+                document.getElementById("qtdEpEdEd").value = "";
 
             }
 

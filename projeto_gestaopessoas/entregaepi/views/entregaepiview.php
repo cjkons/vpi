@@ -433,7 +433,7 @@
                                 <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
                                     <div class="form">
                                         Quantidade
-                                        <input type="text" class="form-control" id="qtdEpiEd"  placeholder="QTD" readonly>
+                                        <input type="text" class="form-control" id="qtdEpiEd"  placeholder="QTD" onchange ="verificarQuantidadePermitidaEd()" readonly>
                                     </div>
                                 </td>
                                 <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
@@ -543,7 +543,7 @@
                                 <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
                                     <div class="form">
                                         Quantidade
-                                        <input type="text" class="form-control" id="qtdEpiEdEd"  placeholder="QTD" readonly>
+                                        <input type="text" class="form-control" id="qtdEpiEdEd"  placeholder="QTD" onchange ="verificarQuantidadePermitidaEdEd()" readonly>
                                     </div>
                                 </td>
                                 <td  style="width: 10%; padding-right: 10px;font-size: 14px;">

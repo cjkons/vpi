@@ -180,10 +180,11 @@ class devolucaoepicontroller extends CI_Controller {
      public function carregarCodCa1() {
 
         $funcao = $this->input->POST('funcao');
+        $matricula = $this->input->POST('matricula');
         
         $this->load->model('devolucaoepimodel');
 
-        $retorno = $this->devolucaoepimodel->carregarCodCa1($funcao);
+        $retorno = $this->devolucaoepimodel->carregarCodCa1($funcao, $matricula);
 
         echo json_encode($retorno);
     }
@@ -292,10 +293,11 @@ class devolucaoepicontroller extends CI_Controller {
 
         $idLancamentoItem = $this->input->POST('idLancamentoItem');
         $id = $this->input->POST('id');
+        $matricula = $this->input->POST('matricula');
 
 
 
-        $retorno = $this->devolucaoepimodel->editarItemLancamento($idLancamentoItem, $id);
+        $retorno = $this->devolucaoepimodel->editarItemLancamento($idLancamentoItem, $id, $matricula);
 
         echo ($retorno);
     }
@@ -306,10 +308,11 @@ class devolucaoepicontroller extends CI_Controller {
 
         $idLancamentoItem = $this->input->POST('idLancamentoItem');
         $id = $this->input->POST('id');
+        $matricula = $this->input->POST('matricula');
 
 
 
-        $retorno = $this->devolucaoepimodel->editarItemLancamentoEd($idLancamentoItem, $id);
+        $retorno = $this->devolucaoepimodel->editarItemLancamentoEd($idLancamentoItem, $id, $matricula);
 
         echo ($retorno);
     }
@@ -382,6 +385,35 @@ class devolucaoepicontroller extends CI_Controller {
 
 
         $retorno = $this->devolucaoepimodel->getNumeroLinhas($id);
+
+        echo json_encode($retorno);
+    }
+    
+    public function verificarQuantidadeEntregue() {
+
+
+        $codCa = $this->input->POST('codCa');
+        $funcao = $this->input->POST('funcao');
+        $matricula = $this->input->POST('matricula');
+
+
+
+
+        $this->load->model('devolucaoepimodel');
+
+        $retorno = $this->devolucaoepimodel->verificarQuantidadeEntregue($codCa, $funcao, $matricula);
+
+        echo json_encode($retorno);
+    }
+    
+    public function getItemHistorico() {
+
+        $this->load->model('devolucaoepimodel');
+
+        $id = $this->input->POST('id');
+        $idLancamentoItem = $this->input->POST('idLancamentoItem');
+
+        $retorno = $this->devolucaoepimodel->getItemHistorico($id, $idLancamentoItem);
 
         echo json_encode($retorno);
     }

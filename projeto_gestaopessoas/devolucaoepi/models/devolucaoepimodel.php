@@ -462,7 +462,7 @@ class devolucaoepimodel extends CI_Model {
 
     ////
     
-    public function carregarCodCa1($funcao) {
+    public function carregarCodCa1($funcao, $matricula) {
         
         $this->initConBanco();
 
@@ -476,10 +476,14 @@ class devolucaoepimodel extends CI_Model {
             $idFuncao = $rs1[0]->ID_FUNCAO;
 
 
-            $query = "SELECT T1.ID_EPI, T1.COD_CA, T1.DESCRICAO_EPI FROM GP_CAD_EPI T1 INNER JOIN GP_EPI_QTD_FUNCAO_ITEM T2 ON T1.TIPO_EPI = T2.TIPO_EPI
-                            INNER JOIN GP_EPI_QTD_FUNCAO T3 ON T3.ID_EPI_QTD_FUNCAO = T2.ID_EPI_QTD_FUNCAO
-                            INNER JOIN GP_CAD_FUNCOES T4 ON T3.FUNCAO = T4.ID_FUNCAO
-                            WHERE T4.ID_FUNCAO = '$idFuncao' ORDER BY T1.DESCRICAO_EPI";
+//            $query = "SELECT T1.ID_EPI, T1.COD_CA, T1.DESCRICAO_EPI FROM GP_CAD_EPI T1 INNER JOIN GP_EPI_QTD_FUNCAO_ITEM T2 ON T1.TIPO_EPI = T2.TIPO_EPI
+//                            INNER JOIN GP_EPI_QTD_FUNCAO T3 ON T3.ID_EPI_QTD_FUNCAO = T2.ID_EPI_QTD_FUNCAO
+//                            INNER JOIN GP_CAD_FUNCOES T4 ON T3.FUNCAO = T4.ID_FUNCAO
+//                            WHERE T4.ID_FUNCAO = '$idFuncao' ORDER BY T1.DESCRICAO_EPI";
+            
+            $query = "SELECT * FROM GP_EPI_ENT T1 INNER JOIN GP_EPI_ENT_ITEM T2 ON T1.ID_EPI_ENT = T2.ID_EPI_ENT 
+                    WHERE T1.FUNCAO = '$funcao' AND T1.MATRICULA = '$matricula'";
+            
             //print_r($query);exit();
             $cs = $this->conBanco->query($query);
             $rs = $cs->result();
@@ -491,16 +495,24 @@ class devolucaoepimodel extends CI_Model {
 
 
                 foreach ($rs as $item) {
-
-                    $idEpi = $item->ID_EPI;
+                    
                     $codCa = $item->COD_CA;
-                    $descricao = $item->DESCRICAO_EPI;
-                    $html .= "<option value='$idEpi'>$codCa ($descricao)</option>";
+                    
+                    $query = "SELECT COD_CA, DESCRICAO_EPI, ID_EPI FROM GP_CAD_EPI WHERE COD_CA = '$codCa'";
+
+                    $cs = $this->conBanco->query($query);
+                    $rs = $cs->result();
+
+                    
+                    $idEpi = $rs[0]->ID_EPI;
+                    $codCa1 = $rs[0]->COD_CA;
+                    $descricao = $rs[0]->DESCRICAO_EPI;
+                    $html .= "<option value='$idEpi'>$codCa1 ($descricao)</option>";
                 }
 
                 return $html;
             } else {
-                return "<option value='0'>Nenhuma Grupo Cadastrado</option>";
+                return "<option value='0'>Nenhum C.A. entregue</option>";
             }
         
     }
@@ -530,7 +542,7 @@ class devolucaoepimodel extends CI_Model {
 
             return $html;
         } else {
-            return "<option value='0'>Nenhuma Grupo Cadastrado</option>";
+            return "<option value='0'>Nenhuma C.A. Cadastrado</option>";
         }
     }
 
@@ -587,7 +599,8 @@ class devolucaoepimodel extends CI_Model {
         $this->initConBanco();
 
 
-        $query = "SELECT * FROM GP_CAD_FUNCIONARIO";
+        //$query = "SELECT * FROM GP_CAD_FUNCIONARIO";
+        $query = "SELECT * FROM GP_EPI_ENT T1 INNER JOIN GP_CAD_FUNCIONARIO T2 ON T1.FUNCIONARIO = T2.ID_FUNCIONARIO";
 
 
         $cs = $this->conBanco->query($query);
@@ -705,7 +718,7 @@ class devolucaoepimodel extends CI_Model {
         $s = 0;
 
         $html .="<tr  style='width: 90%; padding-right: 5px; font-size: 14px;' align='center' >
-                    <td  style='width: 5%;  padding-right: 0px;font-size: 14px;'>Editar ED</td>
+                    <td  style='width: 5%;  padding-right: 0px;font-size: 14px;'>Editar</td>
                     <td  style='width: 25%; padding-right: 5px;font-size: 14px;'>C.A.</td>
                     <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Tipo de EPI</td>
                     <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>QTD</td>
@@ -2024,8 +2037,8 @@ class devolucaoepimodel extends CI_Model {
         }
     }
 
-    public function editarItemLancamento($idLancamentoItem, $id) {
-
+    public function editarItemLancamento($idLancamentoItem, $id, $matricula) {
+        //print_r($matricula); exit();
         $this->initConBanco();
 
         $query = "SELECT * FROM GP_EPI_DEV_ITEM WHERE ID_EPI_DEV = '$id' AND ID_EPI_DEV_ITEM = '$idLancamentoItem'";
@@ -2046,6 +2059,8 @@ class devolucaoepimodel extends CI_Model {
             if (is_array($rs) && count($rs) > 0) {
 
                 $codCa = $rs[0]->COD_CA;
+                $EpiTipo = $rs[0]->TIPO_EPI;
+                
 
                 $query = "SELECT ID_EPI FROM GP_CAD_EPI WHERE COD_CA = '$codCa'";
 
@@ -2054,6 +2069,8 @@ class devolucaoepimodel extends CI_Model {
                 $rs1 = $cs->result();
 
                 $descricaoCodCa = $rs1[0]->ID_EPI;
+                
+                
                 //            
                 $obj[] = $descricaoCodCa;
                 $obj[] = $rs[0]->TIPO_EPI;
@@ -2062,6 +2079,26 @@ class devolucaoepimodel extends CI_Model {
                 $obj[] = $rs[0]->DATA;
                 $obj[] = $rs[0]->TIPO_LANCAMENTO;
                 $obj[] = $rs[0]->BLOCO_EPI;
+                
+                $query = "SELECT * FROM GP_EPI_ENT WHERE MATRICULA = '$matricula'";
+                //print_r($query); exit();
+                $cs2 = $this->conBanco->query($query);
+                $rs2 = $cs2->result();
+                
+                $funcao = $rs2[0]->FUNCAO;
+                $matricula = $rs2[0]->MATRICULA;
+                
+                //$query = "SELECT QUANTIDADE FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO = '$idFuncao' AND TIPO_EPI = '$idEpiTipo'";
+                $query = "SELECT * FROM GP_EPI_ENT T1 INNER JOIN GP_EPI_ENT_ITEM T2 ON T1.ID_EPI_ENT = T2.ID_EPI_ENT 
+                            WHERE T1.FUNCAO = '$funcao' AND T1.MATRICULA = '$matricula' AND T2.TIPO_EPI = '$EpiTipo' AND T2.COD_CA = '$codCa'";
+                //print_r($query);//exit();
+                $cs3 = $this->conBanco->query($query);
+                $rs3 = $cs3->result();
+
+                $obj[] = $rs3[0]->QTD_EPI;
+
+                 
+                
 
                 return json_encode($obj);
             } else {
@@ -2082,6 +2119,8 @@ class devolucaoepimodel extends CI_Model {
             if (is_array($rs) && count($rs) > 0) {
 
                 $codCa = $rs[0]->COD_CA;
+                $EpiTipo = $rs[0]->TIPO_EPI;
+                
 
                 $query = "SELECT ID_EPI FROM GP_CAD_EPI WHERE COD_CA = '$codCa'";
 
@@ -2090,6 +2129,8 @@ class devolucaoepimodel extends CI_Model {
                 $rs1 = $cs->result();
 
                 $descricaoCodCa = $rs1[0]->ID_EPI;
+                
+                
                 //            
                 $obj[] = $descricaoCodCa;
                 $obj[] = $rs[0]->TIPO_EPI;
@@ -2098,6 +2139,23 @@ class devolucaoepimodel extends CI_Model {
                 $obj[] = $rs[0]->DATA;
                 $obj[] = $rs[0]->TIPO_LANCAMENTO;
                 $obj[] = $rs[0]->BLOCO_EPI;
+                
+                $query = "SELECT * FROM GP_EPI_ENT WHERE MATRICULA = '$matricula'";
+                //print_r($query); exit();
+                $cs2 = $this->conBanco->query($query);
+                $rs2 = $cs2->result();
+                
+                $funcao = $rs2[0]->FUNCAO;
+                $matricula = $rs2[0]->MATRICULA;
+                
+                //$query = "SELECT QUANTIDADE FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO = '$idFuncao' AND TIPO_EPI = '$idEpiTipo'";
+                $query = "SELECT * FROM GP_EPI_ENT T1 INNER JOIN GP_EPI_ENT_ITEM T2 ON T1.ID_EPI_ENT = T2.ID_EPI_ENT 
+                            WHERE T1.FUNCAO = '$funcao' AND T1.MATRICULA = '$matricula' AND T2.TIPO_EPI = '$EpiTipo' AND T2.COD_CA = '$codCa'";
+                //print_r($query);//exit();
+                $cs3 = $this->conBanco->query($query);
+                $rs3 = $cs3->result();
+
+                $obj[] = $rs3[0]->QTD_EPI;
                 //          
                 return json_encode($obj);
             } else {
@@ -2107,7 +2165,7 @@ class devolucaoepimodel extends CI_Model {
         }
     }
 
-    public function editarItemLancamentoEd($idLancamentoItem, $id) {
+    public function editarItemLancamentoEd($idLancamentoItem, $id, $matricula) {
 
         $this->initConBanco();
 
@@ -2129,6 +2187,8 @@ class devolucaoepimodel extends CI_Model {
             if (is_array($rs) && count($rs) > 0) {
 
                 $codCa = $rs[0]->COD_CA;
+                $EpiTipo = $rs[0]->TIPO_EPI;
+                
 
                 $query = "SELECT ID_EPI FROM GP_CAD_EPI WHERE COD_CA = '$codCa'";
 
@@ -2137,6 +2197,8 @@ class devolucaoepimodel extends CI_Model {
                 $rs1 = $cs->result();
 
                 $descricaoCodCa = $rs1[0]->ID_EPI;
+                
+                
                 //            
                 $obj[] = $descricaoCodCa;
                 $obj[] = $rs[0]->TIPO_EPI;
@@ -2145,6 +2207,23 @@ class devolucaoepimodel extends CI_Model {
                 $obj[] = $rs[0]->DATA;
                 $obj[] = $rs[0]->TIPO_LANCAMENTO;
                 $obj[] = $rs[0]->BLOCO_EPI;
+                
+                $query = "SELECT * FROM GP_EPI_ENT WHERE MATRICULA = '$matricula'";
+                //print_r($query); exit();
+                $cs2 = $this->conBanco->query($query);
+                $rs2 = $cs2->result();
+                
+                $funcao = $rs2[0]->FUNCAO;
+                $matricula = $rs2[0]->MATRICULA;
+                
+                //$query = "SELECT QUANTIDADE FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO = '$idFuncao' AND TIPO_EPI = '$idEpiTipo'";
+                $query = "SELECT * FROM GP_EPI_ENT T1 INNER JOIN GP_EPI_ENT_ITEM T2 ON T1.ID_EPI_ENT = T2.ID_EPI_ENT 
+                            WHERE T1.FUNCAO = '$funcao' AND T1.MATRICULA = '$matricula' AND T2.TIPO_EPI = '$EpiTipo' AND T2.COD_CA = '$codCa'";
+                //print_r($query);//exit();
+                $cs3 = $this->conBanco->query($query);
+                $rs3 = $cs3->result();
+
+                $obj[] = $rs3[0]->QTD_EPI;
                 
                 return json_encode($obj);
             } else {
@@ -2165,6 +2244,8 @@ class devolucaoepimodel extends CI_Model {
             if (is_array($rs) && count($rs) > 0) {
 
                 $codCa = $rs[0]->COD_CA;
+                $EpiTipo = $rs[0]->TIPO_EPI;
+                
 
                 $query = "SELECT ID_EPI FROM GP_CAD_EPI WHERE COD_CA = '$codCa'";
 
@@ -2173,6 +2254,8 @@ class devolucaoepimodel extends CI_Model {
                 $rs1 = $cs->result();
 
                 $descricaoCodCa = $rs1[0]->ID_EPI;
+                
+                
                 //            
                 $obj[] = $descricaoCodCa;
                 $obj[] = $rs[0]->TIPO_EPI;
@@ -2181,6 +2264,23 @@ class devolucaoepimodel extends CI_Model {
                 $obj[] = $rs[0]->DATA;
                 $obj[] = $rs[0]->TIPO_LANCAMENTO;
                 $obj[] = $rs[0]->BLOCO_EPI;
+                
+                $query = "SELECT * FROM GP_EPI_ENT WHERE MATRICULA = '$matricula'";
+                //print_r($query); exit();
+                $cs2 = $this->conBanco->query($query);
+                $rs2 = $cs2->result();
+                
+                $funcao = $rs2[0]->FUNCAO;
+                $matricula = $rs2[0]->MATRICULA;
+                
+                //$query = "SELECT QUANTIDADE FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO = '$idFuncao' AND TIPO_EPI = '$idEpiTipo'";
+                $query = "SELECT * FROM GP_EPI_ENT T1 INNER JOIN GP_EPI_ENT_ITEM T2 ON T1.ID_EPI_ENT = T2.ID_EPI_ENT 
+                            WHERE T1.FUNCAO = '$funcao' AND T1.MATRICULA = '$matricula' AND T2.TIPO_EPI = '$EpiTipo' AND T2.COD_CA = '$codCa'";
+                //print_r($query);//exit();
+                $cs3 = $this->conBanco->query($query);
+                $rs3 = $cs3->result();
+
+                $obj[] = $rs3[0]->QTD_EPI;
 
                 return json_encode($obj);
             } else {
@@ -2441,6 +2541,465 @@ class devolucaoepimodel extends CI_Model {
             return false;
         }
     }
+    
+    public function verificarQuantidadeEntregue($codCa, $funcao, $matricula) {
+        // print_r("salvarDescricao");exit();
+        $this->initConBanco();
+
+        $query = "SELECT COD_CA, TIPO_EPI FROM GP_CAD_EPI  WHERE ID_EPI = '$codCa' ";
+        //print_r($query);exit();
+        $cs1 = $this->conBanco->query($query);
+        $rs1 = $cs1->result();
+
+        $codCa1 = $rs1[0]->COD_CA;
+        $tipoEpi = $rs1[0]->TIPO_EPI;
+        
+        $query = "SELECT EQUIPAMENTO FROM GP_CAD_EPI_TIPO WHERE ID_EPI_TIPO = '$tipoEpi' ";
+        //print_r($query);exit();
+        $cs2 = $this->conBanco->query($query);
+        $rs2 = $cs2->result();
+
+        $EpiTipo = $rs2[0]->EQUIPAMENTO;
+
+        //$query = "SELECT QUANTIDADE FROM GP_EPI_QTD_FUNCAO_ITEM WHERE ID_EPI_QTD_FUNCAO = '$idFuncao' AND TIPO_EPI = '$idEpiTipo'";
+        $query = "SELECT * FROM GP_EPI_ENT T1 INNER JOIN GP_EPI_ENT_ITEM T2 ON T1.ID_EPI_ENT = T2.ID_EPI_ENT 
+                    WHERE T1.FUNCAO = '$funcao' AND T1.MATRICULA = '$matricula' AND T2.TIPO_EPI = '$EpiTipo' AND T2.COD_CA = '$codCa1'";
+       // print_r($query);//exit();
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+
+        if (is_array($rs) && count($rs) > 0) {
+            
+            $quantidade = $rs[0]->QTD_EPI;
+
+            return $quantidade;
+        }else {
+            
+            return false;
+        }
+    }
+    
+    
+    public function getItemHistorico($id, $idLancamentoItem) {
+
+        $this->initConBanco();
+
+
+        $query = "SELECT COUNT(*) AS TOTAL FROM GP_EPI_DEV_ITEM WHERE ID_EPI_DEV =  '$id'";
+
+        // print_r($query);exit();
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+
+        $totalSalvo = number_format($rs[0]->TOTAL);
+
+        $query = "SELECT COUNT(*) AS TOTAL FROM GP_EPI_DEV_ITEM_TEMP WHERE ID_EPI_DEV =  '$id'";
+
+        // print_r($query);exit();
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+
+        $totalNovo = number_format($rs[0]->TOTAL);
+
+
+        $totalGeral = $totalNovo + $totalSalvo;
+
+        //print_r($totalGeral);exit();
+
+
+        $query = "SELECT * FROM GP_EPI_DEV WHERE ID_EPI_DEV = '$id'";
+        //print_r($query); exit();
+        $cs = $this->conBanco->query($query);
+        $rs = $cs->result();
+
+
+        if (is_array($rs) && count($rs) == null || is_array($rs) && count($rs) == "null") {
+
+            $query = "SELECT * FROM GP_EPI_DEV_ITEM_TEMP WHERE ID_EPI_DEV = '$id' ORDER BY ID_EPI_DEV_ITEM";
+
+            //print_r($query);exit();
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+
+
+            $html = "";
+
+            $i = 0;
+
+            $s = 0;
+
+            $html .="<tr  style='width: 90%; padding-right: 5px; font-size: 14px;' align='center' >
+                        <td  style='width: 5%;  padding-right: 0px;font-size: 14px;'>Editar</td>
+                        <td  style='width: 25%; padding-right: 5px;font-size: 14px;'>C.A.</td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Tipo de EPI</td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>QTD</td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>D/DM/P/R</td>    
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Data</td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Lançamento</td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Nº Bloco</td>
+
+
+
+                  </tr>";
+
+            for ($i = $i; $i < $totalGeral; $i++) {
+
+                //print_r($i);exit();
+
+                $id = $i;
+                $j = $i + 1;
+
+
+
+                $codCa = $j;
+                $codCa .= "_";
+                $codCa .= $j;
+
+                $tipoEpi = $j;
+                $tipoEpi .= "_";
+                $tipoEpi .= $j;
+                $tipoEpi .= "_";
+                $tipoEpi .= $j;
+
+                $qtdEpi = $j;
+                $qtdEpi .= "_";
+                $qtdEpi .= $j;
+                $qtdEpi .= "_";
+                $qtdEpi .= $j;
+                $qtdEpi .= "_";
+                $qtdEpi .= $j;
+                $qtdEpi .= "_";
+                $qtdEpi .= $j;
+
+                $estadoEpi = $j;
+                $estadoEpi .= "_";
+                $estadoEpi .= $j;
+                $estadoEpi .= "_";
+                $estadoEpi .= $j;
+                $estadoEpi .= "_";
+                $estadoEpi .= $j;
+                $estadoEpi .= "_";
+                $estadoEpi .= $j;
+                $estadoEpi .= "_";
+                $estadoEpi .= $j;
+
+                $dataEpi = $j;
+                $dataEpi .= "_";
+                $dataEpi .= $j;
+                $dataEpi .= "_";
+                $dataEpi .= $j;
+                $dataEpi .= "_";
+                $dataEpi .= $j;
+                $dataEpi .= "_";
+                $dataEpi .= $j;
+                $dataEpi .= "_";
+                $dataEpi .= $j;
+                $dataEpi .= "_";
+                $dataEpi .= $j;
+                
+                $blocoEpi = $j;
+                $blocoEpi .= "_";
+                $blocoEpi .= $j;
+                $blocoEpi .= "_";
+                $blocoEpi .= $j;
+                $blocoEpi .= "_";
+                $blocoEpi .= $j;
+                $blocoEpi .= "_";
+                $blocoEpi .= $j;
+                $blocoEpi .= "_";
+                $blocoEpi .= $j;
+                $blocoEpi .= "_";
+                $blocoEpi .= $j;
+                $blocoEpi .= "_";
+                $blocoEpi .= $j;
+                
+                $lancamento = $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+
+
+
+
+
+                $codCaValor = $rs[$s]->COD_CA;
+                // print_r($itemValor); exit();
+                $tipoEpiValor = $rs[$s]->TIPO_EPI;
+                $qtdEpiValor = $rs[$s]->QTD_EPI;
+                $estadoEpiValor = $rs[$s]->N_H;
+                $dataEpiValor = $rs[$s]->DATA;
+                $blocoEpiValor = $rs[$s]->BLOCO_EPI;
+                $lancamentoValor = $rs[$s]->TIPO_LANCAMENTO;
+            
+            
+                $idLancamentoItem = $rs[$s]->ID_EPI_DEV_ITEM;
+
+                $s = $s + 1;
+
+                if($estadoEpiValor == "D"){
+                
+                $estadoEpiValor = "DESCARTE NATURAL";
+                
+                }
+                elseif($estadoEpiValor == "M"){
+
+                    $estadoEpiValor = "DESCARTE MAL USO";
+
+                }
+                elseif($estadoEpiValor == "P"){
+
+                    $estadoEpiValor = "PERDA";
+
+                }
+                else{
+
+                    $estadoEpiValor = "REUTILIZAÇÃO";
+                }
+            
+                
+                 if($lancamentoValor == "D"){
+                
+                $blocoEpiValor = "SEM NÚMERO";
+                
+                }
+                
+                if($lancamentoValor == "D"){
+                
+                $lancamentoValor = "DIRETO";
+                
+                }else{
+
+                    $lancamentoValor = "EM BLOCO";
+                 }
+                 
+                
+
+
+
+
+                $html .="<tr  style='width: 90%; padding-right: 5px; font-size: 14px;' align='center' >
+                        <td  style='width: 5%; padding-right: 0px;font-size: 14px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarItemLancamento($idLancamentoItem)' readonly ></button></div></td>
+                        <td  style='width: 25%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$codCa'   value='$codCaValor' readonly></div></td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$tipoEpi'  value='$tipoEpiValor' readonly></div></td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$qtdEpi'   value='$qtdEpiValor'   readonly></div></td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$estadoEpi'   value='$estadoEpiValor'   readonly></div></td>    
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$dataEpi'    value='$dataEpiValor' readonly ></div></td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$lancamento'    value='$lancamentoValor' readonly ></div></td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$blocoEpi'    value='$blocoEpiValor' readonly ></div></td>
+
+
+                  </tr>";
+            }
+
+
+            return $html;
+        } else {
+
+            $query = "SELECT * FROM GP_EPI_DEV_ITEM WHERE ID_EPI_DEV = '$id' ORDER BY ID_EPI_DEV_ITEM";
+
+            //print_r($query);exit();
+            $cs = $this->conBanco->query($query);
+            $rs = $cs->result();
+
+
+            $html = "";
+
+            $i = 0;
+
+            $s = 0;
+
+            $html .="<tr  style='width: 90%; padding-right: 5px; font-size: 14px;' align='center' >
+                        <td  style='width: 5%;  padding-right: 0px;font-size: 14px;'>Editar</td>
+                        <td  style='width: 25%; padding-right: 5px;font-size: 14px;'>C.A.</td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'>Tipo de EPI</td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>QTD</td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>D/DM/P/R</td>    
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Data</td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Lançamento</td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'>Nº Bloco</td>
+
+
+
+                  </tr>";
+
+            for ($i = $i; $i < $totalGeral; $i++) {
+
+                //print_r($i);exit();
+
+                $id = $i;
+                $j = $i + 1;
+
+
+
+                $codCa = $j;
+                $codCa .= "_";
+                $codCa .= $j;
+
+                $tipoEpi = $j;
+                $tipoEpi .= "_";
+                $tipoEpi .= $j;
+                $tipoEpi .= "_";
+                $tipoEpi .= $j;
+
+                $qtdEpi = $j;
+                $qtdEpi .= "_";
+                $qtdEpi .= $j;
+                $qtdEpi .= "_";
+                $qtdEpi .= $j;
+                $qtdEpi .= "_";
+                $qtdEpi .= $j;
+                $qtdEpi .= "_";
+                $qtdEpi .= $j;
+
+                $estadoEpi = $j;
+                $estadoEpi .= "_";
+                $estadoEpi .= $j;
+                $estadoEpi .= "_";
+                $estadoEpi .= $j;
+                $estadoEpi .= "_";
+                $estadoEpi .= $j;
+                $estadoEpi .= "_";
+                $estadoEpi .= $j;
+                $estadoEpi .= "_";
+                $estadoEpi .= $j;
+
+                $dataEpi = $j;
+                $dataEpi .= "_";
+                $dataEpi .= $j;
+                $dataEpi .= "_";
+                $dataEpi .= $j;
+                $dataEpi .= "_";
+                $dataEpi .= $j;
+                $dataEpi .= "_";
+                $dataEpi .= $j;
+                $dataEpi .= "_";
+                $dataEpi .= $j;
+                $dataEpi .= "_";
+                $dataEpi .= $j;
+                
+                $blocoEpi = $j;
+                $blocoEpi .= "_";
+                $blocoEpi .= $j;
+                $blocoEpi .= "_";
+                $blocoEpi .= $j;
+                $blocoEpi .= "_";
+                $blocoEpi .= $j;
+                $blocoEpi .= "_";
+                $blocoEpi .= $j;
+                $blocoEpi .= "_";
+                $blocoEpi .= $j;
+                $blocoEpi .= "_";
+                $blocoEpi .= $j;
+                $blocoEpi .= "_";
+                $blocoEpi .= $j;
+
+
+                $lancamento = $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+                $lancamento .= "_";
+                $lancamento .= $j;
+
+
+
+                $codCaValor = $rs[$s]->COD_CA;
+                // print_r($itemValor); exit();
+                $tipoEpiValor = $rs[$s]->TIPO_EPI;
+                $qtdEpiValor = $rs[$s]->QTD_EPI;
+                $estadoEpiValor = $rs[$s]->N_H;
+                $dataEpiValor = $rs[$s]->DATA;
+                $blocoEpiValor = $rs[$s]->BLOCO_EPI;
+                $lancamentoValor = $rs[$s]->TIPO_LANCAMENTO;
+            
+            
+                $idLancamentoItem = $rs[$s]->ID_EPI_DEV_ITEM;
+
+                $s = $s + 1;
+
+                if($estadoEpiValor == "D"){
+                
+                $estadoEpiValor = "DESCARTE NATURAL";
+                
+                }
+                elseif($estadoEpiValor == "M"){
+
+                    $estadoEpiValor = "DESCARTE MAL USO";
+
+                }
+                elseif($estadoEpiValor == "P"){
+
+                    $estadoEpiValor = "PERDA";
+
+                }
+                else{
+
+                    $estadoEpiValor = "REUTILIZAÇÃO";
+                }
+            
+
+
+                if($lancamentoValor == "D"){
+                
+                $blocoEpiValor = "SEM NÚMERO";
+                
+                }
+                
+                if($lancamentoValor == "D"){
+                
+                $lancamentoValor = "DIRETO";
+                
+                }else{
+
+                    $lancamentoValor = "EM BLOCO";
+                }
+                
+                
+
+
+                $html .="<tr  style='width: 90%; padding-right: 5px; font-size: 14px;' align='center' >
+                        <td  style='width: 5%; padding-right: 0px;font-size: 14px;'><div class='form'><button type='button' class='btn btn-primary   glyphicon glyphicon-new-window' onclick='editarItemLancamento($idLancamentoItem)' readonly ></button></div></td>
+                        <td  style='width: 25%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$codCa'   value='$codCaValor' readonly></div></td>
+                        <td  style='width: 20%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$tipoEpi'  value='$tipoEpiValor' readonly></div></td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$qtdEpi'   value='$qtdEpiValor'   readonly></div></td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$estadoEpi'   value='$estadoEpiValor'   readonly></div></td>    
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$dataEpi'    value='$dataEpiValor' readonly ></div></td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$lancamento'    value='$lancamentoValor' readonly ></div></td>
+                        <td  style='width: 10%; padding-right: 5px;font-size: 14px;'><div class='form'><input  type='text' class='form-control' id='$blocoEpi'    value='$blocoEpiValor' readonly ></div></td>
+
+
+                  </tr>";
+            }
+
+
+            return $html;
+        }
+    }
+
     
     
     //////// IMPRESSAO

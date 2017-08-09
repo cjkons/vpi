@@ -142,7 +142,7 @@
             <div class="modal-content">
                 <div class="modal-header">
 
-                    <h4 class="modal-title" id="myModalLabel">Entrega EPI</h4>
+                    <h4 class="modal-title" id="myModalLabel">Devolução EPI</h4>
                 </div>
                 <div class="modal-body">
                     <nav class="navbart">
@@ -269,7 +269,8 @@
 
 
                             <table id="tabelaItem2" class="tabela" style="width:90%" align="center"></table> 
-                            <table id="tabelaItem3" class="tabela" style="width:90%" align="center"></table>     
+                            <table id="tabelaItem3" class="tabela" style="width:90%" align="center"></table>    
+                            
 
 
 
@@ -315,7 +316,7 @@
                                 <td  style="width: 25%; padding-right: 5px;font-size: 14px;">
                                     <div class="form">
                                         C.A.
-                                        <select  id="codCa" class="form-control" readonly onchange ="carregarTipoEpi()" ></select>
+                                        <select  id="codCa" class="form-control" readonly onchange ="carregarTipoEpi(), verificarQuantidadeEntregue()" ></select>
                                     </div>
                                 </td>
                                 <td  style="width: 20%; padding-right: 5px;font-size: 14px;">
@@ -324,10 +325,27 @@
                                         <input type="text" class="form-control" id="tipoEpi"  placeholder="Tipo de EPI" disabled>
                                     </div>
                                 </td>
+                                 </tr>
+                        </table>
+                    <table style="width: 90%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
+                            <tr>
+                                
                                 <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
                                     <div class="form">
-                                        Quantidade
-                                        <input type="text" class="form-control" id="qtdEpi"  placeholder="QTD" readonly>
+                                        Qtd Entregue
+                                        <input type="text" class="form-control" id="qtdEpiEntregue"  placeholder="QTD" readonly>
+                                    </div>
+                                </td>
+                                <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
+                                    <div class="form">
+                                        Qtd Devolvida
+                                        <input type="number" class="form-control" id="qtdEpi"  placeholder="QTD" onchange ="verificarSaldoEntregue()" readonly>
+                                    </div>
+                                </td>
+                                <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
+                                    <div class="form">
+                                        Saldo
+                                        <input type="number" class="form-control" id="saldoEpi"  placeholder="QTD" onchange ="verificarSaldoEntregue()" readonly>
                                     </div>
                                 </td>
                                 <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
@@ -367,8 +385,9 @@
                                 </td>
                             </tr>
 
-                        </table> 
+                        </table>
                         <br>
+                        <table id="tabelaHist" class="tabela" style="width:90%" align="center"></table>    
                         <br>
                     </fieldset>
                 </div>
@@ -432,12 +451,30 @@
                                         <input type="text" class="form-control" id="tipoEpiEd"  placeholder="Tipo de EPI" disabled>
                                     </div>
                                 </td>
+                            </tr>
+                        </table>
+                        <table style="width: 90%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
+                            <tr>    
                                 <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
                                     <div class="form">
-                                        Quantidade
-                                        <input type="text" class="form-control" id="qtdEpiEd"  placeholder="QTD" readonly>
+                                        Qtd Entregue
+                                        <input type="text" class="form-control" id="qtdEpiEntregueEd"  placeholder="QTD" readonly>
                                     </div>
                                 </td>
+                             
+                                <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
+                                    <div class="form">
+                                        Qtd Devolvida
+                                        <input type="text" class="form-control" id="qtdEpiEd"  placeholder="QTD" onchange ="verificarSaldoEntregueEd()" readonly>
+                                    </div>
+                                </td>
+                                <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
+                                    <div class="form">
+                                        Saldo
+                                        <input type="number" class="form-control" id="saldoEpiEd"  placeholder="QTD" onchange ="verificarSaldoEntregue()" readonly>
+                                    </div>
+                                </td>
+                             
                                 <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
                                     <div class="form">
                                         N/H
@@ -460,7 +497,7 @@
                                 <td  style="width: 10%;  padding-right: 10px;font-size: 14px;">
                                     <div class="form">
                                         Tipo Lançamento
-                                        <select style="text-transform: uppercase;" id="tipoLancamentoEd" onchange ="carregarCampoBlocoEd()" class="form-control" readonly>
+                                        <select style="text-transform: uppercase;" id="tipoLancamentoEd" onchange ="carregarCampoBlocoEdEd()" class="form-control" readonly>
                                             <option readonly value="0">Selecione</option>
                                             <option readonly value="D">Direta</option>
                                             <option readonly value="B">Em Bloco</option>
@@ -544,10 +581,26 @@
                                         <input type="text" class="form-control" id="tipoEpiEdEd"  placeholder="Tipo de EPI" disabled>
                                     </div>
                                 </td>
+                            </tr>
+                        </table>
+                        <table style="width: 90%; border-collapse: collapse" cellpadding="0" cellspacing="5px" align="center" >
+                            <tr>        
                                 <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
                                     <div class="form">
-                                        Quantidade
-                                        <input type="text" class="form-control" id="qtdEpiEdEd"  placeholder="QTD" readonly>
+                                        Qtd Entregue
+                                        <input type="text" class="form-control" id="qtdEpiEntregueEdEd"  placeholder="QTD" readonly>
+                                    </div>
+                                </td>
+                                <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
+                                    <div class="form">
+                                        Qtd Devolvida
+                                        <input type="text" class="form-control" id="qtdEpiEdEd"  placeholder="QTD" onchange ="verificarSaldoEntregueEdEd()" readonly>
+                                    </div>
+                                </td>
+                                <td  style="width: 10%; padding-right: 5px;font-size: 14px;">
+                                    <div class="form">
+                                        Saldo
+                                        <input type="number" class="form-control" id="saldoEpiEdEd"  placeholder="QTD" onchange ="verificarSaldoEntregueEdEd()" readonly>
                                     </div>
                                 </td>
                                 <td  style="width: 10%; padding-right: 10px;font-size: 14px;">
