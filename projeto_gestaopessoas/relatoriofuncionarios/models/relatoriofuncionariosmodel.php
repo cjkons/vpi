@@ -50,10 +50,29 @@ class relatoriofuncionariosmodel extends CI_Model {
     }
 
     
+    private function getEmpresa($idEmpresa){
+        
+        $this->initConBanco();
+        $query = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA  WHERE ID_EMPRESA = $idEmpresa ";
+
+        $rs = $this->conBanco->query($query)->result();
+        return $rs[0]->NOME_FANTASIA; 
+    }
+    
+    
+    private function getFilial($idFilial){
+        
+        $this->initConBanco();
+        $query = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA_FILIAL WHERE ID_EMPRESA_FILIAL = '$idFilial'";
+
+        $rs = $this->conBanco->query($query)->result();
+        return $rs[0]->NOME_FANTASIA;
+    }
+    
+    
     public function carregarFilial($idEmpresa) {
 
         $this->initConBanco();
-
 
         if ($idEmpresa != "") {
 
@@ -254,30 +273,17 @@ class relatoriofuncionariosmodel extends CI_Model {
     }
     
     
-    private function getHTML($mes,$idEmpresa, $idFilial,$type){
+    private function getData($idEmpresa,$idFilial,$mes){
         
+        /*
+         * Retorna um array iterável com os dados dos funcionários
+         * para emissão do relatório, exemplo de como usar o retorno
+         * if (is_array($rs3) && count($rs3) > 0) {
+         *   foreach ($rs3 as $item) ..... 
+         */
         
-        $dataAtualizada = date('d/m/Y');
-
         $this->initConBanco();
-
-        $query1 = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA  WHERE ID_EMPRESA = $idEmpresa ";
-        //print_r($query1);exit();
-        $rs1 = $this->conBanco->query($query1)->result();
-        $empresa = $rs1[0]->NOME_FANTASIA;
-
-
-        $query2 = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA_FILIAL WHERE ID_EMPRESA_FILIAL = '$idFilial'";
-        $rs2 = $this->conBanco->query($query2)->result();
-        $filial = $rs2[0]->NOME_FANTASIA;
-        if($type == "relatorio"){ 
-            $html = $this->exibirCabecalho($dataAtualizada,$empresa,$filial); //CABECALHO 
-        }
-        else if($type == "relatorioPDF"){
-            $html = $this->cabecalhoPdf($empresa,$filial,$dataAtualizada);
-        }
-        
-        $query3 = " SELECT  T1.MATRICULA, T1.ID_FUNCIONARIO, T1.NOME_FUNCIONARIO,
+        $query = " SELECT   T1.MATRICULA, T1.ID_FUNCIONARIO, T1.NOME_FUNCIONARIO,
                             T1.DATA_NASC, T1.DATA_ADMISSAO, T1.EMPRESA, T1.FILIAL,
                             T1.DESATIVADO, T1.DATA_DEMISSAO,
                             
@@ -291,17 +297,40 @@ class relatoriofuncionariosmodel extends CI_Model {
                             T1.EMPRESA = '$idEmpresa' AND T1.FILIAL = '$idFilial'";
 
         if (!($mes == 0 || $mes == "0")) {
-            $query3 .= " AND T1.DATA_ADMISSAO LIKE '%/$mes/%'";
+            $query .= " AND T1.DATA_ADMISSAO LIKE '%/$mes/%'";
         }
 
-        $query3 .= " ORDER BY TO_DATE(DATA_ADMISSAO,'dd/mm/yyyy')"; 
+        $query .= " ORDER BY TO_DATE(DATA_ADMISSAO,'dd/mm/yyyy')"; 
         //print_r($query);exit();
 
-        $rs3 = $this->conBanco->query($query3)->result();
+        return $this->conBanco->query($query)->result();
+        
+    }
+    
+    
+    private function getHTML($mes,$idEmpresa, $idFilial,$type){
+        
+        
+        $dataAtualizada = date('d/m/Y');
 
-        if (is_array($rs3) && count($rs3) > 0) {
+        $this->initConBanco();
 
-            foreach ($rs3 as $item) {
+        $empresa = $this->getEmpresa($idEmpresa);
+        $filial  = $this->getFilial($idFilial);
+        
+        if($type == "relatorio"){ 
+            $html = $this->exibirCabecalho($dataAtualizada,$empresa,$filial); //CABECALHO 
+        }
+        else if($type == "relatorioPDF"){
+            $html = $this->cabecalhoPdf($empresa,$filial,$dataAtualizada);
+        }
+        
+        
+        $dadosSobreOFuncionario = $this->getData($idEmpresa,$idFilial,$mes);
+        
+        if (is_array($dadosSobreOFuncionario) && count($dadosSobreOFuncionario) > 0) {
+
+            foreach ($dadosSobreOFuncionario as $item) {
 
                 $dataAdmissao       = $item->DATA_ADMISSAO;
                 $dataDemmissao      = $item->DATA_DEMISSAO;
@@ -329,6 +358,7 @@ class relatoriofuncionariosmodel extends CI_Model {
                                 
                             WHERE
                                         T1.EMPRESA = '$idEmpresa' AND T1.FILIAL = '$idFilial' AND T1.MATRICULA = '$matricula'";
+                
                 if(!($mes == 0 || $mes == "0")){
                     $query4 .= " AND T1.DATA_ADMISSAO LIKE '%/$mes/%'";
                 }
@@ -452,34 +482,13 @@ class relatoriofuncionariosmodel extends CI_Model {
     }
     
     
-
-    public function getExcel($mes, $idEmpresa, $idFilial) {
-
-        $dataAtualizada = date('d/m/Y');
-
-        $this->initConBanco();
-
-        $query = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA  WHERE ID_EMPRESA = $idEmpresa ";
-
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-
-        $empresa = $rs[0]->NOME_FANTASIA;
-
-
-        $query = "SELECT NOME_FANTASIA FROM GP_SYS_EMPRESA_FILIAL WHERE ID_EMPRESA_FILIAL = '$idFilial'";
-
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-
-        $filial = $rs[0]->NOME_FANTASIA;
-
-        $periodoRelatorio = 7;
-
-        $html = "";
-
+    private function cabecalhoExcel($dataAtualizada, $idEmpresa,$idFilial){
+        
+        $empresa = $this->getEmpresa($idEmpresa);
+        $filial  = $this->getFilial($idFilial);
+        
         // CABECALHO EXCEL
-
+        
         $html = "";
         $html .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
         $html .= "<table class = 'awesome-text-box' style = 'width:100%;' border = '0'>";
@@ -503,8 +512,8 @@ class relatoriofuncionariosmodel extends CI_Model {
         $html .= "<tr  style = 'background-color: #ffffff; '  border='0'>";
         $html .= "<td colspan = '10' style= ' font-size: 6px;  color: #ffffff;' align = 'left'>-</td>";
         $html .= "</tr>";
-
-        //FINAL DO CABECALHO EXCEL
+        
+        //FINAL DO CABECALHO 
         
         $html .= "<table border = '0'; cellpadding ='0'; cellspacing = '0' >";
        
@@ -517,28 +526,41 @@ class relatoriofuncionariosmodel extends CI_Model {
         $html .= "<td colspan = '3' style = 'color: #ffffff; font-size: 14px;'  align = 'left'><b>Tempo de Empresa</b></td>";
 
         $html .= "</tr>";
+        return $html;
+        
+    }
+    
+    
+    public function getExcel($mes, $idEmpresa, $idFilial) {
 
+        $dataAtualizada = date('d/m/Y');
+        $html = $this->cabecalhoExcel($dataAtualizada, $idEmpresa, $idFilial);
+        
+        $query4 = " SELECT      T1.MATRICULA, T1.ID_FUNCIONARIO, T1.NOME_FUNCIONARIO,
+                                T1.DATA_NASC, T1.DATA_ADMISSAO, T1.EMPRESA, T1.FILIAL,
+                                T1.DESATIVADO, T1.DATA_DEMISSAO,
 
+                                T2.ID_FUNCAO, T2.FUNCAO
 
-        $query = " SELECT  T1.MATRICULA, T1.ID_FUNCIONARIO, T1.NOME_FUNCIONARIO, T1.DATA_NASC, T1.DATA_ADMISSAO, T1.EMPRESA, T1.FILIAL, T2.ID_FUNCAO, T2.FUNCAO
-                            FROM GP_CAD_FUNCIONARIO T1 INNER JOIN GP_CAD_FUNCOES T2
-                            ON  T1.FUNCAO = T2.ID_FUNCAO
-                            WHERE
-                            T1.EMPRESA = '$idEmpresa' AND T1.FILIAL = '$idFilial'";
+                    FROM GP_CAD_FUNCIONARIO T1
+                            
+                    INNER JOIN GP_CAD_FUNCOES T2
 
-        if ($mes != 0 || $mes != "0") {
+                    ON  T1.FUNCAO = T2.ID_FUNCAO
+                                
+                    WHERE
+                                T1.EMPRESA = '$idEmpresa' AND T1.FILIAL = '$idFilial' AND T1.MATRICULA = '$matricula'";
 
-            $query .= " AND T1.DATA_ADMISSAO LIKE '%/$mes/%'";
-        }
-
-        $query .= " ORDER BY TO_DATE(DATA_ADMISSAO,'dd/mm/yyyy')";
+        if(!($mes == 0 || $mes == "0")){
+                    $query4 .= " AND T1.DATA_ADMISSAO LIKE '%/$mes/%'";
+                }
+                
+        $query4 .= " ORDER BY TO_DATE(DATA_ADMISSAO,'dd/mm/yyyy')";
 
 
         //print_r($query);exit();
 
-        $cs = $this->conBanco->query($query);
-        $rs = $cs->result();
-
+        $rs4 = $this->conBanco->query($query)->result();
         if (is_array($rs) && count($rs) > 0) {
 
 

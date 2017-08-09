@@ -238,14 +238,13 @@ function abrirArquivoPdf() {
 function getExcel() {
 
  
-    bloqueiaTela('Processando Relatorio, essa operação pode demorar, aguarde....');
+   bloqueiaTela('Processando Relatorio, essa operação pode demorar, aguarde....');
 
-   var idEmpresa         = $("#idEmpresaFiltro").val();      
-   var idFilial          = $("#idEmpresaFiltro").val();
-   var mes               = $("#mes").val();
-  
-   
-   var controleDePreenchimento = 'S';
+    var idEmpresa         = $("#idEmpresaFiltro").val();      
+    var idFilial          = $("#idEmpresaFiltro").val();
+    var mes               = $("#mes").val();
+
+    var controleDePreenchimento = 'S';
     
     if(idEmpresa == 0){
         controleDePreenchimento = 'N';
@@ -253,7 +252,6 @@ function getExcel() {
     if(idFilial == 0){
         controleDePreenchimento = 'N';
     } 
-         
     
     if(controleDePreenchimento ==  'S'){
 

@@ -75,29 +75,17 @@ class relatoriofuncionarioscontroller extends CI_Controller {
     
     
     public function getExcel() {
-
-
-
+        
         set_time_limit(-1);
         $mes            = $this->input->POST('mes');
         $idEmpresa      = $this->input->POST('idEmpresa');
         $idFilial       = $this->input->POST('idFilial');
-      
-
-        //print_r($medicao); exit();
-
-        $this->load->model('relatoriofuncionariosmodel');
-
-        $pastaClarify = $this->gerarPastaClarifyPeople();
         
+        $this->load->model('relatoriofuncionariosmodel');
+        $pastaClarify = $this->gerarPastaClarifyPeople();
         $nomePastaTemporaria = $this->gerarPastaTemporaria();
-
-
-
         $html = $this->relatoriofuncionariosmodel->getExcel($mes, $idEmpresa, $idFilial);
-
-
-
+        
         $path = "c:/DownloadsClarifyPeople/$nomePastaTemporaria/RelatorioAniversario.xls";
         //print_r($path); exit();
         file_put_contents($path, $html);
