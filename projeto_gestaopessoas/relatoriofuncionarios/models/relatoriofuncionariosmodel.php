@@ -1,7 +1,7 @@
 <?php
 
 require_once("resources/relatoriofuncionarios/dompdf/dompdf_config.inc.php");
-
+                    
 class relatoriofuncionariosmodel extends CI_Model {
 
     private $conBanco;
@@ -175,11 +175,12 @@ class relatoriofuncionariosmodel extends CI_Model {
         $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Data Demissão</b></td>";
         $html .= "<td colspan = '2' style = 'width: 20%; color: #ffffff; font-size: 14px;'  align = 'left'><b>Tempo de Empresa</b></td>";
         $html .= "</tr>";
+        $html .= "</table>";
         
         return $html;
     }
     
-        private function cabecalhoPdf($empresa,$filial,$dataAtualizada){
+    private function cabecalhoPdf($empresa,$filial,$dataAtualizada){
         
         $html = "";
         // CABECALHO DO PDF
@@ -188,7 +189,7 @@ class relatoriofuncionariosmodel extends CI_Model {
         $html .= "<td rowspan = '2' colspan = '2'  align = 'center' style = 'font-size: 22px; color: #ffffff;'><b>&nbsp;&nbsp;RELATÓRIO DE FUNCIONÁRIO</b></td></tr>";
         $html .= "<tr style = 'background-color: #579CE9; height: 50px;'></tr>";
         $html .= "<tr style = 'background-color: #579CE9; height: 50px;'><td rowspan = '2'     align = 'right' style = 'font-size: 22px; color: #ffffff;'><b>Data Emissao:</b></td>";
-        $html .= "<td rowspan = '2'     align = 'center' style = 'font-size: 20px; color: #ffffff;'>$dataAtualizada </td></tr>";
+        $html .= "<td rowspan = '2' align = 'left' style = 'font-size: 20px; color: #ffffff;'>$dataAtualizada</td></tr>";
         $html .= "<tr style = 'background-color: #579CE9; height: 50px;'></tr>";
         $html .= "<tr style = 'background-color: #579CE9; height: 50px;'><td rowspan = '2'    align = 'right' style = 'font-size: 22px; color: #ffffff;'></td>";
         $html .= "<td rowspan = '2'     align = 'center' style = 'font-size: 22px; color: #ffffff;'><b>  </td></tr>";
@@ -200,11 +201,53 @@ class relatoriofuncionariosmodel extends CI_Model {
         $html .= "<tr style = 'background-color: #ffffff; height: 50px;'><td colspan = '10' style = ' color: #ffffff; font-size: 5px;' align = 'center'><b>--------</td></tr>";
         $html .= "<tr style = 'background-color: #579CE9; height: 50px;'>";
         $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 18px;'  align = 'left'><b>&nbsp;&nbsp;Matrícula</b></td>";
-        $html .= "<td colspan = '2' style = 'width: 30%; color: #ffffff; font-size: 18px;'  align = 'left'><b>Funcionário</b></td>";
-        $html .= "<td colspan = '2' style = 'width: 20%; color: #ffffff; font-size: 18px;'  align = 'left'><b>Função</b></td>";
+        $html .= "<td style = 'width: 20%; color: #ffffff; font-size: 18px;'  align = 'left'><b>Funcionário</b></td>";
+        $html .= "<td style = 'width: 15%; color: #ffffff; font-size: 18px;'  align = 'left'><b>Função</b></td>";
         $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 18px;'  align = 'center'><b>Data Admissão</b></td>";
-        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 18px;'  align = 'center'><b>Mês</b></td>";
-        $html .= "<td colspan = '2' style = 'width: 20%; color: #ffffff; font-size: 18px;'  align = 'center'><b>Tempo de Empresa</b></td>";
+        $html .= "<td style = 'width: 15%; color: #ffffff; font-size: 18px;'  align = 'center'><b>Mês</b></td>";
+        $html .= "<td style = 'width: 10%; color: #ffffff; font-size: 18px;'  align = 'center'><b>Data Demissao</b></td>";
+        $html .= "<td style = 'width: 20%; color: #ffffff; font-size: 18px;'  align = 'center'><b>Tempo de Empresa</b></td>";
+        $html .= "</tr>";
+        $html .= "</table>";
+        return $html;
+    }
+    
+    
+    private function pdfData($matricula,$nomeFuncionario,$funcao,
+                             $dataAdmissao, $mesAdmissao, 
+                             $dataDemmissao,$tempoEmpresa){
+        
+        $html = '';
+        $html .= "<table  style = 'width:100%;' border = '0'; cellpadding ='0'; cellspacing = '0' >";
+        $html .= "<tr class = 'linhaOc' style = 'width:100%;'>";
+        $html .= "<td  style = 'width : 7%;  text-transform: uppercase;  font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$matricula</b></td>";
+        $html .= "<td  style = 'width : 14%; text-transform: uppercase;  font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
+        $html .= "<td  style = 'width : 11%; text-transform: uppercase;  font-size: 14px;' align = 'left'><b>$funcao</b></td>";
+        $html .= "<td  style = 'width : 11%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataAdmissao</b></td>";
+        $html .= "<td  style = 'width : 7%;  font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$mesAdmissao</b></td>";
+        $html .= "<td  style = 'width : 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataDemmissao</b></td>";
+        $html .= "<td  style = 'width : 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$tempoEmpresa</b></td>";
+
+        $html .= "</tr>";
+        $html .= "</table>";
+        return $html;
+    }
+    
+    
+    private function relatorioData($matricula,$nomeFuncionario,$nomeFuncionario,
+                                   $dataAdmissao, $mesAdmissao, 
+                                   $dataDemmissao,$tempoEmpresa){
+        $html = '';
+        $html .= "<table  style = 'width:100%;' border = '0'; cellpadding ='0'; cellspacing = '0' >";        
+        $html .= "<tr class = 'linhaOc' style = 'width:100%;'>";
+        $html .= "<td  style = 'text-transform: uppercase; width: 10%; font-size: 14px;' align = 'left'><b>$matricula</b></td>";
+        $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
+        $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
+        $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataAdmissao</b></td>";
+        $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$mesAdmissao</b></td>";
+        $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataDemmissao</b></td>";
+        $html .= "<td  colspan = '2' style = 'width: 20%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$tempoEmpresa</b></td>";
+
         $html .= "</tr>";
         $html .= "</table>";
         return $html;
@@ -311,18 +354,17 @@ class relatoriofuncionariosmodel extends CI_Model {
                         if($desativado == "N"){
                            $dataDemmissao = "Não demitido";
                         }
+                        if($type == "relatorio"){ 
+                            $html .= $this->relatorioData($matricula,$nomeFuncionario,$funcao,
+                                                         $dataAdmissao, $mesAdmissao, 
+                                                         $dataDemmissao,$tempoEmpresa); //CABECALHO 
+                        }
+                        else if($type == "relatorioPDF"){
+                            $html .= $this->pdfData($matricula,$nomeFuncionario,$funcao,
+                                                   $dataAdmissao, $mesAdmissao, 
+                                                   $dataDemmissao,$tempoEmpresa);
+                        }
                         
-                        $html .= "<tr class = 'linhaOc' style = 'width:100%;'>";
-                        $html .= "<td  style = 'text-transform: uppercase; width: 10%; font-size: 14px;' align = 'left'><b>$matricula</b></td>";
-                        $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$nomeFuncionario</b></td>";
-                        $html .= "<td  style = 'text-transform: uppercase; width: 20%; font-size: 14px;' align = 'left'><b>$funcao</b></td>";
-                        $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataAdmissao</b></td>";
-                        $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$mesAdmissao</b></td>";
-                        $html .= "<td  style = 'width: 10%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$dataDemmissao</b></td>";
-                        $html .= "<td  colspan = '2' style = 'width: 20%; font-size: 14px;' align = 'left'><b>&nbsp;&nbsp;$tempoEmpresa</b></td>";
-
-                        $html .= "</tr>";
-
                         }
                     }
                 }
@@ -354,7 +396,7 @@ class relatoriofuncionariosmodel extends CI_Model {
         if(!is_dir($pasta)){
             mkdir($pasta);
         }
-        /*
+        
         if (is_dir($pasta)) {
             $diretorio = dir($pasta);
             
@@ -366,17 +408,14 @@ class relatoriofuncionariosmodel extends CI_Model {
             }
             $diretorio->close();
         }
-        */
         $nomeDoArquivo = "relario_funcionarios.pdf";
         $tipoFolha = "P"; // P = Retrato | L = Paisagem
         $retorno = $this->geraPDF($nomeDoArquivo, $html, $tipoFolha);
-
         if ($retorno) {
             $gerado = true;
         } else {
             $gerado = false;
         }
-
         if ($gerado) {
             echo "Arquivo Gerado: " . $nomeDoArquivo . "\n";
         } else {
@@ -387,27 +426,18 @@ class relatoriofuncionariosmodel extends CI_Model {
 
     
     private function geraPDF($nomeDoArquivo, $html, $tipo) {
-        
-        //print_r("gerapdf");exit();
-        $dompdf = new DOMPDF();
-        
-        //define("DOMPDF_ENABLE_REMOTE", true);
-//	if ($tipo == "L") {
-//		$dompdf->set_paper("legal", "landscape"); // Altera o papel para modo paisagem.
-//	}
-        $dompdf->load_html($html); // Carrega o HTML para a classe.
-        $dompdf->set_paper('A4','portrait');
-        $dompdf->render();
 
+        $dompdf = new DOMPDF();
+        //echo htmlspecialchars($html);exit();
+        $dompdf->load_html($html); // Carrega o HTML para a classe.
+        $dompdf->render();
         $canvas = $dompdf->get_canvas();
         $font = Font_Metrics::get_font("helvetica", "normal");
         $canvas->page_text(540, 820, "Pág. {PAGE_NUM} de {PAGE_COUNT}", $font, 6, array(0, 0, 0)); //header
         $canvas->page_text(270, 820, "VPI TECNOLOGIA  -  CLARIFY People", $font, 6, array(0, 0, 0)); //footer 
         header("Content-type: application/pdf");
         $pdf = $dompdf->output(); // Cria o pdf
-        echo "hehehehhee";exit();
         $nomeDoArquivo = "relario_funcionarios.pdf";
-
         //$arquivo = 'C:\server\htdocs\gcconcreto\relatoriostemp\relatorio\.'; //- GCCONCRETO
         //$arquivo = 'C:\server\htdocs\vpi\relatoriostemp\relatorio\.'; //- VPI
         $arquivo = 'C:\server\htdocs\gestaopessoas\fwk\uploads\pdf\.'; // - LOCAL 

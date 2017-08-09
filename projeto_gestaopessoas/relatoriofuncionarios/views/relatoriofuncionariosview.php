@@ -58,7 +58,7 @@
 
         <!-- RELATÓRIO CONTAS A PAGAR -->
         <link href="resources/relatoriofuncionarios/css/estilomodal.css" rel="stylesheet">
-        <script src="resources/relatoriofuncionarios/js/relatoriofuncionarios-tmp.js"></script>
+        <script src="resources/relatoriofuncionarios/js/relatoriofuncionarios-temp.js"></script>
         
         
         <!-- RELATÓRIO CONTAS A PAGAR -->

@@ -173,12 +173,12 @@ function filtro(){
 
 
 function getPdf() {
-    
-   var idEmpresa         = $("#idEmpresaFiltro").val();      
-   var idFilial          = $("#idEmpresaFiltro").val();
-   var mes               = $("#mes").val();
+
+    var idEmpresa         = $("#idEmpresaFiltro").val();      
+    var idFilial          = $("#idEmpresaFiltro").val();
+    var mes               = $("#mes").val();
    
-   var controleDePreenchimento = 'S';
+    var controleDePreenchimento = 'S';
     
     if(idEmpresa == 0){
         controleDePreenchimento = 'N';
@@ -226,7 +226,7 @@ function abrirArquivoPdf() {
     //window.open('http://www.vpitecnologia.com.br/gcconcreto/relatoriostemp/relatorio/.contas_pagar.pdf'); //- GCCONCRETO
     //window.open('C:/teste/pdf/.teste1.pdf'); - local
     //window.open('http://www.vpitecnologia.com.br/vpi/relatoriostemp/relatorio/.contas_pagar.pdf'); - VPI
-    window.open('http://189.11.172.90/gestaopessoas/fwk/uploads/pdf/.relatorio_aniversario.pdf'); //- servidor
+    window.open('http://189.11.172.90/gestaopessoas/fwk/uploads/pdf/.relatorio_funcionarios.pdf'); //- servidor
     //window.open('http://localhost/gestaopessoas/fwk/uploads/pdf/.relatorio_aniversario.pdf'); //- local
     // var nomePasta = data['nomePasta'];
     //var nomeArquivo = data['nomeArquivo'];
